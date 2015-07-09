@@ -1,8 +1,10 @@
 class SandboxController < ApplicationController
   def inspect
-    model = Object.const_get(params[:current_model])
-    @sandbox_data= model.get_data(params)
-    @kata_models = ["BabyName", "Person"]
+    @available_models = ["BabyName", "Person"]
+    model = Object.const_get(params.fetch("current_model", @available_models.first))
+    url = "/sandbox/inspect/"
+    @sandbox_data= model.get_data(url, params)
+
     respond_to do |format|
       format.html
       format.json { render json: @sandbox_data }
@@ -21,7 +23,8 @@ class SandboxController < ApplicationController
     }
 
     model = Object.const_get(params[:current_model])
-    @sandbox_data = model.get_data(params)
+    url = "/sandbox/interact/"
+    @sandbox_data = model.get_data(url, params, page_and_length)
 
     respond_to do |format|
       format.html

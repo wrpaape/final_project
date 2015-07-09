@@ -1,25 +1,24 @@
 module HandleData
   extend ActiveSupport::Concern
 
-  def self.get_data(params)
-    page_and_length = self.get_page_and_length(params)
+  def self.get_data(url, params, page_and_length = get_page_and_length(params))
     model_file = self.get_model_file
     migration_file = self.get_migration_file
     keys = self.column_names
 
     {
-      "pageData": page_and_length[:page_data],
-      "lengthData": page_and_length[:length_data],
+      "pageData": page_and_length["page_data"],
+      "lengthData": page_and_length["length_data"],
       "modelFile": model_file,
       "migrationFile": migration_file,
       "keys": keys,
-      "url": "/sandbox/interact/"
+      "url": url
     }
   end
 
   private
 
-  def self.get_page_and_length(params)
+  def get_page_and_length(params)
     search = params.fetch("search", "")
     sort = params.fetch("sort", "")
     limit = params.fetch("limit", "10").to_i
@@ -50,8 +49,8 @@ module HandleData
     sort_query = split_query.compact.join(", ")
 
     {
-      "page_data": self.where(search_query).order(sort_query).limit(limit).offset(offset),
-      "length_data": self.where(search_query).count
+      "page_data"=> self.where(search_query).order(sort_query).limit(limit).offset(offset),
+      "length_data"=> self.where(search_query).count
     }
   end
 end
