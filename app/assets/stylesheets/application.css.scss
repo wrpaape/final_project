@@ -1,0 +1,212 @@
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+//You need to now manually import every other scss file.
+@mixin vertical-align {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+
+  align-items: center;
+}
+
+
+body {
+  font-family: Menlo, Consolas, 'Lucida Console', monospace;
+}
+
+th {
+  text-align: center;
+  font-size: 1.2em;
+}
+
+tr {
+  font-size: 0.8em;
+}
+
+section {
+  padding: 15px;
+}
+
+.table {
+  position: relative;
+  margin-bottom: 0;
+  font-family: monaco, Consolas, 'Lucida Console', monospace;
+}
+
+.table-footer {
+  @include vertical-align;
+}
+
+
+
+.vertical-align {
+  @include vertical-align;
+}
+
+.search-bar {
+  position: relative;
+  .search {
+    font-family: monaco, Consolas, 'Lucida Console', monospace;
+    margin-top: 0.25em;
+    font-size: 0.8em;
+    input {
+      float: left;
+      width: 150px;
+    }
+  }
+  .search-submit {
+    font-size: 0.8em;
+    margin-top: 3px;
+    .submit-wrap {
+      position: absolute;
+      bottom: 1px;
+      left: -2px;
+      padding-left: 0px;
+      .box-wrap {
+        display: inline-block;
+        width: 12px;
+        float: left;
+        margin-right: 6px;
+        input {
+          margin-top: 0;
+          margin-bottom: 6px;
+        }
+      }
+      .submit {
+        display: inline-block;
+        font-size: 1.2em;
+        margin-top: 1px;
+        float: left;
+        width: 130px;
+      }
+    }
+  }
+}
+
+
+
+.no-pad-left {
+  padding-left: 0;
+}
+
+.no-pad-right {
+  padding-right: 0;
+}
+
+.pull-right{
+  margin-right: 0;
+}
+
+.next-prev {
+  margin: 0.5em;
+}
+
+.white {
+  background-color: white;
+}
+
+.grey {
+  background-color: grey;
+}
+
+[data-id='ASC'] {
+  background-color: green;
+}
+
+[data-id='DESC'] {
+  background-color: red;
+}
+
+.center {
+  text-align: center;
+}
+
+.show-hide {
+  margin: 0.5em;
+  font-size: 0.8em;
+}
+
+.model {
+  font-size: 0.8em;
+  font-family: monaco, Consolas, 'Lucida Console', monospace;
+  text-align: left;
+  padding: 0 0 0 10px;
+  .pad {
+    opacity: 0;
+  }
+}
+
+
+.schema {
+  font-size: 0.7em;
+  font-family: monaco, Consolas, 'Lucida Console', monospace;
+  text-align: left;
+  padding: 0 0 0 10px;
+  .pad {
+    opacity: 0;
+  }
+}
+
+.object {
+  font-size: 0.8em;
+  font-family: monaco, Consolas, 'Lucida Console', monospace;
+  text-align: left;
+  padding: 0 0 0 10px;
+  .pad {
+    opacity: 0;
+  }
+  .key {
+    color: red;
+  }
+  .value {
+    color: blue;
+  }
+}
+
+.highlight {
+  text-shadow: 0 0 0.2em green;
+}
+
+.lighten-true {
+  opacity: 0.5;
+}
+
+.loading-false {
+  display: none;
+}
+
+.loading-true {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+  opacity: 0.8;
+  &.db-table {
+    margin-top: -175px;
+    margin-left: -225px;
+  }
+  &.db-editor {
+    height: 210px;
+    width: 270px;
+    margin-top: -105px;
+    margin-left: -135px;
+  }
+}
+#editor {
+  position: absolute;
+  width: 500px;
+  height: 200px;
+}
+
+#editor-form {
+  position: relative;
+  width: 500px;
+}
+
+#editor-content {
+  display: none;
+}
