@@ -1,7 +1,7 @@
 class BabyName < ActiveRecord::Base
   def self.get_data(params)
     page_and_length = get_page_and_length(params)
-    Model = Object.const_get(params[:model])
+    model = Object.const_get(params[:model])
     model_file =
 """
 class BabyName < ActiveRecord::Base
@@ -18,8 +18,8 @@ create_table \"baby_names\", force: :cascade do |t|
   t.datetime \"updated_at\", null: false
 end
 """
-    keys = Model.column_names
-    types = keys.map { |key| Model.columns_hash[key].type  }
+    keys = model.column_names
+    types = keys.map { |key| model.columns_hash[key].type  }
 
     {
       "pageData": page_and_length[:pageData],

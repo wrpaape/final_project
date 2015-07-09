@@ -1,7 +1,7 @@
 class SandboxController < ApplicationController
   def inspect
-    Model = Object.const_get(params[:model])
-    @sandbox_data= Model.get_data(params)
+    model = Object.const_get(params[:model])
+    @sandbox_data= model.get_data(params)
     respond_to do |format|
       format.html
       format.json { render json: @sandbox_data }
