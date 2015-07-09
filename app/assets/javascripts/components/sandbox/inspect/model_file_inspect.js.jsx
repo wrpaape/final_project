@@ -11,8 +11,7 @@ var ModelFileInspect = React.createClass({
     var show = this.state.show;
     var table = this.props.grandparent;
     var data = table.state.data;
-    var schemaFile = data.schemaFile;
-    var modelFileName = schema.split('"')[1].slice(0,-1) + '.rb';
+    var modelFileName = table.state.currentModel + '.rb';
     var modelFile = data.modelFile;
     var paddedModelFile = padModelFile(modelFile);
 
@@ -24,13 +23,13 @@ var ModelFileInspect = React.createClass({
             { paddedModelFile }
           </section>
         </div>
-      );
+      )
     } else {
       return(
         <div className='row center'>
           <div onClick={ this.clicked.bind(this, show) } className='btn btn-primary show-hide'>Show { fileName }</div>
         </div>
-      );
+      )
     };
     function padModelFile(modelFile) {
       var paddedModelFile = [];
@@ -46,6 +45,6 @@ var ModelFileInspect = React.createClass({
     }
   },
   clicked: function(show) {
-    this.setState({ show: !show });
+    this.setState({ show: !show })
   }
 });

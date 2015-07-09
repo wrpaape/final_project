@@ -1,7 +1,8 @@
 class SandboxController < ApplicationController
   def inspect
-    model = Object.const_get(params[:model])
+    model = Object.const_get(params[:current_model])
     @sandbox_data= model.get_data(params)
+    @kata_models = ["BabyName", "Person"]
     respond_to do |format|
       format.html
       format.json { render json: @sandbox_data }
@@ -19,9 +20,8 @@ class SandboxController < ApplicationController
       "lengthData": output_json.length
     }
 
-    # get model from json output
-    # Model = Object.const_get(params[:model])
-    # @sandbox_data = Model.get_data(page_and_length)
+    model = Object.const_get(params[:current_model])
+    @sandbox_data = model.get_data(params)
 
     respond_to do |format|
       format.html

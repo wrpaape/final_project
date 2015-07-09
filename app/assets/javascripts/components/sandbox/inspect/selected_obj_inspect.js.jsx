@@ -12,8 +12,7 @@ var SelectedObjInspect = React.createClass({
     var table = this.props.grandparent;
     var obj = table.state.windowObj;
     var data = table.state.data;
-    var model = data.model;
-    var types = data.types;
+    var model = table.state.currentModel;
     var keysCopy = $.extend( [], data.keys);
 
     var attributes = [];

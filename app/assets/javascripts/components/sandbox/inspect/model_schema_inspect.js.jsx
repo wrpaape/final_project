@@ -11,15 +11,15 @@ var ModelSchemaInspect = React.createClass({
     var show = this.state.show;
     var table = this.props.grandparent;
     var data = table.state.data;
-    var schema = data.schema;
-    var paddedSchema = padSchema(schema);
+    var schemaFile = data.schemaFile;
+    var paddedSchemaFile = padSchema(schemaFile);
 
     if (show) {
       return(
         <div className='row center'>
           <div onClick={ this.clicked.bind(this, show) } className='btn btn-default show-hide'>Hide Schema</div>
           <section className='schema'>
-            { paddedSchema }
+            { paddedSchemaFile }
           </section>
         </div>
       );
@@ -30,20 +30,20 @@ var ModelSchemaInspect = React.createClass({
         </div>
       );
     };
-    function padSchema(schema) {
-      var paddedSchema = [];
-      var lines = schema.split('\n');
+    function padSchema(schemaFile) {
+      var paddedSchemaFile = [];
+      var lines = schemaFile.split('\n');
       for (var i = 1; i <= lines.length - 2; i++) {
         if (i === 1 || i === lines.length - 2) {
-          paddedSchema.push(<span key={ 'schema-line-' + i }>{ lines[i] }<br /></span>);
+          paddedSchemaFile.push(<span key={ 'schema-line-' + i }>{ lines[i] }<br /></span>);
         } else {
-          paddedSchema.push(<span key={ 'schema-line-' + i }><span className='pad'>..</span>{ lines[i] }<br /></span>);
+          paddedSchemaFile.push(<span key={ 'schema-line-' + i }><span className='pad'>..</span>{ lines[i] }<br /></span>);
         }
       }
-      return paddedSchema;
+      return paddedSchemaFile;
     }
   },
   clicked: function(show) {
-    this.setState({ show: !show });
+    this.setState({ show: !show })
   }
 });

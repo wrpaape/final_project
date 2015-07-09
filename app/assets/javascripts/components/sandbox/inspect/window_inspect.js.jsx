@@ -9,9 +9,20 @@ var WindowInspect = React.createClass({
   },
   render: function() {
     var table = this.props.parent;
+    var availableModels = table.props.availableModels;
+    var modelOptions = [];
+
+    availableModels.forEach(function (model) {
+      modelOptions.push(<option value={ model }>{ model }</option>);
+    });
 
     return(
       <div>
+        <div className='row'>
+          <select id='current-model' onChange={ this.selected.bind(this, table) } >
+            { modelOptions }
+          </select>
+        </div>
         <div className='row'>
           <ModelFileInspect key='model-file' grandparent={ table } />
         </div>
@@ -26,5 +37,30 @@ var WindowInspect = React.createClass({
         </div>
       </div>
     );
+  },
+  selected: function (table) {
+    var currentModel = table.state.currentModel;
+    var newModel = $('#current-model').val();
+    if (currentModel !== newModel) {
+      table.setState({ loading: true });
+      $.getJSON(table.state.data.url,
+        {
+          model: newModel
+        },
+      function (newData) {
+        table.setState({
+          data: newData,
+          currentModel: newModel,
+          limit: 10,
+          offset: 0,
+          search: '',
+          sort: '',
+          caseSens: 'false',
+          fuzzy: 'true',
+          windowObj: { id: 0 },
+          loading: false
+        })
+      }
+    }
   }
 });

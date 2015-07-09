@@ -26,7 +26,7 @@ var LimitBarInspect = React.createClass({
             offset: table.state.offset,
             caseSens: table.state.caseSens,
             fuzzy: table.state.fuzzy,
-            model: data.model
+            model: table.state.currentModel
           },
           function (newData) {
             table.setState({

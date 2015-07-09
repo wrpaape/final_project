@@ -70,8 +70,8 @@ var SearchBarInspect = React.createClass({
     var newSearch = '';
     var keys = table.state.data.keys;
     var searches = $('.search');
-    var caseSens = $('#case-sens').is(":checked");
-    var fuzzy = $('#fuzzy').is(":checked");
+    var newCaseSens = $('#case-sens').is(":checked");
+    var newFuzzy = $('#fuzzy').is(":checked");
 
     searches.each(function (i) {
       newSearch += keys[i] + '░' + $(this).val() + '▓';
@@ -83,16 +83,16 @@ var SearchBarInspect = React.createClass({
         sort: table.state.sort,
         limit: table.state.limit,
         offset: table.state.offset,
-        case_sens: caseSens,
-        fuzzy: fuzzy
+        case_sens: newCaseSens,
+        fuzzy: newFuzzy,
+        current_model: currentModel
       },
       function (newData) {
         table.setState({
           data: newData,
-          offset: 0,
           search: newSearch,
-          caseSens: caseSens,
-          fuzzy: fuzzy,
+          caseSens: newCaseSens,
+          fuzzy: newFuzzy,
           loading: false
         });
       }

@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20150709003910) do
     t.integer  "mother_id"
     t.integer  "father_id"
     t.integer  "spouse_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "people", ["father_id"], name: "index_people_on_father_id", using: :btree

@@ -5,6 +5,7 @@ var TableInspect = React.createClass({
   getInitialState: function () {
     return {
       data: this.props.data,
+      currentModel: this.props.availableModels[0],
       limit: 10,
       offset: 0,
       search: '',
@@ -19,11 +20,13 @@ var TableInspect = React.createClass({
     var rows = [];
     var data = this.state.data;
     var pageData = data.pageData;
+    var loadingClassName = 'loading-' + this.state.loading +' db-table';
+    var tableClassName = 'table lighten-' + this.state.loading;
+
     pageData.forEach(function (obj) {
       rows.push(<RowInspect key={ 'row-' + obj.id } obj={ obj } keys={ data.keys } url={ data.url + obj.id } parent={this} />);
     }.bind(this));
-    var loadingClassName = 'loading-' + this.state.loading +' db-table';
-    var tableClassName = 'table lighten-' + this.state.loading;
+
     return(
       <div className='row'>
         <div className='col-md-9'>

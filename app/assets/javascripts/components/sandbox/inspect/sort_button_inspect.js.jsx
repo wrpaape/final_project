@@ -4,6 +4,7 @@
 var SortButtonInspect = React.createClass({
   render: function () {
     var colName = this.props.colName;
+
     return (
       <th id={ 'sort-' + colName } data-id='' className={ this.props.className } onClick={ this.clicked }>
         { colName }
@@ -39,12 +40,12 @@ var SortButtonInspect = React.createClass({
         limit: table.state.limit,
         offset: table.state.offset,
         caseSens: table.state.caseSens,
-        fuzzy: table.state.fuzzy
+        fuzzy: table.state.fuzzy,
+        model: table.state.currentModel
       },
       function (newData) {
         table.setState({
           data: newData,
-          offset: 0,
           sort: newSort,
           loading: false
         });

@@ -31,7 +31,8 @@ var PaginateInspect = React.createClass({
           limit: table.state.limit,
           offset: newOffset,
           case_sense: table.state.caseSens,
-          fuzzy: table.state.fuzzy
+          fuzzy: table.state.fuzzy,
+          model: table.state.currentModel
         },
         function (newData) {
           table.setState({
@@ -59,11 +60,14 @@ var PaginateInspect = React.createClass({
             search: table.state.search,
             sort: table.state.sort,
             limit: table.state.limit,
-            offset: newOffset
+            offset: newOffset,
+            case_sense: table.state.caseSens,
+            fuzzy: table.state.fuzzy,
+            current_model: table.state.currentModel
           },
           function (newData) {
             table.setState({
-              pageData: newData,
+              data: newData,
               offset: newOffset,
               loading: false
             });
