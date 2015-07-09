@@ -2,7 +2,7 @@ g0_yobs = (1880..1890).to_a
 genders = ["M", "F"]
 genders.reject { |gender| gender == "M" }
 
-5.times do |i|
+10.times do
   g0_yob = g0_yobs.sample
   g0_gender = genders.sample
   g0_name = BabyName.where("yob = #{g0_yob} AND gender = '#{g0_gender}'").pluck(:name).sample
@@ -30,16 +30,11 @@ genders.reject { |gender| gender == "M" }
     g1_gender = genders.sample
     g1_yob = (g0_yob + g0_spouse_yob) / 2 + rand(20..30)
     g1_name = BabyName.where("yob = #{g1_yob} AND gender = '#{g1_gender}'").pluck(:name).sample
-    mother.children.create(name: g1_name,
-                         gender: g1_gender,
-                            yob: g1_yob,
-                      mother_id: mother.id,
-                      father_id: father.id)
-    father.children.create(name: g1_name,
-                         gender: g1_gender,
-                            yob: g1_yob,
-                      mother_id: mother.id,
-                      father_id: father.id)
+    Person.create(name: g1_name,
+               gender: g1_gender,
+                  yob: g1_yob,
+            mother_id: mother.id,
+            father_id: father.id)
   end
 end
 
@@ -47,7 +42,7 @@ unmarried_yobs = Person.where(spouse_id: nil).order(:yob).pluck(:yob)
 gx_cutoff_low = unmarried_yobs.first
 gx_cutoff_high = unmarried_yobs.last
 
-3.times do |i|
+3.times do
   gx_bachelors = Person.where(spouse_id: nil).where(gender: "M").where("yob >= #{gx_cutoff_low} AND yob <= #{gx_cutoff_high}")
   gx_bachelorettes = Person.where(spouse_id: nil).where(gender: "F").where("yob >= #{gx_cutoff_low} AND yob <= #{gx_cutoff_high}")
 
@@ -69,16 +64,11 @@ gx_cutoff_high = unmarried_yobs.last
       gy_gender = genders.sample
       gy_yob = (mother.yob + father.yob) / 2 + rand(20..40)
       gy_name = BabyName.where("yob = #{gy_yob} AND gender = '#{gy_gender}'").pluck(:name).sample
-      mother.children.create(name: gy_name,
-                     gender: gy_gender,
-                        yob: gy_yob,
-                  mother_id: mother.id,
-                  father_id: father.id)
-      father.children.create(name: gy_name,
-                           gender: gy_gender,
-                              yob: gy_yob,
-                        mother_id: mother.id,
-                        father_id: father.id)
+      Person.create(name: gy_name,
+                 gender: gy_gender,
+                    yob: gy_yob,
+              mother_id: mother.id,
+              father_id: father.id)
     end
   end
 
