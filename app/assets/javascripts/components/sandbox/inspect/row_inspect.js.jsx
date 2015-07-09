@@ -1,7 +1,7 @@
 /* globals React */
 'use strict';
 
-var Row = React.createClass({
+var RowInspect = React.createClass({
   render: function () {
     var cols = [];
     var table = this.props.parent;
@@ -29,19 +29,19 @@ var Row = React.createClass({
   clicked: function (table, obj) {
     var obj = this.props.obj;
     var thisId = '#' + obj.id;
-    var thisRow = $(thisId);
-    var allRows = $('tr');
-    allRows.each(function () {
-      if ($(this).attr('id') !== thisRow.attr('id')) {
+    var thisRowInspect = $(thisId);
+    var allRowInspects = $('tr');
+    allRowInspects.each(function () {
+      if ($(this).attr('id') !== thisRowInspect.attr('id')) {
         $(this).attr('class', '');
       };
     });
 
-    if (thisRow.attr('class') === '') {
-      thisRow.attr('class', 'highlight');
+    if (thisRowInspect.attr('class') === '') {
+      thisRowInspect.attr('class', 'highlight');
       table.setState({ windowObj: obj });
     } else {
-      thisRow.attr('class', '');
+      thisRowInspect.attr('class', '');
       table.setState({ windowObj: { id: 0 } });
     }
 

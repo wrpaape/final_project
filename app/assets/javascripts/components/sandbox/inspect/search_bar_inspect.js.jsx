@@ -1,7 +1,7 @@
 /* globals React */
 'use strict';
 
-var SearchBar = React.createClass({
+var SearchBarInspect = React.createClass({
   getInitialState: function () {
     return {
       show: false

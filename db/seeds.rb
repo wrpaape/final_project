@@ -23,11 +23,8 @@ genders.reject { |gender| gender == "M" }
   g0.save
   g0_spouse.save
 
-  puts "created generation 0"
 
   mother, father = g0.gender == "M" ? [g0_spouse, g0] : [g0, g0_spouse]
-  puts mother.gender
-  puts father.gender
 
   rand(6).times do
     g1_gender = genders.sample
@@ -44,8 +41,6 @@ genders.reject { |gender| gender == "M" }
                       mother_id: mother.id,
                       father_id: father.id)
   end
-  puts "created generation 1"
-  puts "created family tree #{i}"
 end
 
 unmarried_yobs = Person.where(spouse_id: nil).order(:yob).pluck(:yob)
@@ -58,9 +53,6 @@ gx_cutoff_high = unmarried_yobs.last
 
   smaller_pool, larger_pool = gx_bachelors.count > gx_bachelorettes.count ? [gx_bachelorettes, gx_bachelors] : [gx_bachelors, gx_bachelorettes]
   to_be_married = smaller_pool
-  puts smaller_pool.pluck(:gender)
-  puts "--"
-  puts larger_pool.pluck(:gender)
 
   to_be_married.each do |gx|
     gx_spouse = larger_pool.sample
@@ -72,8 +64,6 @@ gx_cutoff_high = unmarried_yobs.last
     gx_spouse.save
 
     mother, father = gx.gender == "M" ? [gx_spouse, gx] : [gx, gx_spouse]
-    puts mother.gender
-    puts father.gender
 
     rand(6).times do
       gy_gender = genders.sample
@@ -94,7 +84,6 @@ gx_cutoff_high = unmarried_yobs.last
 
   gx_cutoff_low += 25
   gx_cutoff_high += 25
-  puts "created generation #{i + 2}"
 end
 
 

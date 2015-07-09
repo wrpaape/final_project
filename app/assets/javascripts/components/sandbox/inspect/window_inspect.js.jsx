@@ -1,7 +1,7 @@
 /* globals React */
 'use strict';
 
-var Window = React.createClass({
+var WindowInspect = React.createClass({
   getInitialState: function () {
     return {
       show: 'false'
@@ -13,16 +13,16 @@ var Window = React.createClass({
     return(
       <div>
         <div className='row'>
-          <ModelFile key='model-file' grandparent={ table } />
+          <ModelFileInspect key='model-file' grandparent={ table } />
         </div>
         <div className='row'>
-          <ModelSchema key='model-schema' grandparent={ table } />
+          <ModelSchemaInspect key='model-schema' grandparent={ table } />
         </div>
         <div className='row'>
-          <SelectedObj key='selected-obj' grandparent={ table } />
+          <SelectedObjInspect key='selected-obj' grandparent={ table } />
         </div>
         <div className='row'>
-          <SearchBar key='search-bar' grandparent={ table } />
+          <SearchBarInspect key='search-bar' grandparent={ table } />
         </div>
       </div>
     );

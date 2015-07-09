@@ -1,7 +1,7 @@
 /* globals React */
 'use strict';
 
-var ModelSchema = React.createClass({
+var ModelSchemaInspect = React.createClass({
   getInitialState: function () {
     return {
       show: false

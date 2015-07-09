@@ -1,7 +1,7 @@
 /* globals React */
 'use strict';
 
-var ModelFile = React.createClass({
+var ModelFileInspect = React.createClass({
   getInitialState: function () {
     return {
       show: false

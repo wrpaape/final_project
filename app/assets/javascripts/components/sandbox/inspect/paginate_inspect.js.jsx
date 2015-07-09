@@ -1,7 +1,7 @@
 /* globals React */
 'use strict';
 
-var Paginate = React.createClass({
+var PaginateInspect = React.createClass({
   render: function () {
     var table = this.props.parent;
     var limit = table.state.limit;

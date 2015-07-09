@@ -1,7 +1,7 @@
 /* globals React */
 'use strict';
 
-var SortButton = React.createClass({
+var SortButtonInspect = React.createClass({
   render: function () {
     var colName = this.props.colName;
     return (

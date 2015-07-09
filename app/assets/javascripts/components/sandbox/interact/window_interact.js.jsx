@@ -13,13 +13,13 @@ var WindowInteract = React.createClass({
     return(
       <div>
         <div className='row'>
-          <ModelFile key='model-file' grandparent={ table } />
+          <ModelFileInteract key='model-file' grandparent={ table } />
         </div>
         <div className='row'>
-          <ModelSchema key='model-schema' grandparent={ table } />
+          <ModelSchemaInteract key='model-schema' grandparent={ table } />
         </div>
         <div className='row'>
-          <SelectedObj key='selected-obj' grandparent={ table } />
+          <SelectedObjInteract key='selected-obj' grandparent={ table } />
         </div>
       </div>
     );

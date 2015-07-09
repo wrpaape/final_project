@@ -1,7 +1,7 @@
 /* globals React */
 'use strict';
 
-var SelectedObj = React.createClass({
+var SelectedObjInspect = React.createClass({
   getInitialState: function () {
     return {
       show: false
