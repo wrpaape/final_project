@@ -1,4 +1,39 @@
 class BabyName < ActiveRecord::Base
+  def self.get_data(params)
+    page_and_length = get_page_and_length(params)
+    Model = Object.const_get(params[:model])
+    model_file =
+"""
+class BabyName < ActiveRecord::Base
+end
+"""
+    schema_file =
+"""
+create_table \"baby_names\", force: :cascade do |t|
+  t.string   \"name\"
+  t.string   \"gender\"
+  t.integer  \"frequency\"
+  t.integer  \"yob\"
+  t.datetime \"created_at\", null: false
+  t.datetime \"updated_at\", null: false
+end
+"""
+    keys = Model.column_names
+    types = keys.map { |key| Model.columns_hash[key].type  }
+
+    {
+      "pageData": page_and_length[:pageData],
+      "lengthData": page_and_length[:lengthData],
+      "model": Model,
+      "modelFile": model_file,
+      "schemaFile": schema_file,
+      "keys": keys,
+      "types": types,
+      "url": "/sandbox/interact/"
+    }
+  end
+
+  private
 
   def self.get_page_and_length(params)
     search = params.fetch("search", "")
@@ -33,37 +68,6 @@ class BabyName < ActiveRecord::Base
     {
       "pageData": self.where(search_query).order(sort_query).limit(limit).offset(offset),
       "lengthData": self.where(search_query).count
-    }
-  end
-
-  def self.get_data(page_and_length)
-    model =
-"""
-class BabyName < ActiveRecord::Base
-end
-"""
-    schema =
-"""
-create_table \"baby_names\", force: :cascade do |t|
-  t.string   \"name\"
-  t.string   \"gender\"
-  t.integer  \"frequency\"
-  t.integer  \"yob\"
-  t.datetime \"created_at\", null: false
-  t.datetime \"updated_at\", null: false
-end
-"""
-    keys = BabyName.column_names
-    types = keys.map { |key| BabyName.columns_hash[key].type  }
-
-    {
-      "pageData": page_and_length[:pageData],
-      "lengthData": page_and_length[:lengthData],
-      "model": model,
-      "schema": schema,
-      "keys": keys,
-      "types": types,
-      "url": "/baby_names/"
     }
   end
 end

@@ -1,4 +1,13 @@
 class SandboxController < ApplicationController
+  def inspect
+    Model = Object.const_get(params[:model])
+    @sandbox_data= Model.get_data(params)
+    respond_to do |format|
+      format.html
+      format.json { render json: @sandbox_data }
+    end
+  end
+
   def interact
     file = File.open("lib/tasks/solution.rake", "w")
     file.write(params[:solution])
@@ -12,20 +21,11 @@ class SandboxController < ApplicationController
 
     # get model from json output
     # Model = Object.const_get(params[:model])
-    # sandbox_data = Model.get_data(page_and_length)
+    # @sandbox_data = Model.get_data(page_and_length)
 
     respond_to do |format|
       format.html
-      format.json { render json: sandbox_data }
-    end
-  end
-
-  def inspect
-    page_and_length = BabyName.get_page_and_length(params)
-    @baby_names= BabyName.get_data(page_and_length)
-    respond_to do |format|
-      format.html
-      format.json { render json: @baby_names }
+      format.json { render json: @sandbox_data }
     end
   end
 end

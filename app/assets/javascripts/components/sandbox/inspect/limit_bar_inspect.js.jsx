@@ -16,15 +16,17 @@ var LimitBarInspect = React.createClass({
       var newLimit = parseInt(key.target.value.trim());
       if (newLimit > 0 && newLimit % 1 === 0) {
         var table = this.props.parent;
+        var data = table.state.data;
         table.setState({ loading: true });
-        $.getJSON(table.state.data.url,
+        $.getJSON(data.url,
           {
             search: table.state.search,
             sort: table.state.sort,
             limit: newLimit,
             offset: table.state.offset,
             caseSens: table.state.caseSens,
-            fuzzy: table.state.fuzzy
+            fuzzy: table.state.fuzzy,
+            model: data.model
           },
           function (newData) {
             table.setState({

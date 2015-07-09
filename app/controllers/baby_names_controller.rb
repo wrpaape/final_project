@@ -5,12 +5,7 @@ class BabyNamesController < ApplicationController
   # GET /baby_names
   # GET /baby_names.json
   def index
-    page_and_length = BabyName.get_page_and_length(params)
-    @baby_names= BabyName.get_data(page_and_length)
-    respond_to do |format|
-      format.html
-      format.json { render json: @baby_names }
-    end
+    @baby_names = BabyName.all
   end
 
 

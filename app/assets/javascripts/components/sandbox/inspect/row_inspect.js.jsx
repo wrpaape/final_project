@@ -29,19 +29,19 @@ var RowInspect = React.createClass({
   clicked: function (table, obj) {
     var obj = this.props.obj;
     var thisId = '#' + obj.id;
-    var thisRowInspect = $(thisId);
+    var thisRow = $(thisId);
     var allRowInspects = $('tr');
     allRowInspects.each(function () {
-      if ($(this).attr('id') !== thisRowInspect.attr('id')) {
+      if ($(this).attr('id') !== thisRow.attr('id')) {
         $(this).attr('class', '');
       };
     });
 
-    if (thisRowInspect.attr('class') === '') {
-      thisRowInspect.attr('class', 'highlight');
+    if (thisRow.attr('class') === '') {
+      thisRow.attr('class', 'highlight');
       table.setState({ windowObj: obj });
     } else {
-      thisRowInspect.attr('class', '');
+      thisRow.attr('class', '');
       table.setState({ windowObj: { id: 0 } });
     }
 
