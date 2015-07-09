@@ -18,11 +18,11 @@ var SelectedObjInspect = React.createClass({
     var attributes = [];
     attributes.push(<span key='obj-open'>{ '{' }</span>);
     if (obj.id !== 0) {
-      var indent = '.....';
+      var indent = '~~~~~';
       var longestLength = keysCopy.sort(function (a, b) { return b.length - a.length; })[0].length;
       keysCopy.forEach(function(key, i) {
         var diff = longestLength - key.length;
-        var pad = new Array(diff + 1).join('.') + indent;
+        var pad = new Array(diff + 1).join('~') + indent;
         attributes.push(
           <div key={'obj-attr-' + i } className='row'>
             <span className='pad'>{ pad }</span>

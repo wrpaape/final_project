@@ -1,5 +1,5 @@
 desc "Imports a CSV file into an ActiveRecord table"
-task :csv_baby_names_import => :environment do
+task :import_baby_names => :environment do
   yobs = (1880..2014).to_a
   yobs.each do |yob|
     lines = File.new("/Users/Reid/my_projects/tiy/week10/day3/final_project/lib/assets/names/yob#{yob}.txt").readlines

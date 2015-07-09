@@ -4,14 +4,14 @@ module HandleData
   def self.get_data(params)
     page_and_length = self.get_page_and_length(params)
     model_file = self.get_model_file
-    schema_file = self.get_model_file
+    migration_file = self.get_migration_file
     keys = self.column_names
 
     {
       "pageData": page_and_length[:page_data],
       "lengthData": page_and_length[:length_data],
       "modelFile": model_file,
-      "schemaFile": schema_file,
+      "migrationFile": migration_file,
       "keys": keys,
       "url": "/sandbox/interact/"
     }

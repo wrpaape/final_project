@@ -8,15 +8,19 @@ end
 """
   end
 
-  def self.get_schema_file
+  def self.get_migration_file
 """
-create_table \"baby_names\", force: :cascade do |t|
-  t.string   \"name\"
-  t.string   \"gender\"
-  t.integer  \"frequency\"
-  t.integer  \"yob\"
-  t.datetime \"created_at\", null: false
-  t.datetime \"updated_at\", null: false
+class CreateBabyNames < ActiveRecord::Migration
+~~def change
+~~~~create_table :baby_names do |t|
+~~~~~~t.string :name
+~~~~~~t.string :gender
+~~~~~~t.integer :frequency
+~~~~~~t.integer :yob
+~
+~~~~~~t.timestamps null: false
+~~~~end
+~~end
 end
 """
   end

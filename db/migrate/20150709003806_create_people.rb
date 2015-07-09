@@ -4,6 +4,7 @@ class CreatePeople < ActiveRecord::Migration
       t.string :name
       t.string :gender
       t.integer :yob
+      t.integer :generation, default: 0
       t.integer :children_count, default: 0
 
       t.references :mother, index: true

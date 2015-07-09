@@ -24,10 +24,13 @@ var WindowInspect = React.createClass({
           </select>
         </div>
         <div className='row'>
+          <ModelUmlInspect key='model-uml' grandparent={ table } />
+        </div>
+        <div className='row'>
           <ModelFileInspect key='model-file' grandparent={ table } />
         </div>
         <div className='row'>
-          <ModelSchemaInspect key='model-schema' grandparent={ table } />
+          <ModelMigrationInspect key='model-migration' grandparent={ table } />
         </div>
         <div className='row'>
           <SelectedObjInspect key='selected-obj' grandparent={ table } />
@@ -47,20 +50,21 @@ var WindowInspect = React.createClass({
         {
           model: newModel
         },
-      function (newData) {
-        table.setState({
-          data: newData,
-          currentModel: newModel,
-          limit: 10,
-          offset: 0,
-          search: '',
-          sort: '',
-          caseSens: 'false',
-          fuzzy: 'true',
-          windowObj: { id: 0 },
-          loading: false
-        })
-      }
+        function (newData) {
+          table.setState({
+            data: newData,
+            currentModel: newModel,
+            limit: 10,
+            offset: 0,
+            search: '',
+            sort: '',
+            caseSens: 'false',
+            fuzzy: 'true',
+            windowObj: { id: 0 },
+            loading: false
+          })
+        }
+      )
     }
   }
 });
