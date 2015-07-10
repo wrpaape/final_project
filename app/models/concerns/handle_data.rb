@@ -34,7 +34,7 @@ module HandleData
       case case_sens
       when "on"
         "CAST(#{key} AS TEXT) LIKE '#{value}'"
-      when "false"
+      else
         "lower(CAST(#{key} AS TEXT)) LIKE '#{value.downcase}'"
       end
     end

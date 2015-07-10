@@ -15,7 +15,7 @@ var RowInspect = React.createClass({
       var className = i % 2 === 0 ? 'grey' : 'white';
       var val = obj[keys[i]];
 
-      if (val === '') {
+      if (val === null) {
         val = 'nil';
       }
 

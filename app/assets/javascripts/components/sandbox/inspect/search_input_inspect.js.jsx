@@ -8,7 +8,7 @@ var SearchInputInspect = React.createClass({
     };
   },
   componentWillReceiveProps: function(nextProps) {
-    this.setState({ value: this.props.defaultValue });
+    this.setState({ value: nextProps.defaultValue });
   },
   render: function() {
     var type = this.props.type;
