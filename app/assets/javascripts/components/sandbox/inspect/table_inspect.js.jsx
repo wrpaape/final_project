@@ -28,7 +28,7 @@ var TableInspect = React.createClass({
     var tableClassName = 'table lighten-' + this.state.loading;
 
     pageData.forEach(function (obj) {
-      rows.push(<RowInspect key={ 'row-' + obj.id } obj={ obj } keys={ data.keys } url={ data.url + obj.id } parent={this} />);
+      rows.push(<RowInspect key={ 'row-' + obj.id } obj={ obj } url={ data.url + obj.id } parent={this} />);
     }.bind(this));
 
     return(

@@ -2,14 +2,28 @@
 'use strict';
 
 var RowInspect = React.createClass({
+  getInitialState: function() {
+    var table = this.props.parent;
+    return {
+      currentModel: table.state.currentModel,
+      obj: this.props.obj
+    };
+  },
+  componentWillReceiveProps: function(nextProps) {
+    var table = nextProps.parent;
+    this.setState({
+      currentModel: table.state.currentModel,
+      obj: nextProps.obj
+    });
+  },
   render: function () {
     var cols = [];
     var table = this.props.parent;
-    var currentModel = table.state.currentModel;
+    var currentModel = this.state.currentModel;
     var windowObj = table.state.windowObj;
     var windowObjModel = table.state.windowObjModel;
-    var obj = this.props.obj;
-    var keys = this.props.keys;
+    var obj = this.state.obj;
+    var keys = Object.keys(obj);
 
     for (var i = 0; i < keys.length; i++) {
       var className = i % 2 === 0 ? 'grey' : 'white';
