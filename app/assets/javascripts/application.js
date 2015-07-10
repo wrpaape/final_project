@@ -18,6 +18,7 @@
 //= require react
 //= require react_ujs
 //= require components
+//= require moment
 //= require_tree .
 //= require jquery/jquery-1.8.3.min
 //= require ace/ace
