@@ -11,8 +11,21 @@ var SearchBarInspect = React.createClass({
     var show = this.state.show;
     var inputs = [];
     var table = this.props.grandparent;
+    var currentModel = table.state.currentModel;
+    var model = table.state.models[currentModel];
+    var caseSens = model.caseSens;
+    var fuzzy = model.fuzzy;
+    var search = model.search;
     var keys = table.state.data.keys;
     keys.forEach(function(key, i) {
+
+    var keyRegex = new RegExp(key + '░');
+
+    var keyIndex = search.search(keyRegex);
+    var searchByIndexStart = keyIndex + key.length + 1;
+    var afterCol = search.slice(searchByIndexStart);
+    var searchByIndexEnd = searchByIndexStart + afterCol.search('▓');
+    var searchBy = searchByIndexEnd > searchByIndexStart ? search.slice(searchByIndexStart, searchByIndexEnd) : '';
       inputs.push(
         <div key={ 'search-' + i } className='row'>
           <div className='search'>
@@ -20,7 +33,7 @@ var SearchBarInspect = React.createClass({
               <label className='pull-right' htmlFor={ key }>{ key }&nbsp;</label>
             </div>
             <div className='col-md-7 no-pad-left'>
-              <input id={ key } className='search-input' type='text' />
+              <SearchInputInspect id={ key } className='search-input' type='text' defaultValue={ searchBy } />
             </div>
           </div>
         </div>
@@ -38,8 +51,8 @@ var SearchBarInspect = React.createClass({
         </div>
         <div className='col-md-offset-5 col-md-7 submit-wrap'>
           <div className='box-wrap'>
-            <input id='fuzzy' type='checkbox' defaultChecked />
-            <input id='case-sens' type='checkbox' />
+            <SearchInputInspect id='fuzzy' className='' type='checkbox' defaultValue={ fuzzy } />
+            <SearchInputInspect id='case-sens' className='' type='checkbox' defaultValue={ caseSens } />
           </div>
           <input type='submit' value='search' className='submit btn btn-primary' />
         </div>
@@ -69,8 +82,8 @@ var SearchBarInspect = React.createClass({
     var newSearch = '';
     var keys = table.state.data.keys;
     var searches = $('.search-input');
-        var newCaseSens = $('#case-sens').is(":checked");
-    var newFuzzy = $('#fuzzy').is(":checked");
+    var newCaseSens = $('#case-sens').is(":checked") ? 'on' : '';
+    var newFuzzy = $('#fuzzy').is(":checked") ? 'on' : '';
     searches.each(function (i) {
       newSearch += keys[i] + '░' + $(this).val() + '▓';
     });

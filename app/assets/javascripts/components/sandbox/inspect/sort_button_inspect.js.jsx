@@ -6,15 +6,12 @@ var SortButtonInspect = React.createClass({
     var table = this.props.grandparent;
     var currentModel = table.state.currentModel;
     var sort = table.state.models[currentModel].sort;
-    console.log(sort);
     var colName = this.props.colName;
     var colRegex = new RegExp(colName + '░');
-
     var colIndex = sort.search(colRegex);
     var sortDirIndexStart = colIndex + colName.length + 1;
     var afterCol = sort.slice(sortDirIndexStart);
     var sortDirIndexEnd = sortDirIndexStart + afterCol.search('▓');
-
     var sortDir = sortDirIndexEnd > sortDirIndexStart ? sort.slice(sortDirIndexStart, sortDirIndexEnd) : '';
 
     return (

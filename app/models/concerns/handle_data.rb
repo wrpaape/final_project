@@ -30,9 +30,9 @@ module HandleData
     split_query = search_pairs.map do |pair|
       key, value = pair.split("░")
       next if value.nil?
-      value = "%#{value}%" if fuzzy == "true"
+      value = "%#{value}%" if fuzzy == "on"
       case case_sens
-      when "true"
+      when "on"
         "CAST(#{key} AS TEXT) LIKE '#{value}'"
       when "false"
         "lower(CAST(#{key} AS TEXT)) LIKE '#{value.downcase}'"

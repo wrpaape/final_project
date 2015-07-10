@@ -43,8 +43,8 @@ class SandboxController < ApplicationController
         "offset"=> 0,
         "search"=> '',
         "sort"=> '',
-        "caseSens"=> 'false',
-        "fuzzy"=> 'true',
+        "caseSens"=> '',
+        "fuzzy"=> 'on',
       }
     end
     states

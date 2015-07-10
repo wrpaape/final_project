@@ -3,11 +3,20 @@
 
 var TableInspect = React.createClass({
   getInitialState: function () {
+    var initialModels = this.props.models;
+    var initialModel = Object.keys(initialModels)[0];
     return {
       data: this.props.data,
-      models: this.props.models,
-      currentModel: Object.keys(this.props.models)[0],
+      models: initialModels,
+      currentModel: initialModel,
       windowObj: { id: 0 },
+      windowObjModel: initialModel,
+      limit: initialModels[initialModel].limit,
+      offset: initialModels[initialModel].offset,
+      search: initialModels[initialModel].search,
+      sort: initialModels[initialModel].sort,
+      caseSens: initialModels[initialModel].caseSens,
+      fuzzy: initialModels[initialModel].fuzzy,
       loading: false
     };
   },

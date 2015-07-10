@@ -7,6 +7,7 @@ var RowInspect = React.createClass({
     var table = this.props.parent;
     var currentModel = table.state.currentModel;
     var windowObj = table.state.windowObj;
+    var windowObjModel = table.state.windowObjModel;
     var obj = this.props.obj;
     var keys = this.props.keys;
 
@@ -22,28 +23,33 @@ var RowInspect = React.createClass({
     }
 
     return (
-      <tr id={ currentModel + '-' + obj.id } className={ className } onClick={ this.clicked.bind(this, table, obj, currentModel) }>
+      <tr id={ currentModel + '-' + obj.id } className={ className } onClick={ this.clicked.bind(this, table, obj, windowObjModel, currentModel) }>
         { cols }
       </tr>
     );
   },
-  clicked: function (table, obj, currentModel) {
-    var obj = this.props.obj;
+  clicked: function (table, obj, windowObjModel, currentModel) {
     var thisId = '#' + currentModel + '-' + obj.id;
     var thisRow = $(thisId);
     var allRows = $('tr');
     allRows.each(function () {
-      if ($(this).attr('id') !== thisRow.attr('id')) {
+      if ($(this).attr('id') !== windowObjModel + '-' + obj.id) {
         $(this).attr('class', '');
       };
     });
 
     if (thisRow.attr('class') === '') {
       thisRow.attr('class', 'highlight');
-      table.setState({ windowObj: obj });
+      table.setState({
+        windowObj: obj,
+        windowObjModel: currentModel
+      });
     } else {
       thisRow.attr('class', '');
-      table.setState({ windowObj: { id: 0 } });
+      table.setState({
+        windowObj: { id: 0 },
+        windowObjModel: currentModel
+      });
     }
 
   }
