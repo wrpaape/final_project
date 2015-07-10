@@ -9,7 +9,7 @@ var TableHeadInspect = React.createClass({
 
     for (var i = 0; i < keys.length; i++) {
       var className = i % 2 === 0 ? 'grey' : 'white';
-      cols.push(<SortButtonInspect key={ 'sort-' + i } className={ className } colName={ keys[i] } grandparent={ table } />);
+      cols.push(<SortButtonInspect key={ 'sort-' + i } className={ className } colName={ keys[i] } grandparent={ table } currentModel={ table.state.currentModel } />);
     }
 
     return(

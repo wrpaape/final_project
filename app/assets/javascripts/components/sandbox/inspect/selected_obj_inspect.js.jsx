@@ -33,7 +33,7 @@ var SelectedObjInspect = React.createClass({
             <span className='pad'>{ pad }</span>
             <span className='key'>{ key }</span>
             <span>: </span>
-            <span className='value' onMouseOver={ this.hovered.bind(this, val) }>{ val }</span>
+            <span id={ 'row-' + i } className='value' onMouseOver={ this.mouseOver.bind(this, val, i) } onMouseOut={ this.mouseOut.bind(this, val, i) }>{ val }</span>
           </div>
         );
       }.bind(this));
@@ -57,12 +57,19 @@ var SelectedObjInspect = React.createClass({
       );
     };
   },
-  hovered: function(val) {
-    var is_datetime = val.toString().match(/^(\d{4})-(\d{2})-(\d{2})([a-zA-Z])(\d{2}):(\d{2}):(\d{2}).(\d{3})([a-zA-Z])/);
-
-    if (is_datetime !== null) {
-      console.log(moment(val).format('MM/DD/YYYY hh:mm a'));
+  mouseOver: function(val, i) {
+    var isDatetime = val.toString().match(/^(\d{4})-(\d{2})-(\d{2})([a-zA-Z])(\d{2}):(\d{2}):(\d{2}).(\d{3})([a-zA-Z])/);
+    if (isDatetime !== null) {
+      var valFormatted = (moment(val).format('MM/DD/YYYY hh:mm a'));
+      var idSelector = '#row-' + i;
+      $(idSelector).html(valFormatted);
+      $(idSelector).addClass("formatted-time");
     }
+  },
+  mouseOut: function(val, i) {
+    var idSelector = '#row-' + i;
+    $(idSelector).html(val);
+    $(idSelector).removeClass("formatted-time");
   },
   clicked: function(show) {
     this.setState({ show: !show });

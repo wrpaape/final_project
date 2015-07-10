@@ -2,26 +2,41 @@
 'use strict';
 
 var SortButtonInspect = React.createClass({
+  getInitialState: function() {
+    return {
+      currentModel: this.props.currentModel,
+      colName: this.props.colName
+    };
+  },
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({
+      currentModel: nextProps.currentModel
+    });
+  },
   render: function () {
     var table = this.props.grandparent;
-    var currentModel = table.state.currentModel;
+    var currentModel = this.state.currentModel;
     var sort = table.state.models[currentModel].sort;
-    var colName = this.props.colName;
+    var colName = this.state.colName;
     var colRegex = new RegExp(colName + '░');
     var colIndex = sort.search(colRegex);
     var sortDirIndexStart = colIndex + colName.length + 1;
     var afterCol = sort.slice(sortDirIndexStart);
     var sortDirIndexEnd = sortDirIndexStart + afterCol.search('▓');
     var sortDir = sortDirIndexEnd > sortDirIndexStart ? sort.slice(sortDirIndexStart, sortDirIndexEnd) : '';
+    var dispName = colName;
+    if (sortDir !== '') {
+      dispName += ' (' + sortDir + ')';
+    }
 
     return (
-      <th id={ 'sort-' + colName } data-id={ sortDir } className={ this.props.className } onClick={ this.clicked.bind(this, table) }>
-        { colName }
+      <th id={ currentModel + '-sort-' + colName } key={ currentModel + '-sort-' + colName } data-id={ sortDir } className={ this.props.className } onClick={ this.clicked.bind(this, table, currentModel, colName) }>
+        { dispName }
       </th>
     );
   },
-  clicked: function (table) {
-    var idSelector = '#sort-' + this.props.colName;
+  clicked: function (table, currentModel, colName) {
+    var idSelector = '#' + currentModel +'-sort-' + colName;
     switch ($(idSelector).attr('data-id')) {
       case '':
         $(idSelector).attr('data-id', 'ASC');
@@ -36,10 +51,9 @@ var SortButtonInspect = React.createClass({
     var newSort = '';
     var all_buttons = $('th');
     all_buttons.each(function () {
-      newSort += $(this).html() + '░' + $(this).attr('data-id') + '▓';
+      newSort += $(this).attr('id').slice(currentModel.length + 6) + '░' + $(this).attr('data-id') + '▓';
     });
 
-    var currentModel = table.state.currentModel;
     var newModels = $.extend({}, table.state.models);
     newModels[currentModel].sort = newSort;
     table.setState({ loading: true });
