@@ -76,7 +76,7 @@ var SearchBarInspect = React.createClass({
     });
 
     var currentModel = table.state.currentModel;
-    var newModels = table.state.models;
+    var newModels = $.extend({}, table.state.models);
     newModels[currentModel].search = newSearch;
     newModels[currentModel].offset = 0;
     newModels[currentModel].caseSens = newCaseSens;

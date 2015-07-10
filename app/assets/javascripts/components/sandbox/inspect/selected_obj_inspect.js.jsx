@@ -13,7 +13,7 @@ var SelectedObjInspect = React.createClass({
     var obj = table.state.windowObj;
     var data = table.state.data;
     var model = table.state.currentModel;
-    var keysCopy = $.extend( [], Object.keys(table.state.windowObj));
+    var keysCopy = $.extend([], Object.keys(table.state.windowObj));
 
     var attributes = [];
     attributes.push(<span key='obj-open'>{ '{' }</span>);

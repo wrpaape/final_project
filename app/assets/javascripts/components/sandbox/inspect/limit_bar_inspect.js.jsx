@@ -18,7 +18,7 @@ var LimitBarInspect = React.createClass({
         var table = this.props.parent;
         var data = table.state.data;
         var currentModel = table.state.currentModel;
-        var newModels = table.state.models;
+        var newModels = $.extend({}, table.state.models);
         newModels[currentModel].limit = newLimit;
 
         table.setState({ loading: true });

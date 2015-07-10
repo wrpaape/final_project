@@ -24,7 +24,7 @@ var PaginateInspect = React.createClass({
     if (newPage > 0 && newPage <= lastPage) {
       var newOffset = (newPage - 1) * table.state.limit;
       var currentModel = table.state.currentModel;
-      var newModels = table.state.models;
+      var newModels = $.extend({}, table.state.models);
       newModels[currentModel].offset = newOffset;
       table.setState({ loading: true });
       $.getJSON(table.state.data.url,
