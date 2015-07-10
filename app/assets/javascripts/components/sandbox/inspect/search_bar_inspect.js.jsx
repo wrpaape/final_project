@@ -66,23 +66,29 @@ var SearchBarInspect = React.createClass({
   submitted: function (e) {
     e.preventDefault();
     var table = this.props.grandparent;
-    table.setState({ loading: true });
     var newSearch = '';
     var keys = table.state.data.keys;
-    var searches = $('.search');
-    var newCaseSens = $('#case-sens').is(":checked");
+    var searches = $('.search-input');
+        var newCaseSens = $('#case-sens').is(":checked");
     var newFuzzy = $('#fuzzy').is(":checked");
-
     searches.each(function (i) {
       newSearch += keys[i] + '░' + $(this).val() + '▓';
     });
 
+    var currentModel = table.state.currentModel;
+    var newModels = table.state.models;
+    newModels[currentModel].search = newSearch;
+    newModels[currentModel].offset = 0;
+    newModels[currentModel].caseSens = newCaseSens;
+    newModels[currentModel].fuzzy = newFuzzy;
+
+    table.setState({ loading: true });
     $.getJSON(table.state.data.url,
       {
         search: newSearch,
         sort: table.state.sort,
         limit: table.state.limit,
-        offset: table.state.offset,
+        offset: 0,
         case_sens: newCaseSens,
         fuzzy: newFuzzy,
         current_model: currentModel
@@ -90,7 +96,9 @@ var SearchBarInspect = React.createClass({
       function (newData) {
         table.setState({
           data: newData,
+          models: newModels,
           search: newSearch,
+          offset: 0,
           caseSens: newCaseSens,
           fuzzy: newFuzzy,
           loading: false

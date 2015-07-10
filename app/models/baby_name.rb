@@ -1,5 +1,5 @@
 class BabyName < ActiveRecord::Base
-  include HandleData
+  extend HandleData
 
   def self.get_model_file
 """
@@ -17,7 +17,7 @@ class CreateBabyNames < ActiveRecord::Migration
 ~~~~~~t.string :gender
 ~~~~~~t.integer :frequency
 ~~~~~~t.integer :yob
-~
+
 ~~~~~~t.timestamps null: false
 ~~~~end
 ~~end

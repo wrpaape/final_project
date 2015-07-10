@@ -5,13 +5,14 @@ var RowInspect = React.createClass({
   render: function () {
     var cols = [];
     var table = this.props.parent;
+    var currentModel = table.state.currentModel;
     var windowObj = table.state.windowObj;
     var obj = this.props.obj;
     var keys = this.props.keys;
 
     for (var i = 0; i < keys.length; i++) {
       var className = i % 2 === 0 ? 'grey' : 'white';
-      cols.push(<td key={ 'row-' + obj.id + 'col-' + i } className={ className }>{ obj[keys[i]] }</td>);
+      cols.push(<td key={ currentModel + '-row-' + obj.id + '-col-' + i } className={ className }>{ obj[keys[i]] }</td>);
     }
 
     if (windowObj.id === obj.id) {
@@ -21,17 +22,17 @@ var RowInspect = React.createClass({
     }
 
     return (
-      <tr id={ obj.id } className={ className } onClick={ this.clicked.bind(this, table, obj) }>
+      <tr id={ currentModel + '-' + obj.id } className={ className } onClick={ this.clicked.bind(this, table, obj, currentModel) }>
         { cols }
       </tr>
     );
   },
-  clicked: function (table, obj) {
+  clicked: function (table, obj, currentModel) {
     var obj = this.props.obj;
-    var thisId = '#' + obj.id;
+    var thisId = '#' + currentModel + '-' + obj.id;
     var thisRow = $(thisId);
-    var allRowInspects = $('tr');
-    allRowInspects.each(function () {
+    var allRows = $('tr');
+    allRows.each(function () {
       if ($(this).attr('id') !== thisRow.attr('id')) {
         $(this).attr('class', '');
       };

@@ -34,7 +34,7 @@ var ModelMigrationInspect = React.createClass({
       var paddedMigrationFile = [];
       var lines = migrationFile.split('\n');
       for (var i = 1; i <= lines.length - 1; i++) {
-        var padIndex = lines[i].search([a-z]);
+        var padIndex = lines[i].search(/[a-z]/);
         var pad = new Array(padIndex + 1).join('~');
         var line = lines[i].slice(padIndex);
         paddedMigrationFile.push(<span key={ 'migration-line-' + i }><span className='pad'>{ pad }</span><span className='migration-line'>{ line }</span><br /></span>);

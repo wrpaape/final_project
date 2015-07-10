@@ -43,8 +43,13 @@ gx_cutoff_high = unmarried_yobs.last
 
 3.times do |i|
   if i == 1
-    dad = { name: "Mike", gender: "M", yob: 1932, generation: 2 }
-    mom = { name: "Carol", gender: "F", yob: 1934, generation: 2 }
+    dad_grandfather = Person.where.not(spouse_id: nil).where(generation: 1).where(gender: "M").first
+    dad_grandmother = dad_grandfather.spouse
+    mom_grandfather = Person.where.not(spouse_id: nil).where(generation: 1).where(gender: "M").last
+    mom_grandmother = mom_grandfather.spouse
+
+    dad = { name: "Mike", gender: "M", yob: 1932, mother_id: mom_grandmother.id, father_id: mom_grandfather.id }
+    mom = { name: "Carol", gender: "F", yob: 1934, mother_id: mom_grandmother.id, father_id: mom_grandfather.id }
     father = Person.create(dad)
     mother = Person.create(mom)
 
@@ -94,6 +99,7 @@ gx_cutoff_high = unmarried_yobs.last
     rand(8).times do
       gy_gender = genders.sample
       gy_yob = (mother.yob + father.yob) / 2 + rand(20..35)
+      gy_yob = gy_yob > 2014 ? 2014 : gy_yob
       gy_name = BabyName.where("yob = #{gy_yob} AND gender = '#{gy_gender}'").pluck(:name).sample
       Person.create(name: gy_name,
                  gender: gy_gender,

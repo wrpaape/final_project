@@ -9,11 +9,11 @@ var WindowInspect = React.createClass({
   },
   render: function() {
     var table = this.props.parent;
-    var availableModels = table.props.availableModels;
+    var availableModels = Object.keys(table.state.models);
     var modelOptions = [];
 
     availableModels.forEach(function (model) {
-      modelOptions.push(<option value={ model }>{ model }</option>);
+      modelOptions.push(<option key={ model + 'option' } value={ model }>{ model }</option>);
     });
 
     return(
@@ -45,22 +45,35 @@ var WindowInspect = React.createClass({
     var currentModel = table.state.currentModel;
     var newModel = $('#current-model').val();
     if (currentModel !== newModel) {
+      var models = table.state.models;
+      var newLimit = models[newModel].limit;
+      var newOffset = models[newModel].offset;
+      var newSearch = models[newModel].search;
+      var newSort = models[newModel].sort;
+      var newCaseSens = models[newModel].caseSens;
+      var newFuzzy = models[newModel].fuzzy;
+
       table.setState({ loading: true });
       $.getJSON(table.state.data.url,
         {
-          model: newModel
+          limit: newLimit,
+          offset: newOffset,
+          search: newSearch,
+          sort: newSort,
+          caseSens: newCaseSens,
+          fuzzy: newFuzzy,
+          current_model: newModel
         },
         function (newData) {
           table.setState({
             data: newData,
             currentModel: newModel,
-            limit: 10,
-            offset: 0,
-            search: '',
-            sort: '',
-            caseSens: 'false',
-            fuzzy: 'true',
-            windowObj: { id: 0 },
+            limit: newLimit,
+            offset: newOffset,
+            search: newSearch,
+            sort: newSort,
+            caseSens: newCaseSens,
+            fuzzy: newFuzzy,
             loading: false
           })
         }

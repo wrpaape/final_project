@@ -22,8 +22,11 @@ var PaginateInspect = React.createClass({
   },
   clicked: function (newPage, table, lastPage) {
     if (newPage > 0 && newPage <= lastPage) {
-      table.setState({ loading: true });
       var newOffset = (newPage - 1) * table.state.limit;
+      var currentModel = table.state.currentModel;
+      var newModels = table.state.models;
+      newModels[currentModel].offset = newOffset;
+      table.setState({ loading: true });
       $.getJSON(table.state.data.url,
         {
           search: table.state.search,
@@ -32,11 +35,12 @@ var PaginateInspect = React.createClass({
           offset: newOffset,
           case_sense: table.state.caseSens,
           fuzzy: table.state.fuzzy,
-          model: table.state.currentModel
+          current_model: currentModel
         },
         function (newData) {
           table.setState({
             data: newData,
+            models: newModels,
             offset: newOffset,
             loading: false
           });
@@ -53,8 +57,12 @@ var PaginateInspect = React.createClass({
       var lastPage = Math.ceil((lengthData || 1) / limit);
 
       if (newPage > 0 && newPage <= lastPage && newPage % 1 === 0) {
-        table.setState({ loading: true });
         var newOffset = (newPage - 1) * table.state.limit;
+        var currentModel = table.state.currentModel;
+        var newModels = table.state.models;
+        newModels[currentModel].offset = newOffset;
+
+        table.setState({ loading: true });
         $.getJSON(table.state.data.url,
           {
             search: table.state.search,
@@ -63,11 +71,12 @@ var PaginateInspect = React.createClass({
             offset: newOffset,
             case_sense: table.state.caseSens,
             fuzzy: table.state.fuzzy,
-            current_model: table.state.currentModel
+            current_model: currentModel
           },
           function (newData) {
             table.setState({
               data: newData,
+              models: newModels,
               offset: newOffset,
               loading: false
             });

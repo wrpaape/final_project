@@ -7,7 +7,7 @@ var LimitBarInspect = React.createClass({
       <div>
         <label htmlFor='limit'>Show&nbsp;</label>
         <input id='limit' type='text' size= '3' onKeyUp={ this.changed } />
-        <label htmlFor='limit'>&nbsp;RowInspects&nbsp;per&nbsp;Page</label>
+        <label htmlFor='limit'>&nbsp;Rows&nbsp;per&nbsp;Page</label>
       </div>
     );
   },
@@ -17,6 +17,10 @@ var LimitBarInspect = React.createClass({
       if (newLimit > 0 && newLimit % 1 === 0) {
         var table = this.props.parent;
         var data = table.state.data;
+        var currentModel = table.state.currentModel;
+        var newModels = table.state.models;
+        newModels[currentModel].limit = newLimit;
+
         table.setState({ loading: true });
         $.getJSON(data.url,
           {
@@ -26,11 +30,12 @@ var LimitBarInspect = React.createClass({
             offset: table.state.offset,
             caseSens: table.state.caseSens,
             fuzzy: table.state.fuzzy,
-            model: table.state.currentModel
+            current_model: currentModel
           },
           function (newData) {
             table.setState({
               data: newData,
+              models: newModels,
               limit: newLimit,
               loading: false
             });

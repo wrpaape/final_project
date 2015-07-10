@@ -28,7 +28,9 @@
 'use strict';
 
 var ready = function() {
-  setEditor();
+  if ($('#editor')){
+    // setEditor();
+  }
 };
 
 var setEditor = function () {

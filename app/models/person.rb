@@ -1,5 +1,5 @@
 class Person < ActiveRecord::Base
-  include HandleData
+  extend HandleData
 
   has_many :children, class_name: "Person", foreign_key: "mother_id"
   has_many :children, class_name: "Person", foreign_key: "father_id"

@@ -5,13 +5,8 @@ var TableInspect = React.createClass({
   getInitialState: function () {
     return {
       data: this.props.data,
-      currentModel: this.props.availableModels[0],
-      limit: 10,
-      offset: 0,
-      search: '',
-      sort: '',
-      caseSens: 'false',
-      fuzzy: 'true',
+      models: this.props.models,
+      currentModel: Object.keys(this.props.models)[0],
       windowObj: { id: 0 },
       loading: false
     };
