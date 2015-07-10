@@ -14,13 +14,12 @@ var RowInspect = React.createClass({
     for (var i = 0; i < keys.length; i++) {
       var className = i % 2 === 0 ? 'grey' : 'white';
       var val = obj[keys[i]];
+
       if (val === '') {
         val = 'nil';
-      } else if (moment(val).toString() !== 'Invalid Date') {
-        val += '\n(' + moment(val).format('MM/DD/YYYY hh:mm a') + ')';
       }
 
-      cols.push(<td key={ currentModel + '-row-' + obj.id + '-col-' + i } className={ className }>{ val }</td>);
+      cols.push(<td key={ currentModel + '-row-' + obj.id + '-col-' + i } className={ className } onMouseOver={ this.hovered.bind(this, val) } >{ val }</td>);
     }
 
     if (windowObj.id === obj.id && windowObjModel === currentModel) {
@@ -34,6 +33,13 @@ var RowInspect = React.createClass({
         { cols }
       </tr>
     );
+  },
+  hovered: function (val) {
+    var is_datetime = val.toString().match(/^(\d{4})-(\d{2})-(\d{2})([a-zA-Z])(\d{2}):(\d{2}):(\d{2}).(\d{3})([a-zA-Z])/);
+
+    if (is_datetime !== null) {
+      console.log(moment(val).format('MM/DD/YYYY hh:mm a'));
+    }
   },
   clicked: function (table, obj, windowObjModel, currentModel) {
     var thisId = '#' + currentModel + '-' + obj.id;

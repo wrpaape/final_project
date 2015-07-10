@@ -23,15 +23,20 @@ var SelectedObjInspect = React.createClass({
       keysCopy.forEach(function(key, i) {
         var diff = longestLength - key.length;
         var pad = new Array(diff + 1).join('~') + indent;
+        var val = obj[key];
+        if (val === '') {
+          val = 'nil';
+        }
+
         attributes.push(
           <div key={'obj-attr-' + i } className='row'>
             <span className='pad'>{ pad }</span>
             <span className='key'>{ key }</span>
             <span>: </span>
-            <span className='value'>{ obj[key] }</span>
+            <span className='value' onMouseOver={ this.hovered.bind(this, val) }>{ val }</span>
           </div>
         );
-      });
+      }.bind(this));
     };
     attributes.push(<span key='obj-close'>{ '}' }</span>);
 
@@ -51,6 +56,13 @@ var SelectedObjInspect = React.createClass({
         </div>
       );
     };
+  },
+  hovered: function(val) {
+    var is_datetime = val.toString().match(/^(\d{4})-(\d{2})-(\d{2})([a-zA-Z])(\d{2}):(\d{2}):(\d{2}).(\d{3})([a-zA-Z])/);
+
+    if (is_datetime !== null) {
+      console.log(moment(val).format('MM/DD/YYYY hh:mm a'));
+    }
   },
   clicked: function(show) {
     this.setState({ show: !show });
