@@ -46,10 +46,10 @@ var TableInspect = React.createClass({
                 </table>
               </section>
               <div className='row table-footer'>
-                <div className='col-md-5'>
+                <div className='col-md-8'>
                   <PaginateInspect parent={ this } />
                 </div>
-                <div className='col-md-7'>
+                <div className='col-md-4'>
                   <LimitBarInspect parent={ this} />
                 </div>
               </div>

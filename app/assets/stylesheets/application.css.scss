@@ -20,6 +20,8 @@
 
 body {
   font-family: Menlo, Consolas, 'Lucida Console', monospace;
+  background-color: black;
+  color: #33FF33;
 }
 
 th {
@@ -56,6 +58,7 @@ section {
   margin-right: -65px;
   width: 130px;
   .relative {
+    right: 25px;
     position: relative;
   }
 }
@@ -118,7 +121,10 @@ section {
   }
 }
 
-
+.limit {
+  float: right;
+  margin-right: 1em;
+}
 
 .no-pad-left {
   padding-left: 0;
@@ -136,12 +142,12 @@ section {
   margin: 0.5em;
 }
 
-.white {
-  background-color: white;
+.lighter {
+  background-color: lighten(black, 10%);
 }
 
-.grey {
-  background-color: grey;
+.darker {
+  background-color: lighten(black, 30%);
 }
 
 [data-id='ASC'] {
@@ -177,7 +183,7 @@ section {
 }
 
 .formatted-time {
-  text-shadow: 0 0 0.2em yellow;
+  text-shadow: 0 0 0.4em yellow;
 }
 
 .migration {
@@ -199,15 +205,15 @@ section {
     opacity: 0;
   }
   .key {
-    color: red;
+    color: #FF66FF;
   }
   .value {
-    color: blue;
+    color: #66FFFF;
   }
 }
 
 .highlight {
-  text-shadow: 0 0 0.2em green;
+  text-shadow: 0 0 0.4em #66FFFF;
 }
 
 .lighten-true {

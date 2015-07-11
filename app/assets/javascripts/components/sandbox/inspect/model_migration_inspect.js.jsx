@@ -12,7 +12,7 @@ var ModelMigrationInspect = React.createClass({
     var table = this.props.grandparent;
     var data = table.state.data;
     var migrationFile = data.migrationFile;
-    var paddedMigrationFile = padMigration(migrationFile);
+    var paddedMigrationFile = padMigrationFile(migrationFile);
 
     if (show) {
       return(
@@ -30,7 +30,7 @@ var ModelMigrationInspect = React.createClass({
         </div>
       );
     };
-    function padMigration(migrationFile) {
+    function padMigrationFile(migrationFile) {
       var paddedMigrationFile = [];
       var lines = migrationFile.split('\n');
       for (var i = 1; i <= lines.length - 1; i++) {

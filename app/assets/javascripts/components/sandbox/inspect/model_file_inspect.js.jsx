@@ -34,12 +34,11 @@ var ModelFileInspect = React.createClass({
     function padModelFile(modelFile) {
       var paddedModelFile = [];
       var lines = modelFile.split('\n');
-      for (var i = 1; i <= lines.length - 2; i++) {
-        if (i === 1 || i === lines.length - 2) {
-          paddedModelFile.push(<span key={ 'file-line-' + i }>{ lines[i] }<br /></span>);
-        } else {
-          paddedModelFile.push(<span key={ 'file-line-' + i }><span className='pad'>..</span>{ lines[i] }<br /></span>);
-        }
+      for (var i = 1; i <= lines.length - 1; i++) {
+        var padIndex = lines[i].search(/[a-z]/);
+        var pad = new Array(padIndex + 1).join('~');
+        var line = lines[i].slice(padIndex);
+        paddedModelFile.push(<span key={ 'model-line-' + i }><span className='pad'>{ pad }</span><span className='model-line'>{ line }</span><br /></span>);
       }
       return paddedModelFile;
     }

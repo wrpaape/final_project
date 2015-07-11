@@ -4,7 +4,7 @@
 var LimitBarInspect = React.createClass({
   render: function() {
     return(
-      <div>
+      <div className='limit'>
         <label htmlFor='limit'>Show&nbsp;</label>
         <input id='limit' type='text' size= '3' onKeyUp={ this.changed } />
         <label htmlFor='limit'>&nbsp;Rows&nbsp;per&nbsp;Page</label>
