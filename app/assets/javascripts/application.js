@@ -30,7 +30,7 @@
 
 var ready = function() {
   if ($('#editor')){
-    // setEditor();
+    setEditor();
   }
 };
 

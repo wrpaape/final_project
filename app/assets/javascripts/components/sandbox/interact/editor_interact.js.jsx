@@ -16,7 +16,7 @@ var EditorInteract = React.createClass({
       <form id='editor-form' onKeyDown={ this.submitted.bind(this, pressedKeys) }>
         <img src='assets/pig_glow.gif' className={ loadingClassName } />
         <input type='hidden' id='editor-content' name='editor-content' />
-        <div className={ editorClassName }>
+        <div id='sticky-footer' className={ editorClassName }>
           <textarea id='editor' defaultValue={ initialText } />
         </div>
       </form>
@@ -41,11 +41,12 @@ var EditorInteract = React.createClass({
       var putsSolution = indentedSolution.replace(/\n  solution/g, '\n  puts solution.to_json');
       var formattedSolution = 'task :solution => :environment do\n  ' + putsSolution + '\nend';
 
-      $.getJSON('solution',
+      $.getJSON('interact',
         {
           solution: formattedSolution
         },
         function(newData) {
+          console.log(newData);
           table.setState({
             data: newData,
             loading: false

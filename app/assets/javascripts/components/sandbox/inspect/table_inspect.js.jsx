@@ -25,34 +25,30 @@ var TableInspect = React.createClass({
     var data = this.state.data;
     var pageData = data.pageData;
     var loadingClassName = 'loading-' + this.state.loading +' db-table';
-    var tableClassName = 'table lighten-' + this.state.loading;
+    var tableClassName = 'table inspect lighten-' + this.state.loading;
 
     pageData.forEach(function (obj) {
-      rows.push(<RowInspect key={ 'row-' + obj.id } obj={ obj } url={ data.url + obj.id } parent={this} />);
+      rows.push(<RowInspect key={ 'row-' + obj.id } obj={ obj } url={ data.url + obj.id } parent={ this } />);
     }.bind(this));
 
     return(
-      <div className='component-container'>
+      <div className='container-inspect'>
         <div className='container'>
-          <div className='row'>
-            <div className='col-md-12'>
-              <section>
-                <table className={ tableClassName }>
-                  <img src='assets/pig_glow.gif' className={ loadingClassName } />
-                  <TableHeadInspect parent={ this } />
-                  <tbody>
-                    {rows}
-                  </tbody>
-                </table>
-              </section>
-              <div className='row table-footer'>
-                <div className='col-md-8'>
-                  <PaginateInspect parent={ this } />
-                </div>
-                <div className='col-md-4'>
-                  <LimitBarInspect parent={ this} />
-                </div>
-              </div>
+          <section>
+            <table className={ tableClassName }>
+              <img src='assets/pig_glow.gif' className={ loadingClassName } />
+              <TableHeadInspect parent={ this } />
+              <tbody>
+                {rows}
+              </tbody>
+            </table>
+          </section>
+          <div className='row table-footer'>
+            <div className='col-md-8'>
+              <PaginateInspect parent={ this } />
+            </div>
+            <div className='col-md-4'>
+              <LimitBarInspect parent={ this} />
             </div>
           </div>
         </div>
