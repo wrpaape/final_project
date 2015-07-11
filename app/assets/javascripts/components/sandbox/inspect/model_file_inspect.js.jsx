@@ -18,7 +18,7 @@ var ModelFileInspect = React.createClass({
     if (show) {
       return(
         <div className='row center'>
-          <div onClick={ this.clicked.bind(this, show) } className='btn btn-default show-hide'>Hide { modelFileName }</div>
+          <div onClick={ this.clicked.bind(this, show) } className='btn btn-default show-hide'>{ modelFileName }</div>
           <section className='model'>
             { paddedModelFile }
           </section>
@@ -27,7 +27,7 @@ var ModelFileInspect = React.createClass({
     } else {
       return(
         <div className='row center'>
-          <div onClick={ this.clicked.bind(this, show) } className='btn btn-primary show-hide'>Show { modelFileName }</div>
+          <div onClick={ this.clicked.bind(this, show) } className='btn btn-primary show-hide'>{ modelFileName }</div>
         </div>
       )
     };

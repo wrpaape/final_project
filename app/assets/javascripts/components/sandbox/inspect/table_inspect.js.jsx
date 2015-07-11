@@ -32,31 +32,31 @@ var TableInspect = React.createClass({
     }.bind(this));
 
     return(
-      <div className='row'>
-        <div className='col-md-9'>
-          <section>
-            <table className={ tableClassName }>
-              <img src='assets/pig_glow.gif' className={ loadingClassName } />
-              <TableHeadInspect parent={ this } />
-              <tbody>
-                {rows}
-              </tbody>
-            </table>
-          </section>
-          <div className='row table-footer'>
-            <div className='col-md-8'>
-              <PaginateInspect parent={ this } />
-            </div>
-            <div className='col-md-4'>
-              <LimitBarInspect parent={ this} />
-            </div>
-          </div>
-        </div>
-        <div className='col-md-3'>
+      <div className='component-container'>
+        <div className='container'>
           <div className='row'>
-            <WindowInspect parent={ this } />
+            <div className='col-md-12'>
+              <section>
+                <table className={ tableClassName }>
+                  <img src='assets/pig_glow.gif' className={ loadingClassName } />
+                  <TableHeadInspect parent={ this } />
+                  <tbody>
+                    {rows}
+                  </tbody>
+                </table>
+              </section>
+              <div className='row table-footer'>
+                <div className='col-md-5'>
+                  <PaginateInspect parent={ this } />
+                </div>
+                <div className='col-md-7'>
+                  <LimitBarInspect parent={ this} />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        <WindowInspect parent={ this } />
       </div>
     );
   }

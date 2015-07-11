@@ -17,7 +17,7 @@ var ModelMigrationInspect = React.createClass({
     if (show) {
       return(
         <div className='row center'>
-          <div onClick={ this.clicked.bind(this, show) } className='btn btn-default show-hide'>Hide Migration</div>
+          <div onClick={ this.clicked.bind(this, show) } className='btn btn-default show-hide'>Migration</div>
           <section className='migration'>
             { paddedMigrationFile }
           </section>
@@ -26,7 +26,7 @@ var ModelMigrationInspect = React.createClass({
     } else {
       return(
         <div className='row center'>
-          <div onClick={ this.clicked.bind(this, show) } className='btn btn-primary show-hide'>Show Migration</div>
+          <div onClick={ this.clicked.bind(this, show) } className='btn btn-primary show-hide'>Migration</div>
         </div>
       );
     };

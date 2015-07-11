@@ -61,8 +61,8 @@ var SearchBarInspect = React.createClass({
 
     if (show) {
       return (
-        <div className='row center search-bar'>
-          <div onClick={ this.clicked } className='btn btn-default show-hide'>Hide Search Bar</div>
+        <div className='row center'>
+          <div onClick={ this.clicked } className='btn btn-default show-hide search-button'>Search Bar</div>
           <form onSubmit={ this.submitted }>
             { inputs }
           </form>
@@ -71,7 +71,7 @@ var SearchBarInspect = React.createClass({
     } else {
       return(
         <div className='row center'>
-          <div onClick={ this.clicked } className='btn btn-primary show-hide'>Show Search Bar</div>
+          <div onClick={ this.clicked } className='btn btn-primary show-hide search-button'>Search Bar</div>
         </div>
       );
     };

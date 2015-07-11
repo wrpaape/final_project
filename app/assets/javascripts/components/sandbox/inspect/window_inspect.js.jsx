@@ -4,7 +4,7 @@
 var WindowInspect = React.createClass({
   getInitialState: function () {
     return {
-      show: 'false'
+      show: false
     };
   },
   render: function() {
@@ -16,30 +16,48 @@ var WindowInspect = React.createClass({
       modelOptions.push(<option key={ model + 'option' } value={ model }>{ model }</option>);
     });
 
+    if (this.state.show) {
     return(
-      <div>
-        <div className='row'>
-          <select id='current-model' onChange={ this.selected.bind(this, table) } >
-            { modelOptions }
-          </select>
-        </div>
-        <div className='row'>
-          <ModelUmlInspect key='model-uml' grandparent={ table } />
-        </div>
-        <div className='row'>
-          <ModelFileInspect key='model-file' grandparent={ table } />
-        </div>
-        <div className='row'>
-          <ModelMigrationInspect key='model-migration' grandparent={ table } />
-        </div>
-        <div className='row'>
-          <SelectedObjInspect key='selected-obj' grandparent={ table } />
-        </div>
-        <div className='row'>
-          <SearchBarInspect key='search-bar' grandparent={ table } />
+      <div className='inspector-hide' >
+        <div className='relative' >
+          <div className='row select-wrap'>
+            <select className='btn btn-default show-hide' id='current-model' onChange={ this.selected.bind(this, table) } >
+              { modelOptions }
+            </select>
+          </div>
+          <div className='row'>
+            <ModelUmlInspect key='model-uml' grandparent={ table } />
+          </div>
+          <div className='row'>
+            <ModelFileInspect key='model-file' grandparent={ table } />
+          </div>
+          <div className='row'>
+            <ModelMigrationInspect key='model-migration' grandparent={ table } />
+          </div>
+          <div className='row'>
+            <SelectedObjInspect key='selected-obj' grandparent={ table } />
+          </div>
+          <div className='row'>
+            <SearchBarInspect key='search-bar' grandparent={ table } />
+          </div>
         </div>
       </div>
     );
+    } else {
+      var vertText = 'Show Inspector'.split('');
+      vertText = vertText.join('\n');
+      return(
+        <div className='inspector-show' onMouseOver={ this.mouseOver }>
+          { vertText }
+        </div>
+      )
+    }
+  },
+  mouseOver: function() {
+    this.setState({ show: true });
+  },
+  mouseOut: function() {
+    this.setState({ show: false });
   },
   selected: function (table) {
     var currentModel = table.state.currentModel;
