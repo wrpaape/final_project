@@ -117,9 +117,78 @@ end
 
 
 
+# rails g scaffold environment title:string description:text models:string
+# rails g scaffold problem title:string instructions:text answer:text environment:belongs_to
+# rails g scaffold user name:string password_digest:string admin:boolean problem_count:integer problem:belongs_to environment:belongs_to
+# rails g scaffold solved_problem solution:text sol_char_count:integer time_exec_total:float time_query_total:float time_query_min:float time_query_max:float time_query_avg:float num_queries:integer user:belongs_to problem:belongs_to
+
+# class CreateEnvironments < ActiveRecord::Migration
+#   def change
+#     create_table :environments do |t|
+#       t.string :title
+#       t.text :description
+#       t.string :models
+#       t.integer :problems_count, default: 0
+#       t.integer :users_count, default: 0
+#       t.integer :solved_problems_count, default: 0
+
+#       t.timestamps null: false
+#     end
+#   end
+# end
 
 
+# class CreateProblems < ActiveRecord::Migration
+#   def change
+#     create_table :problems do |t|
+#       t.string :title
+#       t.text :instructions
+#       t.text :answer
+#       t.integer :solved_problems_count, default: 0
+#       t.integer :users_count, default: 0
+#       t.belongs_to :environment, index: true, foreign_key: true, counter_cache: true
 
+#       t.timestamps null: false
+#     end
+#   end
+# end
+
+# class CreateUsers < ActiveRecord::Migration
+#   def change
+#     create_table :users do |t|
+#       t.string :name
+#       t.string :password_digest
+#       t.boolean :admin, default: false
+#       t.integer :problems_count, default: 0
+#       t.integer :solved_problems_count, default: 0
+#       t.integer :environments_count, default: 0
+#       t.belongs_to :problem, index: true, foreign_key: true
+#       t.belongs_to :environment, index: true, foreign_key: true
+
+#       t.timestamps null: false
+#     end
+#   end
+# end
+
+# class CreateSolvedProblems < ActiveRecord::Migration
+#   def change
+#     create_table :solved_problems do |t|
+#       t.text :solution
+#       t.integer :sol_char_count
+#       t.float :time_exec_total
+#       t.float :time_query_total
+#       t.float :time_query_min
+#       t.float :time_query_max
+#       t.float :time_query_avg
+#       t.integer :num_queries
+#       t.belongs_to :user, index: true, foreign_key: true, counter_cache: true
+#       t.belongs_to :problem, index: true, foreign_key: true, counter_cache: true
+#       t.belongs_to :environment, index: true, foreign_key: true
+
+#       t.timestamps null: false
+#     end
+#   end
+# end
 
 
 

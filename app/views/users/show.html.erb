@@ -15,5 +15,20 @@
   <%= @user.admin %>
 </p>
 
+<p>
+  <strong>Problem count:</strong>
+  <%= @user.problem_count %>
+</p>
+
+<p>
+  <strong>Problem:</strong>
+  <%= @user.problem %>
+</p>
+
+<p>
+  <strong>Enviroment:</strong>
+  <%= @user.enviroment %>
+</p>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

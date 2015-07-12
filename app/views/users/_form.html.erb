@@ -23,6 +23,18 @@
     <%= f.label :admin %><br>
     <%= f.check_box :admin %>
   </div>
+  <div class="field">
+    <%= f.label :problem_count %><br>
+    <%= f.number_field :problem_count %>
+  </div>
+  <div class="field">
+    <%= f.label :problem_id %><br>
+    <%= f.text_field :problem_id %>
+  </div>
+  <div class="field">
+    <%= f.label :enviroment_id %><br>
+    <%= f.text_field :enviroment_id %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

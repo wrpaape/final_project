@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  instructions: MyText
+  answer: MyText
+  enviroment_id: 
+
+two:
+  title: MyString
+  instructions: MyText
+  answer: MyText
+  enviroment_id: 

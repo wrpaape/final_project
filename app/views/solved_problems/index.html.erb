@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Solved Problems</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Solution</th>
+      <th>Sol char count</th>
+      <th>Time exec total</th>
+      <th>Time query total</th>
+      <th>Time query min</th>
+      <th>Time query max</th>
+      <th>Time query avg</th>
+      <th>Num queries</th>
+      <th>User</th>
+      <th>Problem</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @solved_problems.each do |solved_problem| %>
+      <tr>
+        <td><%= solved_problem.solution %></td>
+        <td><%= solved_problem.sol_char_count %></td>
+        <td><%= solved_problem.time_exec_total %></td>
+        <td><%= solved_problem.time_query_total %></td>
+        <td><%= solved_problem.time_query_min %></td>
+        <td><%= solved_problem.time_query_max %></td>
+        <td><%= solved_problem.time_query_avg %></td>
+        <td><%= solved_problem.num_queries %></td>
+        <td><%= solved_problem.user %></td>
+        <td><%= solved_problem.problem %></td>
+        <td><%= link_to 'Show', solved_problem %></td>
+        <td><%= link_to 'Edit', edit_solved_problem_path(solved_problem) %></td>
+        <td><%= link_to 'Destroy', solved_problem, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Solved problem', new_solved_problem_path %>

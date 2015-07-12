@@ -21,15 +21,6 @@ class UsersController < ApplicationController
   def edit
   end
 
-  def query_info
-    # query_file = "solution_queries_#{params[:id]}"
-    # query_line = User.find(params[:id]).query_line
-    respond_to do |format|
-      format.html
-      format.json { render json: User.get_query_info }
-    end
-  end
-
   # POST /users
   # POST /users.json
   def create
@@ -78,6 +69,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :password_digest, :admin)
+      params.require(:user).permit(:name, :password_digest, :admin, :problem_count, :problem_id, :enviroment_id)
     end
 end
