@@ -1,8 +1,7 @@
 task :solution => :environment do
   Rails.logger = Logger.new("log/solution_queries.log")
   def solution
-    100.times {Person.take}
-    Person.take
+    Person.find(1)
   end
   
   start = Time.now

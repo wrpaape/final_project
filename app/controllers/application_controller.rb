@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
 
   def get_solution_data(solution)
     result_hash = get_output_json(solution)
+    result = result_hash["result"]
     time_exec = result_hash["time_exec"]
     query_stats = get_query_stats
 
@@ -30,9 +31,13 @@ class ApplicationController < ActionController::Base
     end
 
     {
-      "result"=> result_hash["result"],
+      "result"=> result,
+      "isCorrect"=> result_correct?(result),
       "timeExecTotal"=> time_exec,
-      "timeExecQuery"=> query_stats["time_query"],
+      "timeQueryTotal"=> query_stats["query_tot_time"],
+      "timeQueryMin"=> query_stats["query_min_time"],
+      "timeQueryMax"=> query_stats["query_max_time"],
+      "timeQueryAvg"=> query_stats["query_avg_time"],
       "numQueries"=> query_stats["num_queries"]
     }
 
@@ -49,23 +54,34 @@ class ApplicationController < ActionController::Base
   end
 
   def get_query_stats
-    time_total = 0
-    line_count = 0
+    all_times = []
     IO.foreach("log/solution_queries.log") do |line|
-      time_total += line.scan(/(?<=\()[^m]*/).first.to_f
-      line_count += 1
+      all_times << line.scan(/(?<=\()[^m]*/).first.to_f
      end
     File.truncate("log/solution_queries.log", 0)
-
-    if time_total >= 1000
-      time_query = "#{(time_total / 1000).sigfig_to_s(4)} s"
-    else
-      time_query = "#{time_total.sigfig_to_s(4)} ms"
-    end
-    {
-      "time_query"=> time_query,
-      "num_queries"=> line_count
+    num_queries = all_times.size
+    min_time = all_times.min
+    max_time = all_times.max
+    tot_time = all_times.inject{ |sum, el| sum + el }
+    avg_time = tot_time / num_queries
+    query_stats = {
+      "query_min_time"=> min_time,
+      "query_max_time"=> max_time,
+      "query_tot_time"=> tot_time,
+      "query_avg_time"=> avg_time,
     }
+
+    query_stats.each do |key, time|
+      query_stats[key] = time >= 1000 ? "#{(time / 1000).sigfig_to_s(4)} s" : "#{time.sigfig_to_s(4)} ms"
+    end
+    query_stats["num_queries"] = num_queries
+    query_stats
+  end
+
+  def result_correct?(result)
+    answer = Array.wrap(Person.find(1))
+    parsed_answer = JSON.parse(answer.to_json)
+    result == parsed_answer ? true : false
   end
 end
 

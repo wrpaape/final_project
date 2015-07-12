@@ -14,7 +14,7 @@ var EditorInteract = React.createClass({
     var editorClassName = 'lighten-' + this.state.loading;
     return(
       <form id='editor-form' onKeyDown={ this.submitted.bind(this, pressedKeys) }>
-        <img src='assets/pig_glow.gif' className={ loadingClassName } />
+        <img src='/assets/pig_glow.gif' className={ loadingClassName } />
         <input type='hidden' id='editor-content' name='editor-content' />
         <div id='sticky-footer' className={ editorClassName }>
           <textarea id='editor' defaultValue={ initialText } />
@@ -40,7 +40,7 @@ var EditorInteract = React.createClass({
       var indentedSolution = inputSolution.replace(/\n/g, '\n  ');
       var putsSolution = indentedSolution.replace(/\n  solution/g, '\n  start = Time.now\n  result = solution\n  finish = Time.now\n  result_hash = { "result"=> Array.wrap(result), "time_exec"=> finish - start }\n  puts result_hash.to_json');
       var formattedSolution = 'task :solution => :environment do\n  Rails.logger = Logger.new("log/solution_queries.log")\n  ' + putsSolution + '\nend';
-      var solCharCount = inputSolution.replace(/\n/g, '').replace(/ /g, '').length;
+      var solCharCount = inputSolution.replace(/\n/g,'').replace(/ /g,'').replace(/defsolution/,'').replace(/endsolution/,'').length;
 
 
       $.getJSON('interact',
@@ -48,10 +48,16 @@ var EditorInteract = React.createClass({
           solution: formattedSolution
         },
         function(newData) {
-          console.log(newData);
-          console.log(solCharCount);
           table.setState({
             data: newData.result,
+            isCorrect: newData.isCorrect,
+            timeExecTotal: newData.timeExecTotal,
+            timeQueryTotal: newData.timeQueryTotal,
+            timeQueryMin: newData.timeQueryMin,
+            timeQueryMax: newData.timeQueryMax,
+            timeQueryAvg: newData.timeQueryAvg,
+            numQueries: newData.numQueries,
+            solCharCount: solCharCount,
             loading: false
           });
           this.setState({ loading: false });

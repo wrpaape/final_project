@@ -22,7 +22,7 @@ var TableInteract = React.createClass({
       <div className='container-interact'>
         <section>
           <table className={ tableClassName }>
-            <img src='assets/pig_glow.gif' className={ loadingClassName } />
+            <img src='/assets/pig_glow.gif' className={ loadingClassName } />
             <TableHeadInteract parent={ this } />
             <tbody>
               {rows}
