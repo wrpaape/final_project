@@ -6,8 +6,8 @@ class CreateUsers < ActiveRecord::Migration
       t.boolean :admin, default: false
       t.integer :problems_count, default: 0
       t.integer :solved_problems_count, default: 0
-      t.integer :enviroments_count, default: 0
-      t.belongs_to :problem, index: true, foreign_key: true
+      t.integer :enviroments_cleared, default: 0
+      t.belongs_to :problem, index: true, foreign_key: true, counter_cache: true
       t.belongs_to :environment, index: true, foreign_key: true
 
       t.timestamps null: false

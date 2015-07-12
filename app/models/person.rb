@@ -39,11 +39,8 @@ class Person < ActiveRecord::Base
 ~~end
 
 ~~def set_generation
-~~~~return unless self.generation.zero?
-~~~~mother_gen = mother ? mother.generation : -1
-~~~~father_gen = father ? father.generation : -1
-~~~~last_gen = mother_gen > father_gen ? father_gen : mother_gen
-~~~~self.generation = last_gen + 1
+~~~~return unless (parent = mother || father)
+~~~~self.generation = parent.generation + 1
 ~~~~self.save
 ~~end
 end
@@ -58,6 +55,7 @@ class CreatePeople < ActiveRecord::Migration
 ~~~~~~t.string :name
 ~~~~~~t.string :gender
 ~~~~~~t.integer :yob
+~~~~~~t.integer :frequency, default: 0
 ~~~~~~t.integer :generation, default: 0
 ~~~~~~t.integer :children_count, default: 0
 
@@ -85,11 +83,8 @@ end
   end
 
   def set_generation
-    return unless self.generation.zero?
-    mother_gen = mother ? mother.generation : -1
-    father_gen = father ? father.generation : -1
-    last_gen = mother_gen > father_gen ? father_gen : mother_gen
-    self.generation = last_gen + 1
+    return unless (parent = mother || father)
+    self.generation = parent.generation + 1
     self.save
   end
 end

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def get_default_model_states(available_models)
     states = {}
-    available_models.each do |model|
+    available_models.each do |model, file_name|
       states[model] = {
         "limit"=> 10,
         "offset"=> 0,
@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
         "sort"=> '',
         "caseSens"=> '',
         "fuzzy"=> 'on',
+        "fileName"=> file_name
       }
     end
     states

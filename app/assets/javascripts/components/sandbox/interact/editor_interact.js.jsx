@@ -43,7 +43,7 @@ var EditorInteract = React.createClass({
       var solCharCount = inputSolution.replace(/\n/g,'').replace(/ /g,'').replace(/defsolution/,'').replace(/endsolution/,'').length;
 
 
-      $.getJSON('interact',
+      $.getJSON(table.props.url,
         {
           solution: formattedSolution
         },

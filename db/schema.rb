@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20150712140920) do
     t.string   "name"
     t.string   "gender"
     t.integer  "yob"
+    t.integer  "frequency",      default: 0
     t.integer  "generation",     default: 0
     t.integer  "children_count", default: 0
     t.integer  "mother_id"
@@ -92,7 +93,7 @@ ActiveRecord::Schema.define(version: 20150712140920) do
     t.boolean  "admin",                 default: false
     t.integer  "problems_count",        default: 0
     t.integer  "solved_problems_count", default: 0
-    t.integer  "enviroments_count",     default: 0
+    t.integer  "enviroments_cleared",   default: 0
     t.integer  "problem_id"
     t.integer  "environment_id"
     t.datetime "created_at",                            null: false

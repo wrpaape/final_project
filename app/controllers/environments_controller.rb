@@ -1,3 +1,4 @@
+require 'open3'
 class EnvironmentsController < ApplicationController
   before_action :set_environment, only: [:show, :edit, :update, :destroy]
 
@@ -10,6 +11,16 @@ class EnvironmentsController < ApplicationController
   # GET /environments/1
   # GET /environments/1.json
   def show
+    available_models = JSON.parse(@evironment.models)
+    model = Object.const_get(params.fetch("current_model", available_models.keys.first))
+    url = "/environment/#{@evironment.id}/"
+    @data= model.get_data(url, params)
+    @default_model_states = get_default_model_states(available_models)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @data }
+    end
   end
 
   # GET /environments/new

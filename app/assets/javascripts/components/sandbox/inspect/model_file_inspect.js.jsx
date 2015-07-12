@@ -10,8 +10,9 @@ var ModelFileInspect = React.createClass({
   render: function() {
     var show = this.state.show;
     var table = this.props.grandparent;
+    var currentModel = table.state.currentModel;
+    var modelFileName = table.models[currentModel].fileName;
     var data = table.state.data;
-    var modelFileName = table.state.currentModel + '.rb';
     var modelFile = data.modelFile;
     var paddedModelFile = padModelFile(modelFile);
 

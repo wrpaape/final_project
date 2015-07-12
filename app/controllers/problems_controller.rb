@@ -10,6 +10,13 @@ class ProblemsController < ApplicationController
   # GET /problems/1
   # GET /problems/1.json
   def show
+    @data = ["The Results of your 'solution' Method will be Displayed Here.",
+             "Hold [CMD + SHIFT + RETURN] or [CTR + SHIFT + RETURN] to reload your results."]
+    @url = "/problems/#{params[:problem_id]}"
+    respond_to do |format|
+      format.html
+      format.json { render json: get_solution_data(params[:solution]) }
+    end
   end
 
   # GET /problems/new
