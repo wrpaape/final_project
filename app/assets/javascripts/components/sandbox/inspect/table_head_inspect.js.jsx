@@ -5,7 +5,7 @@ var TableHeadInspect = React.createClass({
   render: function () {
     var cols = [];
     var table = this.props.parent;
-    var keys = Object.keys(table.state.data.pageData[0]);
+    var keys = table.state.data.keys;
     var currentModel = table.state.currentModel;
 
     for (var i = 0; i < keys.length; i++) {

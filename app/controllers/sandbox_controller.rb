@@ -18,34 +18,6 @@ class SandboxController < ApplicationController
   end
 
   def interact
-    file = File.open("lib/tasks/solution.rake", "w")
-    file.write(params[:solution])
-    file.close
-    output = Open3.capture2e("rake solution").first
-    output_json = Array.wrap(JSON.parse(output))
-
-    @sandbox_data = output_json
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @sandbox_data }
-    end
-  end
-
-  private
-
-  def get_default_model_states(available_models)
-    states = {}
-    available_models.each do |model|
-      states[model] = {
-        "limit"=> 10,
-        "offset"=> 0,
-        "search"=> '',
-        "sort"=> '',
-        "caseSens"=> '',
-        "fuzzy"=> 'on',
-      }
-    end
-    states
+    render json: get_solution_data(params[:solution])
   end
 end

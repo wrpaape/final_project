@@ -18,7 +18,8 @@ var WindowInspect = React.createClass({
 
     if (this.state.show) {
     return(
-      <div className='inspector-hide' onMouseOut={ this.mouseOut }>
+      // onMouseOut={ this.mouseOut }
+      <div className='inspector-hide' >
         <div className='relative' >
           <div className='row select-wrap'>
             <select className='btn btn-default show-hide' id='current-model' onChange={ this.selected.bind(this, table) } >

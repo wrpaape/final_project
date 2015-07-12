@@ -38,8 +38,10 @@ var EditorInteract = React.createClass({
       table.setState({ loading: true });
       var inputSolution = $('#editor-content').val();
       var indentedSolution = inputSolution.replace(/\n/g, '\n  ');
-      var putsSolution = indentedSolution.replace(/\n  solution/g, '\n  puts solution.to_json');
-      var formattedSolution = 'task :solution => :environment do\n  ' + putsSolution + '\nend';
+      var putsSolution = indentedSolution.replace(/\n  solution/g, '\n  start = Time.now\n  result = solution\n  finish = Time.now\n  result_hash = { "result"=> Array.wrap(result), "time_exec"=> finish - start }\n  puts result_hash.to_json');
+      var formattedSolution = 'task :solution => :environment do\n  Rails.logger = Logger.new("log/solution_queries.log")\n  ' + putsSolution + '\nend';
+      var solCharCount = inputSolution.replace(/\n/g, '').replace(/ /g, '').length;
+
 
       $.getJSON('interact',
         {
@@ -47,8 +49,9 @@ var EditorInteract = React.createClass({
         },
         function(newData) {
           console.log(newData);
+          console.log(solCharCount);
           table.setState({
-            data: newData,
+            data: newData.result,
             loading: false
           });
           this.setState({ loading: false });
