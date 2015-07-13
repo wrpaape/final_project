@@ -8,8 +8,9 @@ var SearchBarInspect = React.createClass({
     };
   },
   render: function() {
-    var show = this.state.show;
     var inputs = [];
+    var show = this.state.show;
+    var window = this.props.parent;
     var table = this.props.grandparent;
     var currentModel = table.state.currentModel;
     var model = table.state.models[currentModel];
@@ -27,32 +28,22 @@ var SearchBarInspect = React.createClass({
     var searchByIndexEnd = searchByIndexStart + afterCol.search('▓');
     var searchBy = searchByIndexEnd > searchByIndexStart ? search.slice(searchByIndexStart, searchByIndexEnd) : '';
       inputs.push(
-        <div key={ 'search-' + i } className='row'>
-          <div className='search'>
-            <div className='col-md-5 no-pad-right'>
-              <label className='pull-right' htmlFor={ key }>{ key }&nbsp;</label>
-            </div>
-            <div className='col-md-7 no-pad-left'>
-              <SearchInputInspect id={ key } className='search-input' type='text' defaultValue={ searchBy } />
-            </div>
-          </div>
+        <div key={ 'search-' + i } className='search'>
+          <label htmlFor={ key }>{ key }&nbsp;</label>
+          <SearchInputInspect id={ key } className='search-input' type='text' defaultValue={ searchBy } />
         </div>
       );
     });
     inputs.push(
-      <div key={ 'search-submit' } className='row search-submit'>
-        <div className='col-md-5'>
-          <div className='row'>
-            <label className='pull-right' htmlFor='fuzzy'>fuzzy&nbsp;</label>
-          </div>
-          <div className='row'>
-            <label className='pull-right' htmlFor='case-sens'>case-sensitive&nbsp;</label>
-          </div>
+      <div key={ 'search-submit' } className='search-submit'>
+        <div className='label-wrap'>
+          <label htmlFor='fuzzy'>fuzzy&nbsp;</label>
+          <label htmlFor='case-sens'>case-sensitive&nbsp;</label>
         </div>
-        <div className='col-md-offset-5 col-md-7 submit-wrap'>
+        <div className='submit-wrap'>
           <div className='box-wrap'>
-            <SearchInputInspect id='fuzzy' className='' type='checkbox' defaultValue={ fuzzy } />
-            <SearchInputInspect id='case-sens' className='' type='checkbox' defaultValue={ caseSens } />
+            <SearchInputInspect id='fuzzy' type='checkbox' defaultValue={ fuzzy } />
+            <SearchInputInspect id='case-sens' type='checkbox' defaultValue={ caseSens } />
           </div>
           <input type='submit' value='search' className='submit btn btn-primary' />
         </div>
@@ -61,7 +52,7 @@ var SearchBarInspect = React.createClass({
 
     if (show) {
       return (
-        <div className='row center'>
+        <div className='search-bar'>
           <div onClick={ this.clicked } className='btn btn-default show-hide search-button'>Search Bar</div>
           <form onSubmit={ this.submitted }>
             { inputs }
@@ -70,8 +61,8 @@ var SearchBarInspect = React.createClass({
       );
     } else {
       return(
-        <div className='row center'>
-          <div onClick={ this.clicked } className='btn btn-primary show-hide search-button'>Search Bar</div>
+        <div>
+          <div onClick={ this.clicked.bind(this, show, window) } className='btn btn-primary show-hide search-button'>Search Bar</div>
         </div>
       );
     };
@@ -120,8 +111,14 @@ var SearchBarInspect = React.createClass({
       }
     );
   },
-  clicked: function() {
-    var oldShow = this.state.show;
-    this.setState({ show: !oldShow });
+  clicked: function(show, window) {
+    $('.container-inspect').toggleClass('squish-2');
+    var newShow = !show;
+    this.setState({ show: newShow })
+    if (newShow) {
+      window.setState({ enableToggle: false });
+    } else {
+      window.setState({ enableToggle: true });
+    }
   }
 });

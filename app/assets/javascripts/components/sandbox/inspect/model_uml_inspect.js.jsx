@@ -9,26 +9,33 @@ var ModelUmlInspect = React.createClass({
   },
   render: function() {
     var show = this.state.show;
+    var window = this.props.parent;
     var table = this.props.grandparent;
     var currentModel = table.state.currentModel;
     var umlFilePath = '/assets/' + currentModel + '_uml.png';
 
     if (show) {
       return(
-        <div className='row center'>
-          <div onClick={ this.clicked.bind(this, show) } className='btn btn-default show-hide'>UML</div>
+        <div>
+          <div onClick={ this.clicked.bind(this, show, window) } className='btn btn-default show-hide'>UML</div>
           <img src={ umlFilePath } className='image-uml'/>
         </div>
       );
     } else {
       return(
-        <div className='row center'>
-          <div onClick={ this.clicked.bind(this, show) } className='btn btn-primary show-hide'>UML</div>
+        <div>
+          <div onClick={ this.clicked.bind(this, show, window) } className='btn btn-primary show-hide'>UML</div>
         </div>
       );
     };
   },
-  clicked: function(show) {
-    this.setState({ show: !show })
+  clicked: function(show, window) {
+    var newShow = !show;
+    this.setState({ show: newShow })
+    if (newShow) {
+      window.setState({ enableToggle: false });
+    } else {
+      window.setState({ enableToggle: true });
+    }
   }
 });

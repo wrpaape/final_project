@@ -16,7 +16,7 @@ var EditorInteract = React.createClass({
       <form id='editor-form' onKeyDown={ this.submitted.bind(this, pressedKeys) }>
         <img src='/assets/pig_glow.gif' className={ loadingClassName } />
         <input type='hidden' id='editor-content' name='editor-content' />
-        <div id='sticky-footer' className={ editorClassName }>
+        <div className={ editorClassName }>
           <textarea id='editor' defaultValue={ initialText } />
         </div>
       </form>
@@ -60,8 +60,6 @@ var EditorInteract = React.createClass({
             var showHead = dataTypes.reduce(function(a, b){return (a === b) ? a : false;});
             showHead = showHead === false ? showHead : true;
           }
-
-          console.log(showHead);
 
           table.setState({
             data: data,

@@ -29,13 +29,11 @@
 'use strict';
 
 var ready = function() {
-  if ($('#editor')){
-    setEditor();
-  }
+  setEditor();
 };
 
 var setEditor = function () {
-  $('#editor').ace({ theme: 'monokai', lang: 'ruby' });
+  $('#editor').ace({ theme: 'monokai', lang: 'ruby'});
   var editor = document.querySelector('.ace_editor').env.editor;
   editor.getSession().setTabSize(2);
   editor.gotoLine(2);

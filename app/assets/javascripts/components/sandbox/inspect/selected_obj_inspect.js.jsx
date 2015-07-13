@@ -9,6 +9,7 @@ var SelectedObjInspect = React.createClass({
   },
   render: function() {
     var show = this.state.show;
+    var window = this.props.parent;
     var table = this.props.grandparent;
     var obj = table.state.windowObj;
     var data = table.state.data;
@@ -29,7 +30,7 @@ var SelectedObjInspect = React.createClass({
         }
 
         attributes.push(
-          <div key={'obj-attr-' + i } className='row'>
+          <div key={'obj-attr-' + i }>
             <span className='pad'>{ pad }</span>
             <span className='key'>{ key }</span>
             <span>: </span>
@@ -42,8 +43,8 @@ var SelectedObjInspect = React.createClass({
 
     if (show) {
       return(
-        <div className='row center'>
-          <div onClick={ this.clicked.bind(this, show) } className='btn btn-default show-hide'>Selected Object</div>
+        <div>
+          <div onClick={ this.clicked.bind(this, show, window) } className='btn btn-default show-hide'>Selected Object</div>
           <section className='object'>
             { attributes }
           </section>
@@ -51,8 +52,8 @@ var SelectedObjInspect = React.createClass({
       );
     } else {
       return(
-        <div className='row center'>
-          <div onClick={ this.clicked.bind(this, show) } className='btn btn-primary show-hide'>Selected Object</div>
+        <div>
+          <div onClick={ this.clicked.bind(this, show, window) } className='btn btn-primary show-hide'>Selected Object</div>
         </div>
       );
     };
@@ -71,7 +72,14 @@ var SelectedObjInspect = React.createClass({
     $(idSelector).html(val);
     $(idSelector).removeClass("formatted-time");
   },
-  clicked: function(show) {
-    this.setState({ show: !show });
+  clicked: function(show, window) {
+    $('.container-inspect').toggleClass('squish-1');
+    var newShow = !show;
+    this.setState({ show: newShow })
+    if (newShow) {
+      window.setState({ enableToggle: false });
+    } else {
+      window.setState({ enableToggle: true });
+    }
   }
 });

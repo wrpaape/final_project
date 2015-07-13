@@ -9,6 +9,7 @@ var ModelMigrationInspect = React.createClass({
   },
   render: function() {
     var show = this.state.show;
+    var window = this.props.parent;
     var table = this.props.grandparent;
     var data = table.state.data;
     var migrationFile = data.migrationFile;
@@ -16,8 +17,10 @@ var ModelMigrationInspect = React.createClass({
 
     if (show) {
       return(
-        <div className='row center'>
-          <div onClick={ this.clicked.bind(this, show) } className='btn btn-default show-hide'>Migration</div>
+        <div>
+          <div onClick={ this.clicked.bind(this, show, window) } className='btn btn-default show-hide'>
+            Migration
+          </div>
           <section className='migration'>
             { paddedMigrationFile }
           </section>
@@ -25,8 +28,8 @@ var ModelMigrationInspect = React.createClass({
       );
     } else {
       return(
-        <div className='row center'>
-          <div onClick={ this.clicked.bind(this, show) } className='btn btn-primary show-hide'>Migration</div>
+        <div onClick={ this.clicked.bind(this, show, window) } className='btn btn-primary show-hide'>
+          Migration
         </div>
       );
     };
@@ -42,7 +45,13 @@ var ModelMigrationInspect = React.createClass({
       return paddedMigrationFile;
     }
   },
-  clicked: function(show) {
-    this.setState({ show: !show })
+  clicked: function(show, window) {
+    var newShow = !show;
+    this.setState({ show: newShow })
+    if (newShow) {
+      window.setState({ enableToggle: false });
+    } else {
+      window.setState({ enableToggle: true });
+    }
   }
 });

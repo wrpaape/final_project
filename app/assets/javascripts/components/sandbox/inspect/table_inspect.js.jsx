@@ -33,7 +33,7 @@ var TableInspect = React.createClass({
 
     return(
       <div className='container-inspect'>
-        <div className='container'>
+        <div className='container-table'>
           <section>
             <table className={ tableClassName }>
               <img src='/assets/pig_glow.gif' className={ loadingClassName } />

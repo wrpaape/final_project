@@ -4,10 +4,13 @@
 var WindowInspect = React.createClass({
   getInitialState: function () {
     return {
-      show: false
+      show: false,
+      enableToggle: true
     };
   },
   render: function() {
+    var show = this.state.show;
+    var enableToggle = this.state.enableToggle;
     var table = this.props.parent;
     var availableModels = Object.keys(table.state.models);
     var modelOptions = [];
@@ -15,50 +18,41 @@ var WindowInspect = React.createClass({
     availableModels.forEach(function (model) {
       modelOptions.push(<option key={ model + 'option' } value={ model }>{ model }</option>);
     });
-
-    if (this.state.show) {
+    if (show) {
     return(
-      // onMouseOut={ this.mouseOut }
-      <div className='inspector-hide' >
-        <div className='relative' >
-          <div className='row select-wrap'>
-            <select className='btn btn-default show-hide' id='current-model' onChange={ this.selected.bind(this, table) } >
-              { modelOptions }
-            </select>
-          </div>
-          <div className='row'>
-            <ModelUmlInspect key='model-uml' grandparent={ table } />
-          </div>
-          <div className='row'>
-            <ModelFileInspect key='model-file' grandparent={ table } />
-          </div>
-          <div className='row'>
-            <ModelMigrationInspect key='model-migration' grandparent={ table } />
-          </div>
-          <div className='row'>
-            <SelectedObjInspect key='selected-obj' grandparent={ table } />
-          </div>
-          <div className='row'>
-            <SearchBarInspect key='search-bar' grandparent={ table } />
-          </div>
-        </div>
+      <div className='inspector-hide' onMouseLeave={ this.mouseLeave.bind(this, show, enableToggle) }>
+        <select className='btn btn-primary show-hide' id='current-model' onChange={ this.selected.bind(this, table) } >
+          { modelOptions }
+        </select>
+        <ModelUmlInspect key='model-uml' grandparent={ table } parent={ this } />
+        <ModelFileInspect key='model-file' grandparent={ table } parent={ this } />
+        <ModelMigrationInspect key='model-migration' grandparent={ table } parent={ this } />
+        <SelectedObjInspect key='selected-obj' grandparent={ table } parent={ this } />
+        <SearchBarInspect key='search-bar' grandparent={ table } parent={ this } />
       </div>
     );
     } else {
-      var vertText = 'Show Inspector'.split('');
+      var vertText = 'Show  Inspector'.split('');
       vertText = vertText.join('\n');
+
       return(
-        <div className='inspector-show' onMouseOver={ this.mouseOver }>
+        <div className='inspector-show' onMouseEnter={ this.mouseEnter.bind(this, show, enableToggle) }>
           { vertText }
         </div>
       )
     }
   },
-  mouseOver: function() {
-    this.setState({ show: true });
+  mouseEnter: function(show, enableToggle) {
+    if (enableToggle) {
+      $('.container-inspect').toggleClass('squish-0');
+      this.setState({ show: !show });
+    }
   },
-  mouseOut: function() {
-    this.setState({ show: false });
+  mouseLeave: function(show, enableToggle) {
+    if (enableToggle) {
+      $('.container-inspect').toggleClass('squish-0');
+      this.setState({ show: !show });
+    }
   },
   selected: function (table) {
     var currentModel = table.state.currentModel;

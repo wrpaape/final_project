@@ -9,6 +9,7 @@ var ModelFileInspect = React.createClass({
   },
   render: function() {
     var show = this.state.show;
+    var window = this.props.parent;
     var table = this.props.grandparent;
     var currentModel = table.state.currentModel;
     var modelFileName = table.state.models[currentModel].fileName;
@@ -18,8 +19,10 @@ var ModelFileInspect = React.createClass({
 
     if (show) {
       return(
-        <div className='row center'>
-          <div onClick={ this.clicked.bind(this, show) } className='btn btn-default show-hide'>{ modelFileName }</div>
+        <div>
+          <div onClick={ this.clicked.bind(this, show, window) } className='btn btn-default show-hide'>
+            { modelFileName }
+          </div>
           <section className='model'>
             { paddedModelFile }
           </section>
@@ -27,8 +30,8 @@ var ModelFileInspect = React.createClass({
       )
     } else {
       return(
-        <div className='row center'>
-          <div onClick={ this.clicked.bind(this, show) } className='btn btn-primary show-hide'>{ modelFileName }</div>
+        <div onClick={ this.clicked.bind(this, show, window) } className='btn btn-primary show-hide'>
+          { modelFileName }
         </div>
       )
     };
@@ -44,7 +47,13 @@ var ModelFileInspect = React.createClass({
       return paddedModelFile;
     }
   },
-  clicked: function(show) {
-    this.setState({ show: !show })
+  clicked: function(show, window) {
+    var newShow = !show;
+    this.setState({ show: newShow })
+    if (newShow) {
+      window.setState({ enableToggle: false });
+    } else {
+      window.setState({ enableToggle: true });
+    }
   }
 });

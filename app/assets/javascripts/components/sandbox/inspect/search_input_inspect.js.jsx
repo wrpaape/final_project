@@ -14,15 +14,11 @@ var SearchInputInspect = React.createClass({
     var type = this.props.type;
     if (type === 'text'){
       return (
-        <div>
-          <input id={ this.props.id } className={ this.props.className } type={ type } value={ this.state.value } onChange={ this.changed } />
-        </div>
+        <input id={ this.props.id } type={ type } value={ this.state.value } onChange={ this.changed } />
       );
     } else {
       return (
-        <div>
-          <input id={ this.props.id } className={ this.props.className } type={ type } checked={ this.state.value } onChange={ this.checked } />
-        </div>
+        <input id={ this.props.id } type={ type } checked={ this.state.value } onChange={ this.checked } />
       );
     }
   },
