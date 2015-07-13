@@ -98,6 +98,7 @@ var SearchBarInspect = React.createClass({
     table.setState({ loading: true });
     $.getJSON(table.state.data.url,
       {
+        inspect: true,
         search: newSearch,
         sort: table.state.sort,
         limit: table.state.limit,

@@ -24,13 +24,6 @@ class ApplicationController < ActionController::Base
     result = result_hash["result"]
     time_exec = result_hash["time_exec"]
     query_stats = get_query_stats
-
-    # if time_exec >= 1
-    #   time_exec = "#{(time_exec).sigfig_to_s(4)} s"
-    # else
-    #   time_exec = "#{(time_exec * 1000).sigfig_to_s(4)} ms"
-    # end
-
     {
       "result"=> result,
       "isCorrect"=> result_correct?(result),
@@ -41,7 +34,6 @@ class ApplicationController < ActionController::Base
       "timeQueryAvg"=> query_stats.fetch("query_avg_time", "N/A"),
       "numQueries"=> query_stats.fetch("num_queries", 0)
     }
-
   end
 
   private

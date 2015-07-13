@@ -51,7 +51,9 @@ var SortButtonInspect = React.createClass({
     var newSort = '';
     var all_buttons = $('th');
     all_buttons.each(function () {
-      newSort += $(this).attr('id').slice(currentModel.length + 6) + '░' + $(this).attr('data-id') + '▓';
+      if ($(this).attr('id')) {
+        newSort += $(this).attr('id').slice(currentModel.length + 6) + '░' + $(this).attr('data-id') + '▓';
+      }
     });
 
     var newModels = $.extend({}, table.state.models);
@@ -59,6 +61,7 @@ var SortButtonInspect = React.createClass({
     table.setState({ loading: true });
     $.getJSON(table.state.data.url,
       {
+        inspect: true,
         search: table.state.search,
         sort: newSort,
         limit: table.state.limit,

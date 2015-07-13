@@ -24,6 +24,7 @@ var LimitBarInspect = React.createClass({
         table.setState({ loading: true });
         $.getJSON(data.url,
           {
+            inspect: true,
             search: table.state.search,
             sort: table.state.sort,
             limit: newLimit,

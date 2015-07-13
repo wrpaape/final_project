@@ -10,12 +10,24 @@ class ProblemsController < ApplicationController
   # GET /problems/1
   # GET /problems/1.json
   def show
-    @data = ["The Results of your 'solution' Method will be Displayed Here.",
-             "Hold [CMD + SHIFT + RETURN] or [CTR + SHIFT + [RETURN] to reload your results."]
-    @url = "/problems/#{params[:id]}/"
-    respond_to do |format|
-      format.html
-      format.json { render json: get_solution_data(params[:solution]) }
+    environment= @problem.environment
+    unless params[:interact]
+      available_models = JSON.parse(environment.models)
+      model = Object.const_get(params.fetch("current_model", available_models.keys.first))
+      url = "/problems/#{@problem.id}/"
+      @data_inspect = model.get_data(url, params)
+      @models_inspect = get_default_model_states(available_models)
+    end
+    unless params[:inspect]
+      @data_interact = ["The Results of your 'solution' Method will be Displayed Here.",
+               "Hold [CMD + SHIFT + RETURN] or [CTR + SHIFT + [RETURN] to reload your results."]
+      @url_interact = "/problems/#{params[:id]}/"
+    end
+    100.times { puts params[:inspect] }
+    if params[:inspect]
+      render json: @data_inspect
+    elsif params[:interact]
+      render json: get_solution_data(params[:solution])
     end
   end
 

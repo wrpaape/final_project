@@ -29,6 +29,7 @@ var PaginateInspect = React.createClass({
       table.setState({ loading: true });
       $.getJSON(table.state.data.url,
         {
+          inspect: true,
           search: table.state.search,
           sort: table.state.sort,
           limit: table.state.limit,

@@ -75,6 +75,7 @@ var WindowInspect = React.createClass({
       table.setState({ loading: true });
       $.getJSON(table.state.data.url,
         {
+          inspect: true,
           limit: newLimit,
           offset: newOffset,
           search: newSearch,

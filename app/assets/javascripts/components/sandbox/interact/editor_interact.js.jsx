@@ -45,6 +45,7 @@ var EditorInteract = React.createClass({
 
       $.getJSON(table.props.url,
         {
+          interact: true,
           solution: formattedSolution
         },
         function(newData) {
