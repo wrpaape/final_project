@@ -4,10 +4,10 @@ one:
   title: MyString
   instructions: MyText
   answer: MyText
-  enviroment_id: 
+  environment_id:
 
 two:
   title: MyString
   instructions: MyText
   answer: MyText
-  enviroment_id: 
+  environment_id:

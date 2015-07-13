@@ -35,11 +35,11 @@ class ApplicationController < ActionController::Base
       "result"=> result,
       "isCorrect"=> result_correct?(result),
       "timeExecTotal"=> time_exec,
-      "timeQueryTotal"=> query_stats["query_tot_time"],
-      "timeQueryMin"=> query_stats["query_min_time"],
-      "timeQueryMax"=> query_stats["query_max_time"],
-      "timeQueryAvg"=> query_stats["query_avg_time"],
-      "numQueries"=> query_stats["num_queries"]
+      "timeQueryTotal"=> query_stats.fetch("query_tot_time", "N/A"),
+      "timeQueryMin"=> query_stats.fetch("query_min_time", "N/A"),
+      "timeQueryMax"=> query_stats.fetch("query_max_time", "N/A"),
+      "timeQueryAvg"=> query_stats.fetch("query_avg_time", "N/A"),
+      "numQueries"=> query_stats.fetch("num_queries", 0)
     }
 
   end
@@ -61,6 +61,7 @@ class ApplicationController < ActionController::Base
      end
     File.truncate("log/solution_queries.log", 0)
     num_queries = all_times.size
+    return {} if num_queries == 0
     min_time = all_times.min
     max_time = all_times.max
     tot_time = all_times.inject{ |sum, el| sum + el }

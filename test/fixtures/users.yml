@@ -5,13 +5,13 @@ one:
   password_digest: MyString
   admin: false
   problem_count: 1
-  problem_id: 
-  enviroment_id: 
+  problem_id:
+  environment_id:
 
 two:
   name: MyString
   password_digest: MyString
   admin: false
   problem_count: 1
-  problem_id: 
-  enviroment_id: 
+  problem_id:
+  environment_id:

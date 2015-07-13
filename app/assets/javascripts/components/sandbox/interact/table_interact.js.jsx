@@ -5,52 +5,42 @@ var TableInteract = React.createClass({
   getInitialState: function () {
     return {
       data: this.props.data,
+      showHead: false,
       loading: false
     };
   },
   render: function () {
+    var url = this.props.url;
     var rows = [];
     var data = this.state.data;
-    var dataTypes = [];
     var loadingClassName = 'loading-' + this.state.loading +' db-table';
     var tableClassName = 'table interact lighten-' + this.state.loading;
+    var showHead = this.state.showHead;
 
-    data.forEach(function (obj) {
-      dataTypes.push(typeof(obj));
-    });
-    var areSameType = dataTypes.reduce(function(a, b){return (a === b) ? a : false;});
 
-    if (areSameType && data[0].id !== undefined) {
+    if (showHead) {
       data.forEach(function (obj) {
-        rows.push(<RowInteract key={ 'row-' + obj.id } obj={ obj } url={ data.url + obj.id } parent={ this } />);
+        rows.push(<RowInteract key={ 'row-' + obj.id } obj={ obj } url={ url } parent={ this } />);
       }.bind(this));
-      return(
-        <div className='container-interact'>
-          <section>
-            <table className={ tableClassName }>
-              <img src='/assets/pig_glow.gif' className={ loadingClassName } />
-              <TableHeadInteract parent={ this } />
-              <tbody>
-                {rows}
-              </tbody>
-            </table>
-          </section>
-          <EditorInteract parent={ this } />
-        </div>
-      );
     } else {
       data.forEach(function (obj, i) {
-        rows.push(<tr key={ 'misc-' + i }>{ JSON.stringify(obj) }</tr>);
+        rows.push(<tr key={ 'misc-row-' + i }><td key={ 'misc-col-' + i }>{ JSON.stringify(obj) }</td></tr>);
       });
-      return(
-        <div className='container-interact'>
-          <section>
-            <img src='/assets/pig_glow.gif' className={ loadingClassName } />
-            { rows }
-          </section>
-          <EditorInteract parent={ this } />
-        </div>
-      );
     }
+
+    return(
+      <div className='container-interact'>
+        <section>
+          <table className={ tableClassName }>
+            <img src='/assets/pig_glow.gif' className={ loadingClassName } />
+            <TableHeadInteract parent={ this } />
+            <tbody>
+              {rows}
+            </tbody>
+          </table>
+        </section>
+        <EditorInteract parent={ this } />
+      </div>
+    );
   }
 });

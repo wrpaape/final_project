@@ -11,9 +11,9 @@ class EnvironmentsController < ApplicationController
   # GET /environments/1
   # GET /environments/1.json
   def show
-    available_models = JSON.parse(@evironment.models)
+    available_models = JSON.parse(@environment.models)
     model = Object.const_get(params.fetch("current_model", available_models.keys.first))
-    url = "/environment/#{@evironment.id}/"
+    url = "/environments/#{@environment.id}/"
     @data= model.get_data(url, params)
     @default_model_states = get_default_model_states(available_models)
 

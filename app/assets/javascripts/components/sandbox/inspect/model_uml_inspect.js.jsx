@@ -11,7 +11,7 @@ var ModelUmlInspect = React.createClass({
     var show = this.state.show;
     var table = this.props.grandparent;
     var currentModel = table.state.currentModel;
-    var umlFilePath = 'assets/' + currentModel + '_uml.png';
+    var umlFilePath = '/assets/' + currentModel + '_uml.png';
 
     if (show) {
       return(

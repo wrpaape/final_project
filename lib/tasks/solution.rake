@@ -1,7 +1,7 @@
 task :solution => :environment do
   Rails.logger = Logger.new("log/solution_queries.log")
   def solution
-    Person.find(1)
+    Person.where(name: "Matthew")
   end
   
   start = Time.now

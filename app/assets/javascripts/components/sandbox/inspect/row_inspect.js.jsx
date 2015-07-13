@@ -49,7 +49,7 @@ var RowInspect = React.createClass({
     );
   },
   mouseOver: function(val, obj, i) {
-    var isDatetime = val.toString().match(/^(\d{4})-(\d{2})-(\d{2})([a-zA-Z])(\d{2}):(\d{2}):(\d{2}).(\d{3})([a-zA-Z])/);
+    var isDatetime = val.toString().match(/^(\d{4})-(\d{2})-(\d{2})([a-zA-Z])(\d{2}):(\d{2}):(\d{2})/);
     if (isDatetime !== null) {
       var valFormatted = (moment(val).format('MM/DD/YYYY hh:mm a'));
       var idSelector = '#row-' + obj.id + '-col-' + i;

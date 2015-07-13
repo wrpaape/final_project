@@ -48,8 +48,22 @@ var EditorInteract = React.createClass({
           solution: formattedSolution
         },
         function(newData) {
+          var data = newData.result;
+          if (typeof(data[0]) === 'string') {
+            var showHead = false;
+          } else {
+            var dataTypes = [];
+            data.forEach(function (obj) {
+              dataTypes.push(typeof(obj));
+            });
+            var showHead = dataTypes.reduce(function(a, b){return (a === b) ? a : false;});
+            showHead = showHead === false ? showHead : true;
+          }
+
+          console.log(showHead);
+
           table.setState({
-            data: newData.result,
+            data: data,
             isCorrect: newData.isCorrect,
             timeExecTotal: newData.timeExecTotal,
             timeQueryTotal: newData.timeQueryTotal,
@@ -58,6 +72,7 @@ var EditorInteract = React.createClass({
             timeQueryAvg: newData.timeQueryAvg,
             numQueries: newData.numQueries,
             solCharCount: solCharCount,
+            showHead: showHead,
             loading: false
           });
           this.setState({ loading: false });

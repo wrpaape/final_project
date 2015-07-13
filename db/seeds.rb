@@ -136,7 +136,7 @@ All of the problems in this set can be solved by querying just the 'people' tabl
 baby_names_and_people = Environment.create(
   title: "baby_names and people",
   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  models: [{ "BabyName"=>"baby_name.rb", "Person"=>"person.rb" }].to_json)
+  models: { "BabyName"=>"baby_name.rb", "Person"=>"person.rb" }.to_json)
 
 prob_instruct =
 """
@@ -188,8 +188,8 @@ Accordingly, for every 'Person', person_example, born in the year person_example
 'BabyName.find_by({ name: person_example.name, gender: person_example.gender, yob: person_example.yob}).frequency - 1'
 
 other 'Person's born in the States that year sharing the same name. To save you some time and to
-spare our servers the cost of querying a 99999999-entry database thousands of time, the 'frequency' of a 'Person's
-name for their 'gender' and 'yob' has been cached as
+spare our servers the cost of querying a 1825433-entry table thousands of time, the 'frequency' of a 'Person's
+name for their 'gender' and 'yob' has been cached as:
 
 'Person.frequency'
 

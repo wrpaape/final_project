@@ -11,8 +11,8 @@ class ProblemsController < ApplicationController
   # GET /problems/1.json
   def show
     @data = ["The Results of your 'solution' Method will be Displayed Here.",
-             "Hold [CMD + SHIFT + RETURN] or [CTR + SHIFT + RETURN] to reload your results."]
-    @url = "/problems/#{params[:problem_id]}"
+             "Hold [CMD + SHIFT + RETURN] or [CTR + SHIFT + [RETURN] to reload your results."]
+    @url = "/problems/#{params[:id]}/"
     respond_to do |format|
       format.html
       format.json { render json: get_solution_data(params[:solution]) }
@@ -76,6 +76,6 @@ class ProblemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def problem_params
-      params.require(:problem).permit(:title, :instructions, :answer, :enviroment_id)
+      params.require(:problem).permit(:title, :instructions, :answer, :environment_id)
     end
 end
