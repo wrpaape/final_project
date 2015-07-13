@@ -5,6 +5,18 @@ var TableInteract = React.createClass({
   getInitialState: function () {
     return {
       data: this.props.data,
+      results: {
+        'isCorrect': false,
+        'numQueries': 0,
+        'solCharCount': 0,
+        'times': {
+          'timeExecTotal': 'N/A',
+          'timeQueryTotal': 'N/A',
+          'timeQueryMin': 'N/A',
+          'timeQueryMax': 'N/A',
+          'timeQueryAvg': 'N/A',
+        }
+      },
       showHead: false,
       loading: false
     };
@@ -39,7 +51,14 @@ var TableInteract = React.createClass({
             </tbody>
           </table>
         </section>
-        <EditorInteract parent={ this } />
+        <div className='row'>
+          <div className='col-md-6'>
+            <EditorInteract parent={ this } />
+          </div>
+          <div className='col-md-6'>
+            <DisplayResultsInteract parent={ this } />
+          </div>
+        </div>
       </div>
     );
   }

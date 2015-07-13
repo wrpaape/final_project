@@ -64,14 +64,18 @@ var EditorInteract = React.createClass({
 
           table.setState({
             data: data,
-            isCorrect: newData.isCorrect,
-            timeExecTotal: newData.timeExecTotal,
-            timeQueryTotal: newData.timeQueryTotal,
-            timeQueryMin: newData.timeQueryMin,
-            timeQueryMax: newData.timeQueryMax,
-            timeQueryAvg: newData.timeQueryAvg,
-            numQueries: newData.numQueries,
-            solCharCount: solCharCount,
+            results: {
+              'isCorrect': newData.isCorrect,
+              'numQueries': newData.numQueries,
+              'solCharCount': solCharCount,
+              'times': {
+                'timeExecTotal': newData.timeExecTotal,
+                'timeQueryTotal': newData.timeQueryTotal,
+                'timeQueryMin': newData.timeQueryMin,
+                'timeQueryMax': newData.timeQueryMax,
+                'timeQueryAvg': newData.timeQueryAvg,
+              }
+            },
             showHead: showHead,
             loading: false
           });

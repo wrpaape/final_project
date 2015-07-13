@@ -25,11 +25,11 @@ class ApplicationController < ActionController::Base
     time_exec = result_hash["time_exec"]
     query_stats = get_query_stats
 
-    if time_exec >= 1
-      time_exec = "#{(time_exec).sigfig_to_s(4)} s"
-    else
-      time_exec = "#{(time_exec * 1000).sigfig_to_s(4)} ms"
-    end
+    # if time_exec >= 1
+    #   time_exec = "#{(time_exec).sigfig_to_s(4)} s"
+    # else
+    #   time_exec = "#{(time_exec * 1000).sigfig_to_s(4)} ms"
+    # end
 
     {
       "result"=> result,
@@ -74,7 +74,8 @@ class ApplicationController < ActionController::Base
     }
 
     query_stats.each do |key, time|
-      query_stats[key] = time >= 1000 ? "#{(time / 1000).sigfig_to_s(4)} s" : "#{time.sigfig_to_s(4)} ms"
+      query_stats[key] = time
+      # query_stats[key] = time >= 1000 ? "#{(time / 1000).sigfig_to_s(4)} s" : "#{time.sigfig_to_s(4)} ms"
     end
     query_stats["num_queries"] = num_queries
     query_stats
