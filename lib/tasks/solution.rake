@@ -1,7 +1,7 @@
 task :solution => :environment do
   Rails.logger = Logger.new("log/solution_queries.log")
   def solution
-    Person.where(:children_count=> [1, 2]).order(:name)
+    Person.where(spouse_id: nil).where(generation: 3)
   end
   
   start = Time.now

@@ -71,12 +71,12 @@ remaining_generations.each do |gen|
     father.save
     mother.save
 
-    kids = [{ name: "Greg", gender: "M", yob: 1954},
-            { name: "Marcia", gender: "F", yob: 1956},
-            { name: "Peter", gender: "M", yob: 1957},
-            { name: "Jan", gender: "F", yob: 1958},
-            { name: "Bobby", gender: "M", yob: 1960},
-            { name: "Cindy", gender: "F", yob: 1961}]
+    kids = [{ name: "Greg", gender: "M", yob: 1954 },
+            { name: "Marcia", gender: "F", yob: 1956 },
+            { name: "Peter", gender: "M", yob: 1957 },
+            { name: "Jan", gender: "F", yob: 1958 },
+            { name: "Bobby", gender: "M", yob: 1960 },
+            { name: "Cindy", gender: "F", yob: 1961 }]
     kids.each do |kid|
       kid[:frequency] = BabyName.find_by(kid).frequency
       kid[:mother_id] = mother.id
@@ -148,9 +148,11 @@ of 'people' as one having either 1 'OR' 2 children.
 Complete the 'solution' method so that it returns an array of ActiveRecord 'Person' objects
 representing the 'parents' of a typical household, 'order'ed alphabetically by 'name'.
 """
+answer = Person.where(:children_count=> [1, 2]).order(:name)
 avg_household = baby_names_and_people.problems.create(
   title: "...and here are our 1.5 kids",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: answer.to_json)
 
 prob_instruct =
 """
@@ -161,11 +163,24 @@ having 'name's of the Brady Bunch and 'yob's corresponding to the years of birth
 of the actors who played their roles.
 
 Complete the 'solution' method so that it returns an array of ActiveRecord 'Person' objects
-representing the Brady Bunch that is 'order'ed from oldest to youngest.
+representing the Brady Bunch that is 'order'ed from youngest to oldest.
 """
+
+  mike_brady = Person.find_by({name: "Mike", children_count: 6})
+  carol_brady = mike_brady.spouse
+  brady_bunch = mike_brady.children.order(yob: :desc).map{ |brady_child|  brady_child }
+  if mike_brady.yob > carol_brady.yob
+    brady_bunch << mike_brady << carol_brady
+  else
+    brady_bunch << carol_brady << mike_brady
+  end
+  answer = brady_bunch
+
+
 the_brady_bunch = baby_names_and_people.problems.create(
   title: "The Brady Bunch",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: answer.to_json)
 
 prob_instruct =
 """

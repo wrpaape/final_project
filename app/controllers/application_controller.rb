@@ -76,8 +76,6 @@ class ApplicationController < ActionController::Base
   def results_correct?(results, problem_id)
     answer = Problem.find(problem_id).answer
     parsed_answer = JSON.parse(answer)
-    puts results.length
-    puts parsed_answer.length
     results == parsed_answer ? true : false
   end
 end

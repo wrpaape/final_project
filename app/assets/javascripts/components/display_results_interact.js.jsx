@@ -11,9 +11,9 @@ var DisplayResultsInteract = React.createClass({
       var time = times[key];
       if (time !== 'N/A') {
         if (key !== 'timeExecTotal') {
-          times[key] = time > 1000 ? Number(time / 1000).toPrecision(4) + ' s' : Number(time).toPrecision(4) + ' ms';
+          times[key] = time >= 1000 ? Number(time / 1000).toPrecision(4) + ' s' : Number(time).toPrecision(4) + ' ms';
         } else {
-          times[key] = time > 1 ? Number(time).toPrecision(4) + ' s' : Number(time * 1000).toPrecision(4) + ' ms';
+          times[key] = time >= 1 ? Number(time).toPrecision(4) + ' s' : Number(time * 1000).toPrecision(4) + ' ms';
         }
       }
     });
