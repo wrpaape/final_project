@@ -1,12 +1,12 @@
 task :solution => :environment do
   Rails.logger = Logger.new("log/solution_queries.log")
   def solution
-    "ADFSDFswefwefwef"
+    Person.where(:children_count=> [1, 2]).order(:name)
   end
   
   start = Time.now
-  result = solution
+  results = solution
   finish = Time.now
-  result_hash = { "result"=> Array.wrap(result), "time_exec"=> finish - start }
-  puts result_hash.to_json
+  results_hash = { "results"=> results.to_json, "time_exec"=> finish - start }
+  puts results_hash.to_json
 end

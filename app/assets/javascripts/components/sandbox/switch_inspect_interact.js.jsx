@@ -23,7 +23,7 @@ var SwitchInspectInteract = React.createClass({
           <TableInspect data={ this.props.dataInspect } models={ this.props.modelsInspect } />
         </div>
         <div className={ 'show-' + showInteract }>
-          <TableInteract data={ this.props.dataInteract } url={ this.props.urlInteract } />
+          <TableInteract data={ this.props.dataInteract } url={ this.props.urlInteract } problemId={ this.props.problemId } />
         </div>
       </div>
     );

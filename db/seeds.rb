@@ -146,7 +146,7 @@ refrains from tracking pregnancies and the heights of its tenants, let us define
 of 'people' as one having either 1 'OR' 2 children.
 
 Complete the 'solution' method so that it returns an array of ActiveRecord 'Person' objects
-representing the 'children' of typical 'people' households, 'order'ed alphabetically by 'name'.
+representing the 'parents' of a typical household, 'order'ed alphabetically by 'name'.
 """
 avg_household = baby_names_and_people.problems.create(
   title: "...and here are our 1.5 kids",

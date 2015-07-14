@@ -272,7 +272,9 @@ input {
     margin-left: -225px;
   }
   &.interact {
-    margin-top: -175px;
+    position: fixed;
+    top: 50%;
+    margin-top: -305px;
     margin-left: -225px;
   }
   &.db-editor {

@@ -26,7 +26,7 @@ class ProblemsController < ApplicationController
     if params[:inspect]
       render json: @data_inspect
     elsif params[:interact]
-      render json: get_solution_data(params[:solution])
+      render json: get_solution_data(params)
     end
   end
 

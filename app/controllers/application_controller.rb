@@ -20,14 +20,14 @@ class ApplicationController < ActionController::Base
     states
   end
 
-  def get_solution_data(solution)
-    result_hash = get_output_json(solution)
-    result = result_hash["result"]
-    time_exec = result_hash["time_exec"]
+  def get_solution_data(params)
+    results_hash = get_output_json(params[:solution])
+    results = Array.wrap(JSON.parse(results_hash["results"]))
+    time_exec = results_hash["time_exec"]
     query_stats = get_query_stats
     {
-      "result"=> result,
-      "isCorrect"=> result_correct?(result),
+      "results"=> results,
+      "isCorrect"=> results_correct?(results, params[:problem_id]),
       "timeExecTotal"=> time_exec,
       "timeQueryTotal"=> query_stats.fetch("query_tot_time", "N/A"),
       "timeQueryMin"=> query_stats.fetch("query_min_time", "N/A"),
@@ -68,16 +68,17 @@ class ApplicationController < ActionController::Base
 
     query_stats.each do |key, time|
       query_stats[key] = time
-      # query_stats[key] = time >= 1000 ? "#{(time / 1000).sigfig_to_s(4)} s" : "#{time.sigfig_to_s(4)} ms"
     end
     query_stats["num_queries"] = num_queries
     query_stats
   end
 
-  def result_correct?(result)
-    answer = Array.wrap(Person.find(1))
-    parsed_answer = JSON.parse(answer.to_json)
-    result == parsed_answer ? true : false
+  def results_correct?(results, problem_id)
+    answer = Problem.find(problem_id).answer
+    parsed_answer = JSON.parse(answer)
+    puts results.length
+    puts parsed_answer.length
+    results == parsed_answer ? true : false
   end
 end
 
