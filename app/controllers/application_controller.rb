@@ -22,7 +22,10 @@ class ApplicationController < ActionController::Base
 
   def get_solution_data(params)
     results_hash = get_output_json(params[:solution])
-    results = Array.wrap(JSON.parse(results_hash["results"]))
+    puts results_hash["results"]
+    puts "w********"
+    # results = Array.wrap(JSON.parse(results_hash["results"]))
+    results = Array.wrap(results_hash["results"])
     time_exec = results_hash["time_exec"]
     query_stats = get_query_stats
     {

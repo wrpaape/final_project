@@ -17,18 +17,23 @@ var TableInteract = React.createClass({
           'timeQueryAvg': 'N/A',
         }
       },
-      showHead: false,
       loading: false
     };
   },
   render: function () {
     var url = this.props.url;
     var rows = [];
+    var dataTypes = [];
     var data = this.state.data;
     var loadingClassName = 'loading-' + this.state.loading +' db-table interact';
     var tableClassName = 'table interact lighten-' + this.state.loading;
-    var showHead = this.state.showHead;
 
+    data.forEach(function (obj) {
+      dataTypes.push(typeof(obj));
+    });
+    var areSameType = dataTypes.reduce(function(a, b){return (a === b) ? a : false;});
+
+    var showHead = (areSameType && data[0].id !== undefined) ? true: false;
 
     if (showHead) {
       data.forEach(function (obj) {
@@ -45,7 +50,7 @@ var TableInteract = React.createClass({
         <section>
           <table className={ tableClassName }>
             <img src='/assets/pig_glow.gif' className={ loadingClassName } />
-            <TableHeadInteract parent={ this } />
+            <TableHeadInteract parent={ this } show={ showHead } />
             <tbody>
               {rows}
             </tbody>

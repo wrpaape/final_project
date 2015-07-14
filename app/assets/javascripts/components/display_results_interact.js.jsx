@@ -6,8 +6,10 @@ var DisplayResultsInteract = React.createClass({
     var table = this.props.parent;
     var results = table.state.results;
     var times = results.times;
+    console.log('hi');
 
     Object.keys(times).forEach(function (key) {
+
       var time = times[key];
       if (time !== 'N/A') {
         if (key !== 'timeExecTotal') {
@@ -15,6 +17,8 @@ var DisplayResultsInteract = React.createClass({
         } else {
           times[key] = time >= 1 ? Number(time).toPrecision(4) + ' s' : Number(time * 1000).toPrecision(4) + ' ms';
         }
+        times[key] = times[key].toString().length === 6 ? times[key].toPrecision(3) : times[key];
+        console.log(times[key].toString().length);
       }
     });
 

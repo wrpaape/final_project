@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 20150712140920) do
     t.boolean  "admin",                 default: false
     t.integer  "problems_count",        default: 0
     t.integer  "solved_problems_count", default: 0
-    t.integer  "environments_cleared",   default: 0
+    t.integer  "environments_cleared",  default: 0
     t.integer  "problem_id"
     t.integer  "environment_id"
     t.datetime "created_at",                            null: false

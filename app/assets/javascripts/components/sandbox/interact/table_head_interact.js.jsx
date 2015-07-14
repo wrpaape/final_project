@@ -5,7 +5,7 @@ var TableHeadInteract = React.createClass({
   render: function () {
     var cols = [];
     var table = this.props.parent;
-    var show = table.state.showHead;
+    var show = this.props.show;
     var keys = Object.keys(table.state.data[0]);
 
     for (var i = 0; i < keys.length; i++) {

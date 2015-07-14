@@ -38,7 +38,7 @@ var EditorInteract = React.createClass({
       table.setState({ loading: true });
       var inputSolution = $('#editor-content').val();
       var indentedSolution = inputSolution.replace(/\n/g, '\n  ');
-      var putsSolution = indentedSolution.replace(/\n  solution/g, '\n  start = Time.now\n  results = solution\n  finish = Time.now\n  results_hash = { "results"=> results.to_json, "time_exec"=> finish - start }\n  puts results_hash.to_json');
+      var putsSolution = indentedSolution.replace(/\n  solution/g, '\n  start = Time.now\n  results = solution\n  finish = Time.now\n  results_hash = { "results"=> results, "time_exec"=> finish - start }\n  puts results_hash.to_json');
       var formattedSolution = 'task :solution => :environment do\n  Rails.logger = Logger.new("log/solution_queries.log")\n  ' + putsSolution + '\nend';
       var solCharCount = inputSolution.replace(/\n/g,'').replace(/ /g,'').replace(/defsolution/,'').replace(/endsolution/,'').length;
 
