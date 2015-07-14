@@ -6,15 +6,19 @@ var DisplayResultsInteract = React.createClass({
     var table = this.props.parent;
     var results = table.state.results;
     var times = results.times;
+    var units = [' s', ' ms', ' μs'];
 
     Object.keys(times).forEach(function (key) {
-      var time = times[key];
-      if (time !== 'N/A') {
+      if (times[key] !== 'N/A' && !isNaN(times[key])) {
         if (key !== 'timeExecTotal') {
-          times[key] = time > 1000 ? Number(time / 1000).toPrecision(4) + ' s' : Number(time).toPrecision(4) + ' ms';
-        } else {
-          times[key] = time > 1 ? Number(time).toPrecision(4) + ' s' : Number(time * 1000).toPrecision(4) + ' ms';
+          times[key] /= 1000;
         }
+        var n = 0;
+        while (times[key] < 1) {
+          times[key] *= 1000;
+          n++;
+        }
+        times[key] = Number(times[key]).toPrecision(4) + units[n];
       }
     });
 
