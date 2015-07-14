@@ -84,7 +84,11 @@ var RowInspect = React.createClass({
       });
     } else {
       thisRow.attr('class', '');
-      newPad = $('.wind0w-search').attr('data-id') === 'true' ? 285 : 165;
+      if (oldPad === 25) {
+        newPad = 25;
+      } else {
+        newPad = $('.wind0w-search').attr('data-id') === 'true' ? 285 : 165;
+      }
       table.setState({
         wind0wObj: { id: 0 },
         wind0wObjModel: currentModel,

@@ -285,6 +285,22 @@ input {
   }
 }
 
+.results-wrap {
+  position: relative;
+  .newman-true {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    z-index: 1000;
+    opacity: 0.2;
+  }
+
+  .newman-false {
+    display: none;
+  }
+}
+
+
 .ace_editor{
   width: 100%!important;
   height: 250px!important;

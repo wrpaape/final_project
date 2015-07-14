@@ -46,48 +46,94 @@ var EditorInteract = React.createClass({
       var formattedSolution = 'task :solution => :environment do\n  Rails.logger = Logger.new("log/solution_queries.log")\n  ' + putsSolution + '\nend';
       var solCharCount = inputSolution.replace(/\n/g,'').replace(/ /g,'').replace(RegExp('def' + methodName),'').replace(RegExp('end' + methodName),'').length;
 
-      $.getJSON(table.props.url,
-        {
-          interact: true,
-          solution: formattedSolution,
-          problem_id: table.props.problemId
-        },
-        function(newData) {
-          var data = newData.results;
-          if (typeof(data[0]) === 'string') {
-            var showHead = false;
-          } else {
-            var dataTypes = [];
-            data.forEach(function (obj) {
-              dataTypes.push(typeof(obj));
-            });
-            console.log(newData);
-            console.log(data);
-            console.log(dataTypes);
-            var showHead = dataTypes.reduce(function(a, b){return (a === b) ? a : false;});
-            showHead = showHead === false ? showHead : true;
-          }
+      var blackList = {
+        '(`)': 'pls don\'t use backticks',
+        '([\\s]system[ (])': 'pls don\`t call \'system\'',
+        '(::)': 'pls don\'t try to access methods you don\'t need',
+        '(\\.send)': 'pls don\'t call \'send\'',
+        '(\\.public_send)': 'pls don\'t call \'public_send\'',
+        '(%x[-({])': 'pls don\'t use \'%x\'',
+        '([\\s([{.]exec)': 'pls don\'t call \'exec\'',
+        '([\\s([{.]require)': 'pls don\'t call \'require\'',
+        '([\\s([{.]require_relative)': 'pls don\'t call \'require_relative\'',
+        '([\\s([{.]load)': 'pls don\'t call \'load\'',
+        '([\\s([{.]auto_load)': 'pls don\'t call \'auto_load\'',
+        '(IO.)': 'pls don\'t try to access \'IO\'',
+        '(File.)': 'pls don\'t try to access \'File\'',
+        '(\\.create)': 'pls don\'t try to change my db',
+        '(\\.create_with)': 'pls don\'t try to change my db',
+        '(\\.find_or_create_by)': 'pls don\'t try to change my db',
+        '(\\.find_or_initialize_by)': 'pls don\'t try to change my db',
+        '(\\.update)': 'pls don\'t try to change my db',
+        '(\\.update_all)': 'pls don\'t try to change my db',
+        '(\\.destroy)': 'pls don\'t try to change my db',
+        '(\\.destroy_all)': 'pls don\'t try to change my db',
+        '(\\.delete)': 'pls don\'t try to change my db',
+        '(\\.delete_all)': 'pls don\'t try to change my db',
+        '(\\.save)': 'pls don\'t try to change my db',
+        '((^|[\\s.(])User[\\s.())])': 'ACCESS DENIED',
+        '((^|[\\s.(])Problem[\\s.())])': 'ACCESS DENIED',
+        '((^|[\\s.(])SolvedProblem[\\s.())])': 'ACCESS DENIED',
+        '((^|[\\s.(])Environment[\\s.())])': 'ACCESS DENIED'
+      }
 
-          table.setState({
-            data: data,
-            results: {
-              'isCorrect': newData.isCorrect,
-              'numQueries': newData.numQueries,
-              'solCharCount': solCharCount,
-              'times': {
-                'timeExecTotal': newData.timeExecTotal,
-                'timeQueryTotal': newData.timeQueryTotal,
-                'timeQueryMin': newData.timeQueryMin,
-                'timeQueryMax': newData.timeQueryMax,
-                'timeQueryAvg': newData.timeQueryAvg,
-              }
-            },
-            showHead: showHead,
-            loading: false
-          });
-          this.setState({ loading: false });
-        }.bind(this)
-      );
+      var warnings = [];
+      var keys = Object.keys(blackList);
+      keys.forEach(function (key) {
+        if (inputSolution.search(RegExp(key),'g') >= 0) {
+          warnings.push(blackList[key]);
+        }
+      });
+
+      if (warnings.length > 0) {
+        table.setState({
+          newman: true,
+          data: warnings,
+          results: {
+            'isCorrect': false,
+            'numQueries': 0,
+            'solCharCount': solCharCount,
+            'times': {
+              'timeExecTotal': 'N/A',
+              'timeQueryTotal': 'N/A',
+              'timeQueryMin': 'nuh',
+              'timeQueryMax': 'uh',
+              'timeQueryAvg': 'uh'
+            }
+          },
+          loading: false
+        });
+        this.setState({ loading: false });
+      } else {
+        $.getJSON(table.props.url,
+          {
+            interact: true,
+            solution: formattedSolution,
+            problem_id: table.props.problemId
+          },
+          function(newData) {
+            var data = newData.results;
+            table.setState({
+              data: data,
+              results: {
+                'isCorrect': newData.isCorrect,
+                'numQueries': newData.numQueries,
+                'solCharCount': solCharCount,
+                'times': {
+                  'timeExecTotal': newData.timeExecTotal,
+                  'timeQueryTotal': newData.timeQueryTotal,
+                  'timeQueryMin': newData.timeQueryMin,
+                  'timeQueryMax': newData.timeQueryMax,
+                  'timeQueryAvg': newData.timeQueryAvg,
+                }
+              },
+              newman: false,
+              loading: false
+            });
+            this.setState({ loading: false });
+          }.bind(this)
+        );
+      }
     }
   }
 });

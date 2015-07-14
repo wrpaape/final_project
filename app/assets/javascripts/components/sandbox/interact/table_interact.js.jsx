@@ -17,7 +17,8 @@ var TableInteract = React.createClass({
           'timeQueryAvg': 'N/A',
         }
       },
-      loading: false
+      loading: false,
+      newman: false
     };
   },
   render: function () {
@@ -25,8 +26,10 @@ var TableInteract = React.createClass({
     var rows = [];
     var dataTypes = [];
     var data = this.state.data;
-    var loadingClassName = 'loading-' + this.state.loading +' db-table interact';
-    var tableClassName = 'table interact lighten-' + this.state.loading;
+    var loading = this.state.loading;
+    var loadingClassName = 'loading-' + loading +' db-table interact';
+    var tableClassName = 'table interact lighten-' + loading;
+    var newmanClassName = 'newman-' + this.state.newman;
 
     data.forEach(function (obj) {
       dataTypes.push(typeof(obj));
@@ -43,6 +46,7 @@ var TableInteract = React.createClass({
       data.forEach(function (obj, i) {
         rows.push(<tr key={ 'misc-row-' + i }><td key={ 'misc-col-' + i }>{ JSON.stringify(obj) }</td></tr>);
       });
+      rows.push(<tr key={ 'misc-row-empty' }><td key={ 'misc-col-empty' }></td></tr>);
     }
 
     return(
@@ -60,7 +64,8 @@ var TableInteract = React.createClass({
           <div className='col-md-6 editor'>
             <EditorInteract parent={ this } />
           </div>
-          <div className='col-md-6'>
+          <div className='col-md-6 results-wrap'>
+            <img src='/assets/newman.gif' className={ newmanClassName } />
             <DisplayResultsInteract parent={ this } />
           </div>
         </div>
