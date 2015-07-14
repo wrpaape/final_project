@@ -37,11 +37,14 @@ var EditorInteract = React.createClass({
       this.setState({ loading: true });
       table.setState({ loading: true });
       var inputSolution = $('#editor-content').val();
+      var lastLine = inputSolution.match(/[^\n].*[\n]*$/)[0].replace(/\n*$/,'');
+      var methodName = lastLine.split(' ')[0];
+      methodName = methodName === 'end' ? inputSolution.match(/def +([a-zA-Z_\?\d]*)/)[1] : methodName
       var indentedSolution = inputSolution.replace(/\n/g, '\n  ');
-      var putsSolution = indentedSolution.replace(/\n  solution/g, '\n  start = Time.now\n  results = solution\n  finish = Time.now\n  results_hash = { "results"=> results, "time_exec"=> finish - start }\n  puts results_hash.to_json');
-      var formattedSolution = 'task :solution => :environment do\n  Rails.logger = Logger.new("log/solution_queries.log")\n  ' + putsSolution + '\nend';
-      var solCharCount = inputSolution.replace(/\n/g,'').replace(/ /g,'').replace(/defsolution/,'').replace(/endsolution/,'').length;
 
+      var putsSolution = indentedSolution.replace(RegExp('\n  ' + methodName, 'g'), '\n  start = Time.now\n  results = ' + methodName + '\n  finish = Time.now\n  results_hash = { "results"=> results, "time_exec"=> finish - start }\n  puts results_hash.to_json');
+      var formattedSolution = 'task :solution => :environment do\n  Rails.logger = Logger.new("log/solution_queries.log")\n  ' + putsSolution + '\nend';
+      var solCharCount = inputSolution.replace(/\n/g,'').replace(/ /g,'').replace(RegExp('def' + methodName),'').replace(RegExp('end' + methodName),'').length;
 
       $.getJSON(table.props.url,
         {
@@ -58,6 +61,9 @@ var EditorInteract = React.createClass({
             data.forEach(function (obj) {
               dataTypes.push(typeof(obj));
             });
+            console.log(newData);
+            console.log(data);
+            console.log(dataTypes);
             var showHead = dataTypes.reduce(function(a, b){return (a === b) ? a : false;});
             showHead = showHead === false ? showHead : true;
           }

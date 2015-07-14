@@ -44,12 +44,16 @@ class ApplicationController < ActionController::Base
     file.write(solution)
     file.close
     output = Open3.capture2e("rake solution").first
-    error_match = /(?<=rake aborted!\n)((.|\n)*)/.match(output)
-    if error_match.nil?
+    error_match = /(?<=^rake aborted!\n)((.|\n)*)/.match(output)
+    if output.empty?
+      output = { "results"=> "pls call your method after its definition", "time_exec"=> "N/A" }
+    elsif error_match.nil?
       output = JSON.parse(output)
+      output["results"] = "nil" if output["results"].nil?
     else
       output = { "results"=> error_match.captures.first.split("\n"), "time_exec"=> "N/A" }
     end
+
     output
   end
 
