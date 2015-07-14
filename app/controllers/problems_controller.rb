@@ -15,7 +15,7 @@ class ProblemsController < ApplicationController
       available_models = JSON.parse(environment.models)
       model = Object.const_get(params.fetch("current_model", available_models.keys.first))
       url = "/problems/#{@problem.id}/"
-      @data_inspect = model.get_data(url, params)
+      @data_inspect = model.get_data(url, params, environment.id)
       @models_inspect = get_default_model_states(available_models)
     end
     unless params[:inspect]

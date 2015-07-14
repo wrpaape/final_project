@@ -6,11 +6,12 @@ var TableInspect = React.createClass({
     var initialModels = this.props.models;
     var initialModel = Object.keys(initialModels)[0];
     return {
+      padding: 25,
       data: this.props.data,
       models: initialModels,
       currentModel: initialModel,
-      windowObj: { id: 0 },
-      windowObjModel: initialModel,
+      wind0wObj: { id: 0 },
+      wind0wObjModel: initialModel,
       limit: initialModels[initialModel].limit,
       offset: initialModels[initialModel].offset,
       search: initialModels[initialModel].search,
@@ -30,9 +31,12 @@ var TableInspect = React.createClass({
     pageData.forEach(function (obj) {
       rows.push(<RowInspect key={ 'row-' + obj.id } obj={ obj } url={ data.url + obj.id } parent={ this } />);
     }.bind(this));
+    var styles = {
+      paddingRight: this.state.padding + 'px'
+    };
 
     return(
-      <div className='container-inspect'>
+      <div className='container-inspect' style={ styles }>
         <div className='container-table'>
           <section>
             <table className={ tableClassName }>
@@ -43,13 +47,9 @@ var TableInspect = React.createClass({
               </tbody>
             </table>
           </section>
-          <div className='row table-footer'>
-            <div className='col-md-8'>
-              <PaginateInspect parent={ this } />
-            </div>
-            <div className='col-md-4'>
-              <LimitBarInspect parent={ this} />
-            </div>
+          <div className='sticky-footer paginate'>
+            <PaginateInspect parent={ this } />
+            <LimitBarInspect parent={ this} />
           </div>
         </div>
         <WindowInspect parent={ this } />

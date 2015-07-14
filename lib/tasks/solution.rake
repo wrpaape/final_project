@@ -1,7 +1,7 @@
 task :solution => :environment do
   Rails.logger = Logger.new("log/solution_queries.log")
   def solution
-    [{"key":"val","key2":3}, 4, 1, "hello"]
+    Person.limit(20)
   end
   
   start = Time.now

@@ -9,17 +9,16 @@ var SelectedObjInspect = React.createClass({
   },
   render: function() {
     var show = this.state.show;
-    var window = this.props.parent;
     var table = this.props.grandparent;
-    var obj = table.state.windowObj;
+    var obj = table.state.wind0wObj;
     var data = table.state.data;
     var model = table.state.currentModel;
-    var keysCopy = $.extend([], Object.keys(table.state.windowObj));
+    var keysCopy = $.extend([], Object.keys(table.state.wind0wObj));
 
     var attributes = [];
     attributes.push(<span key='obj-open'>{ '{' }</span>);
     if (obj.id !== 0) {
-      var indent = '~~~~~';
+      var indent = '~~';
       var longestLength = keysCopy.sort(function (a, b) { return b.length - a.length; })[0].length;
       keysCopy.forEach(function(key, i) {
         var diff = longestLength - key.length;
@@ -44,7 +43,7 @@ var SelectedObjInspect = React.createClass({
     if (show) {
       return(
         <div>
-          <div onClick={ this.clicked.bind(this, show, window) } className='btn btn-default show-hide'>Selected Object</div>
+          <div data-id={ show } onClick={ this.clicked.bind(this, show, obj, table) } className='wind0w-button wind0w-object btn btn-default show-hide'>Selected Object</div>
           <section className='object'>
             { attributes }
           </section>
@@ -52,8 +51,8 @@ var SelectedObjInspect = React.createClass({
       );
     } else {
       return(
-        <div>
-          <div onClick={ this.clicked.bind(this, show, window) } className='btn btn-primary show-hide'>Selected Object</div>
+        <div data-id={ show } onClick={ this.clicked.bind(this, show, obj, table) } className='wind0w-button wind0w-object btn btn-primary show-hide'>
+          Selected Object
         </div>
       );
     };
@@ -72,14 +71,18 @@ var SelectedObjInspect = React.createClass({
     $(idSelector).html(val);
     $(idSelector).removeClass("formatted-time");
   },
-  clicked: function(show, window) {
-    $('.container-inspect').toggleClass('squish-1');
-    var newShow = !show;
-    this.setState({ show: newShow })
-    if (newShow) {
-      window.setState({ enableToggle: false });
+  clicked: function(show, obj, table) {
+    var newPad;
+    if (!show && obj.id !== 0) {
+      newPad = 321;
+    } else if (show) {
+      var oldPad = table.state.padding;
+      var newPad = $('.wind0w-search').attr('data-id') === 'true' ? 285 : oldPad;
     } else {
-      window.setState({ enableToggle: true });
+      newPad = oldPad;
     }
+
+    table.setState({ padding: newPad });
+    this.setState({ show: !show })
   }
 });

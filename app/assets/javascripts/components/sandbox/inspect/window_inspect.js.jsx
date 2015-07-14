@@ -4,8 +4,7 @@
 var WindowInspect = React.createClass({
   getInitialState: function () {
     return {
-      show: false,
-      enableToggle: true
+      show: false
     };
   },
   render: function() {
@@ -18,9 +17,21 @@ var WindowInspect = React.createClass({
     availableModels.forEach(function (model) {
       modelOptions.push(<option key={ model + 'option' } value={ model }>{ model }</option>);
     });
+
+    var noneSelected = function() {
+      var selected = true;
+      var allButtons = $('.wind0w-button');
+      allButtons.each(function (i) {
+        if ($(this).attr('data-id') === 'true') {
+          selected = false;
+        }
+      });
+      return selected;
+    }
+
     if (show) {
     return(
-      <div className='inspector-hide' onMouseLeave={ this.mouseLeave.bind(this, show, enableToggle) }>
+      <div className='inspector-hide' onMouseLeave={ this.mouseLeave.bind(this, show, table, noneSelected) }>
         <select className='btn btn-primary show-hide' id='current-model' onChange={ this.selected.bind(this, table) } >
           { modelOptions }
         </select>
@@ -36,22 +47,20 @@ var WindowInspect = React.createClass({
       vertText = vertText.join('\n');
 
       return(
-        <div className='inspector-show' onMouseEnter={ this.mouseEnter.bind(this, show, enableToggle) }>
+        <div className='inspector-show' onMouseEnter={ this.mouseEnter.bind(this, show, table) }>
           { vertText }
         </div>
       )
     }
   },
-  mouseEnter: function(show, enableToggle) {
-    if (enableToggle) {
-      $('.container-inspect').toggleClass('squish-0');
-      this.setState({ show: !show });
-    }
+  mouseEnter: function(show, table) {
+    this.setState({ show: !show });
+    table.setState({ padding: 165 });
   },
-  mouseLeave: function(show, enableToggle) {
-    if (enableToggle) {
-      $('.container-inspect').toggleClass('squish-0');
+  mouseLeave: function(show, table, noneSelected) {
+    if (noneSelected()){
       this.setState({ show: !show });
+      table.setState({ padding: 25 });
     }
   },
   selected: function (table) {

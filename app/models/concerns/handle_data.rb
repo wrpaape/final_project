@@ -1,7 +1,7 @@
 module HandleData
   extend ActiveSupport::Concern
 
-  def get_data(url, params, page_and_length = get_page_and_length(params))
+  def get_data(url, params, environment_id, page_and_length = get_page_and_length(params))
     model_file = self.get_model_file
     migration_file = self.get_migration_file
     keys = self.column_names
@@ -12,7 +12,8 @@ module HandleData
       "modelFile"=> model_file,
       "migrationFile"=> migration_file,
       "keys"=>keys,
-      "url"=> url
+      "url"=> url,
+      "environmentId"=> environment_id
     }
   end
 

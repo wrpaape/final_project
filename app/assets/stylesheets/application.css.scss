@@ -26,23 +26,30 @@
   }
 }
 
+table {
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+
 .container-inspect {
+  position: relative;
   box-sizing: border-box;
   width: 100%;
-  padding-right: 25px;
-  &.squish-0 {
-    padding-right: 165px;
-  }
-  &.squish-1 {
-    padding-right: 300px;
-  }
-  &.squish-2 {
-    padding-right: 295px;
-  }
-  position: relative;
-  .container-table {
-    .table {
-      position: relative;
+  // padding-right: 25px;
+  margin-bottom: 36px;
+  // &.squish-0 {
+  //   padding-right: 165px;
+  // }
+  // &.squish-1 {
+  //   padding-right: 295px;
+  // }
+  // &.squish-2 {
+  //   padding-right: 295px;
+  // }
+  .paginate {
+    div {
+      display: inline-block;
+      margin-right: 10px;
     }
   }
   .inspector-show {
@@ -57,18 +64,30 @@
     position: absolute;
     top: 10px;
     margin: 0;
-    right: 15px;
+    right: 0;
+    padding-right: 15px;
     height: 100%;
+    text-align: right;
+    img {
+      display: block;
+      float: right;
+      clear: both;
+    }
     .search-bar {
-      position: absolute;
-      right: 0;
+      display: block;
+      float: right;
+      clear: both;
+      text-align: right;
       .search-button {
+        display: block;
         float: right;
+        clear: both;
       }
       .search {
+        display: block;
         float: right;
+        clear: both;
         width: 350px;
-        display: inline-block;
         text-align: right;
         font-family: monaco, Consolas, 'Lucida Console', monospace;
         margin-top: 0.25em;
@@ -79,8 +98,12 @@
         }
       }
       .search-submit {
+        display: block;
+        float: right;
+        clear: both;
         text-align: right;
         .label-wrap {
+          display: inline-block;
           label {
             display: block;
           }
@@ -109,7 +132,7 @@
 
 
 .container-interact {
-
+  margin-bottom: 236px;
 }
 
 body {
@@ -136,30 +159,8 @@ input {
   border-color: #33FF33;
 }
 
-.table {
-  font-family: monaco, Consolas, 'Lucida Console', monospace;
-  &.inspect{
-    position: relative;
-    margin-bottom: 0;
-  }
-  &.interact{
-
-  }
-}
-
-.table-footer {
-  @include vertical-align;
-}
-
-
-
 .vertical-align {
   @include vertical-align;
-}
-
-.limit {
-  float: right;
-  margin-right: 1em;
 }
 
 .no-pad-left {
@@ -203,10 +204,14 @@ input {
   margin: 0.5em 0;
   font-size: 0.8em;
   width: 150px;
+  float: right;
+  clear: both;
 }
 
 .model {
-  font-size: 0.8em;
+  display: block;
+  float: right;
+  clear: both;
   font-family: monaco, Consolas, 'Lucida Console', monospace;
   text-align: left;
   padding: 0 0 0 10px;
@@ -220,7 +225,9 @@ input {
 }
 
 .migration {
-  font-size: 0.7em;
+  display: block;
+  float: right;
+  clear: both;
   font-family: monaco, Consolas, 'Lucida Console', monospace;
   text-align: left;
   padding: 0 0 0 10px;
@@ -230,6 +237,9 @@ input {
 }
 
 .object {
+  display: block;
+  float: right;
+  clear: both;
   font-size: 0.8em;
   font-family: monaco, Consolas, 'Lucida Console', monospace;
   text-align: left;
@@ -289,6 +299,7 @@ input {
   bottom: 0;
   left: 0;
   right: 0;
+  background: black;
 }
 
 .editor {

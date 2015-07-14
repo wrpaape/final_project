@@ -10,7 +10,6 @@ var SearchBarInspect = React.createClass({
   render: function() {
     var inputs = [];
     var show = this.state.show;
-    var window = this.props.parent;
     var table = this.props.grandparent;
     var currentModel = table.state.currentModel;
     var model = table.state.models[currentModel];
@@ -52,8 +51,8 @@ var SearchBarInspect = React.createClass({
 
     if (show) {
       return (
-        <div className='search-bar'>
-          <div onClick={ this.clicked } className='btn btn-default show-hide search-button'>Search Bar</div>
+        <div data-id={ show } className='wind0w-button wind0w-search search-bar'>
+          <div onClick={ this.clicked.bind(this, show, table) } className='btn btn-default show-hide search-button'>Search Bar</div>
           <form onSubmit={ this.submitted }>
             { inputs }
           </form>
@@ -61,8 +60,8 @@ var SearchBarInspect = React.createClass({
       );
     } else {
       return(
-        <div>
-          <div onClick={ this.clicked.bind(this, show, window) } className='btn btn-primary show-hide search-button'>Search Bar</div>
+        <div data-id={ show } onClick={ this.clicked.bind(this, show, table) } className='wind0w-button wind0w-search btn btn-primary show-hide search-button'>
+          Search Bar
         </div>
       );
     };
@@ -111,14 +110,13 @@ var SearchBarInspect = React.createClass({
       }
     );
   },
-  clicked: function(show, window) {
-    $('.container-inspect').toggleClass('squish-2');
-    var newShow = !show;
-    this.setState({ show: newShow })
-    if (newShow) {
-      window.setState({ enableToggle: false });
-    } else {
-      window.setState({ enableToggle: true });
+  clicked: function(show, table) {
+    var oldPad = table.state.padding;
+    if (oldPad < 285 && !show) {
+      table.setState({ padding: 285 });
+    } else if (oldPad === 285 && show) {
+      table.setState({ padding: 165 });
     }
+    this.setState({ show: !show });
   }
 });
