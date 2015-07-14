@@ -25,7 +25,7 @@ var TableInteract = React.createClass({
     var url = this.props.url;
     var rows = [];
     var data = this.state.data;
-    var loadingClassName = 'loading-' + this.state.loading +' db-table';
+    var loadingClassName = 'loading-' + this.state.loading +' db-table interact';
     var tableClassName = 'table interact lighten-' + this.state.loading;
     var showHead = this.state.showHead;
 

@@ -23,7 +23,6 @@ class ProblemsController < ApplicationController
                "Hold [CMD + SHIFT + RETURN] or [CTR + SHIFT + [RETURN] to reload your results."]
       @url_interact = "/problems/#{params[:id]}/"
     end
-    100.times { puts params[:inspect] }
     if params[:inspect]
       render json: @data_inspect
     elsif params[:interact]

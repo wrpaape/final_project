@@ -29,7 +29,7 @@ var SearchBarInspect = React.createClass({
       inputs.push(
         <div key={ 'search-' + i } className='search'>
           <label htmlFor={ key }>{ key }&nbsp;</label>
-          <SearchInputInspect id={ key } className='search-input' type='text' defaultValue={ searchBy } />
+          <SearchInputInspect id={ key } type='text' className='search-input' defaultValue={ searchBy } />
         </div>
       );
     });
@@ -41,8 +41,8 @@ var SearchBarInspect = React.createClass({
         </div>
         <div className='submit-wrap'>
           <div className='box-wrap'>
-            <SearchInputInspect id='fuzzy' type='checkbox' defaultValue={ fuzzy } />
-            <SearchInputInspect id='case-sens' type='checkbox' defaultValue={ caseSens } />
+            <SearchInputInspect id='fuzzy' type='checkbox' className='' defaultValue={ fuzzy } />
+            <SearchInputInspect id='casesens' type='checkbox' className='' defaultValue={ caseSens } />
           </div>
           <input type='submit' value='search' className='submit btn btn-primary' />
         </div>

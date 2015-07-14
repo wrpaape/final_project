@@ -30,7 +30,7 @@ module HandleData
     search_pairs = search.split("▓")
     split_query = search_pairs.map do |pair|
       key, value = pair.split("░")
-      next if value.nil?
+      next unless value
       value = "%#{value}%" if fuzzy == "on"
       case case_sens
       when "on"
@@ -44,7 +44,7 @@ module HandleData
     sort_pairs = sort.split("▓")
     split_query = sort_pairs.map do |pair|
       key, dir = pair.split("░")
-      next if dir.nil?
+      next unless dir
       "#{key} #{dir}"
     end
     sort_query = split_query.compact.join(", ")

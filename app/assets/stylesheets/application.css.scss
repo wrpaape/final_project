@@ -35,17 +35,7 @@ table {
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  // padding-right: 25px;
   margin-bottom: 36px;
-  // &.squish-0 {
-  //   padding-right: 165px;
-  // }
-  // &.squish-1 {
-  //   padding-right: 295px;
-  // }
-  // &.squish-2 {
-  //   padding-right: 295px;
-  // }
   .paginate {
     div {
       display: inline-block;
@@ -278,6 +268,10 @@ input {
   z-index: 1000;
   opacity: 0.8;
   &.db-table {
+    margin-top: -175px;
+    margin-left: -225px;
+  }
+  &.interact {
     margin-top: -175px;
     margin-left: -225px;
   }
