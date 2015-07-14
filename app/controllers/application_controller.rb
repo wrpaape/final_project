@@ -44,7 +44,13 @@ class ApplicationController < ActionController::Base
     file.write(solution)
     file.close
     output = Open3.capture2e("rake solution").first
-    output_json = JSON.parse(output)
+    error_match = /(?<=rake aborted!\n)((.|\n)*)/.match(output)
+    if error_match.nil?
+      output = JSON.parse(output)
+    else
+      output = { "results"=> error_match.captures.first.split("\n"), "time_exec"=> "N/A" }
+    end
+    output
   end
 
   def get_query_stats
