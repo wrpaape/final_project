@@ -76,7 +76,7 @@ var RowInspect = React.createClass({
     var newPad;
     if (thisRow.attr('class') === '') {
       thisRow.attr('class', 'highlight');
-      newPad = $('.wind0w-object').attr('data-id') === 'true' ? 321 : oldPad;
+      newPad = $('.wind0w-object').attr('data-id') === 'true' ? 300 : oldPad;
       table.setState({
         wind0wObj: obj,
         wind0wObjModel: currentModel,

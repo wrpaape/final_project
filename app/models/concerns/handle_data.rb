@@ -54,4 +54,12 @@ module HandleData
       "length_data"=> self.where(search_query).count
     }
   end
+
+  def where_query(key, value, fuzzy, case_sens, last = false)
+
+  end
+
+  def order_query(key, dir, last = false)
+
+  end
 end

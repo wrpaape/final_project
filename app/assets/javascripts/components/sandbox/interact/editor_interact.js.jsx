@@ -71,10 +71,10 @@ var EditorInteract = React.createClass({
         '(\\.delete)': 'pls don\'t try to change my db',
         '(\\.delete_all)': 'pls don\'t try to change my db',
         '(\\.save)': 'pls don\'t try to change my db',
-        '((^|[\\s.(])User[\\s.())])': 'ACCESS DENIED',
-        '((^|[\\s.(])Problem[\\s.())])': 'ACCESS DENIED',
-        '((^|[\\s.(])SolvedProblem[\\s.())])': 'ACCESS DENIED',
-        '((^|[\\s.(])Environment[\\s.())])': 'ACCESS DENIED'
+        '((^|[\\s.(])User[\\s.())])': 'access denied',
+        '((^|[\\s.(])Problem[\\s.())])': 'access denied',
+        '((^|[\\s.(])SolvedProblem[\\s.())])': 'access denied',
+        '((^|[\\s.(])Environment[\\s.())])': 'access denied'
       }
 
       var warnings = [];
@@ -85,9 +85,37 @@ var EditorInteract = React.createClass({
         }
       });
 
-      if (warnings.length > 0) {
+      var opacityLevel = warnings.length;
+
+      if (opacityLevel > 0) {
+        var nuh = 'nuh';
+        var uh = 'uh';
+
+        var newmanLevel = 1;
+        if (opacityLevel > 2) {
+          newmanLevel = 2;
+          nuh = 'NUH';
+          uh = 'UH';
+          var warnings = warnings.map(function (warning) {
+            warning = warning.toUpperCase();
+            return warning;
+          })
+        }
+        if (opacityLevel > 4) {
+          newmanLevel = 3;
+          nuh = 'STOP IT';
+          uh = 'STOP IT';
+          opacityLevel = 5;
+           var warnings = warnings.map(function (warning) {
+            warning += ' ' + warning + ' ' + warning + ' ' + warning + ' ' + warning;
+            return warning;
+          })
+        }
+
         table.setState({
           newman: true,
+          newmanLevel: newmanLevel,
+          opacityLevel: opacityLevel,
           data: warnings,
           results: {
             'isCorrect': false,
@@ -96,9 +124,9 @@ var EditorInteract = React.createClass({
             'times': {
               'timeExecTotal': 'N/A',
               'timeQueryTotal': 'N/A',
-              'timeQueryMin': 'nuh',
-              'timeQueryMax': 'uh',
-              'timeQueryAvg': 'uh'
+              'timeQueryMin': nuh,
+              'timeQueryMax': uh,
+              'timeQueryAvg': uh
             }
           },
           loading: false
@@ -128,6 +156,8 @@ var EditorInteract = React.createClass({
                 }
               },
               newman: false,
+              newmanLevel: 1,
+              opacityLevel: 0,
               loading: false
             });
             this.setState({ loading: false });

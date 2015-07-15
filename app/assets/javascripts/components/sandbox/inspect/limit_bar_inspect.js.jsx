@@ -2,6 +2,11 @@
 'use strict';
 
 var LimitBarInspect = React.createClass({
+  getInitialState: function () {
+    return {
+      limit: 10
+    };
+  },
   render: function() {
     return(
       <div className='limit'>

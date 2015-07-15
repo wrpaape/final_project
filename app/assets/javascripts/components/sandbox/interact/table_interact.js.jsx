@@ -18,7 +18,9 @@ var TableInteract = React.createClass({
         }
       },
       loading: false,
-      newman: false
+      newman: false,
+      newmanLevel: 1,
+      opacityLevel: 0
     };
   },
   render: function () {
@@ -29,7 +31,7 @@ var TableInteract = React.createClass({
     var loading = this.state.loading;
     var loadingClassName = 'loading-' + loading +' db-table interact';
     var tableClassName = 'table interact lighten-' + loading;
-    var newmanClassName = 'newman-' + this.state.newman;
+    var newmanClassName = 'newman-' + this.state.newman + ' opacity-' + this.state.opacityLevel;
 
     data.forEach(function (obj) {
       dataTypes.push(typeof(obj));
@@ -65,7 +67,7 @@ var TableInteract = React.createClass({
             <EditorInteract parent={ this } />
           </div>
           <div className='col-md-6 results-wrap'>
-            <img src='/assets/newman.gif' className={ newmanClassName } />
+            <img src={ '/assets/newman' + this.state.newmanLevel + '.gif' } className={ newmanClassName } />
             <DisplayResultsInteract parent={ this } />
           </div>
         </div>

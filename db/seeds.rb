@@ -133,6 +133,7 @@ spanning up to 5 generations of 'Person's born between 1880 and 2014.
 
 All of the problems in this set can be solved by querying just the 'people' table.
 """
+env_descrip = env_descrip[1..-2]
 baby_names_and_people = Environment.create(
   title: "baby_names and people",
   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
@@ -148,7 +149,9 @@ of 'people' as one having either 1 'OR' 2 children.
 Complete the 'solution' method so that it returns an array of ActiveRecord 'Person' objects
 representing the 'parents' of a typical household, 'order'ed alphabetically by 'name'.
 """
-
+def answer_avg_household
+  Person.where(:children_count=> [1, 2]).order(:name)
+end
 avg_household = baby_names_and_people.problems.create(
   title: "...and here are our 1.5 kids",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
@@ -165,6 +168,18 @@ of the actors who played their roles.
 Complete the 'solution' method so that it returns an array of ActiveRecord 'Person' objects
 representing the Brady Bunch that is 'order'ed from youngest to oldest.
 """
+prob_instruct = prob_instruct[1..-2]
+def answer_brady_bunch
+  mike_brady = Person.find_by({name: "Mike", children_count: 6})
+  carol_brady = mike_brady.spouse
+  brady_bunch = mike_brady.children.order(yob: :desc).map{ |brady_child|  brady_child }
+  if mike_brady.yob > carol_brady.yob
+    brady_bunch << mike_brady << carol_brady
+  else
+    brady_bunch << carol_brady << mike_brady
+  end
+  brady_bunch
+end
 the_brady_bunch = baby_names_and_people.problems.create(
   title: "The Brady Bunch",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
@@ -179,6 +194,24 @@ that is, except for one lucky individual.
 
 Complete the 'solution' method so that it returns the ActiveRecord 'Person' object representing the Bachelor(ette).
 """
+prob_instruct = prob_instruct[1..-2]
+def answer_bachelor
+  all_singles = Person.where(spouse_id: nil)
+  gens_with_singles = all_singles.pluck(:generation).uniq
+  gens_with_singles.each do |gen|
+    genders_of_singles = all_singles.where(generation: gen).pluck(:gender)
+    m_and_f_available = genders_of_singles.uniq.size == 2 ? true : false
+    if m_and_f_available
+      if genders_of_singles.count("F") > 1
+        the_bachelor = all_singles.find_by({ generation: gen, gender: "M" })
+        return the_bachelor
+      else
+        the_bachelorette = all_singles.find_by({ generation: gen, gender: "F" })
+        return the_bachelorette
+      end
+    end
+  end
+end
 the_bachelor = baby_names_and_people.problems.create(
   title: "The Bachelor(ette?)",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
@@ -205,6 +238,7 @@ representing the laziest parents of each generation, 'order'ed by generation:
 
 [ [gen0_lazy_mother, gen0_lazy_father], ..., ..., [gen3_lazy_mother, gen3_lazy_father] ]
 """
+prob_instruct = prob_instruct[1..-2]
 lazy_parents_award = baby_names_and_people.problems.create(
   title: "The Laziest Parents Award",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
@@ -285,9 +319,7 @@ lazy_parents_award = baby_names_and_people.problems.create(
 admin = User.create(name: "admin", password: "admin", password_confirmation: "admin", admin: true)
 
 
-def answer_avg_household
-  Person.where(:children_count=> [1, 2]).order(:name)
-end
+
 raw_avg_household =
 """
 def solution
@@ -298,23 +330,6 @@ solution
 """
 raw_avg_household = raw_avg_household[1..-2]
 
-def answer_bachelor
-  all_singles = Person.where(spouse_id: nil)
-  gens_with_singles = all_singles.pluck(:generation).uniq
-  gens_with_singles.each do |gen|
-    genders_of_singles = all_singles.where(generation: gen).pluck(:gender)
-    m_and_f_available = genders_of_singles.uniq.size == 2 ? true : false
-    if m_and_f_available
-      if genders_of_singles.count("F") > 1
-        the_bachelor = all_singles.find_by({ generation: gen, gender: "M" })
-        return the_bachelor
-      else
-        the_bachelorette = all_singles.find_by({ generation: gen, gender: "F" })
-        return the_bachelorette
-      end
-    end
-  end
-end
 raw_bachelor =
 """
 def solution
@@ -324,11 +339,11 @@ def solution
     genders_of_singles = all_singles.where(generation: gen).pluck(:gender)
     m_and_f_available = genders_of_singles.uniq.size == 2 ? true : false
     if m_and_f_available
-      if genders_of_singles.count("F") > 1
-        the_bachelor = all_singles.find_by({ generation: gen, gender: "M" })
+      if genders_of_singles.count(\"F\") > 1
+        the_bachelor = all_singles.find_by({ generation: gen, gender: \"M\" })
         return the_bachelor
       else
-        the_bachelorette = all_singles.find_by({ generation: gen, gender: "F" })
+        the_bachelorette = all_singles.find_by({ generation: gen, gender: \"F\" })
         return the_bachelorette
       end
     end
@@ -339,21 +354,10 @@ solution
 """
 raw_bachelor = raw_bachelor[1..-2]
 
-def answer_brady_bunch
-  mike_brady = Person.find_by({name: "Mike", children_count: 6})
-  carol_brady = mike_brady.spouse
-  brady_bunch = mike_brady.children.order(yob: :desc).map{ |brady_child|  brady_child }
-  if mike_brady.yob > carol_brady.yob
-    brady_bunch << mike_brady << carol_brady
-  else
-    brady_bunch << carol_brady << mike_brady
-  end
-  brady_bunch
-end
 raw_brady_bunch =
 """
 def solution
-  mike_brady = Person.find_by({name: "Mike", children_count: 6})
+  mike_brady = Person.find_by({name: \"Mike\", children_count: 6})
   carol_brady = mike_brady.spouse
   brady_bunch = mike_brady.children.order(yob: :desc).map{ |brady_child|  brady_child }
   if mike_brady.yob > carol_brady.yob
