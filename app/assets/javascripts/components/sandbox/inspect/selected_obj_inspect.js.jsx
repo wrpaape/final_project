@@ -77,7 +77,7 @@ var SelectedObjInspect = React.createClass({
       newPad = 321;
     } else if (show) {
       var oldPad = table.state.padding;
-      var newPad = $('.wind0w-search').attr('data-id') === 'true' ? 285 : oldPad;
+      var newPad = $('.wind0w-search').attr('data-id') === 'true' ? 285 : 165;
     } else {
       newPad = oldPad;
     }
