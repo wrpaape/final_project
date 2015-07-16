@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   resources :people
 
   root 'home#home'
+  # root 'home#test'
 end

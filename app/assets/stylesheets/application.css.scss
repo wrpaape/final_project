@@ -13,16 +13,39 @@
   align-items: center;
 }
 
-.home {
+canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background: black;
+}
+
+.home-wrap {
   text-align: center;
-  h1{
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 50%;
+  margin-left: -215px;
+  background: none;
+  z-index: 1000;
+  div {
+    display: block;
+    background: black;
     font-family: monaco, Consolas, 'Lucida Console', monospace;
-  }
-  h3{
-    font-size: 1em;
-  }
-  h2{
-    font-size: 1em;
+    padding: 10px;
+    text-align: center;
+    .presents-home {
+      font-size: 0.8em;
+    }
+    .title-home {
+      font-family: monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 2.5em;
+    }
+    .subtitle-home {
+      font-size: 1.2em;
+    }
   }
 }
 
