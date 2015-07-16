@@ -17,7 +17,7 @@ var SwitchInspectInteract = React.createClass({
     var umlFilePath = '/assets/environment' + this.props.dataInspect.environmentId + '_uml.png';
     var formattedInstructions = [];
     instructions.forEach(function(line, i) {
-      var splitLine = line.split('\'');
+      var splitLine = line.split('|');
       var formattedLine = [];
       splitLine.forEach(function(seg, i) {
         var className = '';
