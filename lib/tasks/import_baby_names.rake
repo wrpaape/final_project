@@ -2,7 +2,7 @@ desc "Imports a CSV file into an ActiveRecord table"
 task :import_baby_names => :environment do
   yobs = (1880..2014).to_a
   yobs.each do |yob|
-    lines = File.new("/Users/Reid/my_projects/tiy/week10/day3/final_project/lib/assets/names/yob#{yob}.txt").readlines
+    lines = File.new("/assets/names/yob#{yob}.txt").readlines
     keys = ["name", "gender", "frequency", "yob"]
     lines.each do |line|
       values = line.strip.split(',') << yob
