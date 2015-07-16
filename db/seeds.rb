@@ -111,11 +111,11 @@ remaining_generations.each do |gen|
         gy_name = gy_baby_name.name
         gy_frequency = gy_baby_name.frequency
         Person.create(name: gy_name,
-                   gender: gy_gender,
-                      yob: gy_yob,
-                frequency: gy_frequency,
-                mother_id: mother.id,
-                father_id: father.id)
+                    gender: gy_gender,
+                       yob: gy_yob,
+                 frequency: gy_frequency,
+                 mother_id: mother.id,
+                 father_id: father.id)
       end
     end
   end
@@ -189,7 +189,7 @@ prob_instruct =
 """
 Within the |people| family tree, all |Person|s were able to find a non-sibling |spouse|
 of the opposite gender who was also born in their |generation|. In other words, all within
-a generation were married off two by two until a lonely pool of |M|s or |F|s remained. All,
+a generation were married off two by two until a lonely pool of |\"M\"|s or |\"F\"|s remained. All,
 that is, except for one lucky individual.
 
 Complete the |solution| method so that it returns the ActiveRecord |Person| object representing the Bachelor(ette).

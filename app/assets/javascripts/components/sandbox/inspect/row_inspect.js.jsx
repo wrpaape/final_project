@@ -26,7 +26,7 @@ var RowInspect = React.createClass({
     var keys = Object.keys(obj);
 
     for (var i = 0; i < keys.length; i++) {
-      var className = i % 2 === 0 ? 'darker' : 'lighter';
+      var className = i % 2 === 0 ? 'darker td' : 'lighter td';
       var val = obj[keys[i]];
 
       if (val === null) {

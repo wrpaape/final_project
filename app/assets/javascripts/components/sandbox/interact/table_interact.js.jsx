@@ -63,16 +63,15 @@ var TableInteract = React.createClass({
       }.bind(this));
     } else {
       data.forEach(function (obj, i) {
-        rows.push(<tr key={ 'misc-row-' + i }><td key={ 'misc-col-' + i }>{ JSON.stringify(obj) }</td></tr>);
+        rows.push(<tr key={ 'misc-row-' + i }><td key={ 'misc-col-' + i } className='td'>{ JSON.stringify(obj) }</td></tr>);
       });
-      rows.push(<tr key={ 'misc-row-empty' }><td key={ 'misc-col-empty' }></td></tr>);
+      rows.push(<tr key={ 'misc-row-empty' }><td key={ 'misc-col-empty' } className='td'></td></tr>);
     }
 
     return(
       <div className='container-interact'>
         <section>
           <table className={ tableClassName }>
-            <Img src='/assets/pig_glow.gif' className={ loadingClassName } />
             <TableHeadInteract parent={ this } show={ showHead } />
             <tbody>
               {rows}
