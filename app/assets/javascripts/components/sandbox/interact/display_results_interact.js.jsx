@@ -27,8 +27,10 @@ var DisplayResultsInteract = React.createClass({
       }
     });
 
+    var isCorrect = table.state.results.isCorrect;
     var showCorrect = this.state.showCorrect;
     var dispCorrect = showCorrect ? results.isCorrect.toString() : '????';
+    var buttonContents = (showCorrect && isCorrect) ? 'submit solution' : 'check answer';
 
     return(
       <div className='display-results'>
@@ -97,7 +99,7 @@ var DisplayResultsInteract = React.createClass({
           </div>
         </div>
         <div className='btn btn-primary' onClick={ this.clicked }>
-          submit solution
+          { buttonContents }
         </div>
       </div>
     );

@@ -34,7 +34,7 @@ table {
 .container-inspect {
   box-sizing: border-box;
   width: 100%;
-  margin-bottom: 36px;
+  margin-top: 36px;
   .paginate {
     div {
       display: inline-block;
@@ -121,7 +121,7 @@ table {
 
 
 .container-interact {
-  margin-bottom: 236px;
+  margin-top: 36px;
 }
 
 body {
@@ -363,6 +363,35 @@ input {
   height: 250px!important;
 }
 
+.sticky-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  div {
+    position: relative;
+    display: inline-block;
+    margin-right: 1em;
+  }
+  button {
+    margin-right: 1em;
+  }
+}
+
+.modal-content {
+  margin-top: 48px;
+  font-size: 1.4em;
+  padding: 1em;
+  background: black;
+  &.image{
+    text-align: center;
+    background: none;
+    image {
+      height: 500px;
+    }
+  }
+}
+
 .sticky-footer {
   position: fixed;
   bottom: 0;
@@ -377,4 +406,8 @@ input {
 
 #editor-content {
   display: none;
+}
+
+.code {
+  color: #33ffdb;
 }

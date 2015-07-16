@@ -46,7 +46,7 @@ genders = ["M", "F"]
   end
 end
 
-remaining_generations = [1,2,3,4]
+remaining_generations = [1, 2, 3, 4]
 
 remaining_generations.each do |gen|
   gx_bachelors_ettes = Person.where(spouse_id: nil).where(generation: gen)
@@ -123,31 +123,31 @@ end
 
 env_descrip =
 """
-This problem set involves the ActiveRecord models 'BabyName' and 'Person'.
+This problem set involves the ActiveRecord models |BabyName| and |Person|.
 
-The corresponding database table 'baby_names' is seeded with data recorded from
+The corresponding database table |baby_names| is seeded with data recorded from
 1880 to 2014 on baby names with over 5 occurences (http://www.ssa.gov/oact/babynames/limits.html).
 
-The second table 'people' is seeded with several interwoven families
-spanning up to 5 generations of 'Person's born between 1880 and 2014.
+The second table |people| is seeded with several interwoven families
+spanning up to 5 generations of |Person|s born between 1880 and 2014.
 
-All of the problems in this set can be solved by querying just the 'people' table.
+All of the problems in this set can be solved by querying just the |people| table.
 """
 env_descrip = env_descrip[1..-2]
 baby_names_and_people = Environment.create(
-  title: "baby_names and people",
+  title: "people and baby_names",
   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  models: { "BabyName"=>"baby_name.rb", "Person"=>"person.rb" }.to_json)
+  models: { "Person"=>"person.rb", "BabyName"=>"baby_name.rb" }.to_json)
 
 prob_instruct =
 """
-'Person's of the 'people' table may have 0 or more children as per the ActiveRecord 'has_many'
-association. Assuming your typical American household houses 1.5 'children', and our database
+|Person|s of the |people| table may have 0 or more children as per the ActiveRecord |has_many|
+association. Assuming your typical American household houses 1.5 |children|, and our database
 refrains from tracking pregnancies and the heights of its tenants, let us define a typical household
-of 'people' as one having either 1 'OR' 2 children.
+of |people| as one having either 1 |or| 2 children.
 
-Complete the 'solution' method so that it returns an array of ActiveRecord 'Person' objects
-representing the 'parents' of a typical household, 'order'ed alphabetically by 'name'.
+Complete the |solution| method so that it returns an array of ActiveRecord |Person| objects
+representing the |mother| and |father| of a typical household, |order|ed alphabetically by |name|.
 """
 def answer_avg_household
   Person.where(:children_count=> [1, 2]).order(:name)
@@ -161,12 +161,12 @@ prob_instruct =
 """
 ~Here's the story, of a lovely lady...~
 
-Hidden within the 'people' table is a 'mother', a 'father', and 6 'children'
-having 'name's of the Brady Bunch and 'yob's corresponding to the years of birth
+Hidden within the |people| table is a |mother|, a |father|, and 6 |children|
+having |name|s of the Brady Bunch and |yob|s corresponding to the years of birth
 of the actors who played their roles.
 
-Complete the 'solution' method so that it returns an array of ActiveRecord 'Person' objects
-representing the Brady Bunch that is 'order'ed from youngest to oldest.
+Complete the |solution| method so that it returns an array of ActiveRecord |Person| objects
+representing the Brady Bunch that is |order|ed from youngest to oldest.
 """
 prob_instruct = prob_instruct[1..-2]
 def answer_brady_bunch
@@ -187,12 +187,12 @@ the_brady_bunch = baby_names_and_people.problems.create(
 
 prob_instruct =
 """
-Within the 'people' family tree, all 'Person's were able to find a non-sibling 'spouse'
-of the opposite gender who was also born in their 'generation'. In other words, all within
-a generation were married off two by two until a lonely pool of 'M's or 'F's remained. All,
+Within the |people| family tree, all |Person|s were able to find a non-sibling |spouse|
+of the opposite gender who was also born in their |generation|. In other words, all within
+a generation were married off two by two until a lonely pool of |M|s or |F|s remained. All,
 that is, except for one lucky individual.
 
-Complete the 'solution' method so that it returns the ActiveRecord 'Person' object representing the Bachelor(ette).
+Complete the |solution| method so that it returns the ActiveRecord |Person| object representing the Bachelor(ette).
 """
 prob_instruct = prob_instruct[1..-2]
 def answer_bachelor
@@ -219,22 +219,22 @@ the_bachelor = baby_names_and_people.problems.create(
 
 prob_instruct =
 """
-Every 'Person' was 'name'd by their 'mother' and 'father' corresponding to a 'BabyName' of the same 'yob'.
-Accordingly, for every 'Person', person_example, born in the year person_example.yob, there were
+Every |Person| was |name|d by their |mother| and |father| corresponding to a |BabyName| of the same |yob|.
+Accordingly, for every |Person|, person_example, born in the year person_example.yob, there were
 
-'BabyName.find_by({ name: person_example.name, gender: person_example.gender, yob: person_example.yob}).frequency - 1'
+|BabyName.find_by({ name: person_example.name, gender: person_example.gender, yob: person_example.yob}).frequency - 1|
 
-other 'Person's born in the States that year sharing the same name. To save you some time and to
-spare our servers the cost of querying a 1825433-entry table thousands of time, the 'frequency' of a 'Person's
-name for their 'gender' and 'yob' has been cached as:
+other |Person|s born in the States that year sharing the same name. To save you some time and to
+spare our servers the cost of querying a 1825433-entry table thousands of times, the |frequency| of a |Person|s
+name for their |gender| and |yob| has been cached as:
 
-'Person.frequency'
+|Person.frequency|
 
-when 'people' was seeded. The Laziest Parents Award will go to the
-'mother' and 'father' of the 'Person' born with the most common name for every generation.
+when |people| was seeded. The Laziest Parents Award will go to the
+|mother| and |father| of the |Person| born with the most common name for every generation.
 
-Complete the 'solution' method so that it returns a 4 element array composed of 2 element arrays of ActiveRecord 'Person' objects
-representing the laziest parents of each generation, 'order'ed by generation:
+Complete the |solution| method so that it returns a 4 element array composed of 2 element arrays of ActiveRecord |Person| objects
+representing the laziest parents of each generation, |order|ed by generation in the following format:
 
 [ [gen0_lazy_mother, gen0_lazy_father], ..., ..., [gen3_lazy_mother, gen3_lazy_father] ]
 """
@@ -244,78 +244,7 @@ lazy_parents_award = baby_names_and_people.problems.create(
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
 
 
-# rails g scaffold environment title:string description:text models:string
-# rails g scaffold problem title:string instructions:text answer:text environment:belongs_to
-# rails g scaffold user name:string password_digest:string admin:boolean problem_count:integer problem:belongs_to environment:belongs_to
-# rails g scaffold solved_problem solution:text sol_char_count:integer time_exec_total:float time_query_total:float time_query_min:float time_query_max:float time_query_avg:float num_queries:integer user:belongs_to problem:belongs_to
 
-# class CreateEnvironments < ActiveRecord::Migration
-#   def change
-#     create_table :environments do |t|
-#       t.string :title
-#       t.text :description
-#       t.string :models
-#       t.integer :problems_count, default: 0
-#       t.integer :users_count, default: 0
-#       t.integer :solved_problems_count, default: 0
-
-#       t.timestamps null: false
-#     end
-#   end
-# end
-
-
-# class CreateProblems < ActiveRecord::Migration
-#   def change
-#     create_table :problems do |t|
-#       t.string :title
-#       t.text :instructions
-#       t.text :answer
-#       t.integer :solved_problems_count, default: 0
-#       t.integer :users_count, default: 0
-#       t.belongs_to :environment, index: true, foreign_key: true, counter_cache: true
-
-#       t.timestamps null: false
-#     end
-#   end
-# end
-
-# class CreateUsers < ActiveRecord::Migration
-#   def change
-#     create_table :users do |t|
-#       t.string :name
-#       t.string :password_digest
-#       t.boolean :admin, default: false
-#       t.integer :problems_count, default: 0
-#       t.integer :solved_problems_count, default: 0
-#       t.integer :environments_cleared, default: 0
-#       t.belongs_to :problem, index: true, foreign_key: true, counter_cache: true
-#       t.belongs_to :environment, index: true, foreign_key: true
-
-#       t.timestamps null: false
-#     end
-#   end
-# end
-
-# class CreateSolvedProblems < ActiveRecord::Migration
-#   def change
-#     create_table :solved_problems do |t|
-#       t.text :solution
-#       t.integer :sol_char_count
-#       t.float :time_exec_total
-#       t.float :time_query_total
-#       t.float :time_query_min
-#       t.float :time_query_max
-#       t.float :time_query_avg
-#       t.integer :num_queries
-#       t.belongs_to :user, index: true, foreign_key: true, counter_cache: true
-#       t.belongs_to :problem, index: true, foreign_key: true, counter_cache: true
-#       t.belongs_to :environment, index: true, foreign_key: true
-
-#       t.timestamps null: false
-#     end
-#   end
-# end
 admin = User.create(name: "admin", password: "admin", password_confirmation: "admin", admin: true)
 
 

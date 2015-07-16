@@ -137,7 +137,7 @@ var EditorInteract = React.createClass({
           {
             interact: true,
             solution: formattedSolution,
-            problem_id: table.props.problemId
+            problem_id: table.props.problem.id
           },
           function(newData) {
             var data = newData.results;

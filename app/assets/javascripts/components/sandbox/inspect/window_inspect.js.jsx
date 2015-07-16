@@ -35,7 +35,6 @@ var WindowInspect = React.createClass({
         <select className='btn btn-primary show-hide' id='current-model' onChange={ this.selected.bind(this, table) } >
           { modelOptions }
         </select>
-        <ModelUmlInspect key='model-uml' grandparent={ table } parent={ this } />
         <ModelFileInspect key='model-file' grandparent={ table } parent={ this } />
         <ModelMigrationInspect key='model-migration' grandparent={ table } parent={ this } />
         <SelectedObjInspect key='selected-obj' grandparent={ table } parent={ this } />
@@ -104,3 +103,4 @@ var WindowInspect = React.createClass({
     }
   }
 });
+        // <ModelUmlInspect key='model-uml' grandparent={ table } parent={ this } />

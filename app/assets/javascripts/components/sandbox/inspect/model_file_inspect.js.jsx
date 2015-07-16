@@ -38,7 +38,7 @@ var ModelFileInspect = React.createClass({
       var paddedModelFile = [];
       var lines = modelFile.split('\n');
       for (var i = 1; i <= lines.length - 1; i++) {
-        var padIndex = lines[i].search(/[a-z]/);
+        var padIndex = lines[i].search(/[a-zA-Z]/);
         var pad = new Array(padIndex + 1).join('~');
         var line = lines[i].slice(padIndex);
         paddedModelFile.push(<span key={ 'model-line-' + i }><span className='pad'>{ pad }</span><span className='model-line'>{ line }</span><br /></span>);
