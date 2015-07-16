@@ -11,8 +11,12 @@ var WindowInspect = React.createClass({
     var show = this.state.show;
     var enableToggle = this.state.enableToggle;
     var table = this.props.parent;
+    var data = table.state.data;
     var availableModels = Object.keys(table.state.models);
+    var currentModel = table.state.currentModel;
     var modelOptions = [];
+    var modelFileName = table.state.models[currentModel].fileName;
+    var migrationFileName = data.migrationFileName.split('\n');
 
     availableModels.forEach(function (model) {
       modelOptions.push(<option key={ model + 'option' } value={ model }>{ model }</option>);
@@ -30,13 +34,20 @@ var WindowInspect = React.createClass({
     }
 
     if (show) {
+      console.log(modelFileName);
     return(
       <div className='inspector-hide' onMouseLeave={ this.mouseLeave.bind(this, show, table, noneSelected) }>
         <select className='btn btn-primary show-hide' id='current-model' onChange={ this.selected.bind(this, table) } >
           { modelOptions }
         </select>
-        <ModelFileInspect key='model-file' grandparent={ table } parent={ this } />
-        <ModelMigrationInspect key='model-migration' grandparent={ table } parent={ this } />
+        <button type='button' className='btn btn-primary show-hide' data-toggle='modal' data-target='.model-file'>
+          { modelFileName }
+        </button>
+        <button type='button' className='btn btn-primary show-hide smaller' data-toggle='modal' data-target='.migration-file'>
+          <span>{ migrationFileName[0] }</span>
+          <br />
+          <span>{ migrationFileName[1] }</span>
+        </button>
         <SelectedObjInspect key='selected-obj' grandparent={ table } parent={ this } />
         <SearchBarInspect key='search-bar' grandparent={ table } parent={ this } />
       </div>
@@ -103,4 +114,6 @@ var WindowInspect = React.createClass({
     }
   }
 });
+        // <ModelFileInspect key='model-file' grandparent={ table } parent={ this } />
+        // <ModelMigrationInspect key='model-migration' grandparent={ table } parent={ this } />
         // <ModelUmlInspect key='model-uml' grandparent={ table } parent={ this } />

@@ -12,6 +12,7 @@ module HandleData
       "query"=> page_and_length["query"],
       "modelFile"=> model_file,
       "migrationFile"=> migration_file,
+      "migrationFileName"=> "YYYYMMDDHHMMSS_\ncreate_#{self.table_name}.rb",
       "keys"=>keys,
       "url"=> url,
       "environmentId"=> environment_id
@@ -23,7 +24,7 @@ module HandleData
   def get_page_and_length(params)
     search = params.fetch("search", "")
     sort = params.fetch("sort", "")
-    limit = params.fetch("limit", "10").to_i
+    limit = params.fetch("limit", "5").to_i
     offset = params.fetch("offset", "0").to_i
     case_sens = params.fetch("case_sens", "")
     fuzzy = params.fetch("fuzzy", "on")

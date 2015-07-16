@@ -24,6 +24,8 @@ var TableInspect = React.createClass({
   render: function () {
     var rows = [];
     var data = this.state.data;
+    var modelFile = data.modelFile;
+    var migrationFile = data.migrationFile;
     var pageData = data.pageData;
     var loadingClassName = 'loading-' + this.state.loading +' db-table';
     var tableClassName = 'table inspect lighten-' + this.state.loading;
@@ -34,6 +36,18 @@ var TableInspect = React.createClass({
     var styles = {
       paddingRight: this.state.padding + 'px'
     };
+
+    var padFile = function(file, type) {
+      var paddedModelFile = [];
+      var lines = file.split('\n');
+      for (var i = 1; i <= lines.length - 1; i++) {
+        var padIndex = lines[i].search(/[a-zA-Z]/);
+        var pad = new Array(padIndex + 1).join('~');
+        var line = lines[i].slice(padIndex);
+        paddedModelFile.push(<span key={ type + '-line-' + i }><span className='pad'>{ pad }</span><span className={ type + '-line' }>{ line }</span><br /></span>);
+      }
+      return paddedModelFile;
+    }
 
     return(
       <div className='container-inspect' style={ styles }>
@@ -54,6 +68,20 @@ var TableInspect = React.createClass({
           </div>
         </div>
         <WindowInspect parent={ this } />
+        <div className='modal fade model-file' tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
+          <div className='modal-dialog modal-lg'>
+            <div className='modal-content model'>
+              { padFile(modelFile, 'model') }
+            </div>
+          </div>
+        </div>
+        <div className='modal fade migration-file' tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
+          <div className='modal-dialog modal-lg'>
+            <div className='modal-content migration'>
+              { padFile(migrationFile, 'migration') }
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

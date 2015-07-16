@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     states = {}
     available_models.each do |model, file_name|
       states[model] = {
-        "limit"=> 10,
+        "limit"=> 5,
         "offset"=> 0,
         "search"=> '',
         "sort"=> '',

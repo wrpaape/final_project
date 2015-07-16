@@ -141,7 +141,7 @@ baby_names_and_people = Environment.create(
 
 prob_instruct =
 """
-|Person|s of the |people| table may have 0 or more children as per the ActiveRecord |has_many|
+|Person|s of the |people| table may have 0 or more |children| as per the ActiveRecord |has_many|
 association. Assuming your typical American household houses 1.5 |children|, and our database
 refrains from tracking pregnancies and the heights of its tenants, let us define a typical household
 of |people| as one having either 1 |or| 2 children.

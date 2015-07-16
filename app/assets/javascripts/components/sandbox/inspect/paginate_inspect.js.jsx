@@ -11,7 +11,7 @@ var PaginateInspect = React.createClass({
     var currentPage = Math.ceil(offset / limit) + 1;
 
     return(
-      <div>
+      <div className='paginate'>
         <div onClick={ this.clicked.bind(this, 1, table, lastPage) } className='btn btn-default next-prev'>First</div>
         <div onClick={ this.clicked.bind(this, currentPage - 1, table, lastPage) } className='btn btn-default next-prev'>Prev</div>
         <input className='btn btn-primary next-prev' type='text' size={ currentPage.toString().length } placeholder={ currentPage } onKeyUp={ this.changed } />

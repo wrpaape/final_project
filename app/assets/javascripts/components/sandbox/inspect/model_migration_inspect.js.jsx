@@ -11,14 +11,15 @@ var ModelMigrationInspect = React.createClass({
     var show = this.state.show;
     var table = this.props.grandparent;
     var data = table.state.data;
-    var migrationFile = data.migrationFile;
+    var migrationFileName = data.migrationFileName;
+
     var paddedMigrationFile = padMigrationFile(migrationFile);
 
     if (show) {
       return(
         <div>
           <div data-id={ show } onClick={ this.clicked.bind(this, show) } className='wind0w-button btn btn-default show-hide'>
-            Migration
+            { migrationFileName }
           </div>
           <section className='migration'>
             { paddedMigrationFile }

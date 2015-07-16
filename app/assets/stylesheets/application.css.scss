@@ -34,16 +34,10 @@ table {
 .container-inspect {
   box-sizing: border-box;
   width: 100%;
-  margin-top: 36px;
-  .paginate {
-    div {
-      display: inline-block;
-      margin-right: 10px;
-    }
-  }
+  margin-top: 40px;
   .inspector-show {
     position: fixed;
-    top: 50px;
+    top: 56px;
     right: 0px;
     font-size: 1.2em;
     width: 25px;
@@ -51,7 +45,7 @@ table {
   }
   .inspector-hide {
     position: fixed;
-    top: 48px;
+    top: 50px;
     margin: 0;
     right: 0;
     padding-right: 15px;
@@ -141,6 +135,7 @@ tr {
 
 section {
   padding: 15px;
+  padding-left: 10px;
 }
 
 input {
@@ -164,10 +159,6 @@ input {
   margin-right: 0;
 }
 
-.next-prev {
-  margin: 0.5em;
-}
-
 .lighter {
   background-color: lighten(black, 10%);
 }
@@ -189,18 +180,19 @@ input {
 }
 
 .show-hide {
-  display: block;
-  margin: 0.5em 0;
-  font-size: 0.8em;
-  width: 150px;
   float: right;
   clear: both;
+  display: block;
+  margin: 5px 0;
+  font-size: 0.8em;
+  box-sizing: border-box;
+  width: 150px;
+  &.smaller {
+    font-size: 0.7em;
+  }
 }
 
 .model {
-  display: block;
-  float: right;
-  clear: both;
   font-family: monaco, Consolas, 'Lucida Console', monospace;
   text-align: left;
   padding: 0 0 0 10px;
@@ -214,9 +206,6 @@ input {
 }
 
 .migration {
-  display: block;
-  float: right;
-  clear: both;
   font-family: monaco, Consolas, 'Lucida Console', monospace;
   text-align: left;
   padding: 0 0 0 10px;
@@ -313,30 +302,6 @@ input {
   }
 }
 
-.query-wrap {
-  display: block;
-  .query {
-    &.model-name {
-      color: #33ffdb;
-    }
-    &.all {
-      color: #33ff33;
-    }
-    &.search {
-      color: #ff33e5;
-    }
-    &.sort {
-      color: #e0ff33;
-    }
-    &.limit {
-      color: #a633ff;
-    }
-    &.offset {
-      color: #ffffff;
-    }
-  }
-}
-
 .display-results {
   text-align: left;
   font-size: 1.4em;
@@ -368,13 +333,14 @@ input {
   top: 0;
   left: 0;
   right: 0;
+  padding: 10px;
   div {
     position: relative;
     display: inline-block;
-    margin-right: 1em;
+    margin-right: 10px;
   }
   button {
-    margin-right: 1em;
+    margin-right: 10px;
   }
 }
 
@@ -386,9 +352,6 @@ input {
   &.image{
     text-align: center;
     background: none;
-    image {
-      height: 500px;
-    }
   }
 }
 
@@ -397,7 +360,44 @@ input {
   bottom: 0;
   left: 0;
   right: 0;
-  background: black;
+  .paginate {
+    display: inline-block;
+    background: none;
+    padding: 10px;
+    padding-bottom: 0px;
+    .next-prev {
+      margin-right: 10px;
+    }
+  }
+  .limit {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .query-wrap {
+    display: block;
+    padding: 10px;
+    background: black;
+    .query {
+      &.model-name {
+        color: #33ffdb;
+      }
+      &.all {
+        color: #33ff33;
+      }
+      &.search {
+        color: #ff33e5;
+      }
+      &.sort {
+        color: #e0ff33;
+      }
+      &.limit {
+        color: #a633ff;
+      }
+      &.offset {
+        color: #ffffff;
+      }
+    }
+  }
 }
 
 .editor {
