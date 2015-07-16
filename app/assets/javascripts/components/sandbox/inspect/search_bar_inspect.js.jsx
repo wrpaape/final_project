@@ -42,7 +42,7 @@ var SearchBarInspect = React.createClass({
         <div className='submit-wrap'>
           <div className='box-wrap'>
             <SearchInputInspect id='fuzzy' type='checkbox' className='' defaultValue={ fuzzy } />
-            <SearchInputInspect id='casesens' type='checkbox' className='' defaultValue={ caseSens } />
+            <SearchInputInspect id='case-sens' type='checkbox' className='' defaultValue={ caseSens } />
           </div>
           <input type='submit' value='search' className='submit btn btn-primary' />
         </div>

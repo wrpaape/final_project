@@ -12,8 +12,8 @@ class ApplicationController < ActionController::Base
         "offset"=> 0,
         "search"=> '',
         "sort"=> '',
-        "caseSens"=> '',
-        "fuzzy"=> 'on',
+        "caseSens"=> 'on',
+        "fuzzy"=> '',
         "fileName"=> file_name
       }
     end

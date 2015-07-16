@@ -2,6 +2,11 @@
 'use strict';
 
 var DisplayResultsInteract = React.createClass({
+  getInitialState: function () {
+    return {
+      showCorrect: false
+    };
+  },
   render: function () {
     var table = this.props.parent;
     var results = table.state.results;
@@ -22,74 +27,82 @@ var DisplayResultsInteract = React.createClass({
       }
     });
 
+    var showCorrect = this.state.showCorrect;
+    var dispCorrect = showCorrect ? results.isCorrect.toString() : '????';
+
     return(
-      <div className='row'>
+      <div className='display-results'>
         <div className='row'>
-          <div className='col-md-6'>
-            Total Number of DB Queries:
+          <div className='type'>
+            &nbsp;&nbsp;&nbsp;&nbsp;total queries:
           </div>
-          <span>
+          <div className='value'>
             { results['numQueries'] }
-          </span>
+          </div>
         </div>
         <div className='row'>
-          <div className='col-md-6'>
-            Shortest Query Time:
+          <div className='type'>
+            &nbsp;&nbsp;&nbsp;shortest query:
           </div>
-          <span>
+          <div className='value'>
             { times['timeQueryMin'] }
-          </span>
+          </div>
         </div>
         <div className='row'>
-          <div className='col-md-6'>
-            Longest Query Time:
+          <div className='type'>
+            &nbsp;&nbsp;&nbsp;&nbsp;longest query:
           </div>
-          <span>
+          <div className='value'>
             { times['timeQueryMax'] }
-          </span>
+          </div>
         </div>
         <div className='row'>
-          <div className='col-md-6'>
-            Average Query Time:
+          <div className='type'>
+            &nbsp;&nbsp;&nbsp;&nbsp;average query:
           </div>
-          <span>
+          <div className='value'>
             { times['timeQueryAvg'] }
-          </span>
+          </div>
         </div>
         <div className='row'>
-          <div className='col-md-6'>
-            Total Query Time:
+          <div className='type'>
+            &nbsp;total query time:
           </div>
-          <span>
+          <div className='value'>
             { times['timeQueryTotal'] }
-          </span>
+          </div>
         </div>
         <div className='row'>
-          <div className='col-md-6'>
-            Total Time to Execute:
+          <div className='type'>
+            &nbsp;&nbsp;time to execute:
           </div>
-          <span>
+          <div className='value'>
             { times['timeExecTotal'] }
-          </span>
+          </div>
         </div>
         <div className='row'>
-          <div className='col-md-6'>
-            Non-Whitespace Character Count:
+          <div className='type'>
+            non-ws char count:
           </div>
-          <span>
+          <div className='value'>
             { results['solCharCount'] }
-          </span>
+          </div>
         </div>
         <div className='row'>
-          <div className='col-md-6'>
-            Answered Correctly:
+          <div className='type'>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;correct:
           </div>
-          <span>
-            { results['isCorrect'].toString() }
-          </span>
+          <div className='value'>
+            { dispCorrect }
+          </div>
+        </div>
+        <div className='btn btn-primary' onClick={ this.clicked }>
+          submit solution
         </div>
       </div>
     );
-
+  },
+  clicked: function () {
+    this.setState({ showCorrect: true });
   }
 });

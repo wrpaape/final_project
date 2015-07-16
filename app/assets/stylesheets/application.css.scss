@@ -32,7 +32,6 @@ table {
 }
 
 .container-inspect {
-  position: relative;
   box-sizing: border-box;
   width: 100%;
   margin-bottom: 36px;
@@ -43,16 +42,16 @@ table {
     }
   }
   .inspector-show {
-    position: absolute;
-    top: 12px;
+    position: fixed;
+    top: 50px;
     right: 0px;
     font-size: 1.2em;
     width: 25px;
     height: 100%;
   }
   .inspector-hide {
-    position: absolute;
-    top: 10px;
+    position: fixed;
+    top: 48px;
     margin: 0;
     right: 0;
     padding-right: 15px;
@@ -102,8 +101,8 @@ table {
           display: inline-block;
           .submit {
             width: 130px;
-            margin-bottom: 20px;
-            height: 36px;
+            margin-bottom: 24px;
+            height: 37px;
           }
           .box-wrap {
             display: inline-block;
@@ -262,7 +261,7 @@ input {
 }
 
 .loading-true {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   z-index: 1000;
@@ -272,12 +271,12 @@ input {
     margin-left: -225px;
   }
   &.interact {
-    position: fixed;
     top: 50%;
     margin-top: -305px;
     margin-left: -225px;
   }
   &.db-editor {
+    position: absolute;
     height: 210px;
     width: 270px;
     margin-top: -105px;
@@ -314,6 +313,50 @@ input {
   }
 }
 
+.query-wrap {
+  display: block;
+  .query {
+    &.model-name {
+      color: #33ffdb;
+    }
+    &.all {
+      color: #33ff33;
+    }
+    &.search {
+      color: #ff33e5;
+    }
+    &.sort {
+      color: #e0ff33;
+    }
+    &.limit {
+      color: #a633ff;
+    }
+    &.offset {
+      color: #ffffff;
+    }
+  }
+}
+
+.display-results {
+  text-align: left;
+  font-size: 1.4em;
+  padding-top: 0.5em;
+  .row {
+    display: block;
+    .type{
+      display: inline-block;
+      color: #33ffdb;
+    }
+    .value{
+      display: inline-block;
+      padding-left: 1em;
+      color: #f46aee;
+    }
+  }
+  .btn {
+    float: right;
+  }
+}
 
 .ace_editor{
   width: 100%!important;
