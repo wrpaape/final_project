@@ -36,13 +36,13 @@ var DisplayResultsInteract = React.createClass({
       <div className='display-results'>
         <div className='row'>
           <div className='type'>
-            &nbsp;&nbsp;&nbsp;&nbsp;total queries:
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total queries:
           </div>
           <div className='value'>
             { results['numQueries'] }
           </div>
         </div>
-        <div className='row'>
+        <div>
           <div className='type'>
             &nbsp;&nbsp;&nbsp;shortest query:
           </div>
@@ -50,7 +50,7 @@ var DisplayResultsInteract = React.createClass({
             { times['timeQueryMin'] }
           </div>
         </div>
-        <div className='row'>
+        <div>
           <div className='type'>
             &nbsp;&nbsp;&nbsp;&nbsp;longest query:
           </div>
@@ -58,7 +58,7 @@ var DisplayResultsInteract = React.createClass({
             { times['timeQueryMax'] }
           </div>
         </div>
-        <div className='row'>
+        <div>
           <div className='type'>
             &nbsp;&nbsp;&nbsp;&nbsp;average query:
           </div>
@@ -66,7 +66,7 @@ var DisplayResultsInteract = React.createClass({
             { times['timeQueryAvg'] }
           </div>
         </div>
-        <div className='row'>
+        <div>
           <div className='type'>
             &nbsp;total query time:
           </div>
@@ -74,7 +74,7 @@ var DisplayResultsInteract = React.createClass({
             { times['timeQueryTotal'] }
           </div>
         </div>
-        <div className='row'>
+        <div>
           <div className='type'>
             &nbsp;&nbsp;time to execute:
           </div>
@@ -82,7 +82,7 @@ var DisplayResultsInteract = React.createClass({
             { times['timeExecTotal'] }
           </div>
         </div>
-        <div className='row'>
+        <div>
           <div className='type'>
             non-ws char count:
           </div>
@@ -90,16 +90,16 @@ var DisplayResultsInteract = React.createClass({
             { results['solCharCount'] }
           </div>
         </div>
-        <div className='row'>
+        <div>
           <div className='type'>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;correct:
           </div>
           <div className='value'>
             { dispCorrect }
           </div>
-        </div>
-        <div className='btn btn-primary' onClick={ this.clicked }>
-          { buttonContents }
+          <div className='btn btn-primary' onClick={ this.clicked }>
+            { buttonContents }
+          </div>
         </div>
       </div>
     );

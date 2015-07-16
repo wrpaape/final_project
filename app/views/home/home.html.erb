@@ -1,11 +1,18 @@
 <canvas id='arb-matrix'></canvas>
-<div class="home-wrap">
-  <div>
+<div class="home-container">
+  <div class="home-wrap">
     <div class="presents-home">tastyham presents...</div>
-    <div class="title-home">ActiveRecord Baby</div>
     <%= image_tag("mvc.gif") %>
+    <div class="title-home">ActiveRecord Baby</div>
+    <button type="button" className="btn btn-primary" data-toggle="modal" data-target=".sign-up">
+      sign up
+    </button>
+    <button type="button" className="btn btn-primary" data-toggle="modal" data-target=".sign-in">
+      sign in
+    </button>
+    <div class="btn btn-primary">visiting</div>
     <div class="subtitle-home">where baby Rails devs hone their db:fu</div>
-    </div>
+  </div>
 </div>
 
 <script type='text/javascript'>

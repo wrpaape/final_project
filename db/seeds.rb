@@ -133,7 +133,6 @@ spanning up to 5 generations of |Person|s born between 1880 and 2014.
 
 All of the problems in this set can be solved by querying just the |people| table.
 """
-env_descrip = env_descrip[1..-2]
 baby_names_and_people = Environment.create(
   title: "people and baby_names",
   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
@@ -168,7 +167,6 @@ of the actors who played their roles.
 Complete the |solution| method so that it returns an array of ActiveRecord |Person| objects
 representing the Brady Bunch that is |order|ed from youngest to oldest.
 """
-prob_instruct = prob_instruct[1..-2]
 def answer_brady_bunch
   mike_brady = Person.find_by({name: "Mike", children_count: 6})
   carol_brady = mike_brady.spouse
@@ -194,7 +192,6 @@ that is, except for one lucky individual.
 
 Complete the |solution| method so that it returns the ActiveRecord |Person| object representing the Bachelor(ette).
 """
-prob_instruct = prob_instruct[1..-2]
 def answer_bachelor
   all_singles = Person.where(spouse_id: nil)
   gens_with_singles = all_singles.pluck(:generation).uniq
@@ -238,7 +235,6 @@ representing the laziest parents of each generation, |order|ed by generation in 
 
 [ [gen0_lazy_mother, gen0_lazy_father], ..., ..., [gen3_lazy_mother, gen3_lazy_father] ]
 """
-prob_instruct = prob_instruct[1..-2]
 lazy_parents_award = baby_names_and_people.problems.create(
   title: "The Laziest Parents Award",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
@@ -257,7 +253,7 @@ end
 
 solution
 """
-raw_avg_household = raw_avg_household[1..-2]
+raw_avg_household = raw_avg_household[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n")
 
 raw_bachelor =
 """
@@ -281,7 +277,7 @@ end
 
 solution
 """
-raw_bachelor = raw_bachelor[1..-2]
+raw_bachelor = raw_bachelor[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n")
 
 raw_brady_bunch =
 """
@@ -299,7 +295,7 @@ end
 
 solution
 """
-raw_brady_bunch = raw_brady_bunch[1..-2]
+raw_brady_bunch = raw_brady_bunch[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n")
 
 SolvedProblem.create(
   solution: raw_bachelor,

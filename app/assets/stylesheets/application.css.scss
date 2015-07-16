@@ -21,30 +21,40 @@ canvas {
   background: black;
 }
 
-.home-wrap {
+.home-container {
   text-align: center;
   position: absolute;
   z-index: 0;
   top: 0;
   left: 50%;
+  height: 100%;
   margin-left: -215px;
-  background: none;
-  z-index: 1000;
-  div {
-    display: block;
-    background: black;
-    font-family: monaco, Consolas, 'Lucida Console', monospace;
-    padding: 10px;
+  background: black;
+  padding: 0 10px;
+
+  .home-wrap {
+    font-family: Menlo, Consolas, 'Lucida Console', monospace;
     text-align: center;
+      margin: 1em;
+
+    img{
+      height: 400px;
+    }
     .presents-home {
       font-size: 0.8em;
     }
     .title-home {
       font-family: monaco, Consolas, 'Lucida Console', monospace;
       font-size: 2.5em;
+      margin-bottom: 0.5em;
+    }
+    .btn-primary {
+      font-size: 0.8em;
+      margin: 0.5em;
     }
     .subtitle-home {
-      font-size: 1.2em;
+      position: absolute;
+      bottom: 15px;
     }
   }
 }
@@ -308,10 +318,14 @@ input {
 
 .results-wrap {
   position: relative;
+  display: inline-block;
+  background: black;
+  width: 50%;
+  margin: 0;
   .newman-true {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 40px;
     z-index: 1000;
     &.opacity-1{
       opacity: 0.2;
@@ -337,7 +351,6 @@ input {
 
 
 .ace_editor{
-
   width: 100%!important;
   height: 250px!important;
 }
@@ -371,7 +384,7 @@ input {
 
 .sticky-footer {
   position: fixed;
-  bottom: 0;
+  bottom: 10px;
   left: 10px;
   right: 10px;
   .paginate {
@@ -414,10 +427,13 @@ input {
   }
   .display-results {
     background: black;
+    display: block;
+    float: left;
+    clear: both;
     text-align: left;
     font-size: 1.4em;
-    padding-top: 0.5em;
-    .row {
+    padding: 10px;
+    div {
       display: block;
       .type{
         display: inline-block;
@@ -430,13 +446,17 @@ input {
       }
     }
     .btn {
-      float: right;
+      position: absolute;
+      top: 10px;
+      right: 10px;
     }
   }
 }
 
 .editor {
   position: relative;
+  display: inline-block;
+  width: 50%;
 }
 
 #editor-content {

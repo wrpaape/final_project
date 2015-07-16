@@ -78,11 +78,11 @@ var TableInteract = React.createClass({
             </tbody>
           </table>
         </section>
-        <div className='row sticky-footer'>
-          <div className='col-md-6 editor'>
+        <div className='sticky-footer'>
+          <div className='editor'>
             <EditorInteract parent={ this } />
           </div>
-          <div className='col-md-6 results-wrap'>
+          <div className='results-wrap'>
             <Img src={ '/assets/newman' + this.state.newmanLevel + '.gif' } className={ newmanClassName } />
             <DisplayResultsInteract parent={ this } />
           </div>
