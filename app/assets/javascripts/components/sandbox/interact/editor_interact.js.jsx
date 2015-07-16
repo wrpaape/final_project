@@ -39,17 +39,32 @@ var EditorInteract = React.createClass({
       var inputSolution = $('#editor-content').val();
       var lastLine = inputSolution.match(/[^\n].*[\n]*$/)[0].replace(/\n*$/,'');
       var methodName = lastLine.split(' ')[0];
-      methodName = methodName === 'end' ? inputSolution.match(/def +([a-zA-Z_\?\d]*)/)[1] : methodName
-      var indentedSolution = inputSolution.replace(/\n/g, '\n  ');
+      methodName = methodName === 'end' ? inputSolution.match(/def +([a-zA-Z_\?\d]*)/)[1] : methodName;
+      var splitSolution = inputSolution.split('\n');
+      for (var i = 0; i < splitSolution.length; i++)  {
+        if (splitSolution[i].search(RegExp('def ' + methodName)) >= 0) {
+          splitSolution.splice(i + 1, 0, '  status = Timeout::timeout(5) do');
+          break;
+        }
+      };
+      var reverseSplitSolution = splitSolution.reverse();
+      for (var i = 0; i < reverseSplitSolution.length; i++) {
+        if (reverseSplitSolution[i].search(RegExp('end')) >= 0) {
+          reverseSplitSolution.splice(i + 1, 0, '  end');
+          break;
+        }
+      };
 
+      inputSolution = reverseSplitSolution.reverse().join('\n');
+      var indentedSolution = inputSolution.replace(/\n/g, '\n  ');
       var putsSolution = indentedSolution.replace(RegExp('\n  ' + methodName, 'g'), '\n  start = Time.now\n  results = ' + methodName + '\n  finish = Time.now\n  results_hash = { "results"=> results, "time_exec"=> finish - start }\n  puts results_hash.to_json');
-      var formattedSolution = 'task :solution => :environment do\n  Rails.logger = Logger.new("log/solution_queries.log")\n  ' + putsSolution + '\nend';
+      var formattedSolution = 'require \'timeout\'\ntask :solution => :environment do\n  Rails.logger = Logger.new("log/solution_queries.log")\n  ' + putsSolution + '\nend';
       var solCharCount = inputSolution.replace(/\n/g,'').replace(/ /g,'').replace(RegExp('def' + methodName),'').replace(RegExp('end' + methodName),'').length;
 
       var blackList = {
         '(`)': 'pls don\'t use backticks',
         '([\\s]system[ (])': 'pls don\`t call \'system\'',
-        '(::)': 'pls don\'t try to access methods you don\'t need',
+        '([^Timeout]::[^Error: execution expired])': 'pls don\'t try to access methods you don\'t need',
         '(\\.send)': 'pls don\'t call \'send\'',
         '(\\.public_send)': 'pls don\'t call \'public_send\'',
         '(%x[-({])': 'pls don\'t use \'%x\'',
@@ -60,11 +75,11 @@ var EditorInteract = React.createClass({
         '([\\s([{.]auto_load)': 'pls don\'t call \'auto_load\'',
         '(IO.)': 'pls don\'t try to access \'IO\'',
         '(File.)': 'pls don\'t try to access \'File\'',
-        '(\\.create)': 'pls don\'t try to change my db',
+        '(\\.create[^d_at])': 'pls don\'t try to change my db',
         '(\\.create_with)': 'pls don\'t try to change my db',
         '(\\.find_or_create_by)': 'pls don\'t try to change my db',
         '(\\.find_or_initialize_by)': 'pls don\'t try to change my db',
-        '(\\.update)': 'pls don\'t try to change my db',
+        '(\\.update[^d_at])': 'pls don\'t try to change my db',
         '(\\.update_all)': 'pls don\'t try to change my db',
         '(\\.destroy)': 'pls don\'t try to change my db',
         '(\\.destroy_all)': 'pls don\'t try to change my db',
@@ -162,7 +177,7 @@ var EditorInteract = React.createClass({
             });
             this.setState({ loading: false });
           }.bind(this)
-        );
+        )
       }
     }
   }

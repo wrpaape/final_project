@@ -21,10 +21,10 @@ var SwitchInspectInteract = React.createClass({
       var formattedLine = [];
       splitLine.forEach(function(seg, i) {
         var className = '';
-        if (i % 2 === 0) {
+        if (i % 2 !== 0) {
           className += 'code';
-          if (seg[0] === seg[0].toUpperCase()) {
-            className += ' model';
+          if (seg[0] !== undefined && seg[0] === seg[0].toUpperCase()) {
+            className += '-model';
           }
         }
         formattedLine.push(<span key={ 'seg' + i } className={ className }>{ seg }</span>);

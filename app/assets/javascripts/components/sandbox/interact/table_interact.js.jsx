@@ -32,6 +32,23 @@ var TableInteract = React.createClass({
     var loadingClassName = 'loading-' + loading +' db-table interact';
     var tableClassName = 'table interact lighten-' + loading;
     var newmanClassName = 'newman-' + this.state.newman + ' opacity-' + this.state.opacityLevel;
+    var timeoutLimit = 5;
+    var objectLimit = 1000;
+    var charLimit = 10000;
+    var keys = Object.keys(data);
+
+    if (data[keys[0]].search(/(Timeout::Error: execution expired)/g) >= 0) {
+      data.unshift('pls have your code execute in ' + timeoutLimit + ' s or less');
+    } else if (keys.length >= objectLimit) {
+      data = ['object length: ' + keys.length, 'pls limit your objects to ' + objectLimit + ' elements or less'];
+    } else {
+      for (var i = 0; i < keys.length; i++) {
+        if (data[keys[i]].length >= charLimit) {
+          data = ['string length: ' + data[keys[i]].length, 'pls limit your strings to ' + charLimit + ' characters or less'];
+          break;
+        }
+      }
+    }
 
     data.forEach(function (obj) {
       dataTypes.push(typeof(obj));
