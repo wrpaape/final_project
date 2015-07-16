@@ -144,6 +144,7 @@ GEM
       execjs
       rails (>= 3.1)
       react-source (~> 0.13)
+    react-rails-img (0.1.1)
     react-source (0.13.3)
     sass (3.4.15)
     sass-rails (5.0.3)
@@ -202,6 +203,7 @@ DEPENDENCIES
   rails-assets-moment!
   rails_12factor
   react-rails
+  react-rails-img
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring

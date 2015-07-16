@@ -54,7 +54,7 @@ var TableInspect = React.createClass({
         <div className='container-table'>
           <section>
             <table className={ tableClassName }>
-              <img src='/assets/pig_glow.gif' className={ loadingClassName } />
+              <Img src='/assets/pig_glow.gif' className={ loadingClassName } />
               <TableHeadInspect parent={ this } />
               <tbody>
                 {rows}

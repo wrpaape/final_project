@@ -72,7 +72,7 @@ var TableInteract = React.createClass({
       <div className='container-interact'>
         <section>
           <table className={ tableClassName }>
-            <img src='/assets/pig_glow.gif' className={ loadingClassName } />
+            <Img src='/assets/pig_glow.gif' className={ loadingClassName } />
             <TableHeadInteract parent={ this } show={ showHead } />
             <tbody>
               {rows}
@@ -84,7 +84,7 @@ var TableInteract = React.createClass({
             <EditorInteract parent={ this } />
           </div>
           <div className='col-md-6 results-wrap'>
-            <img src={ '/assets/newman' + this.state.newmanLevel + '.gif' } className={ newmanClassName } />
+            <Img src={ '/assets/newman' + this.state.newmanLevel + '.gif' } className={ newmanClassName } />
             <DisplayResultsInteract parent={ this } />
           </div>
         </div>

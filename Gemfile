@@ -60,6 +60,7 @@ gem 'bootstrap-sass'
 gem 'react-rails'
 gem 'bcrypt'
 gem 'jquery-ace-rails'
+gem 'react-rails-img'
 
 source "https://rails-assets.org" do
  gem 'rails-assets-moment'

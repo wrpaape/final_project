@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   private
 
   def get_output_json(solution)
-    file = File.open("lib/tasks/solution.rake", "w")
+    file = File.open(Rails.root.join("lib", "tasks", "solution.rake"), "w"))
     file.write(solution)
     file.close
     output = Open3.capture2e("rake solution").first
@@ -59,10 +59,11 @@ class ApplicationController < ActionController::Base
 
   def get_query_stats
     all_times = []
-    IO.foreach("log/solution_queries.log") do |line|
+    log_url = Rails.root.join("log", "solution_queries.log")
+    IO.foreach(log_url) do |line|
       all_times << line.scan(/(?<=\()[^m]*/).first.to_f
      end
-    File.truncate("log/solution_queries.log", 0)
+    File.truncate(log_url, 0)
     num_queries = all_times.size
     return {} if num_queries == 0
     min_time = all_times.min

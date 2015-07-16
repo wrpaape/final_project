@@ -61,7 +61,7 @@ var SwitchInspectInteract = React.createClass({
         <div className='modal fade uml' tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
           <div className='modal-dialog modal-lg'>
             <div className='modal-content image'>
-              <img src={ umlFilePath } className='image-uml'/>
+              <Img src={ umlFilePath } className='image-uml'/>
             </div>
           </div>
         </div>

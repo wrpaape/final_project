@@ -25,6 +25,7 @@
 //= require ace/theme-monokai
 //= require ace/mode-ruby
 //= require jquery-ace.min
+//= require react_rails_img
 
 'use strict';
 
