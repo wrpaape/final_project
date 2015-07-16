@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   private
 
   def get_output_json(solution)
-    file = File.open(Rails.root.join("lib", "tasks", "solution.rake"), "w"))
+    file = File.open(Rails.root.join("lib", "tasks", "solution.rake"), "w")
     file.write(solution)
     file.close
     output = Open3.capture2e("rake solution").first
