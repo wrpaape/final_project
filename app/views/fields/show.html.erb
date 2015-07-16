@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @field.size %>
+</p>
+
+<p>
+  <strong>Upkeep:</strong>
+  <%= @field.upkeep %>
+</p>
+
+<p>
+  <strong>Farm:</strong>
+  <%= @field.farm %>
+</p>
+
+<p>
+  <strong>Crop:</strong>
+  <%= @field.crop %>
+</p>
+
+<%= link_to 'Edit', edit_field_path(@field) %> |
+<%= link_to 'Back', fields_path %>

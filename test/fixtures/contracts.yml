@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  quantity: 1
+  price: 1.5
+  farmer_id: 
+  crop_id: 
+  client_id: 
+
+two:
+  quantity: 1
+  price: 1.5
+  farmer_id: 
+  crop_id: 
+  client_id: 
