@@ -1,15 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  quantity: 1
+  weight: 1.5
   price: 1.5
+  start: 2015-07-17
+  finish: 2015-07-17
   farmer_id: 
   crop_id: 
   client_id: 
 
 two:
-  quantity: 1
+  weight: 1.5
   price: 1.5
+  start: 2015-07-17
+  finish: 2015-07-17
   farmer_id: 
   crop_id: 
   client_id: 

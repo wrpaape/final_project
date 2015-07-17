@@ -5,8 +5,10 @@
 <table>
   <thead>
     <tr>
-      <th>Quantity</th>
+      <th>Weight</th>
       <th>Price</th>
+      <th>Start</th>
+      <th>Finish</th>
       <th>Farmer</th>
       <th>Crop</th>
       <th>Client</th>
@@ -17,8 +19,10 @@
   <tbody>
     <% @contracts.each do |contract| %>
       <tr>
-        <td><%= contract.quantity %></td>
+        <td><%= contract.weight %></td>
         <td><%= contract.price %></td>
+        <td><%= contract.start %></td>
+        <td><%= contract.finish %></td>
         <td><%= contract.farmer %></td>
         <td><%= contract.crop %></td>
         <td><%= contract.client %></td>

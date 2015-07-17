@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  resources :fields
-  resources :farms
   resources :contracts
   resources :crops
+  resources :fields
+  resources :farms
   resources :clients
   resources :farmers
   resources :solved_problems

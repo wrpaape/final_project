@@ -18,7 +18,7 @@ class ContractsControllerTest < ActionController::TestCase
 
   test "should create contract" do
     assert_difference('Contract.count') do
-      post :create, contract: { client_id: @contract.client_id, crop_id: @contract.crop_id, farmer_id: @contract.farmer_id, price: @contract.price, quantity: @contract.quantity }
+      post :create, contract: { client_id: @contract.client_id, crop_id: @contract.crop_id, farmer_id: @contract.farmer_id, finish: @contract.finish, price: @contract.price, start: @contract.start, weight: @contract.weight }
     end
 
     assert_redirected_to contract_path(assigns(:contract))
@@ -35,7 +35,7 @@ class ContractsControllerTest < ActionController::TestCase
   end
 
   test "should update contract" do
-    patch :update, id: @contract, contract: { client_id: @contract.client_id, crop_id: @contract.crop_id, farmer_id: @contract.farmer_id, price: @contract.price, quantity: @contract.quantity }
+    patch :update, id: @contract, contract: { client_id: @contract.client_id, crop_id: @contract.crop_id, farmer_id: @contract.farmer_id, finish: @contract.finish, price: @contract.price, start: @contract.start, weight: @contract.weight }
     assert_redirected_to contract_path(assigns(:contract))
   end
 

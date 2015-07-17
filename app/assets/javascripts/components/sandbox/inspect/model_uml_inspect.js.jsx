@@ -17,7 +17,7 @@ var ModelUmlInspect = React.createClass({
       return(
         <div>
           <div data-id={ show } onClick={ this.clicked.bind(this, show) } className='wind0w-button btn btn-default show-hide'>UML</div>
-          <img src={ umlFilePath } className='image-uml'/>
+          <Img src={ umlFilePath } className='image-uml'/>
         </div>
       );
     } else {

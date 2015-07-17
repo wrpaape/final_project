@@ -126,32 +126,32 @@
 # This problem set involves the ActiveRecord models |BabyName| and |Person|.
 
 # The corresponding database table |baby_names| is seeded with data recorded from
-# 1880 to 2014 on baby names with over 5 occurences (http://www.ssa.gov/oact/babynames/limits.html).
+# 1880 to 2014 on baby names with over 5 occurences in the US.
 
 # The second table |people| is seeded with several interwoven families
 # spanning up to 5 generations of |Person|s born between 1880 and 2014.
 
 # All of the problems in this set can be solved by querying just the |people| table.
 # """
-# baby_names_and_people = Environment.create(
-#   title: "people and baby_names",
+# family_tree = Environment.create(
+#   title: "Family Tree",
 #   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   models: { "Person"=>"person.rb", "BabyName"=>"baby_name.rb" }.to_json)
 
 # prob_instruct =
 # """
-# |Person|s of the |people| table may have 0 or more |children| as per the ActiveRecord |has_many|
+# |Person|s of the |people| table may have 0 or more |children| as per the ActiveRecord |#has_many|
 # association. Assuming your typical American household houses 1.5 |children|, and our database
 # refrains from tracking pregnancies and the heights of its tenants, let us define a typical household
-# of |people| as one having either 1 |or| 2 children.
+# of |people| as one having either 1 |#or| 2 children.
 
-# Complete the |solution| method so that it returns an array of ActiveRecord |Person| objects
-# representing the |mother| and |father| of a typical household, |order|ed alphabetically by |name|.
+# Complete the |##solution| method so that it returns an array of ActiveRecord |Person| objects
+# representing the |mother| and |father| of a typical household, |#order|ed alphabetically by |name|.
 # """
 # def answer_avg_household
 #   Person.where(:children_count=> [1, 2]).order(:name)
 # end
-# avg_household = baby_names_and_people.problems.create(
+# avg_household = family_tree.problems.create(
 #   title: "...and here are our 1.5 kids",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   answer: answer_avg_household.to_json)
@@ -164,7 +164,7 @@
 # having |name|s of the Brady Bunch and |yob|s corresponding to the years of birth
 # of the actors who played their roles.
 
-# Complete the |solution| method so that it returns an array of ActiveRecord |Person| objects
+# Complete the |#solution| method so that it returns an array of ActiveRecord |Person| objects
 # representing the Brady Bunch that is |order|ed from youngest to oldest.
 # """
 # def answer_brady_bunch
@@ -178,7 +178,7 @@
 #   end
 #   brady_bunch
 # end
-# the_brady_bunch = baby_names_and_people.problems.create(
+# the_brady_bunch = family_tree.problems.create(
 #   title: "The Brady Bunch",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   answer: answer_brady_bunch.to_json)
@@ -190,7 +190,7 @@
 # a generation were married off two by two until a lonely pool of |\"M\"|s or |\"F\"|s remained. All,
 # that is, except for one lucky individual.
 
-# Complete the |solution| method so that it returns the ActiveRecord |Person| object representing the Bachelor(ette).
+# Complete the |#solution| method so that it returns the ActiveRecord |Person| object representing the Bachelor(ette).
 # """
 # def answer_bachelor
 #   all_singles = Person.where(spouse_id: nil)
@@ -209,7 +209,7 @@
 #     end
 #   end
 # end
-# the_bachelor = baby_names_and_people.problems.create(
+# the_bachelor = family_tree.problems.create(
 #   title: "The Bachelor(ette?)",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   answer: answer_bachelor.to_json)
@@ -217,25 +217,25 @@
 # prob_instruct =
 # """
 # Every |Person| was |name|d by their |mother| and |father| corresponding to a |BabyName| of the same |yob|.
-# Accordingly, for every |Person|, person_example, born in the year person_example.yob, there were
+# Accordingly, for every |Person|, |#person_example|, born in the year |#person_example.yob|, there were
 
-# |BabyName.find_by({ name: person_example.name, gender: person_example.gender, yob: person_example.yob}).frequency - 1|
+# |#BabyName.find_by({ name: person_example.name, gender: person_example.gender, yob: person_example.yob}).frequency - 1|
 
 # other |Person|s born in the States that year sharing the same name. To save you some time and to
 # spare our servers the cost of querying a 1825433-entry table thousands of times, the |frequency| of a |Person|s
 # name for their |gender| and |yob| has been cached as:
 
-# |Person.frequency|
+# |#Person.frequency|
 
 # when |people| was seeded. The Laziest Parents Award will go to the
 # |mother| and |father| of the |Person| born with the most common name for every generation.
 
-# Complete the |solution| method so that it returns a 4 element array composed of 2 element arrays of ActiveRecord |Person| objects
-# representing the laziest parents of each generation, |order|ed by generation in the following format:
+# Complete the |#solution| method so that it returns a 4 element array composed of 2 element arrays of ActiveRecord |Person| objects
+# representing the laziest parents of each generation, |#order|ed by generation in the following format:
 
-# [ [gen0_lazy_mother, gen0_lazy_father], ..., ..., [gen3_lazy_mother, gen3_lazy_father] ]
+# |#[ [gen0_lazy_mother, gen0_lazy_father], ..., ..., [gen3_lazy_mother, gen3_lazy_father] ]|
 # """
-# lazy_parents_award = baby_names_and_people.problems.create(
+# lazy_parents_award = family_tree.problems.create(
 #   title: "The Laziest Parents Award",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
 
@@ -308,7 +308,7 @@
 #   num_queries: 4,
 #   user_id: admin.id,
 #   problem_id: the_bachelor.id,
-#   environment_id: baby_names_and_people.id)
+#   environment_id: family_tree.id)
 
 crops = {
   "barley"=> {
@@ -480,8 +480,8 @@ crops = {
     "yield"=> 280.0*100
   },
   "apples"=> {
-    "price"=> 34400.0,
-    "yield"=> 0.383
+    "price"=> 0.383,
+    "yield"=> 34400.0
   },
   "strawberries"=> {
     "price"=> 82.9/100,
@@ -489,12 +489,17 @@ crops = {
   }
 }
 
-rand(150..200).times do
-  farmer = Farmer.create(name: Faker::Name.name)
+rand(1500..2000).times do
+  farmer = Farmer.create(name: Faker::Name.first_name)
   Farm.create(farmer_id: farmer.id)
 end
 
-rand(15..20).times do
+if Farmer.count.even?
+  farmer = Farmer.create(name: Faker::Name.first_name)
+  Farm.create(farmer_id: farmer.id)
+end
+
+rand(150..200).times do
   Client.create(name: Faker::Company.name + " #{Faker::Company.suffix}" * rand(2),
              revenue: Math.exp(rand(11..16)))
 end
@@ -504,34 +509,54 @@ crops.each do |crop, hash|
   Crop.create(name: crop, yield: hash["yield"])
   price_hash[crop] = hash["price"]
 end
-puts price_hash.inspect
+
+last_contract_id = 0
+end_of_2013 = Date.new(2013,12,31)
+last_friday_2013 = end_of_2013
+last_friday_2013 -= 1 until last_friday_2013.friday?
+beginning_of_2016 = Date.new(2016)
+first_monday_2016 = beginning_of_2016
+first_monday_2016 += 1 until first_monday_2016.monday?
 
 Client.all.each do |client|
   starting_revenue = client.revenue
   available_revenue = starting_revenue
   loop do
     contract_total = rand(0.0025..0.01) * starting_revenue
-    puts contract_total
-    break unless (contract_total < available_revenue || client.id == 13)
+    break unless (contract_total < available_revenue || client.id == 130)
     crop = Crop.all.sample
     contract_price = rand(0.75..1.25) * price_hash[crop.name]
     contract_weight = contract_total / contract_price
     farmer = Farmer.all.sample
-    Contract.create(weight: contract_weight,
-                     price: contract_price,
-                 farmer_id: farmer.id,
-                 client_id: client.id,
-                   crop_id: crop.id)
+    if (last_contract_id % 500).zero?
+      contract = Contract.create(weight: contract_weight,
+                                  price: contract_price,
+                                  start: rand(last_friday_2013..Date.today),
+                                 finish: rand(1.year.from_now.to_date..first_monday_2016),
+                              farmer_id: farmer.id,
+                              client_id: client.id,
+                                crop_id: crop.id)
+    else
+      contract = Contract.create(weight: contract_weight,
+                                  price: contract_price,
+                                  start: rand(3.years.ago.to_date..Date.today),
+                                 finish: rand(1.year.from_now.to_date..3.years.from_now.to_date),
+                              farmer_id: farmer.id,
+                              client_id: client.id,
+                                crop_id: crop.id)
+    end
+
+    last_contract_id = contract.id
     available_revenue -= contract_total
 
     field_size = contract_weight / crop.yield
-    field_upkeep = rand(0.6..0.9) * contract_price
+    field_upkeep = rand(0.6..0.9) * contract_total
     farm = farmer.farm
     Field.create(size: field_size,
                upkeep: field_upkeep,
               farm_id: farm.id,
               crop_id: crop.id)
-    break if (available_revenue < 0 && client.id == 13)
+    break if (available_revenue < 0 && client.id == 130)
   end
 end
 
@@ -539,8 +564,106 @@ Farmer.all.each do |farmer|
   farm = farmer.farm
   contracts_revenue = farmer.contracts.sum("price * weight")
   fields_cost = farm.fields.sum(:upkeep)
-  farm_maintenance = farmer.id == 169 ? (contracts_revenue - rand(1.1..1.2) * fields_cost) : (contracts_revenue - rand(0.5..0.8) * fields_cost)
+  farm_maintenance = farmer.id == 1069 ? (rand(1.1..1.2) * (contracts_revenue - fields_cost)) : (rand(0.5..0.8) * (contracts_revenue - fields_cost))
   farm.update(maintenance: farm_maintenance)
 end
 
+env_descrip =
+"""
+This problem set involves the ActiveRecord models |Farmer|, |Farm|, |Crop|, |Field|, |Client|, and |Contract|.
+
+The database tables |crops| and |contracts| are seeded based on the USDA's data on latest yields and market prices for a variety of crops.
+
+|clients| is seeded with |revenue| with which to negiotiate |Contract|s.
+
+Every |Contract| |#join|ing a |Farmer| and a |Client| includes a single |Crop|,
+|weight| in lbs required annually, the negiotiated |price| to be paid in $ per lb, a |start| |#Date|,
+and a |finish| |#Date|.
+
+|Farmer|s in turn plant |Crop|s on their |Farm| in |Field|s which will be harvested once every year.
+
+Only one |Crop| is planted on each |Field|, and each |Field| is |size|d to |yield| the |weight| of its |Crop|
+required by its |Contract|.
+
+Each |Field| costs a fixed |upkeep| to maintain based on its |size| and the market price of its |crop|.
+
+In addition to the |upkeep| of their |Farm|'s |Field|s, every |Farmer| must acquire the cost of |maintenance| of its |Farm|
+"""
+old_mac = Environment.create(
+  title: "Old MacDonald has_one Farm",
+  description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  models: { "Farmer"=>"farmer.rb", "Farm"=>"farm.rb", "Crop"=>"crop.rb", "Field"=>"field.rb", "Client"=>"client.rb", "Contract"=>"Contract.rb" }.to_json)
+
+prob_instruct =
+"""
+In the magical realm of SQLville, the terms of each |Contract| remain the same year to year (as does every other value stored) and are never broken.
+Each |Contract| may last 1 year (harvest) or longer. Which |Contract|s were negiotiated to |start| after the last Friday of 2013 |#and| |finish| before the first Monday
+of 2016?
+
+Complete the |#solution| method so that it returns an array of ActiveRecord |Contract| objects representing those that |start|
+and |finish| in the range of |#Date|s provided, |#order|ed by earliest |start| |#Date|.
+"""
+def answer_technically_3_years
+end
+technically_3_years = old_mac.problems.create(
+  title: "Technically 3 Years",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
+  # answer: answer_technically_3_years.to_json)
+
+prob_instruct =
+"""
+A 'booming' |Crop| is one that |#has_many| |Contract|s and |Field|s. Which |Crop| was involved in the highest number of |Contract|s?
+Which |Crop| was planted over the greatest acreage?
+
+Complete the |#solution| method so that it returns an array of two ActiveRecord |Crop| objects representing the |Crop| with the greatest
+|#count| of |Contract|s and the |Crop| with the greatest |#sum|ed |size| of its |Field|s in the following format:
+
+[most_contracts_crop, most_size_crop]
+"""
+def answer_bandwagon_crops
+end
+bandwagon_crops = old_mac.problems.create(
+  title: "Bandwagon Crops",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
+  # answer: answer_bandwagon_crops.to_json)
+
+prob_instruct =
+"""
+Weary of his relentless success, Smitty W has decided to get away from it all to visit his old rural stomping grounds and catch up with his cousin.
+Although their family has a rich history of being the best, it appears all the leftover mediocrity was funneled into Smitty's cousin's |Farm|ing operation.
+
+In terms of |Contract| income, Smitty's cousin is by definition |#average|--an equal number of |Farmer|s will make more money than them this year as will make less than them.
+Who is Smitty's cousin?
+
+Complete the |#solution| method so that it returns the ActiveRecord |Farmer| object representing Smitty W's Cousin.
+"""
+def answer_smitty_w
+end
+technically_3_years = old_mac.problems.create(
+  title: "Old Farmer Werbenjagermanjensen",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
+  # answer: answer_smitty_w.to_json)
+
+
+
+prob_instruct =
+"""
+El Niño + Paleo-preaching tabloids = a great time to grow and sell |Crop|s. All |Farmer|s and |Client|s of the |farmers| and |clients|
+tables are expected to profit this year. All, that is, except for one deplorable duo of database (I tried) instances.
+
+A profitable |Client| will have enough |revenue| to cover the |#sum| of the costs of its |Contract|s
+
+A profitable |Farmer| will cover the |#sum| of the |upkeep| costs of all the |Field|s on their |Farm| plus its cost of |maintenance| with the |#sum| of the money made from their |Contract|s.
+
+Complete the |#solution| method so that it returns an array of two ActiveRecord objects representing the |Farmer|
+and |Client| who will not profit this year in the following format:
+
+|[unprofitable_client, unprofitable_farmer]|
+"""
+def answer_the_red_line
+end
+the_red_line = old_mac.problems.create(
+  title: "The Red Line and the Black Thumb",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
+  # answer: answer_the_red_line.to_json)
 
