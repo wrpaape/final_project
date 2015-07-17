@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150712140920) do
+ActiveRecord::Schema.define(version: 20150716232250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,34 @@ ActiveRecord::Schema.define(version: 20150712140920) do
     t.string   "gender"
     t.integer  "frequency"
     t.integer  "yob"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.string   "name"
+    t.float    "revenue"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "contracts", force: :cascade do |t|
+    t.float    "weight"
+    t.float    "price"
+    t.integer  "farmer_id"
+    t.integer  "crop_id"
+    t.integer  "client_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "contracts", ["client_id"], name: "index_contracts_on_client_id", using: :btree
+  add_index "contracts", ["crop_id"], name: "index_contracts_on_crop_id", using: :btree
+  add_index "contracts", ["farmer_id"], name: "index_contracts_on_farmer_id", using: :btree
+
+  create_table "crops", force: :cascade do |t|
+    t.string   "name"
+    t.float    "yield"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -35,6 +63,33 @@ ActiveRecord::Schema.define(version: 20150712140920) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
   end
+
+  create_table "farmers", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "farms", force: :cascade do |t|
+    t.float    "maintenance"
+    t.integer  "farmer_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "farms", ["farmer_id"], name: "index_farms_on_farmer_id", using: :btree
+
+  create_table "fields", force: :cascade do |t|
+    t.float    "size"
+    t.float    "upkeep"
+    t.integer  "farm_id"
+    t.integer  "crop_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "fields", ["crop_id"], name: "index_fields_on_crop_id", using: :btree
+  add_index "fields", ["farm_id"], name: "index_fields_on_farm_id", using: :btree
 
   create_table "people", force: :cascade do |t|
     t.string   "name"
@@ -104,6 +159,12 @@ ActiveRecord::Schema.define(version: 20150712140920) do
   add_index "users", ["environment_id"], name: "index_users_on_environment_id", using: :btree
   add_index "users", ["problem_id"], name: "index_users_on_problem_id", using: :btree
 
+  add_foreign_key "contracts", "clients"
+  add_foreign_key "contracts", "crops"
+  add_foreign_key "contracts", "farmers"
+  add_foreign_key "farms", "farmers"
+  add_foreign_key "fields", "crops"
+  add_foreign_key "fields", "farms"
   add_foreign_key "problems", "environments"
   add_foreign_key "solved_problems", "environments"
   add_foreign_key "solved_problems", "problems"

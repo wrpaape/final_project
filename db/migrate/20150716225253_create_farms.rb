@@ -8,3 +8,4 @@ class CreateFarms < ActiveRecord::Migration
     end
   end
 end
+
