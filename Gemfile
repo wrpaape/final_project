@@ -52,7 +52,6 @@ end
 
 group :development, :test do
   gem 'pry'
-  gem 'faker'
 end
 
 gem 'bullet', group: :development
@@ -61,6 +60,7 @@ gem 'react-rails'
 gem 'bcrypt'
 gem 'jquery-ace-rails'
 gem 'react-rails-img'
+gem 'faker'
 
 source "https://rails-assets.org" do
  gem 'rails-assets-moment'
