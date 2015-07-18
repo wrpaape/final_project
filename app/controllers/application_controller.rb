@@ -50,6 +50,7 @@ class ApplicationController < ActionController::Base
     elsif error_match.nil?
       output = JSON.parse(output)
       output["results"] = "nil" if output["results"].nil?
+      output["results"] = "[]" if output["results"].empty?
     else
       output = { "results"=> error_match.captures.first.split("\n"), "time_exec"=> "N/A" }
     end

@@ -22,24 +22,21 @@ var SwitchInspectInteract = React.createClass({
       splitLine.forEach(function(seg, i) {
         var className = '';
         if (i % 2 !== 0) {
-          className += 'code';
-          if (seg[0] !== undefined) {
-            if (seg[0] === '#') {
-              className += ' code-ar-keyword';
-              seg = seg.slice(1);
-            } else if (seg[0] === '@') {
-              className += ' code-table';
-              seg = seg.slice(1);
-            } else if (seg[0] === '&') {
-              className += ' code-relation';
-              seg = seg.slice(1);
-            } else if (seg[0] === '*') {
-              className += ' code-attribute';
-              seg = seg.slice(1);
-            } else if (seg[0] === seg[0].toUpperCase()) {
-              className += ' code-model';
-            }
+          className += 'code ';
+          if (seg[0] === '%') {
+            className += 'code-general';
+          } else if (seg[0] === '#') {
+            className += ' code-ar-keyword';
+          } else if (seg[0] === '@') {
+            className += ' code-table';
+          } else if (seg[0] === '&') {
+            className += ' code-relation';
+          } else if (seg[0] === '*') {
+            className += ' code-attribute';
+          } else if (seg[0] === '~') {
+            className += ' code-model';
           }
+          seg = seg.slice(1);
         }
         formattedLine.push(<span key={ 'seg' + i } className={ className }>{ seg }</span>);
       });

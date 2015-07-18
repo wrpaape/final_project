@@ -491,7 +491,9 @@ input {
 }
 
 .code {
-  color: white;
+  &,code-general{
+    color: white;
+  }
   &.code-ar-keyword {
     color: #FF9926;
   }

@@ -1,16 +1,22 @@
 class Person < ActiveRecord::Base
   extend HandleData
 
-  has_many :children, class_name: "Person", foreign_key: "mother_id"
-  has_many :children, class_name: "Person", foreign_key: "father_id"
+  has_many :children_of_father, class_name: 'Person', foreign_key: 'father_id'
+  has_many :children_of_mother, class_name: 'Person', foreign_key: 'mother_id'
   has_one :spouse, class_name: "Person", foreign_key: "spouse_id"
 
-  belongs_to :mother, class_name: "Person"
-  belongs_to :father, class_name: "Person"
   belongs_to :spouse, class_name: "Person"
+  belongs_to :father, class_name: 'Person'
+  belongs_to :mother, class_name: 'Person'
+
+
 
   after_create :increment_children_counter_cache, :set_generation
   before_destroy :decrement_children_counter_cache
+
+  def children
+     children_of_mother.size > children_of_father.size ? children_of_mother : children_of_father
+  end
 
   def self.get_model_file
 """
