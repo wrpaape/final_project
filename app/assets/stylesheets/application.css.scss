@@ -392,8 +392,28 @@ input {
             width: 100%;
           }
         }
-        &.sign-up {
-
+        &.form {
+          text-align: center;
+          form {
+            display: inline-block;
+            text-align: right;
+            .form-query-wrap {
+              margin: 0.25em;
+              display: block;
+            }
+            .actions {
+              margin: 0.25em;
+              input {
+                width: 132px;
+              }
+              &.sign-up {
+                padding-right: 12px;
+              }
+              &.sign-in {
+                padding-right: 59px;
+              }
+            }
+          }
         }
       }
     }
@@ -482,7 +502,7 @@ input {
 }
 
 .code {
-  &,code-general{
+  &.code-general{
     color: white;
   }
   &.code-ar-keyword {
@@ -499,6 +519,9 @@ input {
   }
   &.code-model {
     color: #33ffdb;
+  }
+  &.code-value {
+    color: #f46aee;
   }
 }
 
