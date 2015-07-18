@@ -577,10 +577,10 @@ This problem set involves the ActiveRecord models |Farmer|, |Farm|, |Crop|, |Fie
 
 The database tables |@crops| and |@contracts| are seeded based on the USDA's data on latest yields and market prices for a variety of crops.
 
-|@clients| is seeded with |*revenue| with which to negiotiate |Contract|s.
+|@clients| is seeded with |*revenue| with which to negotiate |Contract|s.
 
 Every |Contract| |#join|ing a |Farmer| and a |Client| includes a single |Crop|,
-|*weight| in lbs required annually, the negiotiated |price| to be paid in $ per lb, a |*start| |#Date|,
+|*weight| in lbs required annually, the negotiated |price| to be paid in $ per lb, a |*start| |#Date|,
 and a |*finish| |#Date|.
 
 |Farmer|s in turn plant |Crop|s on their |&farm| in |Field|s which will be harvested once every year.
@@ -600,7 +600,7 @@ old_mac = Environment.create(
 prob_instruct =
 """
 In the magical realm of SQLville, the terms of each |Contract| remain the same year to year (as does every other value stored) and are never broken.
-Each |Contract| may last 1 year (harvest) or longer. Which |Contract|s were negiotiated to |*start| after the last Friday of 2013 |#and| |*finish| before the first Monday
+Each |Contract| may last 1 year (harvest) or longer. Which |Contract|s were negotiated to |*start| after the last Friday of 2013 |#and| |*finish| before the first Monday
 of 2016?
 
 Complete the |solution| method so that it returns an array of ActiveRecord |Contract| objects representing those that |*start|

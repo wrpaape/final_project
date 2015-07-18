@@ -23,8 +23,7 @@ class CreateFields < ActiveRecord::Migration
 ~~~~t.belongs_to :farm, index: true, foreign_key: true
 ~~~~t.belongs_to :crop, index: true, foreign_key: true
 
-~~~~~~t.timestamps null: false
-~~~~end
+~~~~t.timestamps null: false
 ~~end
 end
 """

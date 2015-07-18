@@ -383,14 +383,29 @@ input {
   }
 }
 
-.modal-content {
-  margin-top: 48px;
-  font-size: 1.4em;
-  padding: 1em;
-  background: black;
-  &.image{
-    text-align: center;
-    background: none;
+.modal {
+  &.fade {
+    padding: 25px!important;
+    .modal-dialog {
+      width: 100%;
+      .modal-content {
+        margin-top: 30px;
+        font-size: 1.4em;
+        padding: 1em;
+        background: black;
+        &.image {
+          margin-right: 0;
+          margin-left: 0;
+          padding: 0;
+          text-align: center;
+          background: none;
+          width: 100%;
+          img {
+            width: 100%;
+          }
+        }
+      }
+    }
   }
 }
 
