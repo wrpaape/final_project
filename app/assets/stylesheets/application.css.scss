@@ -475,11 +475,33 @@ input {
   display: none;
 }
 
-.code-model {
-  color: #33ffdb;
-}
-
-
 .code {
-  color: #ff8afc;
+  color: white;
+  &.code-ar-keyword {
+    color: #FF9926;
+  }
+  &.code-table {
+    color: #E9F934;
+  }
+  &.code-relation {
+    color: #FF4CF6;
+  }
+  &.code-attribute {
+    color: #9544FB;
+  }
+  &.code-model {
+    color: #33ffdb;
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+

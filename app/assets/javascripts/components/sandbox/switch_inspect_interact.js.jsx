@@ -14,7 +14,7 @@ var SwitchInspectInteract = React.createClass({
     var problem = this.props.problem;
     var instructions = problem.instructions.split('\n');
     var buttonContents = showInspect ? 'Enter your Solution' : 'Inspect your Environment';
-    var umlFilePath = '/assets/environment' + '2' + '_uml.png';
+    var umlFilePath = '/assets/environment' + this.props.dataInspect.environmentId + '_uml.png';
     var formattedInstructions = [];
     instructions.forEach(function(line, i) {
       var splitLine = line.split('|');
@@ -23,8 +23,22 @@ var SwitchInspectInteract = React.createClass({
         var className = '';
         if (i % 2 !== 0) {
           className += 'code';
-          if (seg[0] !== undefined && seg[0] === seg[0].toUpperCase()) {
-            className += '-model';
+          if (seg[0] !== undefined) {
+            if (seg[0] === '#') {
+              className += ' code-ar-keyword';
+              seg = seg.slice(1);
+            } else if (seg[0] === '@') {
+              className += ' code-table';
+              seg = seg.slice(1);
+            } else if (seg[0] === '&') {
+              className += ' code-relation';
+              seg = seg.slice(1);
+            } else if (seg[0] === '*') {
+              className += ' code-attribute';
+              seg = seg.slice(1);
+            } else if (seg[0] === seg[0].toUpperCase()) {
+              className += ' code-model';
+            }
           }
         }
         formattedLine.push(<span key={ 'seg' + i } className={ className }>{ seg }</span>);
