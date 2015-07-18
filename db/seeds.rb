@@ -1,7 +1,7 @@
 g0_yobs = (1880..1890).to_a
 genders = ["M", "F"]
 
-10.times do
+30.times do
   g0_yob = g0_yobs.sample
   g0_gender = genders.sample
   g0_baby_name = BabyName.where("yob = #{g0_yob} AND gender = '#{g0_gender}'").sample
@@ -139,6 +139,10 @@ of |~Person|s as one having either 1 |#or| 2 |&children|.
 
 Complete the |%solution| method so that it returns an array of ActiveRecord |~Person| objects
 representing the |&mother| and |&father| of a typical household, |#order|ed alphabetically by |*name|.
+
+Note that |&children| is a custom method (see person.rb in the inspector) and not a pure ActiveRecord relation.
+This method allows for |&mother|s and |&father|s to access the same ActiveRecord collection of |&children| without having to create an additional join table,
+but at the cost of making an additional query for every call.
 """
 def answer_avg_household
   Person.where(:children_count=> [1, 2]).order(:name)
@@ -340,384 +344,384 @@ raw_bachelor = raw_bachelor[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n")
 
 
 
-# crops = {
-#   "barley"=> {
-#     "price"=> 5.62/40,
-#     "yield"=> 71.3*40
-#   },
-#   "beans"=> {
-#     "price"=> 35.8/100,
-#     "yield"=> 1753.0
-#   },
-#   "corn"=> {
-#     "price"=> 4.11/56,
-#     "yield"=> 171*56
-#   },
-#   "cotton"=> {
-#     "price"=> 0.80,
-#     "yield"=> 838.0
-#   },
-#   "flaxseed"=> {
-#     "price"=> 13.2/56,
-#     "yield"=> 21.1*56
-#   },
-#   "hay"=> {
-#     "price"=> 178.0/2000,
-#     "yield"=> 2.45*2000
-#   },
-#   "hops"=> {
-#     "price"=> 1.83,
-#     "yield"=> 1868.0
-#   },
-#   "lentils"=> {
-#     "price"=> 21.1/100,
-#     "yield"=> 1300.0
-#   },
-#   "oats"=> {
-#     "price"=> 3.54/60,
-#     "yield"=> 68.6*60
-#   },
-#   "peanuts"=> {
-#     "price"=> 0.23,
-#     "yield"=> 3932.0
-#   },
-#   "rice"=> {
-#     "price"=> 15.6/100,
-#     "yield"=> 7572.0
-#   },
-#   "grain"=> {
-#     "price"=> 7.41/100,
-#     "yield"=> 67.6*56
-#   },
-#   "soybeans"=> {
-#     "price"=> 12.5/60,
-#     "yield"=> 47.8*60
-#   },
-#   "sunflower"=> {
-#     "price"=> 21.7/100,
-#     "yield"=> 1469.0
-#   },
-#   "wheat"=> {
-#     "price"=> 6.34/100,
-#     "yield"=> 44.3*100
-#   },
-#   "artichokes"=> {
-#     "price"=> 50.4/100,
-#     "yield"=> 130.0*100
-#   },
-#   "asparagus"=> {
-#     "price"=> 111.0/100,
-#     "yield"=> 31.0*100
-#   },
-#   "beets"=> {
-#     "price"=> 65.8/100,
-#     "yield"=> 16.72*2000
-#   },
-#   "broccoli"=> {
-#     "price"=> 35.1/100,
-#     "yield"=> 147.0*100
-#   },
-#   "brussel sprouts"=> {
-#     "price"=> 36.5/100,
-#     "yield"=> 180.0*100
-#   },
-#   "cabbage"=> {
-#     "price"=> 17.7/100,
-#     "yield"=> 357.0*100
-#   },
-#   "carrots"=> {
-#     "price"=> 33.1/100,
-#     "yield"=> 342.0*100
-#   },
-#   "cauliflower"=> {
-#     "price"=> 46.0/100,
-#     "yield"=> 186.0*100
-#   },
-#   "celery"=> {
-#     "price"=> 20.0/100,
-#     "yield"=> 636.0*100
-#   },
-#   "mushrooms"=> {
-#     "price"=> 7.79/6.55,
-#     "yield"=> 6.55*43560
-#   },
-#   "cucumbers"=> {
-#     "price"=> 26.6/100,
-#     "yield"=> 184.0*100
-#   },
-#   "eggplant"=> {
-#     "price"=> 25.1/100,
-#     "yield"=> 291.0*100
-#   },
-#   "escarole & endive"=> {
-#     "price"=> 29.5/100,
-#     "yield"=> 180.0*100
-#   },
-#   "garlic"=> {
-#     "price"=> 68.2/100,
-#     "yield"=> 163.0*100
-#   },
-#   "collard greens"=> {
-#     "price"=> 21.6/100,
-#     "yield"=> 119.0*100
-#   },
-#   "lettuce"=> {
-#     "price"=> 23.1/100,
-#     "yield"=> 366.0*100
-#   },
-#   "cantaloupe"=> {
-#     "price"=> 18.6/100,
-#     "yield"=> 236.0*100
-#   },
-#   "okra"=> {
-#     "price"=> 46.1/100,
-#     "yield"=> 60.0*100
-#   },
-#   "onions"=> {
-#     "price"=> 11.2/100,
-#     "yield"=> 523.0*100
-#   },
-#   "peas"=> {
-#     "price"=> 399.0/2000,
-#     "yield"=> 1.93*2000
-#   },
-#   "bell peppers"=> {
-#     "price"=> 38.9/100,
-#     "yield"=> 330.0*100
-#   },
-#   "pumpkins"=> {
-#     "price"=> 10.6/100,
-#     "yield"=> 266.0*100
-#   },
-#   "radishes"=> {
-#     "price"=> 38.9/100,
-#     "yield"=> 92.0*100
-#   },
-#   "spinach"=> {
-#     "price"=> 40.5/100,
-#     "yield"=> 158.0*100
-#   },
-#   "squash"=> {
-#     "price"=> 38.1/100,
-#     "yield"=> 149.0*100
-#   },
-#   "sweet corn"=> {
-#     "price"=> 26.6/100,
-#     "yield"=> 118.0*100
-#   },
-#   "tomatoes"=> {
-#     "price"=> 42.5/100,
-#     "yield"=> 280.0*100
-#   },
-#   "apples"=> {
-#     "price"=> 0.383,
-#     "yield"=> 34400.0
-#   },
-#   "strawberries"=> {
-#     "price"=> 82.9/100,
-#     "yield"=> 505.0*100
-#   }
-# }
+crops = {
+  "barley"=> {
+    "price"=> 5.62/40,
+    "yield"=> 71.3*40
+  },
+  "beans"=> {
+    "price"=> 35.8/100,
+    "yield"=> 1753.0
+  },
+  "corn"=> {
+    "price"=> 4.11/56,
+    "yield"=> 171*56
+  },
+  "cotton"=> {
+    "price"=> 0.80,
+    "yield"=> 838.0
+  },
+  "flaxseed"=> {
+    "price"=> 13.2/56,
+    "yield"=> 21.1*56
+  },
+  "hay"=> {
+    "price"=> 178.0/2000,
+    "yield"=> 2.45*2000
+  },
+  "hops"=> {
+    "price"=> 1.83,
+    "yield"=> 1868.0
+  },
+  "lentils"=> {
+    "price"=> 21.1/100,
+    "yield"=> 1300.0
+  },
+  "oats"=> {
+    "price"=> 3.54/60,
+    "yield"=> 68.6*60
+  },
+  "peanuts"=> {
+    "price"=> 0.23,
+    "yield"=> 3932.0
+  },
+  "rice"=> {
+    "price"=> 15.6/100,
+    "yield"=> 7572.0
+  },
+  "grain"=> {
+    "price"=> 7.41/100,
+    "yield"=> 67.6*56
+  },
+  "soybeans"=> {
+    "price"=> 12.5/60,
+    "yield"=> 47.8*60
+  },
+  "sunflower"=> {
+    "price"=> 21.7/100,
+    "yield"=> 1469.0
+  },
+  "wheat"=> {
+    "price"=> 6.34/100,
+    "yield"=> 44.3*100
+  },
+  "artichokes"=> {
+    "price"=> 50.4/100,
+    "yield"=> 130.0*100
+  },
+  "asparagus"=> {
+    "price"=> 111.0/100,
+    "yield"=> 31.0*100
+  },
+  "beets"=> {
+    "price"=> 65.8/100,
+    "yield"=> 16.72*2000
+  },
+  "broccoli"=> {
+    "price"=> 35.1/100,
+    "yield"=> 147.0*100
+  },
+  "brussel sprouts"=> {
+    "price"=> 36.5/100,
+    "yield"=> 180.0*100
+  },
+  "cabbage"=> {
+    "price"=> 17.7/100,
+    "yield"=> 357.0*100
+  },
+  "carrots"=> {
+    "price"=> 33.1/100,
+    "yield"=> 342.0*100
+  },
+  "cauliflower"=> {
+    "price"=> 46.0/100,
+    "yield"=> 186.0*100
+  },
+  "celery"=> {
+    "price"=> 20.0/100,
+    "yield"=> 636.0*100
+  },
+  "mushrooms"=> {
+    "price"=> 7.79/6.55,
+    "yield"=> 6.55*43560
+  },
+  "cucumbers"=> {
+    "price"=> 26.6/100,
+    "yield"=> 184.0*100
+  },
+  "eggplant"=> {
+    "price"=> 25.1/100,
+    "yield"=> 291.0*100
+  },
+  "escarole & endive"=> {
+    "price"=> 29.5/100,
+    "yield"=> 180.0*100
+  },
+  "garlic"=> {
+    "price"=> 68.2/100,
+    "yield"=> 163.0*100
+  },
+  "collard greens"=> {
+    "price"=> 21.6/100,
+    "yield"=> 119.0*100
+  },
+  "lettuce"=> {
+    "price"=> 23.1/100,
+    "yield"=> 366.0*100
+  },
+  "cantaloupe"=> {
+    "price"=> 18.6/100,
+    "yield"=> 236.0*100
+  },
+  "okra"=> {
+    "price"=> 46.1/100,
+    "yield"=> 60.0*100
+  },
+  "onions"=> {
+    "price"=> 11.2/100,
+    "yield"=> 523.0*100
+  },
+  "peas"=> {
+    "price"=> 399.0/2000,
+    "yield"=> 1.93*2000
+  },
+  "bell peppers"=> {
+    "price"=> 38.9/100,
+    "yield"=> 330.0*100
+  },
+  "pumpkins"=> {
+    "price"=> 10.6/100,
+    "yield"=> 266.0*100
+  },
+  "radishes"=> {
+    "price"=> 38.9/100,
+    "yield"=> 92.0*100
+  },
+  "spinach"=> {
+    "price"=> 40.5/100,
+    "yield"=> 158.0*100
+  },
+  "squash"=> {
+    "price"=> 38.1/100,
+    "yield"=> 149.0*100
+  },
+  "sweet corn"=> {
+    "price"=> 26.6/100,
+    "yield"=> 118.0*100
+  },
+  "tomatoes"=> {
+    "price"=> 42.5/100,
+    "yield"=> 280.0*100
+  },
+  "apples"=> {
+    "price"=> 0.383,
+    "yield"=> 34400.0
+  },
+  "strawberries"=> {
+    "price"=> 82.9/100,
+    "yield"=> 505.0*100
+  }
+}
 
-# rand(1500..2000).times do
-#   farmer = Farmer.create(name: Faker::Name.first_name)
-#   Farm.create(farmer_id: farmer.id)
-# end
+rand(1500..2000).times do
+  farmer = Farmer.create(name: Faker::Name.first_name)
+  Farm.create(farmer_id: farmer.id)
+end
 
-# if Farmer.count.even?
-#   farmer = Farmer.create(name: Faker::Name.first_name)
-#   Farm.create(farmer_id: farmer.id)
-# end
+if Farmer.count.even?
+  farmer = Farmer.create(name: Faker::Name.first_name)
+  Farm.create(farmer_id: farmer.id)
+end
 
-# rand(150..200).times do
-#   Client.create(name: Faker::Company.name + " #{Faker::Company.suffix}" * rand(2),
-#              revenue: Math.exp(rand(11..16)))
-# end
+rand(150..200).times do
+  Client.create(name: Faker::Company.name + " #{Faker::Company.suffix}" * rand(2),
+             revenue: Math.exp(rand(11..16)))
+end
 
-# price_hash = {}
-# crops.each do |crop, hash|
-#   Crop.create(name: crop, yield: hash["yield"])
-#   price_hash[crop] = hash["price"]
-# end
+price_hash = {}
+crops.each do |crop, hash|
+  Crop.create(name: crop, yield: hash["yield"])
+  price_hash[crop] = hash["price"]
+end
 
-# last_contract_id = 0
-# end_of_2013 = Date.new(2013,12,31)
-# last_friday_2013 = end_of_2013
-# last_friday_2013 -= 1 until last_friday_2013.friday?
-# beginning_of_2016 = Date.new(2016)
-# first_monday_2016 = beginning_of_2016
-# first_monday_2016 += 1 until first_monday_2016.monday?
+last_contract_id = 0
+end_of_2013 = Date.new(2013,12,31)
+last_friday_2013 = end_of_2013
+last_friday_2013 -= 1 until last_friday_2013.friday?
+beginning_of_2016 = Date.new(2016)
+first_monday_2016 = beginning_of_2016
+first_monday_2016 += 1 until first_monday_2016.monday?
 
-# Client.all.each do |client|
-#   starting_revenue = client.revenue
-#   available_revenue = starting_revenue
-#   loop do
-#     contract_total = rand(0.0025..0.01) * starting_revenue
-#     break unless (contract_total < available_revenue || client.id == 130)
-#     crop = Crop.all.sample
-#     contract_price = rand(0.75..1.25) * price_hash[crop.name]
-#     contract_weight = contract_total / contract_price
-#     farmer = Farmer.all.sample
-#     if (last_contract_id % 500).zero?
-#       contract = Contract.create(weight: contract_weight,
-#                                   price: contract_price,
-#                                   start: rand(last_friday_2013..Date.new(2014)),
-#                                  finish: rand(Date.new(2016)..first_monday_2016),
-#                               farmer_id: farmer.id,
-#                               client_id: client.id,
-#                                 crop_id: crop.id)
-#     else
-#       contract = Contract.create(weight: contract_weight,
-#                                   price: contract_price,
-#                                   start: rand(3.years.ago.to_date..Date.today),
-#                                  finish: rand(1.year.from_now.to_date..3.years.from_now.to_date),
-#                               farmer_id: farmer.id,
-#                               client_id: client.id,
-#                                 crop_id: crop.id)
-#     end
+Client.all.each do |client|
+  starting_revenue = client.revenue
+  available_revenue = starting_revenue
+  loop do
+    contract_total = rand(0.0025..0.01) * starting_revenue
+    break unless (contract_total < available_revenue || client.id == 130)
+    crop = Crop.all.sample
+    contract_price = rand(0.75..1.25) * price_hash[crop.name]
+    contract_weight = contract_total / contract_price
+    farmer = Farmer.all.sample
+    if (last_contract_id % 500).zero?
+      contract = Contract.create(weight: contract_weight,
+                                  price: contract_price,
+                                  start: rand(last_friday_2013..Date.new(2014)),
+                                 finish: rand(Date.new(2016)..first_monday_2016),
+                              farmer_id: farmer.id,
+                              client_id: client.id,
+                                crop_id: crop.id)
+    else
+      contract = Contract.create(weight: contract_weight,
+                                  price: contract_price,
+                                  start: rand(3.years.ago.to_date..Date.today),
+                                 finish: rand(1.year.from_now.to_date..3.years.from_now.to_date),
+                              farmer_id: farmer.id,
+                              client_id: client.id,
+                                crop_id: crop.id)
+    end
 
-#     last_contract_id = contract.id
-#     available_revenue -= contract_total
+    last_contract_id = contract.id
+    available_revenue -= contract_total
 
-#     field_size = contract_weight / crop.yield
-#     field_upkeep = rand(0.6..0.9) * contract_total
-#     farm = farmer.farm
-#     Field.create(size: field_size,
-#                upkeep: field_upkeep,
-#               farm_id: farm.id,
-#               crop_id: crop.id)
-#     break if (available_revenue < 0 && client.id == 130)
-#   end
-# end
+    field_size = contract_weight / crop.yield
+    field_upkeep = rand(0.6..0.9) * contract_total
+    farm = farmer.farm
+    Field.create(size: field_size,
+               upkeep: field_upkeep,
+              farm_id: farm.id,
+              crop_id: crop.id)
+    break if (available_revenue < 0 && client.id == 130)
+  end
+end
 
-# Farmer.all.each do |farmer|
-#   farm = farmer.farm
-#   contracts_revenue = farmer.contracts.sum("price * weight")
-#   fields_cost = farm.fields.sum(:upkeep)
-#   farm_maintenance = farmer.id == 1069 ? (rand(1.1..1.2) * (contracts_revenue - fields_cost)) : (rand(0.5..0.8) * (contracts_revenue - fields_cost))
-#   farm.update(maintenance: farm_maintenance)
-# end
+Farmer.all.each do |farmer|
+  farm = farmer.farm
+  contracts_revenue = farmer.contracts.sum("price * weight")
+  fields_cost = farm.fields.sum(:upkeep)
+  farm_maintenance = farmer.id == 1069 ? (rand(1.1..1.2) * (contracts_revenue - fields_cost)) : (rand(0.5..0.8) * (contracts_revenue - fields_cost))
+  farm.update(maintenance: farm_maintenance)
+end
 
-# env_descrip =
-# """
-# This problem set involves the ActiveRecord models |~Farmer|, |~Farm|, |~Crop|, |~Field|, |~Client|, and |~Contract|.
+env_descrip =
+"""
+This problem set involves the ActiveRecord models |~Farmer|, |~Farm|, |~Crop|, |~Field|, |~Client|, and |~Contract|.
 
-# The database tables |@crops| and |@contracts| are seeded based on the USDA's data on latest yields and market prices for a variety of crops.
+The database tables |@crops| and |@contracts| are seeded based on the USDA's data on latest yields and market prices for a variety of crops.
 
-# |@clients| is seeded with |*revenue| with which to negotiate |~Contract|s.
+|@clients| is seeded with |*revenue| with which to negotiate |~Contract|s.
 
-# Every |~Contract| |#join|ing a |~Farmer| and a |~Client| includes a single |~Crop|,
-# |*weight| in lbs required annually, the negotiated |price| to be paid in $ per lb, a |*start| |#Date|,
-# and a |*finish| |#Date|.
+Every |~Contract| |#join|ing a |~Farmer| and a |~Client| includes a single |~Crop|,
+|*weight| in lbs required annually, the negotiated |price| to be paid in $ per lb, a |*start| |#Date|,
+and a |*finish| |#Date|.
 
-# |~Farmer|s in turn plant |~Crop|s on their |&farm| in |~Field|s which will be harvested once every year.
+|~Farmer|s in turn plant |~Crop|s on their |&farm| in |~Field|s which will be harvested once every year.
 
-# Only one |~Crop| is planted on each |~Field|, and each |~Field| is |*size|d to |*yield| the |*weight| of its |&crop|
-# required by its |~Contract|.
+Only one |~Crop| is planted on each |~Field|, and each |~Field| is |*size|d to |*yield| the |*weight| of its |&crop|
+required by its |~Contract|.
 
-# Each |~Field| costs a fixed |*upkeep| to maintain based on its |*size| and the market price of its |&crop|.
+Each |~Field| costs a fixed |*upkeep| to maintain based on its |*size| and the market price of its |&crop|.
 
-# In addition to the |*upkeep| of their |&farm|'s |&fields|, every |~Farmer| must acquire the cost of |*maintenance| of its |&farm|
-# """
-# old_mac = Environment.create(
-#   title: "Old MacDonald has_one Farm",
-#   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   models: { "Farmer"=>"farmer.rb", "Farm"=>"farm.rb", "Crop"=>"crop.rb", "Field"=>"field.rb", "Client"=>"client.rb", "Contract"=>"Contract.rb" }.to_json)
+In addition to the |*upkeep| of their |&farm|'s |&fields|, every |~Farmer| must acquire the cost of |*maintenance| of its |&farm|
+"""
+old_mac = Environment.create(
+  title: "Old MacDonald has_one Farm",
+  description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  models: { "Farmer"=>"farmer.rb", "Farm"=>"farm.rb", "Crop"=>"crop.rb", "Field"=>"field.rb", "Client"=>"client.rb", "Contract"=>"Contract.rb" }.to_json)
 
-# prob_instruct =
-# """
-# In the magical realm of SQLville, the terms of each |~Contract| remain the same year to year (as does every other value stored) and are never broken.
-# Each |~Contract| may last 1 year (harvest) or longer. Which |~Contract|s were negotiated to |*start| after the last Friday of 2013 |#and| |*finish| before the first Monday
-# of 2016?
+prob_instruct =
+"""
+In the magical realm of SQLville, the terms of each |~Contract| remain the same year to year (as does every other value stored) and are never broken.
+Each |~Contract| may last 1 year (harvest) or longer. Which |~Contract|s were negotiated to |*start| after the last Friday of 2013 |#and| |*finish| before the first Monday
+of 2016?
 
-# Complete the |%solution| method so that it returns an array of ActiveRecord |~Contract| objects representing those that |*start|
-# and |*finish| in the range of |#Date|s provided, |#order|ed by earliest |*start| |#Date|.
-# """
-# def answer_technically_3_years
-#   end_of_2013 = Date.new(2013,12,31)
-#   last_friday_2013 = end_of_2013
-#   last_friday_2013 -= 1 until last_friday_2013.friday?
-#   beginning_of_2016 = Date.new(2016)
-#   first_monday_2016 = beginning_of_2016
-#   first_monday_2016 += 1 until first_monday_2016.monday?
+Complete the |%solution| method so that it returns an array of ActiveRecord |~Contract| objects representing those that |*start|
+and |*finish| in the range of |#Date|s provided, |#order|ed by earliest |*start| |#Date|.
+"""
+def answer_technically_3_years
+  end_of_2013 = Date.new(2013,12,31)
+  last_friday_2013 = end_of_2013
+  last_friday_2013 -= 1 until last_friday_2013.friday?
+  beginning_of_2016 = Date.new(2016)
+  first_monday_2016 = beginning_of_2016
+  first_monday_2016 += 1 until first_monday_2016.monday?
 
-#   Contract.where("start > '#{last_friday_2013}' and finish < '#{first_monday_2016}'").order(:start)
-# end
-# technically_3_years = old_mac.problems.create(
-#   title: "Technically 3 Years",
-#   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: answer_technically_3_years.to_json)
+  Contract.where("start > '#{last_friday_2013}' and finish < '#{first_monday_2016}'").order(:start)
+end
+technically_3_years = old_mac.problems.create(
+  title: "Technically 3 Years",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: answer_technically_3_years.to_json)
 
-# prob_instruct =
-# """
-# A 'booming' |~Crop| is one that |#has_many| |&contracts| and |&fields|. Which |~Crop| was involved in the highest number of |~Contract|s?
-# Which |~Crop| was planted over the greatest acreage?
+prob_instruct =
+"""
+A 'booming' |~Crop| is one that |#has_many| |&contracts| and |&fields|. Which |~Crop| was involved in the highest number of |~Contract|s?
+Which |~Crop| was planted over the greatest acreage?
 
-# Complete the |%solution| method so that it returns an array of the |*name|s of the two ActiveRecord |~Crop| objects representing the |~Crop| with the greatest
-# |#count| of |&contracts| and the |~Crop| with the greatest |#sum|med |*size| of its |&fields| in the following format:
+Complete the |%solution| method so that it returns an array of the |*name|s of the two ActiveRecord |~Crop| objects representing the |~Crop| with the greatest
+|#count| of |&contracts| and the |~Crop| with the greatest |#sum|med |*size| of its |&fields| in the following format:
 
-# |%[most_contracts_crop_name, greatest_acreage_crop_name}|
-# """
-# def answer_bandwagon_crops
-#   most_contracts_crop_name = Crop.select("crops.*, COUNT(contracts.id) AS contracts_count").joins(:contracts).group(:id).order("contracts_count DESC").take.name
-#   greatest_acreage_crop_name = Crop.select("crops.*, SUM(fields.size) AS total_acreage").joins(:fields).group(:id).order("total_acreage DESC").take.name
+|%[most_contracts_crop_name, greatest_acreage_crop_name}|
+"""
+def answer_bandwagon_crops
+  most_contracts_crop_name = Crop.select("crops.*, COUNT(contracts.id) AS contracts_count").joins(:contracts).group(:id).order("contracts_count DESC").take.name
+  greatest_acreage_crop_name = Crop.select("crops.*, SUM(fields.size) AS total_acreage").joins(:fields).group(:id).order("total_acreage DESC").take.name
 
-#   [most_contracts_crop_name, greatest_acreage_crop_name]
-# end
-# bandwagon_crops = old_mac.problems.create(
-#   title: "Bandwagon Crops",
-#   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: answer_bandwagon_crops.to_json)
+  [most_contracts_crop_name, greatest_acreage_crop_name]
+end
+bandwagon_crops = old_mac.problems.create(
+  title: "Bandwagon Crops",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: answer_bandwagon_crops.to_json)
 
-# prob_instruct =
-# """
-# Weary of his relentless success, Smitty W has decided to get away from it all to visit his old rural stomping grounds and catch up with his cousin.
-# Although their family has a rich history of being the best, it appears the leftover mediocrity was funneled into Smitty's cousin's |~Farm|ing operation.
+prob_instruct =
+"""
+Weary of his relentless success, Smitty W has decided to get away from it all to visit his old rural stomping grounds and catch up with his cousin.
+Although their family has a rich history of being the best, it appears the leftover mediocrity was funneled into Smitty's cousin's |~Farm|ing operation.
 
-# In terms of |~Contract| income, Smitty's cousin is by definition |#average|--an equal number of |~Farmer|s will make more money than them this year as will make less than them.
-# If the money a |~Farmer| makes = the |#sum| of the money made from their |&clients|, who is Smitty's cousin?
+In terms of |~Contract| income, Smitty's cousin is by definition |#average|--an equal number of |~Farmer|s will make more money than them this year as will make less than them.
+If the money a |~Farmer| makes = the |#sum| of the money made from their |&clients|, who is Smitty's cousin?
 
-# Complete the |%solution| method so that it returns the |*name| of the ActiveRecord |~Farmer| object representing Smitty W's Cousin.
-# """
-# def answer_smitty_w
-#   farmer_w_name = Farmer.select("farmers.*, SUM(contracts.price * contracts.weight) AS total_income").joins(:contracts).group(:id).order("total_income DESC").offset(Farmer.count / 2).take.name
-# end
-# smitty_w = old_mac.problems.create(
-#   title: "Old Farmer Werbenjagermanjensen",
-#   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: answer_smitty_w.to_json)
+Complete the |%solution| method so that it returns the |*name| of the ActiveRecord |~Farmer| object representing Smitty W's Cousin.
+"""
+def answer_smitty_w
+  farmer_w_name = Farmer.select("farmers.*, SUM(contracts.price * contracts.weight) AS total_income").joins(:contracts).group(:id).order("total_income DESC").offset(Farmer.count / 2).take.name
+end
+smitty_w = old_mac.problems.create(
+  title: "Old Farmer Werbenjagermanjensen",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: answer_smitty_w.to_json)
 
-# prob_instruct =
-# """
-# El Niño + paleo-preaching tabloids = a great time to grow and sell |~Crop|s. All |~Farmer|s and |~Client|s of the |@farmers| and |@clients|
-# tables are expected to profit this year. All, that is, except for one deplorable duo of database (I tried) instances.
+prob_instruct =
+"""
+El Niño + paleo-preaching tabloids = a great time to grow and sell |~Crop|s. All |~Farmer|s and |~Client|s of the |@farmers| and |@clients|
+tables are expected to profit this year. All, that is, except for one deplorable duo of database (I tried) instances.
 
-# A profitable |~Client| will have enough |*revenue| to cover the |#sum| of the costs of its |&contracts|.
+A profitable |~Client| will have enough |*revenue| to cover the |#sum| of the costs of its |&contracts|.
 
-# A profitable |~Farmer| will cover the |#sum| of the |*upkeep| costs of all the |~Field|s on their |&farm| plus its cost of |*maintenance| with the |#sum| of the money made from their |&contracts|.
+A profitable |~Farmer| will cover the |#sum| of the |*upkeep| costs of all the |~Field|s on their |&farm| plus its cost of |*maintenance| with the |#sum| of the money made from their |&contracts|.
 
-# Complete the |%solution| method so that it returns an array of the |*name|s of two ActiveRecord objects representing the |~Farmer|
-# and |~Client| who will not profit this year in the following format:
+Complete the |%solution| method so that it returns an array of the |*name|s of two ActiveRecord objects representing the |~Farmer|
+and |~Client| who will not profit this year in the following format:
 
-# |%[unprofitable_client_name, unprofitable_farmer_name]|
-# """
-# def answer_the_red_line
-#   unprofitable_client_name = Client.select("clients.*, (SUM(contracts.price * contracts.weight) - revenue) AS profit").joins(:contracts).group(:id).order("profit").take.name
+|%[unprofitable_client_name, unprofitable_farmer_name]|
+"""
+def answer_the_red_line
+  unprofitable_client_name = Client.select("clients.*, (SUM(contracts.price * contracts.weight) - revenue) AS profit").joins(:contracts).group(:id).order("profit").take.name
 
-#   farmers_w_income = Farmer.select("farmers.*, SUM(contracts.price * contracts.weight) AS total_income").joins(:contracts).group(:id).order(:id)
-#   farms_w_upkeep = Farm.select("farms.*, SUM(fields.upkeep) AS total_upkeep").joins(:fields).group(:id).order(:farmer_id)
+  farmers_w_income = Farmer.select("farmers.*, SUM(contracts.price * contracts.weight) AS total_income").joins(:contracts).group(:id).order(:id)
+  farms_w_upkeep = Farm.select("farms.*, SUM(fields.upkeep) AS total_upkeep").joins(:fields).group(:id).order(:farmer_id)
 
-#   farmers_w_income.each_with_index do |farmer, index|
-#     farm = farms_w_upkeep[index]
-#     profit = farmer.total_income - farm.total_upkeep - farm.maintenance
-#     if profit < 0
-#       unprofitable_farmer_name = farmer.name
-#       return [unprofitable_client_name, unprofitable_farmer_name]
-#     end
-#   end
-# end
-# the_red_line = old_mac.problems.create(
-#   title: "The Red Line and the Black Thumb",
-#   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: answer_the_red_line.to_json)
+  farmers_w_income.each_with_index do |farmer, index|
+    farm = farms_w_upkeep[index]
+    profit = farmer.total_income - farm.total_upkeep - farm.maintenance
+    if profit < 0
+      unprofitable_farmer_name = farmer.name
+      return [unprofitable_client_name, unprofitable_farmer_name]
+    end
+  end
+end
+the_red_line = old_mac.problems.create(
+  title: "The Red Line and the Black Thumb",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: answer_the_red_line.to_json)
 

@@ -17,22 +17,23 @@
 <div class="modal fade sign-up" tab-index="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <%= form_for(@user) do |f|  %>
-        <span class="model">User</span>
-        <span class="method">.create(</span>
-        <label for="name" class="name">name:</span>
-        <%= f.text_field  :todo_item %>
-        <%= f.submit "Add todo", class: "btn btn-primary" %>
-      <%end%>
-        <span class="value">
-          <input class={ this.props.className } id={ this.props.id } type="text">
-          </input>
-        </span>
-      </div>
-      <div class="password">
-      </div>
-      <div>
-      </div class="password-confirmation">
+      <h2>Sign up</h2>
+
+      <%= form_for(@user, url: registration_path(@user)) do |f| %>
+        <div class="field">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, autocomplete: "off" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password_confirmation %><br />
+          <%= f.password_field :password_confirmation, autocomplete: "off" %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Sign up" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

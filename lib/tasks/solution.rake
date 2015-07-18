@@ -3,7 +3,7 @@ task :solution => :environment do
   Rails.logger = Logger.new(Rails.root.join("log", "solution_queries.log"))
   def solution
     status = Timeout::timeout(5) do
-    Person.take.children
+    Person.take.father
     end
   end
   

@@ -61,8 +61,9 @@ gem 'bcrypt'
 gem 'jquery-ace-rails'
 gem 'react-rails-img'
 gem 'faker'
+gem 'devise'
 
 source "https://rails-assets.org" do
- gem 'rails-assets-moment'
- gem 'rails-assets-datetimepicker'
+  gem 'rails-assets-moment'
+  gem 'rails-assets-datetimepicker'
 end
