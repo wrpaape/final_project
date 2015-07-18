@@ -25,6 +25,8 @@ var SwitchInspectInteract = React.createClass({
           className += 'code ';
           if (seg[0] === '%') {
             className += 'code-general';
+          } else if (seg[0] === '?') {
+            className += ' code-sql';
           } else if (seg[0] === '#') {
             className += ' code-ar-keyword';
           } else if (seg[0] === '@') {

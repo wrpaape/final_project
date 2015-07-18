@@ -404,13 +404,13 @@ input {
             .actions {
               margin: 0.25em;
               input {
-                width: 132px;
+                width: 156px;
               }
               &.sign-up {
                 padding-right: 12px;
               }
               &.sign-in {
-                padding-right: 59px;
+                padding-right: 83px;
               }
             }
           }
@@ -506,19 +506,27 @@ input {
     color: white;
   }
   &.code-ar-keyword {
-    color: #FF9926;
+    // color: #FF9926;
+    color: #00F9A7;
+  }
+  &.code-sql {
+    color: #E6DB74;
   }
   &.code-table {
-    color: #E9F934;
+    // color: #E9F934;
+    color: #FFDD00;
   }
   &.code-relation {
-    color: #FF4CF6;
+    // color: #FF4CF6;
+    color: #FF628C;
   }
   &.code-attribute {
-    color: #9544FB;
+    // color: #9544FB;
+    color: #AE81FF;
   }
   &.code-model {
-    color: #33ffdb;
+    // color: #33ffdb;
+    color: #66D9EF;
   }
   &.code-value {
     color: #f46aee;
