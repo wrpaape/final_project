@@ -4,12 +4,11 @@
 var Environments = React.createClass({
   getInitialState: function() {
     return {
-      showInspect: true,
-      showInteract: false,
-      currentEnvironment: null
+      currentEnv: this.props.environments[0]
     };
   },
   render: function() {
+    var parent = this;
     var envs = [];
     var environments = this.props.environments;
     environments.forEach(function(env) {
@@ -44,7 +43,7 @@ var Environments = React.createClass({
         formattedDescrip.push(<p key={ 'env-' + env.id + '-line' + i }>{ formattedLine }</p>);
       });
       envs.push(
-        <div className='env-wrap' key={'env-' +env.id }>
+        <div className='env-wrap' key={'env-' + env.id }>
           <button type='button' className='btn btn-primary' data-toggle='modal' data-target={'.env-' + env.id }>
             { env.title }
           </button>
@@ -52,6 +51,9 @@ var Environments = React.createClass({
             <div className='modal-dialog modal-lg'>
               <div className='modal-content'>
                 { formattedDescrip }
+                <div onClick={ parent.clicked(env) }>
+                  hello
+                </div>
               </div>
             </div>
           </div>
@@ -65,12 +67,7 @@ var Environments = React.createClass({
       </div>
     );
   },
-  switched: function() {
-    var newShowInspect = !this.state.showInspect;
-    var newShowInteract = !this.state.showInteract;
-    this.setState({
-      showInspect: newShowInspect,
-      showInteract: newShowInteract
-    });
+  clicked: function() {
+    console.log(this);
   }
 });
