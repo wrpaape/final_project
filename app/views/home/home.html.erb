@@ -4,32 +4,49 @@
     <div class="presents-home">tastyham presents...</div>
     <%= image_tag("mvc.gif") %>
     <div class="title-home">ActiveRecord Baby</div>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".sign-up">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".sign-up-form">
       sign up
     </button>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".sign-in">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".sign-in-form">
       sign in
     </button>
     <div class="btn btn-primary">visiting</div>
     <div class="subtitle-home">where baby Rails devs hone their db:fu</div>
   </div>
 </div>
-<div class="modal fade sign-up" tab-index="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="sign-up-form modal fade" tab-index="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <h2>Sign up</h2>
-
       <%= form_for(@user, url: registration_path(@user)) do |f| %>
+        <span>
+          User
+        </span>
+        <span>
+          .create(
+        </span>
         <div class="field">
-          <%= f.label :password %><br />
+          <%= f.label :name, "name: " %>
+          <%= f.text_field :name, autocomplete: "off" %>
+        </div>
+        <span>
+          ,
+        </span>
+        <br />
+        <div class="field">
+          <%= f.label :password, "password: " %>
           <%= f.password_field :password, autocomplete: "off" %>
         </div>
-
+        <span>
+          ,
+        </span>
+        <br />
         <div class="field">
-          <%= f.label :password_confirmation %><br />
+          <%= f.label :password_confirmation, "password_confirmation: " %>
           <%= f.password_field :password_confirmation, autocomplete: "off" %>
         </div>
-
+        <span>
+          )
+        </span>
         <div class="actions">
           <%= f.submit "Sign up" %>
         </div>
@@ -37,7 +54,7 @@
     </div>
   </div>
 </div>
-<div class="modal fade sign-in" tab-index="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="sign-in-form modal fade" tab-index="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       "hi"

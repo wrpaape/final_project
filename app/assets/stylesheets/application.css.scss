@@ -21,18 +21,6 @@ canvas {
   background: black;
 }
 
-.modal{
-  &.fade {
-    position: fixed;
-    &.sign-in {
-      // position:
-    }
-    &.sign-up {
-
-    }
-  }
-}
-
 .home-container {
   text-align: center;
   position: absolute;
@@ -65,8 +53,7 @@ canvas {
       margin: 0.5em;
     }
     .subtitle-home {
-      position: absolute;
-      bottom: 15px;
+      margin-top: 58px;
     }
   }
 }
@@ -385,6 +372,7 @@ input {
 
 .modal {
   &.fade {
+    position: fixed;
     padding: 25px!important;
     .modal-dialog {
       width: 100%;
@@ -403,6 +391,9 @@ input {
           img {
             width: 100%;
           }
+        }
+        &.sign-up {
+
         }
       }
     }
