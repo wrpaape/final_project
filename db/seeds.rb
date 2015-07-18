@@ -531,8 +531,8 @@ Client.all.each do |client|
     if (last_contract_id % 500).zero?
       contract = Contract.create(weight: contract_weight,
                                   price: contract_price,
-                                  start: rand(last_friday_2013..Date.today),
-                                 finish: rand(1.year.from_now.to_date..first_monday_2016),
+                                  start: rand(last_friday_2013..Date.new(2014)),
+                                 finish: rand(Date.new(2016)..first_monday_2016),
                               farmer_id: farmer.id,
                               client_id: client.id,
                                 crop_id: crop.id)
@@ -604,11 +604,19 @@ Complete the |#solution| method so that it returns an array of ActiveRecord |Con
 and |finish| in the range of |#Date|s provided, |#order|ed by earliest |start| |#Date|.
 """
 def answer_technically_3_years
+  end_of_2013 = Date.new(2013,12,31)
+  last_friday_2013 = end_of_2013
+  last_friday_2013 -= 1 until last_friday_2013.friday?
+  beginning_of_2016 = Date.new(2016)
+  first_monday_2016 = beginning_of_2016
+  first_monday_2016 += 1 until first_monday_2016.monday?
+
+  Contract.where("start > '#{last_friday_2013}' and finish < '#{first_monday_2016}'").order(:start)
 end
 technically_3_years = old_mac.problems.create(
   title: "Technically 3 Years",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
-  # answer: answer_technically_3_years.to_json)
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: answer_technically_3_years.to_json)
 
 prob_instruct =
 """
@@ -618,19 +626,23 @@ Which |Crop| was planted over the greatest acreage?
 Complete the |#solution| method so that it returns an array of two ActiveRecord |Crop| objects representing the |Crop| with the greatest
 |#count| of |Contract|s and the |Crop| with the greatest |#sum|ed |size| of its |Field|s in the following format:
 
-[most_contracts_crop, most_size_crop]
+[most_contracts_crop, greatest_acreage_crop]
 """
 def answer_bandwagon_crops
+  most_contracts_crop = Crop.select("crops.*, COUNT(contracts.id) AS contracts_count").joins(:contracts).group(:id).order("contracts_count DESC").take
+  greatest_acreage_crop = Crop.select("crops.*, SUM(fields.size) AS total_acreage").joins(:fields).group(:id).order("total_acreage DESC").take
+
+  [most_contracts_crop, greatest_acreage_crop]
 end
 bandwagon_crops = old_mac.problems.create(
   title: "Bandwagon Crops",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
-  # answer: answer_bandwagon_crops.to_json)
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: answer_bandwagon_crops.to_json)
 
 prob_instruct =
 """
 Weary of his relentless success, Smitty W has decided to get away from it all to visit his old rural stomping grounds and catch up with his cousin.
-Although their family has a rich history of being the best, it appears all the leftover mediocrity was funneled into Smitty's cousin's |Farm|ing operation.
+Although their family has a rich history of being the best, it appears the leftover mediocrity was funneled into Smitty's cousin's |Farm|ing operation.
 
 In terms of |Contract| income, Smitty's cousin is by definition |#average|--an equal number of |Farmer|s will make more money than them this year as will make less than them.
 Who is Smitty's cousin?
@@ -638,17 +650,16 @@ Who is Smitty's cousin?
 Complete the |#solution| method so that it returns the ActiveRecord |Farmer| object representing Smitty W's Cousin.
 """
 def answer_smitty_w
+  farmer_w = Farmer.select("farmers.*, SUM(contracts.price * contracts.weight) AS total_income").joins(:contracts).group(:id).order("total_income DESC").offset(Farmer.count / 2).take
 end
 technically_3_years = old_mac.problems.create(
   title: "Old Farmer Werbenjagermanjensen",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
-  # answer: answer_smitty_w.to_json)
-
-
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: answer_smitty_w.to_json)
 
 prob_instruct =
 """
-El Niño + Paleo-preaching tabloids = a great time to grow and sell |Crop|s. All |Farmer|s and |Client|s of the |farmers| and |clients|
+El Niño + paleo-preaching tabloids = a great time to grow and sell |Crop|s. All |Farmer|s and |Client|s of the |farmers| and |clients|
 tables are expected to profit this year. All, that is, except for one deplorable duo of database (I tried) instances.
 
 A profitable |Client| will have enough |revenue| to cover the |#sum| of the costs of its |Contract|s
@@ -661,9 +672,22 @@ and |Client| who will not profit this year in the following format:
 |[unprofitable_client, unprofitable_farmer]|
 """
 def answer_the_red_line
+  unprofitable_client = Client.select("clients.*, (SUM(contracts.price * contracts.weight) - revenue) AS profit").joins(:contracts).group(:id).order("profit").take
+
+  farmers_w_income = Farmer.select("farmers.*, SUM(contracts.price * contracts.weight) AS total_income").joins(:contracts).group(:id).order(:id)
+  farms_w_upkeep = Farm.select("farms.*, SUM(fields.upkeep) AS total_upkeep").joins(:fields).group(:id).order(:farmer_id)
+
+  farmers_w_income.each_with_index do |farmer, index|
+    farm = farms_w_upkeep[index]
+    profit = farmer.total_income - farm.total_upkeep - farm.maintenance
+    if profit < 0
+      unprofitable_farmer = farmer
+      return [unprofitable_client, unprofitable_farmer]
+    end
+  end
 end
 the_red_line = old_mac.problems.create(
   title: "The Red Line and the Black Thumb",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"))
-  # answer: answer_the_red_line.to_json)
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: answer_the_red_line.to_json)
 

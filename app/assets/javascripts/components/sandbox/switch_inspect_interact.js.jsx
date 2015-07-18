@@ -14,7 +14,7 @@ var SwitchInspectInteract = React.createClass({
     var problem = this.props.problem;
     var instructions = problem.instructions.split('\n');
     var buttonContents = showInspect ? 'Enter your Solution' : 'Inspect your Environment';
-    var umlFilePath = '/assets/environment' + this.props.dataInspect.environmentId + '_uml.png';
+    var umlFilePath = '/assets/environment' + '2' + '_uml.png';
     var formattedInstructions = [];
     instructions.forEach(function(line, i) {
       var splitLine = line.split('|');
