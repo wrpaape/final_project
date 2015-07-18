@@ -617,7 +617,7 @@ and a |*finish| |%Date|.
 |~Farmer|s in turn plant |~Crop|s on their |&farm| in |~Field|s which will be harvested once every year.
 
 Only one |~Crop| is planted on each |~Field|, and each |~Field| is |*size|d to |*yield| the |*weight| of its |&crop|
-required by its |~Contract|.
+required by its |&crop|'s |&contract|.
 
 Each |~Field| costs a fixed |*upkeep| to maintain based on its |*size| and the market price of its |&crop|.
 

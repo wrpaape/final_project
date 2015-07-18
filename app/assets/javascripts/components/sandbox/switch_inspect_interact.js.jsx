@@ -19,9 +19,9 @@ var SwitchInspectInteract = React.createClass({
     instructions.forEach(function(line, i) {
       var splitLine = line.split('|');
       var formattedLine = [];
-      splitLine.forEach(function(seg, i) {
+      splitLine.forEach(function(seg, j) {
         var className = '';
-        if (i % 2 !== 0) {
+        if (j % 2 !== 0) {
           className += 'code ';
           if (seg[0] === '%') {
             className += 'code-general';
@@ -40,7 +40,7 @@ var SwitchInspectInteract = React.createClass({
           }
           seg = seg.slice(1);
         }
-        formattedLine.push(<span key={ 'seg' + i } className={ className }>{ seg }</span>);
+        formattedLine.push(<span key={ 'seg' + j } className={ className }>{ seg }</span>);
       });
       formattedInstructions.push(<p key={ 'line' + i }>{ formattedLine }</p>);
     });
