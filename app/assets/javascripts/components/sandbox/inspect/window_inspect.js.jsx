@@ -34,7 +34,6 @@ var WindowInspect = React.createClass({
     }
 
     if (show) {
-      console.log(modelFileName);
     return(
       <div className='inspector-hide' onMouseLeave={ this.mouseLeave.bind(this, show, table, noneSelected) }>
         <select className='btn btn-primary show-hide' id='current-model' onChange={ this.selected.bind(this, table) } >

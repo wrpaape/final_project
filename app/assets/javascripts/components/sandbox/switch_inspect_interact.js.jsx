@@ -37,6 +37,8 @@ var SwitchInspectInteract = React.createClass({
             className += ' code-attribute';
           } else if (seg[0] === '~') {
             className += ' code-model';
+          } else if (seg[0] === '`') {
+              className += ' code-value';
           }
           seg = seg.slice(1);
         }
@@ -48,15 +50,18 @@ var SwitchInspectInteract = React.createClass({
     return(
       <div className='switch'>
         <div className='sticky-header'>
-          <div className='btn btn-primary' onClick={ this.switched }>
-            { buttonContents }
-          </div>
+          <a href='/environments/' className='btn btn-primary'>
+            <span>back to&nbsp;</span><span className='code code-ar-keyword'>environment</span><span>s</span>
+          </a>
           <button type='button' className='btn btn-primary' data-toggle='modal' data-target='.instructions'>
             { '\'' + problem.title + '\' instructions' }
           </button>
           <button type='button' className='btn btn-primary' data-toggle='modal' data-target='.uml'>
             UML
           </button>
+          <div className='btn btn-primary' onClick={ this.switched }>
+            { buttonContents }
+          </div>
         </div>
         <div className={ 'show-' + showInspect }>
           <TableInspect data={ this.props.dataInspect } models={ this.props.modelsInspect } />

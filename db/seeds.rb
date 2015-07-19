@@ -126,7 +126,7 @@ spanning up to 5 |*generation|s of |~Person|s born between 1880 and 2014.
 All of the problems in this set can be solved by querying just the |@people| table.
 """
 family_tree = Environment.create(
-  title: "Family Tree",
+  title: "The |@people| Family Tree",
   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   models: { "Person"=>"person.rb", "BabyName"=>"baby_name.rb" }.to_json)
 
@@ -166,7 +166,7 @@ representing the Brady Bunch that is |#order|ed from youngest to oldest.
 def answer_brady_bunch
   mike_brady = Person.find_by({name: "Mike", children_count: 6})
   carol_brady = mike_brady.spouse
-  brady_bunch = mike_brady.children.order(yob: :desc).map{ |brady_child|  brady_child }
+  brady_bunch = mike_brady.children.order(yob: :desc).map{ |brady_child| brady_child }
   if mike_brady.yob > carol_brady.yob
     brady_bunch << mike_brady << carol_brady
   else
@@ -624,7 +624,7 @@ Each |~Field| costs a fixed |*upkeep| to maintain based on its |*size| and the m
 In addition to the |*upkeep| of their |&farm|'s |&fields|, every |~Farmer| must acquire the cost of |*maintenance| of its |&farm|
 """
 old_mac = Environment.create(
-  title: "Old MacDonald has_one Farm",
+  title: "Old MacDonald |#has_one| |~Farm|",
   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   models: { "Farmer"=>"farmer.rb", "Farm"=>"farm.rb", "Crop"=>"crop.rb", "Field"=>"field.rb", "Client"=>"client.rb", "Contract"=>"Contract.rb" }.to_json)
 

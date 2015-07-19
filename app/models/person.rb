@@ -13,43 +13,43 @@ class Person < ActiveRecord::Base
   before_destroy :decrement_children_counter_cache
 
   def children
-    children_of_mother.size > children_of_father.size ? children_of_mother : children_of_father
+    children_of_mother.count > children_of_father.count ? children_of_mother : children_of_father
   end
 
   def self.get_model_file
 """
-class Person < ActiveRecord::Base
-~~has_many :children_of_father, class_name: \"Person\", foreign_key: \"father_id\"
-~~has_many :children_of_mother, class_name: \"Person\", foreign_key: \"mother_id\"
-~~has_one :spouse, class_name: \"Person\", foreign_key: \"spouse_id\"
+class $~Person$ < ActiveRecord::Base
+~~$#has_many$ $&:children_of_father$, class_name: $?\"Person\"$, foreign_key: $?\"father_id\"$
+~~$#has_many$ $&:children_of_mother$, class_name: $?\"Person\"$, foreign_key: $?\"mother_id\"$
+~~$#has_one$ $&:spouse$, class_name: $?\"Person\"$, foreign_key: \"spouse_id\"
 
-~~belongs_to :spouse, class_name: \"Person\"
-~~belongs_to :father, class_name: \"Person\"
-~~belongs_to :mother, class_name: \"Person\"
+~~$#belongs_to$ $&:spouse$, class_name: $?\"Person\"$
+~~$#belongs_to$ $&:father$, class_name: $?\"Person\"$
+~~$#belongs_to$ $&:mother$, class_name: $?\"Person\"$
 
-~~after_create :increment_children_counter_cache, :set_generation
-~~before_destroy :decrement_children_counter_cache
+~~$#after_create$ :increment_children_counter_cache, :set_generation
+~~$#before_destroy$ :decrement_children_counter_cache
 
 ~~def children
-~~~~children_of_mother.size > children_of_father.size ? children_of_mother : children_of_father
+~~~~$&children_of_mother$$#.count$ > $&children_of_father$$#.count$ ? $&children_of_mother$ : $&children_of_father$
 ~~end
 
 ~~private
 
 ~~def increment_children_counter_cache
-~~~~Person.increment_counter(\"children_count\", father.id) if father
-~~~~Person.increment_counter(\"children_count\", mother.id) if mother
+~~~~$~Person$$#.increment_counter($$?\"children_count\"$, $&father$$*.id$$#)$ if $&father$
+~~~~$~Person$$#.increment_counter($$?\"children_count\"$, $&mother$$*.id$$#)$ if $&mother$
 ~~end
 
 ~~def decrement_children_counter_cache
-~~~~Person.decrement_counter(\"children_count\", father.id) if father
-~~~~Person.decrement_counter(\"children_count\", mother.id) if mother
+~~~~$~Person$$#.decrement_counter($$?\"children_count\"$, $&father$$*.id$$#)$ if $&father$
+~~~~$~Person$$#.decrement_counter($$?\"children_count\"$, $&mother$$*.id$$#)$ if $&mother$
 ~~end
 
 ~~def set_generation
-~~~~return unless (parent = mother || father)
-~~~~self.generation = parent.generation + 1
-~~~~self.save
+~~~~return unless (parent = $&mother$ || $&father$)
+~~~~self$*.generation$ = parent$*.generation$ + 1
+~~~~self$#.save$
 ~~end
 end
 """

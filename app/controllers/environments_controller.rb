@@ -5,7 +5,7 @@ class EnvironmentsController < ApplicationController
   # GET /environments
   # GET /environments.json
   def index
-    @environments = Environment.all
+    @environments = Environment.all.map{ |env| { "env"=>env, "probs"=>env.problems } }
   end
 
   # GET /environments/1

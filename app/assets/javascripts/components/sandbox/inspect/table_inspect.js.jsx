@@ -41,10 +41,39 @@ var TableInspect = React.createClass({
       var paddedModelFile = [];
       var lines = file.split('\n');
       for (var i = 1; i <= lines.length - 1; i++) {
-        var padIndex = lines[i].search(/[a-zA-Z]/);
+        var padIndex = lines[i].search(/[^~]/);
         var pad = new Array(padIndex + 1).join('~');
         var line = lines[i].slice(padIndex);
-        paddedModelFile.push(<span key={ type + '-line-' + i }><span className='pad'>{ pad }</span><span className={ type + '-line' }>{ line }</span><br /></span>);
+        var formattedLine = [];
+        var splitLine = line.split('$');
+
+        splitLine.forEach(function(seg, j) {
+          var className = 'code ';
+          if (j % 2 !== 0) {
+            if (seg[0] === '%') {
+              className += 'code-general';
+            } else if (seg[0] === '?') {
+              className += ' code-sql';
+            } else if (seg[0] === '#') {
+              className += ' code-ar-keyword';
+            } else if (seg[0] === '@') {
+              className += ' code-table';
+            } else if (seg[0] === '&') {
+              className += ' code-relation';
+            } else if (seg[0] === '*') {
+              className += ' code-attribute';
+            } else if (seg[0] === '~') {
+              className += ' code-model';
+            } else if (seg[0] === '`') {
+              className += ' code-value';
+            }
+            seg = seg.slice(1);
+          } else {
+            className += 'code-general';
+          }
+          formattedLine.push(<span key={ 'file-seg-' + j } className={ className }>{ seg }</span>);
+        });
+        paddedModelFile.push(<span key={ type + '-line-' + i }><span className='pad'>{ pad }</span><span className={ type + '-line' }>{ formattedLine }</span><br /></span>);
       }
       return paddedModelFile;
     }

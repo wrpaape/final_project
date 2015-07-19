@@ -4,15 +4,43 @@
 var Environments = React.createClass({
   getInitialState: function() {
     return {
-      envIdProblemsShown: 0
+      envIdHovered: 0
     };
   },
   render: function() {
     var parent = this;
-    var envIdProblemsShown = this.state.envIdProblemsShown;
+    var envIdHovered = this.state.envIdHovered;
     var envs = [];
     var environments = this.props.environments;
-    environments.forEach(function(env) {
+    environments.forEach(function(environment) {
+      var formattedTitle = [];
+      var env = environment.env;
+      var splitLine = env.title.split('|');
+      splitLine.forEach(function(seg, j) {
+        var className = '';
+        if (j % 2 !== 0) {
+          className += 'code ';
+          if (seg[0] === '%') {
+            className += 'code-general';
+          } else if (seg[0] === '?') {
+            className += ' code-sql';
+          } else if (seg[0] === '#') {
+            className += ' code-ar-keyword';
+          } else if (seg[0] === '@') {
+            className += ' code-table';
+          } else if (seg[0] === '&') {
+            className += ' code-relation';
+          } else if (seg[0] === '*') {
+            className += ' code-attribute';
+          } else if (seg[0] === '~') {
+            className += ' code-model';
+          } else if (seg[0] === '`') {
+            className += ' code-value';
+          }
+          seg = seg.slice(1);
+        }
+        formattedTitle.push(<span key={ 'env-' + env.id + '-title-seg-' + j } className={ className }>{ seg }</span>);
+      });
       var formattedDescrip = [];
       var descrip = env.description.split('\n');
       descrip.forEach(function(line, i) {
@@ -36,23 +64,35 @@ var Environments = React.createClass({
               className += ' code-attribute';
             } else if (seg[0] === '~') {
               className += ' code-model';
+            } else if (seg[0] === '`') {
+              className += ' code-value';
             }
             seg = seg.slice(1);
           }
-          formattedLine.push(<span key={ 'env-' + env.id + '-seg-' + j } className={ className }>{ seg }</span>);
+          formattedLine.push(<span key={ 'env-' + env.id + '-descrip-seg-' + j } className={ className }>{ seg }</span>);
         });
-        formattedDescrip.push(<p key={ 'env-' + env.id + '-line' + i }>{ formattedLine }</p>);
+        formattedDescrip.push(<p key={ 'env-' + env.id + '-descrip-line' + i }>{ formattedLine }</p>);
       });
       envs.push(
-        <ModalEnvironment key={'env-' + env.id } environment={ env } descrip={ formattedDescrip } parent={ parent } showProblems={ env.id === envIdProblemsShown ? true : false } />
+        <div key={'env-' + env.id } onMouseLeave={ parent.mouseLeave } >
+        <ModalEnvironment environment={ environment } title={ formattedTitle } descrip={ formattedDescrip } parent={ parent } hovered={ env.id === envIdHovered ? true : false } />
+        </div>
       );
     });
 
     return(
-      <div className='environments'>
-        { envs }
+      <div className='env-index'>
+        <div>
+          <span className='code code-sql'>SELECT</span><span>&nbsp;your&nbsp;</span><span className='code code-ar-keyword'>environment</span>
+        </div>
+        <div className='environments'>
+          { envs }
+        </div>
       </div>
     );
-  }
+  },
+  mouseLeave: function() {
+    this.setState({ envIdHovered: 0 });
+  },
 });
 

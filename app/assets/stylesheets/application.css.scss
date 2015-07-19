@@ -368,6 +368,9 @@ input {
   button {
     margin-right: 10px;
   }
+  a {
+    margin-right: 10px;
+  }
 }
 
 .modal {
@@ -422,7 +425,7 @@ input {
 
 .sticky-footer {
   position: fixed;
-  bottom: 10px;
+  bottom: 0;
   left: 10px;
   right: 10px;
   .paginate {
@@ -530,6 +533,46 @@ input {
   }
   &.code-value {
     color: #f46aee;
+  }
+}
+
+.env-index {
+  padding: 10px;
+  text-align: center;
+  .env-wrap {
+    margin: 50px;
+    .env-title {
+      &.true {
+        font-size: 2em;
+        text-shadow: 0 0 1.5em yellow;
+      }
+    }
+    .env-details {
+      &.false {
+        display: none;
+      }
+    }
+    button {
+      margin: 5px;
+      min-width: 150px;
+    }
+    .problems-wrap {
+      padding-left: 50%;
+      &.false {
+        display: none;
+      }
+      div {
+        padding-left: 78px;
+        text-align: left;
+        a {
+          text-align: left;
+          margin: 5px;
+        }
+      }
+    }
+    .modal-content {
+      text-align: left;
+    }
   }
 }
 
