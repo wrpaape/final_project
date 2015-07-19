@@ -4,12 +4,14 @@
 var Environments = React.createClass({
   getInitialState: function() {
     return {
-      envIdHovered: 0
+      envIdHovered: 0,
+      showEnvs: false
     };
   },
   render: function() {
     var parent = this;
     var envIdHovered = this.state.envIdHovered;
+    var showEnvs = this.state.showEnvs;
     var envs = [];
     var environments = this.props.environments;
     environments.forEach(function(environment) {
@@ -82,10 +84,12 @@ var Environments = React.createClass({
 
     return(
       <div className='env-index'>
-        <div>
-          <span className='code code-sql'>SELECT</span><span>&nbsp;your&nbsp;</span><span className='code code-ar-keyword'>environment</span>
+        <div onClick={ this.clicked }>
+          <div className='btn btn-primary'>
+            <span className='code code-sql'>SELECT</span><span>&nbsp;your&nbsp;</span><span className='code code-ar-keyword'>environment</span>
+          </div>
         </div>
-        <div className='environments'>
+        <div className={ 'envs-wrap ' + showEnvs }>
           { envs }
         </div>
       </div>
@@ -94,5 +98,9 @@ var Environments = React.createClass({
   mouseLeave: function() {
     this.setState({ envIdHovered: 0 });
   },
+  clicked: function() {
+    var showEnvs = this.state.showEnvs;
+    this.setState({ showEnvs: !showEnvs });
+  }
 });
 

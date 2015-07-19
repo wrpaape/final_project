@@ -5,19 +5,19 @@ var ModalEnvironment = React.createClass({
   getInitialState: function() {
     return {
       hovered: this.props.hovered,
-      showProblems: false
+      showProbs: false
     };
   },
   componentWillReceiveProps: function(nextProps) {
     this.setState({
       hovered: nextProps.hovered,
-      showProblems: false
+      showProbs: false
     });
   },
   render: function() {
     var probButtons = [];
     var hovered = this.state.hovered;
-    var showProblems = this.state.showProblems;
+    var showProbs = this.state.showProbs;
     var environment = this.props.environment;
     var env = environment.env;
     var probs = environment.probs;
@@ -26,7 +26,7 @@ var ModalEnvironment = React.createClass({
     var umlFilePath = '/assets/environment' + env.id + '_uml.png';
 
     probs.forEach(function(prob, i) {
-      probButtons.push(<div key={ prob.id }><a href={'/problems/' + prob.id } className='btn btn-default'>{ prob.title }</a></div>);
+      probButtons.push(<div key={ prob.id }><a href={'/problems/' + prob.id } className='btn btn-primary'>{ prob.title }</a></div>);
     });
 
     return(
@@ -35,17 +35,17 @@ var ModalEnvironment = React.createClass({
           { title }
         </div>
         <div className={ 'env-details ' + hovered } onMouseOut={ this.mouseOut }>
-          <button type='button' className='btn btn-primary' data-toggle='modal' data-target={'.env-' + env.id }>
+          <button type='button' className='btn btn-default' data-toggle='modal' data-target={'.env-' + env.id }>
             description
           </button>
-          <button type='button' className='btn btn-primary' data-toggle='modal' data-target={'.uml-' + env.id }>
+          <button type='button' className='btn btn-default' data-toggle='modal' data-target={'.uml-' + env.id }>
             UML
           </button>
-          <button className='btn btn-primary' onClick={ this.clicked }>
+          <button className='btn btn-default' onClick={ this.clicked }>
             problems
           </button>
           <br />
-          <div className={ 'problems-wrap ' + showProblems }>
+          <div className={ 'problems-wrap ' + showProbs }>
             { probButtons }
           </div>
           <div id={ 'fade-env-' + env.id } className={ 'modal fade env-' + env.id } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
@@ -55,13 +55,13 @@ var ModalEnvironment = React.createClass({
               </div>
             </div>
           </div>
-        <div className={ 'modal fade uml-' + env.id } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
-          <div className='modal-dialog modal-lg'>
-            <div className='modal-content image'>
-              <Img src={ umlFilePath } className='image-uml'/>
+          <div className={ 'modal fade uml-' + env.id } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
+            <div className='modal-dialog modal-lg'>
+              <div className='modal-content image'>
+                <Img src={ umlFilePath } className='image-uml'/>
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
     );
@@ -72,7 +72,7 @@ var ModalEnvironment = React.createClass({
     envIndex.setState({ envIdHovered: env.id });
   },
   clicked: function() {
-    var oldShowProblems = this.state.showProblems;
-    this.setState({ showProblems: !oldShowProblems });
+    var oldShowProbs = this.state.showProbs;
+    this.setState({ showProbs: !oldShowProbs });
   }
 });

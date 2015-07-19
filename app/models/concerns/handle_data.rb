@@ -45,7 +45,7 @@ module HandleData
       when "on"
         "CAST(#{key} AS TEXT) LIKE '#{value}'"
       else
-        "lower(CAST(#{key} AS TEXT)) LIKE '#{value.downcase}'"
+        "LOWER(CAST(#{key} AS TEXT)) LIKE '#{value.downcase}'"
       end
     end
     search_query = split_query.compact.join(" AND ")
@@ -63,47 +63,47 @@ module HandleData
     {
       "page_data"=> self.where(search_query).order(sort_query).limit(limit).offset(offset),
       "length_data"=> total_count,
-      "query"=> build_query(query_hash, fuzzy, case_sens, total_count, model_name)
+      "query"=> build_query(query_hash, fuzzy, case_sens, total_count, "|~#{model_name}|")
     }
   end
 
   def build_query(query_hash, fuzzy, case_sens, total_count, model_name)
     search_hash = query_hash["search"]
     sort_hash = query_hash["sort"]
-    return { "query model-name"=> model_name, "query all"=> ".all" } if search_hash.none? && sort_hash.none? && query_hash["limit"].to_i >= total_count && query_hash["offset"].to_i <= 0
+    return { "query model-name"=> model_name, "query all"=> "|#.all|" } if search_hash.none? && sort_hash.none? && query_hash["limit"].to_i >= total_count && query_hash["offset"].to_i <= 0
 
-    search_query = ".where" if search_hash.size > 0
+    search_query = "|#.where|" if search_hash.size > 0
     if fuzzy == "on" && case_sens == "on"
       search_hash.each_with_index do |(key, value), i|
-        search_query += '("' if i == 0
+        search_query += '|#(||?"|' if i == 0
         if type_of(value) == 'Numeric'
           value = "\"#{value}\".to_datetime.to_s" if ["created_at", "updated_at"].include?(key)
-          search_query += "CAST(#{key} AS TEXT) LIKE '%#{value}%'"
+          search_query += "|?CAST(||*#{key}| |?AS TEXT) LIKE '%||`#{value}||?%'|"
         else
-          search_query += "#{key} LIKE '%#{value}%'"
+          search_query += "|*#{key}| |?LIKE '%||`#{value}||?%'|"
         end
-        search_query += i == (search_hash.size - 1) ? '")' : " AND "
+        search_query += i == (search_hash.size - 1) ? '|?"||#)|' : " |?AND| "
       end
     elsif fuzzy == "on" && case_sens == ""
       search_hash.each_with_index do |(key, value), i|
-        search_query += '("' if i == 0
+        search_query += '|#(||?"|' if i == 0
         if type_of(value) == 'Numeric'
           value = "\"#{value}\".to_datetime.to_s.downcase" if ["created_at", "updated_at"].include?(key)
-          search_query += "lower(CAST(#{key} AS TEXT)) LIKE '%#{value}%'"
+          search_query += "|?LOWER(CAST(||*#{key}| |?AS TEXT)) LIKE '%||`#{value}||?%'|"
         else
-          search_query += "lower(#{key}) LIKE '%#{value.downcase}%'"
+          search_query += "|?LOWER(||*#{key}||?) LIKE '%||`#{value.downcase}||?%'|"
         end
-        search_query += i == (search_hash.size - 1) ? '")' : " AND "
+        search_query += i == (search_hash.size - 1) ? '|?"||#)|' : " |?AND| "
       end
     elsif fuzzy == "" && case_sens == "on"
       search_hash.each_with_index do |(key, value), i|
         value = "\"#{value}\".to_datetime" if ["created_at", "updated_at"].include?(key)
         if search_hash.size == 1
-          search_query += "(#{key}: #{value})"
+          search_query += "|#(||*#{key}:| |`#{value}||#)|"
         else
-          search_query += '({ ' if i == 0
-          search_query += "#{key}: #{value}"
-          search_query += i == (search_hash.size - 1) ? ' })' : ", "
+          search_query += '|#({| ' if i == 0
+          search_query += "|*#{key}:| |`#{value}|"
+          search_query += i == (search_hash.size - 1) ? ' |#})|' : "|#, |"
         end
       end
     else
@@ -113,28 +113,28 @@ module HandleData
       ar_hash.each_with_index do |(key, value), i|
         value = "\"#{value}\".to_datetime" if ["created_at", "updated_at"].include?(key)
         if ar_hash.size == 1
-          search_query += "(#{key}: #{value})"
+          search_query += "|#(||*#{key}:| |`#{value}||#)|"
         else
-          search_query += '({ ' if i == 0
-          search_query += "#{key}: #{value}"
-          search_query += i == (ar_hash.size - 1) ? ' })' : ", "
+          search_query += '|#({| ' if i == 0
+          search_query += "|*#{key}:| |`#{value}|"
+          search_query += i == (ar_hash.size - 1) ? ' |#})|' : "|#, |"
         end
       end
       sq_hash.each_with_index do |(key, value), i|
-        search_query += '.where("' if i == 0
-        search_query += "lower(#{key}) = '#{value.downcase}'"
-        search_query += i == (sq_hash.size - 1) ? '")' : " AND "
+        search_query += '|#.where(||?"|' if i == 0
+        search_query += "|?LOWER(||*#{key}|?) = '||`#{value.downcase}||?'|"
+        search_query += i == (sq_hash.size - 1) ? '|?"||#)|' : " |?AND| "
       end
     end
 
-    sort_query = ".order" if sort_hash.size > 0
+    sort_query = "|#.order|" if sort_hash.size > 0
     sort_hash.each_with_index do |(key, dir), i|
       if sort_hash.size == 1
-        sort_query += "(#{key}: :#{dir.downcase})"
+        sort_query += "|#(||*#{key}:| |`:#{dir.downcase}|)"
       else
-        sort_query += '({ ' if i == 0
-        sort_query += "#{key}: :#{dir.downcase}"
-        sort_query += i == (sort_hash.size - 1) ? ' })' : ", "
+        sort_query += '|#({| ' if i == 0
+        sort_query += "|*#{key}:| |`:#{dir.downcase}|"
+        sort_query += i == (sort_hash.size - 1) ? ' |#})|' : "|#, |"
       end
     end
 
@@ -143,8 +143,8 @@ module HandleData
     query["query search"] = search_query
     query["query sort"] = sort_query
 
-    query["query limit"] = ".limit(#{query_hash["limit"]})" unless query_hash["limit"].to_i >= total_count
-    query["query offset"] = ".offset(#{query_hash["offset"]})" unless query_hash["offset"].to_i <= 0
+    query["query limit"] = "|#.limit(||`#{query_hash["limit"]}||#)|" unless query_hash["limit"].to_i >= total_count
+    query["query offset"] = "|#.offset(||`#{query_hash["offset"]}||#)|" unless query_hash["offset"].to_i <= 0
     query
   end
 
