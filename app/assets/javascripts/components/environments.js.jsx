@@ -4,11 +4,12 @@
 var Environments = React.createClass({
   getInitialState: function() {
     return {
-      currentEnv: this.props.environments[0]
+      envIdProblemsShown: 0
     };
   },
   render: function() {
     var parent = this;
+    var envIdProblemsShown = this.state.envIdProblemsShown;
     var envs = [];
     var environments = this.props.environments;
     environments.forEach(function(env) {
@@ -43,21 +44,7 @@ var Environments = React.createClass({
         formattedDescrip.push(<p key={ 'env-' + env.id + '-line' + i }>{ formattedLine }</p>);
       });
       envs.push(
-        <div className='env-wrap' key={'env-' + env.id }>
-          <button type='button' className='btn btn-primary' data-toggle='modal' data-target={'.env-' + env.id }>
-            { env.title }
-          </button>
-          <div className={ 'modal fade env-' + env.id } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
-            <div className='modal-dialog modal-lg'>
-              <div className='modal-content'>
-                { formattedDescrip }
-                <div onClick={ parent.clicked(env) }>
-                  hello
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ModalEnvironment key={'env-' + env.id } environment={ env } descrip={ formattedDescrip } parent={ parent } showProblems={ env.id === envIdProblemsShown ? true : false } />
       );
     });
 
@@ -66,8 +53,6 @@ var Environments = React.createClass({
         { envs }
       </div>
     );
-  },
-  clicked: function() {
-    console.log(this);
   }
 });
+
