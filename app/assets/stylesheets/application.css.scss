@@ -62,12 +62,12 @@ table {
   table-layout: fixed;
   word-wrap: break-word;
   th {
-    color: #FF66FF;
+    color: #AE81FF;
     border-bottom: 2px solid #33FF33!important;
   }
   td {
     &.td{
-      color: #66FFFF;
+      color: #f46aee;
       border-top: 1px solid #33FF33!important;
     }
   }
@@ -210,11 +210,24 @@ input {
 }
 
 [data-id='ASC'] {
-  background-color: green;
-}
+  text-shadow:
+    0 0 1.5em green,
+    3px 3px 0 green,
+    -1px -1px 0 green,
+    1px -1px 0 green,
+    -1px  1px 0 green,
+    1px  1px 0 green;
+
+  }
 
 [data-id='DESC'] {
-  background-color: red;
+  text-shadow:
+    0 0 1.5em red,
+    3px 3px 0 red,
+    -1px -1px 0 red,
+    1px -1px 0 red,
+    -1px  1px 0 red,
+    1px  1px 0 red;
 }
 
 .center {
@@ -244,7 +257,13 @@ input {
 }
 
 .formatted-time {
-  text-shadow: 0 0 1.5em yellow;
+  text-shadow:
+    0 0 1.5em yellow,
+    3px 3px 0 yellow,
+    -1px -1px 0 yellow,
+    1px -1px 0 yellow,
+    -1px  1px 0 yellow,
+    1px  1px 0 yellow;
 }
 
 .migration {
@@ -276,7 +295,13 @@ input {
 }
 
 .highlight {
-  text-shadow: 0 0 1.5em #66FFFF;
+  text-shadow:
+    0 0 1.5em #66FFFF,
+    3px 3px 0 #66FFFF,
+    -1px -1px 0 #66FFFF,
+    1px -1px 0 #66FFFF,
+    -1px  1px 0 #66FFFF,
+    1px  1px 0 #66FFFF;
 }
 
 .lighten-true {
@@ -544,7 +569,13 @@ input {
     .env-title {
       &.true {
         font-size: 2em;
-        text-shadow: 0 0 1.5em yellow;
+        text-shadow:
+          0 0 1.5em yellow,
+          3px 3px 0 yellow,
+          -1px -1px 0 yellow,
+          1px -1px 0 yellow,
+          -1px  1px 0 yellow,
+          1px  1px 0 yellow;
       }
     }
     .env-details {

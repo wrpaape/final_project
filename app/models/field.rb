@@ -6,9 +6,9 @@ class Field < ActiveRecord::Base
 
   def self.get_model_file
 """
-class Field < ActiveRecord::Base
-~~belongs_to :farm
-~~belongs_to :crop
+class $~Field$ < ActiveRecord::Base
+~~$#belongs_to$ $&:farm$
+~~$#belongs_to$ $&:crop$
 end
 """
   end
@@ -17,13 +17,13 @@ end
 """
 class CreateFields < ActiveRecord::Migration
 ~~def change
-~~~~create_table :fields do |t|
-~~~~t.float :size
-~~~~t.float :upkeep
-~~~~t.belongs_to :farm, index: true, foreign_key: true
-~~~~t.belongs_to :crop, index: true, foreign_key: true
+~~~~create_table $@:fields$ do |t|
+~~~~t.float $*:size$
+~~~~t.float $*:upkeep$
+~~~~t$#.belongs_to$ $&:farm$, index: true, foreign_key: true
+~~~~t$#.belongs_to$ $&:crop$, index: true, foreign_key: true
 
-~~~~t.timestamps null: false
+~~~~t$*.timestamps$ null: false
 ~~end
 end
 """

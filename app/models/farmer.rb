@@ -7,10 +7,10 @@ class Farmer < ActiveRecord::Base
 
   def self.get_model_file
 """
-class Farmer < ActiveRecord::Base
-~~has_many :contracts
-~~has_many :clients, through: :contracts
-~~has_one :farm
+class $~Farmer$ < ActiveRecord::Base
+~~$#has_many$ $&:contracts$
+~~$#has_many$ $&:clients$, $#through:$ $&:contracts$
+~~$#has_one$ $&:farm$
 end
 """
   end
@@ -19,10 +19,10 @@ end
 """
 class CreateFarmers < ActiveRecord::Migration
 ~~def change
-~~~~create_table :farmers do |t|
-~~~~~~t.string :name
+~~~~create_table $@:farmers$ do |t|
+~~~~~~t.string $*:name$
 
-~~~~~~t.timestamps null: false
+~~~~~~t$*.timestamps$ null: false
 ~~~~end
 ~~end
 end

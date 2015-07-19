@@ -3,7 +3,7 @@ class BabyName < ActiveRecord::Base
 
   def self.get_model_file
 """
-class BabyName < ActiveRecord::Base
+class $~BabyName$ < ActiveRecord::Base
 end
 """
   end
@@ -12,13 +12,13 @@ end
 """
 class CreateBabyNames < ActiveRecord::Migration
 ~~def change
-~~~~create_table :baby_names do |t|
-~~~~~~t.string :name
-~~~~~~t.string :gender
-~~~~~~t.integer :frequency
-~~~~~~t.integer :yob
+~~~~create_table $@:baby_names$ do |t|
+~~~~~~t.string $*:name$
+~~~~~~t.string $*:gender$
+~~~~~~t.integer $*:frequency$
+~~~~~~t.integer $*:yob$
 
-~~~~~~t.timestamps null: false
+~~~~~~t$*.timestamps$ null: false
 ~~~~end
 ~~end
 end
