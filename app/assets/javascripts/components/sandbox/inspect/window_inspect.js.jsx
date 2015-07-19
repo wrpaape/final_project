@@ -113,6 +113,3 @@ var WindowInspect = React.createClass({
     }
   }
 });
-        // <ModelFileInspect key='model-file' grandparent={ table } parent={ this } />
-        // <ModelMigrationInspect key='model-migration' grandparent={ table } parent={ this } />
-        // <ModelUmlInspect key='model-uml' grandparent={ table } parent={ this } />

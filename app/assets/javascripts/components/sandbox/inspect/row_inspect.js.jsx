@@ -24,6 +24,9 @@ var RowInspect = React.createClass({
     var wind0wObjModel = table.state.wind0wObjModel;
     var obj = this.state.obj;
     var keys = Object.keys(obj);
+    var keysCopy = $.extend([], keys);
+    var longestLength = keysCopy.sort(function (a, b) { return b.length - a.length; })[0].length;
+    var objPad = 300 + (longestLength - 10) * 6;
 
     for (var i = 0; i < keys.length; i++) {
       var className = i % 2 === 0 ? 'darker td' : 'lighter td';
@@ -43,7 +46,7 @@ var RowInspect = React.createClass({
     }
 
     return (
-      <tr id={ currentModel + '-' + obj.id } className={ className } onClick={ this.clicked.bind(this, table, obj, wind0wObjModel, currentModel) }>
+      <tr id={ currentModel + '-' + obj.id } className={ className } onClick={ this.clicked.bind(this, table, obj, wind0wObjModel, currentModel, objPad) }>
         { cols }
       </tr>
     );
@@ -62,7 +65,7 @@ var RowInspect = React.createClass({
     $(idSelector).html(val);
     $(idSelector).removeClass("formatted-time");
   },
-  clicked: function (table, obj, wind0wObjModel, currentModel) {
+  clicked: function (table, obj, wind0wObjModel, currentModel, objPad) {
     var thisId = '#' + currentModel + '-' + obj.id;
     var thisRow = $(thisId);
     var allRows = $('tr');
@@ -76,7 +79,10 @@ var RowInspect = React.createClass({
     var newPad;
     if (thisRow.attr('class') === '') {
       thisRow.attr('class', 'highlight');
-      newPad = $('.wind0w-object').attr('data-id') === 'true' ? 300 : oldPad;
+      var clicked = $('.wind0w-object').attr('data-id');
+      console.log(objPad);
+      newPad = clicked === 'true' ? objPad : oldPad;
+      console.log(newPad);
       table.setState({
         wind0wObj: obj,
         wind0wObjModel: currentModel,

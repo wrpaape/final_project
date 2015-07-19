@@ -14,17 +14,16 @@ var SelectedObjInspect = React.createClass({
     var data = table.state.data;
     var model = table.state.currentModel;
     var keysCopy = $.extend([], Object.keys(table.state.wind0wObj));
-
+    var longestLength = keysCopy.sort(function (a, b) { return b.length - a.length; })[0].length;
     var attributes = [];
     attributes.push(<span key='obj-open'>{ '{' }</span>);
     if (obj.id !== 0) {
       var indent = '~~';
-      var longestLength = keysCopy.sort(function (a, b) { return b.length - a.length; })[0].length;
       keysCopy.forEach(function(key, i) {
         var diff = longestLength - key.length;
         var pad = new Array(diff + 1).join('~') + indent;
         var val = obj[key];
-        if (val === '') {
+        if (val === null) {
           val = 'nil';
         }
 
@@ -43,7 +42,7 @@ var SelectedObjInspect = React.createClass({
     if (show) {
       return(
         <div>
-          <div data-id={ show } onClick={ this.clicked.bind(this, show, obj, table) } className='wind0w-button wind0w-object btn btn-default show-hide'>Selected Object</div>
+          <div data-id={ show } onClick={ this.clicked.bind(this, show, obj, table, longestLength) } className='wind0w-button wind0w-object btn btn-default show-hide'>Selected Object</div>
           <section className='object'>
             { attributes }
           </section>
@@ -51,7 +50,7 @@ var SelectedObjInspect = React.createClass({
       );
     } else {
       return(
-        <div data-id={ show } onClick={ this.clicked.bind(this, show, obj, table) } className='wind0w-button wind0w-object btn btn-primary show-hide'>
+        <div data-id={ show } onClick={ this.clicked.bind(this, show, obj, table, longestLength) } className='wind0w-button wind0w-object btn btn-primary show-hide'>
           Selected Object
         </div>
       );
@@ -71,13 +70,13 @@ var SelectedObjInspect = React.createClass({
     $(idSelector).html(val);
     $(idSelector).removeClass("formatted-time");
   },
-  clicked: function(show, obj, table) {
+  clicked: function(show, obj, table, longestLength) {
+    var oldPad = table.state.padding;
     var newPad;
     if (!show && obj.id !== 0) {
-      newPad = 300;
+      newPad = 300 + (longestLength - 10) * 6;
     } else if (show) {
-      var oldPad = table.state.padding;
-      var newPad = $('.wind0w-search').attr('data-id') === 'true' ? 285 : 165;
+      newPad = $('.wind0w-search').attr('data-id') === 'true' ? 285 : 165;
     } else {
       newPad = oldPad;
     }
