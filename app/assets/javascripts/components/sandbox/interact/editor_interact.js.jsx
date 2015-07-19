@@ -37,6 +37,7 @@ var EditorInteract = React.createClass({
       this.setState({ loading: true });
       table.setState({ loading: true });
       var inputSolution = $('#editor-content').val();
+      var solCharCount = inputSolution.replace(/\n/g,'').replace(/ /g,'').replace(RegExp('def' + methodName),'').replace(RegExp('end' + methodName),'').length;
       var lastLine = inputSolution.match(/[^\n].*[\n]*$/)[0].replace(/\n*$/,'');
       var methodName = lastLine.split(' ')[0];
       methodName = methodName === 'end' ? inputSolution.match(/def +([a-zA-Z_\?\d]*)/)[1] : methodName;
@@ -59,7 +60,7 @@ var EditorInteract = React.createClass({
       var indentedSolution = inputSolution.replace(/\n/g, '\n  ');
       var putsSolution = indentedSolution.replace(RegExp('\n  ' + methodName, 'g'), '\n  start = Time.now\n  results = ' + methodName + '\n  finish = Time.now\n  results_hash = { "results"=> results, "time_exec"=> finish - start }\n  puts results_hash.to_json');
       var formattedSolution = 'require \'timeout\'\ntask :solution => :environment do\n  Rails.logger = Logger.new(Rails.root.join("log", "solution_queries.log"))\n  ' + putsSolution + '\nend';
-      var solCharCount = inputSolution.replace(/\n/g,'').replace(/ /g,'').replace(RegExp('def' + methodName),'').replace(RegExp('end' + methodName),'').length;
+
 
       var blackList = {
         '(`)': 'pls don\'t use backticks',
