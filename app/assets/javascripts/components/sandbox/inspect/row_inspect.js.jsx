@@ -25,8 +25,9 @@ var RowInspect = React.createClass({
     var obj = this.state.obj;
     var keys = Object.keys(obj);
     var keysCopy = $.extend([], keys);
-    var longestLength = keysCopy.sort(function (a, b) { return b.length - a.length; })[0].length;
-    var objPad = 300 + (longestLength - 10) * 6;
+    var displayStrings = keysCopy.map(function(key) { return key + ': ' + obj[key].toString(); });
+    var longestLength = displayStrings.sort(function (a, b) { return b.length - a.length; })[0].length;
+    var objPad = (longestLength + 2) * 7;
 
     for (var i = 0; i < keys.length; i++) {
       var className = i % 2 === 0 ? 'darker td' : 'lighter td';

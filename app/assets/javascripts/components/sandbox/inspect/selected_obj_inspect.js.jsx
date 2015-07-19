@@ -14,13 +14,15 @@ var SelectedObjInspect = React.createClass({
     var data = table.state.data;
     var model = table.state.currentModel;
     var keysCopy = $.extend([], Object.keys(table.state.wind0wObj));
-    var longestLength = keysCopy.sort(function (a, b) { return b.length - a.length; })[0].length;
+    var displayStrings = keysCopy.map(function(key) { return key + ': ' + obj[key].toString(); });
+    var longestLength = displayStrings.sort(function (a, b) { return b.length - a.length; })[0].length;
+    var longestLengthKeys = keysCopy.sort(function (a, b) { return b.length - a.length; })[0].length;
     var attributes = [];
     attributes.push(<span key='obj-open'>{ '{' }</span>);
     if (obj.id !== 0) {
       var indent = '~~';
       keysCopy.forEach(function(key, i) {
-        var diff = longestLength - key.length;
+        var diff = longestLengthKeys - key.length;
         var pad = new Array(diff + 1).join('~') + indent;
         var val = obj[key];
         if (val === null) {
@@ -74,7 +76,7 @@ var SelectedObjInspect = React.createClass({
     var oldPad = table.state.padding;
     var newPad;
     if (!show && obj.id !== 0) {
-      newPad = 300 + (longestLength - 10) * 6;
+      newPad = (longestLength + 2) * 7;
     } else if (show) {
       newPad = $('.wind0w-search').attr('data-id') === 'true' ? 285 : 165;
     } else {
