@@ -606,7 +606,7 @@ env_descrip =
 """
 This problem set involves the ActiveRecord models |~Farmer|, |~Farm|, |~Crop|, |~Field|, |~Client|, and |~Contract|.
 
-The database tables |@crops| and |@contracts| are seeded based on the USDA's data on latest yields and market prices for a variety of crops.
+The database tables |@crops| and |@contracts| are seeded based on the USDA's latest yields and market prices for a variety of crops.
 
 |@clients| is seeded with |*revenue| with which to negotiate |~Contract|s.
 

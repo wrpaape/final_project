@@ -34,6 +34,8 @@ var ModalEnvironment = React.createClass({
     );
   },
   clicked: function() {
-    this.props.parent.setState({ envIdProblemsShown: this.props.environment.id });
+    var env = this.props.environment;
+    var envIndex = this.props.parent;
+    envIndex.setState({ envIdProblemsShown: env.id });
   }
 });
