@@ -135,7 +135,7 @@ module HandleData
     sort_query = "|#.order|" if sort_hash.size > 0
     sort_hash.each_with_index do |(key, dir), i|
       if sort_hash.size == 1
-        sort_query += "|#(||*#{key}:| |`:#{dir.downcase}|)"
+        sort_query += "|#(||*#{key}:| |`:#{dir.downcase}||#)|"
       else
         sort_query += '|#({| ' if i == 0
         sort_query += "|*#{key}:| |`:#{dir.downcase}|"

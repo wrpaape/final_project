@@ -30,7 +30,10 @@
 'use strict';
 
 var ready = function() {
-  setEditor();
+  var pathname = window.location.pathname;
+  if (pathname.search(/^\/problems/) >= 0) {
+    setEditor();
+  }
 };
 
 var setEditor = function () {

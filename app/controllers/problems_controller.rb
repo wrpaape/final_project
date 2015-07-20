@@ -14,8 +14,8 @@ class ProblemsController < ApplicationController
     unless params[:interact]
       available_models = JSON.parse(environment.models)
       model = Object.const_get(params.fetch("current_model", available_models.keys.first))
-      url = "https://active-record-baby.herokuapp.com/problems/#{@problem.id}/"
-      # url = "/problems/#{@problem.id}/"
+      # url = "https://active-record-baby.herokuapp.com/problems/#{@problem.id}/"
+      url = "/problems/#{@problem.id}/"
       @data_inspect = model.get_data(url, params, environment.id)
       @models_inspect = get_default_model_states(available_models)
     end
