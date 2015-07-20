@@ -513,6 +513,10 @@ input {
   bottom: -5px;
   left: 10px;
   right: 10px;
+  &.sticky-footer-interact {
+    background-color: black;
+    padding-top: 10px;
+  }
   .paginate {
     display: inline-block;
     background: none;
@@ -571,6 +575,7 @@ input {
       text-align: left;
       font-size: 1.4em;
       padding: 10px;
+      padding-top: 0;
       div {
         display: block;
         .type{
