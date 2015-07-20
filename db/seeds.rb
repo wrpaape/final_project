@@ -150,7 +150,7 @@ end
 avg_household = family_tree.problems.create(
   title: "...and here are our 1.5 kids",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
-  answer: answer_avg_household.to_json)
+  answer: Array.wrap(answer_avg_household).to_json)
 
 prob_instruct =
 """
@@ -177,7 +177,7 @@ end
 the_brady_bunch = family_tree.problems.create(
   title: "The Brady Bunch",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
-  answer: answer_brady_bunch.to_json)
+  answer: Array.wrap(answer_brady_bunch).to_json)
 
 prob_instruct =
 """
@@ -204,24 +204,25 @@ def answer_bachelor
       end
     end
   end
+  return "no bachelor(ette)s!"
 end
 the_bachelor = family_tree.problems.create(
   title: "The Bachelor(ette?)",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
-  answer: answer_bachelor.to_json)
+  answer: Array.wrap(answer_bachelor).to_json)
 
 prob_instruct =
 """
 Every |~Person| was |*name|d by their |&mother| and |&father| corresponding to a |~BabyName| of the same |*yob|.
 Accordingly, for every |~Person|, |person_example|, born in the year |person_example.yob|, there were
 
-|BabyName.find_by({ name: person_example.name, gender: person_example.gender, yob: person_example.yob}).frequency - 1|
+|~BabyName||#.find_by({| |*name:| |`person_example.name||#,| |*gender:| |`person_example.gender||#,| |*yob:| |`person_example.yob||#})||*.frequency|| - 1|
 
 other |~Person|s born in the States that year sharing the same |*name|. To save you some time and to
 spare our servers the cost of querying a 1825433-entry table thousands of times, the |*frequency| of a |~Person|s
 |*name| for their |*gender| and |*yob| has been cached as:
 
-|Person.frequency|
+|~Person||*.frequency|
 
 when |@people| was seeded. The Laziest Parents Award will go to the
 |&mother| and |&father| of the |~Person| born with the most common |*name| for their |*generation|.
@@ -242,105 +243,10 @@ end
 lazy_parents_award = family_tree.problems.create(
   title: "The Laziest Parents Award",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
-  answer: answer_lazy_parents.to_json)
+  answer: Array.wrap(answer_lazy_parents).to_json)
 
 
 
-# admin = User.create(name: "admin", password: "admin", password_confirmation: "admin", admin: true)
-
-
-
-raw_avg_household =
-"""
-def solution
-  Person.where(:children_count=> [1, 2]).order(:name)
-end
-
-solution
-"""
-raw_avg_household = raw_avg_household[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n")
-
-raw_brady_bunch =
-"""
-def solution
-  mike_brady = Person.find_by({name: \"Mike\", children_count: 6})
-  carol_brady = mike_brady.spouse
-  brady_bunch = mike_brady.children.order(yob: :desc).map{ |brady_child|  brady_child }
-  if mike_brady.yob > carol_brady.yob
-    brady_bunch << mike_brady << carol_brady
-  else
-    brady_bunch << carol_brady << mike_brady
-  end
-  brady_bunch
-end
-
-solution
-"""
-raw_brady_bunch = raw_brady_bunch[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n")
-
-raw_bachelor =
-"""
-def solution
-  all_singles = Person.where(spouse_id: nil)
-  gens_with_singles = all_singles.pluck(:generation).uniq
-  gens_with_singles.each do |gen|
-    genders_of_singles = all_singles.where(generation: gen).pluck(:gender)
-    m_and_f_available = genders_of_singles.uniq.size == 2 ? true : false
-    if m_and_f_available
-      if genders_of_singles.count(\"F\") > 1
-        the_bachelor = all_singles.find_by({ generation: gen, gender: \"M\" })
-        return the_bachelor
-      else
-        the_bachelorette = all_singles.find_by({ generation: gen, gender: \"F\" })
-        return the_bachelorette
-      end
-    end
-  end
-end
-
-solution
-"""
-raw_bachelor = raw_bachelor[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n")
-
-
-# SolvedProblem.create(
-#   solution: raw_avg_household,
-#   total queries: 1,
-#    shortest query: 3.400 ms,
-#     longest query: 3.400 ms,
-#     average query: 3.400 ms,
-#  total query time: 3.400 ms,
-#   time to execute: 506.5 ms,
-# non-ws char count: 80,
-#   user_id: admin.id,
-#   problem_id: avg_household.id,
-#   environment_id: family_tree.id)
-
-# SolvedProblem.create(
-#   solution: raw_brady_bunch,
-#     total queries:3
-#    shortest query:200.0 μs
-#     longest query:500.0 μs
-#     average query:333.3 μs
-#  total query time:1.000 ms
-#   time to execute:309.1 ms
-# non-ws char count:317
-#   user_id: admin.id,
-#   problem_id: the_brady_bunch.id,
-#   environment_id: family_tree.id)
-
-# SolvedProblem.create(
-#   solution: raw_bachelor,
-#   sol_char_count: 479,
-#   time_exec_total: 0.2358,
-#   time_query_total: 0.0013,
-#   time_query_min: 0.000002,
-#   time_query_max: 0.000006,
-#   time_query_avg: 0.00000325,
-#   num_queries: 4,
-#   user_id: admin.id,
-#   problem_id: the_bachelor.id,
-#   environment_id: family_tree.id)
 
 
 
@@ -650,7 +556,7 @@ end
 technically_3_years = old_mac.problems.create(
   title: "Technically 3 Years",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
-  answer: answer_technically_3_years.to_json)
+  answer: Array.wrap(answer_technically_3_years).to_json)
 
 prob_instruct =
 """
@@ -660,7 +566,7 @@ Which |~Crop| was planted over the greatest acreage?
 Complete the |%solution| method so that it returns an array of the |*name|s of the two ActiveRecord |~Crop| objects representing the |~Crop| with the greatest
 |#count| of |&contracts| and the |~Crop| with the greatest |#sum|med |*size| of its |&fields| in the following format:
 
-|%[most_contracts_crop_name, greatest_acreage_crop_name]|
+|%[|`most_contracts_crop_name||%,| |`greatest_acreage_crop_name||%]|
 """
 def answer_bandwagon_crops
   most_contracts_crop_name = Crop.select("crops.*, COUNT(contracts.id) AS contracts_count").joins(:contracts).group(:id).order("contracts_count DESC").take.name
@@ -671,7 +577,7 @@ end
 bandwagon_crops = old_mac.problems.create(
   title: "Bandwagon Crops",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
-  answer: answer_bandwagon_crops.to_json)
+  answer: Array.wrap(answer_bandwagon_crops).to_json)
 
 prob_instruct =
 """
@@ -689,7 +595,7 @@ end
 smitty_w = old_mac.problems.create(
   title: "Old Farmer Werbenjagermanjensen",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
-  answer: answer_smitty_w.to_json)
+  answer: Array.wrap(answer_smitty_w).to_json)
 
 prob_instruct =
 """
@@ -703,7 +609,7 @@ A profitable |~Farmer| will cover the |#sum| of the |*upkeep| costs of all the |
 Complete the |%solution| method so that it returns an array of the |*name|s of two ActiveRecord objects representing the |~Farmer|
 and |~Client| who will not profit this year in the following format:
 
-|%[unprofitable_client_name, unprofitable_farmer_name]|
+|%[||`unprofitable_client_name||%,| |`unprofitable_farmer_name||%]|
 """
 def answer_the_red_line
   unprofitable_client_name = Client.select("clients.*, (SUM(contracts.price * contracts.weight) - revenue) AS profit").joins(:contracts).group(:id).order("profit").take.name
@@ -723,5 +629,296 @@ end
 the_red_line = old_mac.problems.create(
   title: "The Red Line and the Black Thumb",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
-  answer: answer_the_red_line.to_json)
+  answer: Array.wrap(answer_the_red_line).to_json)
 
+raw_avg_household =
+"""
+def solution
+  Person.where(:children_count=> [1, 2]).order(:name)
+end
+
+solution
+"""
+raw_avg_household = raw_avg_household[1..-2]
+
+raw_brady_bunch =
+"""
+def solution
+  mike_brady = Person.find_by({name: \"Mike\", children_count: 6})
+  carol_brady = mike_brady.spouse
+  brady_bunch = mike_brady.children.order(yob: :desc).map{ |brady_child|  brady_child }
+  if mike_brady.yob > carol_brady.yob
+    brady_bunch << mike_brady << carol_brady
+  else
+    brady_bunch << carol_brady << mike_brady
+  end
+  brady_bunch
+end
+
+solution
+"""
+raw_brady_bunch = raw_brady_bunch[1..-2]
+
+raw_bachelor =
+"""
+def solution
+  all_singles = Person.where(spouse_id: nil)
+  gens_with_singles = all_singles.pluck(:generation).uniq
+  gens_with_singles.each do |gen|
+    genders_of_singles = all_singles.where(generation: gen).pluck(:gender)
+    m_and_f_available = genders_of_singles.uniq.size == 2 ? true : false
+    if m_and_f_available
+      if genders_of_singles.count("F") > 1
+        the_bachelor = all_singles.find_by({ generation: gen, gender: "M" })
+        return the_bachelor
+      else
+        the_bachelorette = all_singles.find_by({ generation: gen, gender: "F" })
+        return the_bachelorette
+      end
+    end
+  end
+  return \"no bachelor(ette)s!\"
+end
+
+solution
+"""
+raw_bachelor = raw_bachelor[1..-2]
+
+raw_lazy_parents =
+"""
+def solution
+  children_gens = [1, 2, 3, 4]
+  laziest_parents = children_gens.map do |gen|
+    max_freq_child = Person.where(generation: gen).order(frequency: :desc).take
+    [max_freq_child.mother, max_freq_child.father]
+  end
+  laziest_parents.flatten
+end
+
+solution
+"""
+raw_lazy_parents = raw_lazy_parents[1..-2]
+
+raw_technicaly_3_years =
+"""
+def solution
+  end_of_2013 = Date.new(2013,12,31)
+  last_friday_2013 = end_of_2013
+  last_friday_2013 -= 1 until last_friday_2013.friday?
+  beginning_of_2016 = Date.new(2016)
+  first_monday_2016 = beginning_of_2016
+  first_monday_2016 += 1 until first_monday_2016.monday?
+
+  Contract.where(\"start > '#{last_friday_2013}' and finish < '#{first_monday_2016}'\").order(:start)
+end
+
+solution
+"""
+raw_technicaly_3_years = raw_technicaly_3_years[1..-2]
+
+raw_bandwagon_crops =
+"""
+def solution
+  most_contracts_crop_name = Crop.select(\"crops.*, COUNT(contracts.id) AS contracts_count\").joins(:contracts).group(:id).order(\"contracts_count DESC\").take.name
+  greatest_acreage_crop_name = Crop.select(\"crops.*, SUM(fields.size) AS total_acreage\").joins(:fields).group(:id).order(\"total_acreage DESC\").take.name
+
+  [most_contracts_crop_name, greatest_acreage_crop_name]
+end
+
+solution
+"""
+raw_bandwagon_crops = raw_bandwagon_crops[1..-2]
+
+raw_smitty_w =
+"""
+def solution
+  farmer_w_name = Farmer.select(\"farmers.*, SUM(contracts.price * contracts.weight) AS total_income\").joins(:contracts).group(:id).order(\"total_income DESC\").offset(Farmer.count / 2).take.name
+end
+
+solution
+"""
+raw_smitty_w = raw_smitty_w[1..-2]
+
+raw_the_red_line =
+"""
+def solution
+  unprofitable_client_name = Client.select(\"clients.*, (SUM(contracts.price * contracts.weight) - revenue) AS profit\").joins(:contracts).group(:id).order(\"profit\").take.name
+
+  farmers_w_income = Farmer.select(\"farmers.*, SUM(contracts.price * contracts.weight) AS total_income\").joins(:contracts).group(:id).order(:id)
+  farms_w_upkeep = Farm.select(\"farms.*, SUM(fields.upkeep) AS total_upkeep\").joins(:fields).group(:id).order(:farmer_id)
+
+  farmers_w_income.each_with_index do |farmer, index|
+    farm = farms_w_upkeep[index]
+    profit = farmer.total_income - farm.total_upkeep - farm.maintenance
+    if profit < 0
+      unprofitable_farmer_name = farmer.name
+      return [unprofitable_client_name, unprofitable_farmer_name]
+    end
+  end
+end
+
+solution
+"""
+raw_the_red_line = raw_the_red_line[1..-2]
+
+# admin = User.create(name: "admin", password: "admin", password_confirmation: "admin", admin: true, email: "admin@admin.com")
+
+# SolvedProblem.create(
+#   solution: raw_avg_household,
+#   total queries: 1,
+#    shortest query: 3.400 ms,
+#     longest query: 3.400 ms,
+#     average query: 3.400 ms,
+#  total query time: 3.400 ms,
+#   time to execute: 506.5 ms,
+# non-ws char count: 80,
+#   user_id: admin.id,
+#   problem_id: avg_household.id,
+#   environment_id: family_tree.id)
+#     total queries:1
+#    shortest query:2.700 ms
+#     longest query:2.700 ms
+#     average query:2.700 ms
+#  total query time:2.700 ms
+#   time to execute:76.39 ms
+# non-ws char count:49
+#           correct:true
+
+# SolvedProblem.create(
+#   solution: raw_brady_bunch,
+#     total queries:3
+#    shortest query:200.0 μs
+#     longest query:500.0 μs
+#     average query:333.3 μs
+#  total query time:1.000 ms
+#   time to execute:309.1 ms
+# non-ws char count:317
+#   user_id: admin.id,
+#   problem_id: the_brady_bunch.id,
+#   environment_id: family_tree.id)
+#     total queries:5
+#    shortest query:700.0 μs
+#     longest query:16.90 ms
+#     average query:4.800 ms
+#  total query time:24.00 ms
+#   time to execute:165.8 ms
+# non-ws char count:286
+#           correct:true
+
+# SolvedProblem.create(
+#   solution: raw_bachelor,
+#   sol_char_count: 479,
+#   time_exec_total: 0.2358,
+#   time_query_total: 0.0013,
+#   time_query_min: 0.000002,
+#   time_query_max: 0.000006,
+#   time_query_avg: 0.00000325,
+#   num_queries: 4,
+#   user_id: admin.id,
+#   problem_id: the_bachelor.id,
+#   environment_id: family_tree.id)
+
+# SolvedProblem.create(
+#   solution: raw_lasy_parents,
+#   sol_char_count: 479,
+#   time_exec_total: 0.2358,
+#   time_query_total: 0.0013,
+#   time_query_min: 0.000002,
+#   time_query_max: 0.000006,
+#   time_query_avg: 0.00000325,
+#   num_queries: 4,
+#   user_id: admin.id,
+#   problem_id: the_lasy_parents.id,
+#   environment_id: family_tree.id)
+#     total queries:12
+#    shortest query:100.0 μs
+#     longest query:2.600 ms
+#     average query:558.3 μs
+#  total query time:6.700 ms
+#   time to execute:82.42 ms
+# non-ws char count:205
+#           correct:true
+
+# SolvedProblem.create(
+#   solution: raw_technically_3_years,
+#   sol_char_count: 479,
+#   time_exec_total: 0.2358,
+#   time_query_total: 0.0013,
+#   time_query_min: 0.000002,
+#   time_query_max: 0.000006,
+#   time_query_avg: 0.00000325,
+#   num_queries: 4,
+#   user_id: admin.id,
+#   problem_id: the_technically_3_years.id,
+#   environment_id: old_mac.id)
+#     total queries:1
+#    shortest query:20.60 ms
+#     longest query:20.60 ms
+#     average query:20.60 ms
+#  total query time:20.60 ms
+#   time to execute:26.22 ms
+# non-ws char count:316
+#           correct:true
+
+# SolvedProblem.create(
+#   solution: raw_technically_3_years,
+#   sol_char_count: 479,
+#   time_exec_total: 0.2358,
+#   time_query_total: 0.0013,
+#   time_query_min: 0.000002,
+#   time_query_max: 0.000006,
+#   time_query_avg: 0.00000325,
+#   num_queries: 4,
+#   user_id: admin.id,
+#   problem_id: the_technically_3_years.id,
+#   environment_id: old_mac.id)
+#     total queries:1
+#    shortest query:20.60 ms
+#     longest query:20.60 ms
+#     average query:20.60 ms
+#  total query time:20.60 ms
+#   time to execute:26.22 ms
+# non-ws char count:316
+#           correct:true
+
+# SolvedProblem.create(
+#   solution: raw_smitty_w,
+#   sol_char_count: 479,
+#   time_exec_total: 0.2358,
+#   time_query_total: 0.0013,
+#   time_query_min: 0.000002,
+#   time_query_max: 0.000006,
+#   time_query_avg: 0.00000325,
+#   num_queries: 4,
+#   user_id: admin.id,
+#   problem_id: smitty_w.id,
+#   environment_id: old_mac.id)
+#     total queries:3
+#    shortest query:18.60 ms
+#     longest query:57.40 ms
+#     average query:39.07 ms
+#  total query time:117.2 ms
+#   time to execute:488.5 ms
+# non-ws char count:655
+#           correct:true
+
+# SolvedProblem.create(
+#   solution: raw_the_red_line,
+#   sol_char_count: 479,
+#   time_exec_total: 0.2358,
+#   time_query_total: 0.0013,
+#   time_query_min: 0.000002,
+#   time_query_max: 0.000006,
+#   time_query_avg: 0.00000325,
+#   num_queries: 4,
+#   user_id: admin.id,
+#   problem_id: the_red_line.id,
+#   environment_id: old_mac.id)
+#     total queries:3
+#    shortest query:18.60 ms
+#     longest query:57.40 ms
+#     average query:39.07 ms
+#  total query time:117.2 ms
+#   time to execute:488.5 ms
+# non-ws char count:655
+#           correct:true
