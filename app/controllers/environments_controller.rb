@@ -13,8 +13,8 @@ class EnvironmentsController < ApplicationController
   def show
     available_models = JSON.parse(@environment.models)
     model = Object.const_get(params.fetch("current_model", available_models.keys.first))
-    # url = "/environments/#{@environment.id}/"
-    url = "https://active-record-baby.herokuapp.com/environments/#{@environment.id}/"
+    url = "/environments/#{@environment.id}/"
+    # url = "https://active-record-baby.herokuapp.com/environments/#{@environment.id}/"
     @data= model.get_data(url, params)
     @default_model_states = get_default_model_states(available_models)
 

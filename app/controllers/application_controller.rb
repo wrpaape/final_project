@@ -23,8 +23,9 @@ class ApplicationController < ActionController::Base
   def get_solution_data(params)
     results_hash = get_output_json(params[:solution])
     results = Array.wrap(results_hash["results"])
-    time_exec = results_hash["time_exec"]
     query_stats = get_query_stats
+    100.times { puts results_hash }
+    time_exec = results_hash["time_exec"] == 'N/A' ? 'N/A' : results_hash["time_exec"] + query_stats.fetch("query_tot_time", 0)
     {
       "results"=> results,
       "isCorrect"=> results_correct?(results, params[:problem_id]),
@@ -50,7 +51,8 @@ class ApplicationController < ActionController::Base
     elsif error_match.nil?
       output = JSON.parse(output)
       output["results"] = "nil" if output["results"].nil?
-      output["results"] = "[]" if output["results"].empty?
+      output["results"] = "[]" if output["results"] == []
+      output["results"] = "{}" if output["results"] == {}
     else
       output = { "results"=> error_match.captures.first.split("\n"), "time_exec"=> "N/A" }
     end
@@ -72,10 +74,10 @@ class ApplicationController < ActionController::Base
     tot_time = all_times.inject{ |sum, el| sum + el }
     avg_time = tot_time / num_queries
     query_stats = {
-      "query_min_time"=> min_time,
-      "query_max_time"=> max_time,
-      "query_tot_time"=> tot_time,
-      "query_avg_time"=> avg_time,
+      "query_min_time"=> min_time / 1000,
+      "query_max_time"=> max_time / 1000,
+      "query_tot_time"=> tot_time / 1000,
+      "query_avg_time"=> avg_time / 1000,
     }
 
     query_stats.each do |key, time|

@@ -15,9 +15,6 @@ var DisplayResultsInteract = React.createClass({
 
     Object.keys(times).forEach(function (key) {
       if (times[key] !== 'N/A' && !isNaN(times[key])) {
-        if (key !== 'timeExecTotal') {
-          times[key] /= 1000;
-        }
         var n = 0;
         while (times[key] < 1) {
           times[key] *= 1000;

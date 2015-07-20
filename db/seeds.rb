@@ -142,7 +142,7 @@ representing the |&mother| and |&father| of a typical household, |#order|ed alph
 
 Note that |&children| is a custom method (see person.rb in the inspector) and not a pure ActiveRecord relation.
 This method allows for |&mother|s and |&father|s to access the same ActiveRecord collection of |&children| without having to create an additional join table,
-but at the cost of making an additional query for every call.
+but at the cost of making 2 additional queries for every call.
 """
 def answer_avg_household
   Person.where(children_count: [1, 2]).order(:name)
