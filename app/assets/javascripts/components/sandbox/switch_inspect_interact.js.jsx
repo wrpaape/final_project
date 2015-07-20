@@ -4,6 +4,7 @@
 var SwitchInspectInteract = React.createClass({
   getInitialState: function() {
     return {
+      highlightInstructions: true,
       showInspect: true,
       showInteract: false,
       editorSwitched: false
@@ -55,7 +56,7 @@ var SwitchInspectInteract = React.createClass({
           <a href='/environments/' className='btn btn-primary'>
             <span>back to&nbsp;</span><span className='code code-ar-keyword'>environment</span><span>s</span>
           </a>
-          <button type='button' className='btn btn-primary' data-toggle='modal' data-target='.instructions'>
+          <button type='button' className={ 'btn btn-primary instructions-highlight-' + this.state.highlightInstructions } data-toggle='modal' data-target='.instructions' onClick={ this.switchIntructionsHighlight }>
             { '\'' + problem.title + '\' instructions' }
           </button>
           <button type='button' className='btn btn-primary' data-toggle='modal' data-target='.uml'>
@@ -96,5 +97,8 @@ var SwitchInspectInteract = React.createClass({
       showInteract: newShowInteract,
       editorSwitched: true
     });
+  },
+  switchIntructionsHighlight: function() {
+    this.setState({ highlightInstructions: false });
   }
 });

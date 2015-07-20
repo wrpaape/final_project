@@ -449,6 +449,34 @@ input {
   }
   button {
     margin-right: 10px;
+    &.instructions-highlight-true {
+      color: black!important;
+      text-shadow:
+        0 0 1.5em yellow,
+        3px 3px 0 yellow,
+        -1px -1px 0 yellow,
+        1px -1px 0 yellow,
+        -1px  1px 0 yellow,
+        1px  1px 0 yellow;
+      -webkit-box-shadow:
+        3px 3px 0 $code-green,
+        -3px -3px 0 $code-green,
+        3px -3px 0 $code-green,
+        -3px  3px 0 $code-green,
+        3px  3px 0 $code-green;
+      -moz-box-shadow:
+        3px 3px 0 $code-green,
+        -3px -3px 0 $code-green,
+        3px -3px 0 $code-green,
+        -3px  3px 0 $code-green,
+        3px  3px 0 $code-green;
+      box-shadow:
+        3px 3px 0 $code-green,
+        -3px -3px 0 $code-green,
+        3px -3px 0 $code-green,
+        -3px  3px 0 $code-green,
+        3px  3px 0 $code-green;
+    }
   }
   a {
     margin-right: 10px;
