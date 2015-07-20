@@ -98,9 +98,25 @@ table {
     color: $code-attribute;
     border-bottom: 2px solid $code-green!important;
   }
+  .highlight {
+    text-shadow:
+      0 0 1.5em #66FFFF,
+      3px 3px 0 #66FFFF,
+      -1px -1px 0 #66FFFF,
+      1px -1px 0 #66FFFF,
+      -1px  1px 0 #66FFFF,
+      1px  1px 0 #66FFFF;
+      td {
+        &.td{
+          color: black!important;
+          border-top: 1px solid $code-green!important;
+        }
+      }
+  }
+
   td {
+    color: $code-value;
     &.td{
-      color: $code-value;
       border-top: 1px solid $code-green!important;
     }
   }
@@ -112,7 +128,7 @@ table {
   margin-top: 40px;
   .inspector-show {
     position: fixed;
-    top: 56px;
+    top: 48px;
     right: 0px;
     font-size: 1.2em;
     width: 25px;
@@ -120,7 +136,7 @@ table {
   }
   .inspector-hide {
     position: fixed;
-    top: 50px;
+    top: 51px;
     margin: 0;
     right: 0;
     padding-right: 15px;
@@ -243,6 +259,7 @@ input {
 }
 
 [data-id='ASC'] {
+  color: black;
   text-shadow:
     0 0 1.5em green,
     3px 3px 0 green,
@@ -254,6 +271,7 @@ input {
   }
 
 [data-id='DESC'] {
+  color: black;
   text-shadow:
     0 0 1.5em red,
     3px 3px 0 red,
@@ -290,6 +308,7 @@ input {
 }
 
 .formatted-time {
+  color: black!important;
   text-shadow:
     0 0 1.5em yellow,
     3px 3px 0 yellow,
@@ -325,16 +344,6 @@ input {
   .value {
     color: $code-value;
   }
-}
-
-.highlight {
-  text-shadow:
-    0 0 1.5em #66FFFF,
-    3px 3px 0 #66FFFF,
-    -1px -1px 0 #66FFFF,
-    1px -1px 0 #66FFFF,
-    -1px  1px 0 #66FFFF,
-    1px  1px 0 #66FFFF;
 }
 
 .lighten-true {
@@ -589,6 +598,7 @@ input {
           font-size: 1.5em;
           &.true {
             font-size: 2em;
+            color: black;
             text-shadow:
               0 0 1.5em yellow,
               3px 3px 0 yellow,

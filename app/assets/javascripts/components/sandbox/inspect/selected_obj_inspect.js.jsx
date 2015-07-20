@@ -14,9 +14,16 @@ var SelectedObjInspect = React.createClass({
     var data = table.state.data;
     var model = table.state.currentModel;
     var keysCopy = $.extend([], Object.keys(table.state.wind0wObj));
-    var displayStrings = keysCopy.map(function(key) { return key + ': ' + obj[key]; });
-    var longestLength = displayStrings.sort(function (a, b) { return b.length - a.length; })[0].length;
     var longestLengthKeys = keysCopy.sort(function (a, b) { return b.length - a.length; })[0].length;
+    var displayValues = keysCopy.map(function(key) {
+      var val = obj[key];
+      if (val === null) {
+        return 'nil';
+      }
+      return val.toString();
+    });
+    var longestLengthValues = displayValues.sort(function (a, b) { return b.length - a.length; })[0].length;
+    var longestLength = longestLengthKeys + 2 + longestLengthValues;
     var attributes = [];
     attributes.push(<span key='obj-open'>{ '{' }</span>);
     if (obj.id !== 0) {

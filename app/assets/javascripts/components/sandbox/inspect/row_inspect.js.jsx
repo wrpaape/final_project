@@ -25,8 +25,16 @@ var RowInspect = React.createClass({
     var obj = this.state.obj;
     var keys = Object.keys(obj);
     var keysCopy = $.extend([], keys);
-    var displayStrings = keysCopy.map(function(key) { return key + ': ' + obj[key]; });
-    var longestLength = displayStrings.sort(function (a, b) { return b.length - a.length; })[0].length;
+    var longestLengthKeys = keysCopy.sort(function (a, b) { return b.length - a.length; })[0].length;
+    var displayValues = keysCopy.map(function(key) {
+      var val = obj[key];
+      if (val === null) {
+        return 'nil';
+      }
+      return val.toString();
+    });
+    var longestLengthValues = displayValues.sort(function (a, b) { return b.length - a.length; })[0].length;
+    var longestLength = longestLengthKeys + 2 + longestLengthValues;
     var objPad = (longestLength + 2) * 7;
 
     for (var i = 0; i < keys.length; i++) {
