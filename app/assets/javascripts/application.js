@@ -49,6 +49,7 @@ var setEditor = function () {
     enableBasicAutocompletion: true,
     enableLiveAutocompletion: false
   });
+  editor.focus();
   function updateHiddenInput() {
     var hiddenInput = $('input[name="editor-content"]');
     hiddenInput.val(editor.getSession().getValue());

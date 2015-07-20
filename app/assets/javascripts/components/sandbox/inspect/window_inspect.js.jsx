@@ -19,7 +19,7 @@ var WindowInspect = React.createClass({
     var migrationFileName = data.migrationFileName.split('\n');
 
     availableModels.forEach(function (model) {
-      modelOptions.push(<option key={ model + 'option' } value={ model }>{ model }</option>);
+      modelOptions.push(<option key={ model + 'option' } className='model-option' value={ model }>{ model }</option>);
     });
 
     var noneSelected = function() {

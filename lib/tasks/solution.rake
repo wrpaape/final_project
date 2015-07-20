@@ -3,7 +3,7 @@ task :solution => :environment do
   ActiveRecord::Base.logger = Logger.new(Rails.root.join("log", "solution_queries.log"))
   def solution
     status = Timeout::timeout(5) do
-    Person.take(30)
+    Person.where("LOWER(name) LIKE '%e%'")
     end
   end
   

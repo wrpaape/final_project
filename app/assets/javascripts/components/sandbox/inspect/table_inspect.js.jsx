@@ -90,7 +90,7 @@ var TableInspect = React.createClass({
               </tbody>
             </table>
           </section>
-          <div className='sticky-footer paginate'>
+          <div className='sticky-footer paginate sticky-footer-inspect'>
             <PaginateInspect parent={ this } />
             <LimitBarInspect parent={ this} />
             <QueryInspect parent={ this } />

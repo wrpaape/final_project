@@ -88,8 +88,12 @@ module HandleData
       search_hash.each_with_index do |(key, value), i|
         search_query += '|#(||?"|' if i == 0
         if type_of(value) == 'Numeric'
-          value = "\"#{value}\".to_datetime.to_s.downcase" if ["created_at", "updated_at"].include?(key)
-          search_query += "|?LOWER(CAST(||*#{key}| |?AS TEXT)) LIKE '%||`#{value}||?%'|"
+           if ["created_at", "updated_at"].include?(key)
+            value = "\"#{value}\".to_datetime.to_s.downcase"
+            search_query += "|?LOWER(CAST(||*#{key}| |?AS TEXT)) LIKE '%||`#{value}||?%'|"
+           else
+            search_query += "|?CAST(||*#{key}| |?AS TEXT) LIKE '%||`#{value}||?%'|"
+           end
         else
           search_query += "|?LOWER(||*#{key}||?) LIKE '%||`#{value.downcase}||?%'|"
         end

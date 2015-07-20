@@ -536,7 +536,7 @@ old_mac = Environment.create(
 
 prob_instruct =
 """
-In the magical realm of SQLville, the terms of each |~Contract| remain the same year to year (as does every other value stored) and are never broken.
+In the magical realm of |?SQL|ville, the terms of each |~Contract| remain the same year to year (as does every other value stored) and are never broken.
 Each |~Contract| may last 1 year (harvest) or longer. Which |~Contract|s were negotiated to |*start| after the last Friday of 2013 |#AND| |*finish| before the first Monday
 of 2016?
 

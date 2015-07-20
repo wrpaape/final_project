@@ -78,7 +78,7 @@ var TableInteract = React.createClass({
             </tbody>
           </table>
         </section>
-        <div className='sticky-footer'>
+        <div className='sticky-footer sticky-footer-interact'>
           <div className='editor'>
             <EditorInteract parent={ this } />
           </div>
