@@ -86,7 +86,7 @@ var TableInspect = React.createClass({
               <Img src='/assets/pig_glow.gif' className={ loadingClassName } />
               <TableHeadInspect parent={ this } />
               <tbody>
-                {rows}
+                { rows }
               </tbody>
             </table>
           </section>

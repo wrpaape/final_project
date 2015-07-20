@@ -5,7 +5,7 @@ class EnvironmentsController < ApplicationController
   # GET /environments
   # GET /environments.json
   def index
-    @environments = Environment.all.map{ |env| { "env"=>env, "probs"=>env.problems.map{ |prob| { "prob"=>prob, "solvedProbs"=>prob.solved_problems}  } } }
+    @environments = Environment.all.map{ |env| { "env"=>env, "probs"=>env.problems.map{ |prob| { "prob"=>prob, "solvedProbs"=>prob.solved_problems.count < 10 ? (prob.solved_problems.order(:time_exec_total).as_json << [SolvedProblem.new] * (10 - prob.solved_problems.count)).flatten : prob.solved_problems.order(:time_exec_total).limit(10) } } } }
   end
 
   # GET /environments/1

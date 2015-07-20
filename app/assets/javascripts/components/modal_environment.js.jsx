@@ -32,7 +32,7 @@ var ModalEnvironment = React.createClass({
       var solvedProbs = probHash.solvedProbs;
       probButtons.push(<div key={ prob.id }><a href={'/problems/' + prob.id } className='btn btn-primary'>{ prob.title }</a></div>);
       leaderButtons.push(<div key={ 'leader-' + prob.id }><button type='button' className='btn btn-default' data-toggle='modal' data-target={'.leader-' + prob.id }>leaderboard</button></div>);
-      leaderModals.push(<ModalLeader className={ 'modal fade leader-' + prob.id } solvedProbs={ solvedProbs } />);
+      leaderModals.push(<ModalLeaderboard key={ 'modal-leader-' + prob.id } className={ 'modal fade leader-' + prob.id } solvedProbs={ solvedProbs } />);
     });
 
     return(

@@ -20,31 +20,34 @@
 //= require components
 //= require moment
 //= require_tree .
-//= require jquery/jquery-1.8.3.min
 //= require ace/ace
-//= require ace/theme-monokai
+//= require ace/worker-html
+//= require ace/theme-terminal
 //= require ace/mode-ruby
-//= require jquery-ace.min
+//= require ace/ext-language_tools
 //= require react_rails_img
 
 'use strict';
 
-var ready = function() {
-  var pathname = window.location.pathname;
-  if (pathname.search(/^\/problems/) >= 0) {
-    setEditor();
-  }
-};
-
 var setEditor = function () {
-  $('#editor').ace({ theme: 'monokai', lang: 'ruby'});
-  var editor = document.querySelector('.ace_editor').env.editor;
+
+  var editor = ace.edit('editor');
+  editor.setTheme('ace/theme/terminal');
+  editor.session.setMode('ace/mode/ruby');
+
+  editor.$blockScrolling = Infinity
+  editor = document.querySelector('.ace_editor').env.editor;
   editor.getSession().setTabSize(2);
   editor.gotoLine(2);
   editor.insert('  ');
   updateHiddenInput();
   editor.getSession().on('change', function() {
     updateHiddenInput();
+  });
+
+  editor.setOptions({
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: false
   });
   function updateHiddenInput() {
     var hiddenInput = $('input[name="editor-content"]');
@@ -53,5 +56,5 @@ var setEditor = function () {
 };
 
 
-$(document).ready(ready);
-$(document).on('page:load', ready);
+$(document).on('click', '#editor-switch-false', setEditor);
+

@@ -5,12 +5,14 @@ var SwitchInspectInteract = React.createClass({
   getInitialState: function() {
     return {
       showInspect: true,
-      showInteract: false
+      showInteract: false,
+      editorSwitched: false
     };
   },
   render: function() {
     var showInspect = this.state.showInspect;
     var showInteract = this.state.showInteract;
+    var editorSwitched = this.state.editorSwitched;
     var problem = this.props.problem;
     var instructions = problem.instructions.split('\n');
     var buttonContents = showInspect ? [<span key='solution'><span>enter your&nbsp;</span><span className='code code-general'>solution</span></span>] : [<span key='environment'><span>inspect your&nbsp;</span><span className='code code-ar-keyword'>environment</span></span>];
@@ -59,7 +61,7 @@ var SwitchInspectInteract = React.createClass({
           <button type='button' className='btn btn-primary' data-toggle='modal' data-target='.uml'>
             UML
           </button>
-          <div className='btn btn-primary' onClick={ this.switched }>
+          <div id={ 'editor-switch-' + editorSwitched } className='btn btn-primary' onClick={ this.switched }>
             { buttonContents }
           </div>
         </div>
@@ -91,7 +93,8 @@ var SwitchInspectInteract = React.createClass({
     var newShowInteract = !this.state.showInteract;
     this.setState({
       showInspect: newShowInspect,
-      showInteract: newShowInteract
+      showInteract: newShowInteract,
+      editorSwitched: true
     });
   }
 });

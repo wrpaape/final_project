@@ -45,7 +45,7 @@ var RowInspect = React.createClass({
         val = 'nil';
       }
 
-      cols.push(<td id={ 'row-' + obj.id + '-col-' + i } key={ currentModel + '-row-' + obj.id + '-col-' + i } className={ className } onMouseOver={ this.mouseOver.bind(this, val, obj, i) } onMouseOut={ this.mouseOut.bind(this, val, obj, i) }>{ val }</td>);
+      cols.push(<td id={ 'inspect-row-' + obj.id + '-col-' + i } key={ currentModel + '-row-' + obj.id + '-col-' + i } className={ className } onMouseOver={ this.mouseOver.bind(this, val, obj, i) } onMouseOut={ this.mouseOut.bind(this, val, obj, i) }>{ val }</td>);
     }
 
     if (wind0wObj.id === obj.id && wind0wObjModel === currentModel) {
@@ -64,13 +64,13 @@ var RowInspect = React.createClass({
     var isDatetime = val.toString().match(/^(\d{4})-(\d{2})-(\d{2})([a-zA-Z])(\d{2}):(\d{2}):(\d{2})/);
     if (isDatetime !== null) {
       var valFormatted = (moment(val).format('MM/DD/YYYY hh:mm a'));
-      var idSelector = '#row-' + obj.id + '-col-' + i;
+      var idSelector = '#inspect-row-' + obj.id + '-col-' + i;
       $(idSelector).html(valFormatted);
       $(idSelector).addClass("formatted-time");
     }
   },
   mouseOut: function(val, obj, i) {
-    var idSelector = '#row-' + obj.id + '-col-' + i;
+    var idSelector = '#inspect-row-' + obj.id + '-col-' + i;
     $(idSelector).html(val);
     $(idSelector).removeClass("formatted-time");
   },

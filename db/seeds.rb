@@ -761,7 +761,7 @@ solution
 """
 raw_the_red_line = raw_the_red_line[1..-2]
 
-# admin = User.create(name: "admin", password: "admin", password_confirmation: "admin", admin: true, email: "admin@admin.com")
+admin = User.create(name: "admin", password: "admin", password_confirmation: "admin", admin: true, email: "admin@admin.com")
 
 # SolvedProblem.create(
 #   solution: raw_avg_household,

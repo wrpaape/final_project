@@ -58,7 +58,7 @@ gem 'bullet', group: :development
 gem 'bootstrap-sass'
 gem 'react-rails'
 gem 'bcrypt'
-gem 'jquery-ace-rails'
+gem 'ace-rails-ap'
 gem 'react-rails-img'
 gem 'faker'
 gem 'devise'

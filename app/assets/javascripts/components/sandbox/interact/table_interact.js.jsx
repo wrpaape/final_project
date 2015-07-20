@@ -74,7 +74,7 @@ var TableInteract = React.createClass({
           <table className={ tableClassName }>
             <TableHeadInteract parent={ this } show={ showHead } />
             <tbody>
-              {rows}
+              { rows }
             </tbody>
           </table>
         </section>
