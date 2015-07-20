@@ -14,7 +14,7 @@
         sign in
       </button>
     <% end %>
-    <div class="btn btn-primary">visiting</div>
+    <div class="btn btn-primary">visitor</div>
     <div class="subtitle-home">where baby Rails devs hone their db:fu</div>
   </div>
 </div>
@@ -25,15 +25,15 @@
         <div class="form-query-wrap">
           <span class="code code-model">User</span><span class="code code-ar-keyword">.create(</span><!--
        --><%= f.label :name, "name: ", class: "code code-attribute" %><!--
-       --><%= f.text_field :name, autofocus: true, autocomplete: "off", size: 12 %><span class="code code-general">,</span>
+       --><%= f.text_field :name, autofocus: true, autocomplete: "off", size: 12 %><span class="code code-ar-keyword">,</span>
         </div>
         <div class="form-query-wrap">
           <%= f.label :email, "email: ", class: "code code-attribute" %><!--
-       --><%= f.email_field :email, autocomplete: "off", size: 12 %><span class="code code-general">,</span>
+       --><%= f.email_field :email, autocomplete: "off", size: 12 %><span class="code code-ar-keyword">,</span>
         </div>
         <div class="form-query-wrap">
           <%= f.label :password, "password: ", class: "code code-attribute" %><!--
-       --><%= f.password_field :password, autocomplete: "off", size: 12 %><span class="code code-general">,</span>
+       --><%= f.password_field :password, autocomplete: "off", size: 12 %><span class="code code-ar-keyword">,</span>
         </div>
         <div class="form-query-wrap">
           <%= f.label :password_confirmation, "password_confirmation: ", class: "code code-attribute" %><!--
@@ -53,17 +53,17 @@
         <div class="form-query-wrap">
           <span class="code code-model">User</span><span class="code code-ar-keyword">.where(</span><!--
        --><span class="code code-sql">"</span><!--
-       --><%= f.label :name, "name = ", class: "code code-sql" %><!--
-       --><%= f.text_field :name, autofocus: true, autocomplete: "off", size: 12 %><span class="code code-sql">&nbsp;OR&nbsp;&nbsp;&nbsp;&nbsp;</span>
+       --><%= f.label :name, "name = '", class: "code code-sql" %><!--
+       --><%= f.text_field :name, autofocus: true, autocomplete: "off", size: 12 %><span class="code code-sql">'&nbsp;OR&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </div>
         <div class="form-query-wrap">
-          <%= f.label :email, "email = ", class: "code code-sql" %><!--
-       --><%= f.email_field :email, autocomplete: "off", size: 12 %><span class="code code-sql">&nbsp;AND&nbsp;&nbsp;&nbsp;</span>
+          <%= f.label :email, "email = '", class: "code code-sql" %><!--
+       --><%= f.email_field :email, autocomplete: "off", size: 12 %><span class="code code-sql">'&nbsp;AND&nbsp;&nbsp;&nbsp;</span>
         </div>
         <div class="form-query-wrap">
-          <%= f.label :password, "password = ", class: "code code-sql" %><!--
+          <%= f.label :password, "password = '", class: "code code-sql" %><!--
        --><%= f.password_field :password, autocomplete: "off", size: 12 %><!--
-       --><span class="code code-sql">"</span><!--
+       --><span class="code code-sql">'"</span><!--
        --><span class="code code-ar-keyword">).take</span>
         </div>
         <div class="actions sign-in">

@@ -1,6 +1,17 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 //You need to now manually import every other scss file.
+
+$code-green: #33FF33;
+$code-general: white;
+$code-ar-keyword: #00F9A7;
+$code-sql: #E6DB74;
+$code-table: #FFDD00;
+$code-relation: #FF628C;
+$code-attribute: #AE81FF;
+$code-model: #66D9EF;
+$code-value: #F46AEE;
+
 @mixin vertical-align {
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -21,15 +32,15 @@ canvas {
   background: black;
 }
 
-::-webkit-input-placeholder { color: #33FF33!important; opacity: 0.5; }
-:-moz-placeholder { color: #33FF33!important; opacity: 0.5; }
-::-moz-placeholder { color: #33FF33!important; opacity: 0.5; }
-:-ms-input-placeholder { color: #33FF33!important; opacity: 0.5; }
+::-webkit-input-placeholder { color: $code-green!important; opacity: 0.5; }
+:-moz-placeholder { color: $code-green!important; opacity: 0.5; }
+::-moz-placeholder { color: $code-green!important; opacity: 0.5; }
+:-ms-input-placeholder { color: $code-green!important; opacity: 0.5; }
 
 .btn {
   background: black!important;
-  border-color: #33FF33!important;
-  color: #33FF33!important;
+  border-color: $code-green!important;
+  color: $code-green!important;
   &:hover {
   text-shadow:
     0 0 1.5em black,
@@ -84,13 +95,13 @@ table {
   table-layout: fixed;
   word-wrap: break-word;
   th {
-    color: #AE81FF;
-    border-bottom: 2px solid #33FF33!important;
+    color: $code-attribute;
+    border-bottom: 2px solid $code-green!important;
   }
   td {
     &.td{
-      color: #f46aee;
-      border-top: 1px solid #33FF33!important;
+      color: $code-value;
+      border-top: 1px solid $code-green!important;
     }
   }
 }
@@ -185,7 +196,7 @@ table {
 body {
   font-family: Menlo, Consolas, 'Lucida Console', monospace;
   background-color: black;
-  color: #33FF33;
+  color: $code-green;
 }
 
 th {
@@ -204,7 +215,7 @@ section {
 
 input {
   background-color: black;
-  border-color: #33FF33;
+  border-color: $code-green;
 }
 
 .vertical-align {
@@ -309,10 +320,10 @@ input {
     opacity: 0;
   }
   .key {
-    color: #AE81FF;
+    color: $code-attribute;
   }
   .value {
-    color: #f46aee;
+    color: $code-value;
   }
 }
 
@@ -450,6 +461,9 @@ input {
             .form-query-wrap {
               margin: 0.25em;
               display: block;
+              input {
+                color: $code-value;
+              }
             }
             .actions {
               margin: 0.25em;
@@ -460,7 +474,7 @@ input {
                 padding-right: 12px;
               }
               &.sign-in {
-                padding-right: 83px;
+                padding-right: 94px;
               }
             }
           }
@@ -491,28 +505,8 @@ input {
     display: block;
     padding: 10px 0;
     background: black;
-    .query {
-      // &.model-name {
-      //   color: #33ffdb;
-      // }
-      // &.all {
-      //   color: #33ff33;
-      // }
-      // &.search {
-      //   color: #ff33e5;
-      // }
-      // &.sort {
-      //   color: #e0ff33;
-      // }
-      // &.limit {
-      //   margin: 0;
-      //   color: #a633ff;
-      // }
-      // &.offset {
-      //   color: #ffffff;
-      // }
-    }
   }
+
   .display-results {
     background: black;
     display: block;
@@ -530,7 +524,7 @@ input {
       .value{
         display: inline-block;
         padding-left: 1em;
-        color: #f46aee;
+        color: $code-value;
       }
     }
     .btn {
@@ -553,28 +547,28 @@ input {
 
 .code {
   &.code-general{
-    color: white;
+    color: $code-general;
   }
   &.code-ar-keyword {
-    color: #00F9A7;
+    color: $code-ar-keyword;
   }
   &.code-sql {
-    color: #E6DB74;
+    color: $code-sql;
   }
   &.code-table {
-    color: #FFDD00;
+    color: $code-table
   }
   &.code-relation {
-    color: #FF628C;
+    color: $code-relation;
   }
   &.code-attribute {
-    color: #AE81FF;
+    color: $code-attribute;
   }
   &.code-model {
-    color: #66D9EF;
+    color: $code-model;
   }
   &.code-value {
-    color: #f46aee;
+    color: $code-value;
   }
 }
 
@@ -619,7 +613,7 @@ input {
             display: none;
           }
           div {
-            padding-left: 78px;
+            padding-left: 65px;
             text-align: left;
             a {
               text-align: left;

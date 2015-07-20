@@ -25,7 +25,7 @@ var RowInspect = React.createClass({
     var obj = this.state.obj;
     var keys = Object.keys(obj);
     var keysCopy = $.extend([], keys);
-    var displayStrings = keysCopy.map(function(key) { return key + ': ' + obj[key].toString(); });
+    var displayStrings = keysCopy.map(function(key) { return key + ': ' + obj[key]; });
     var longestLength = displayStrings.sort(function (a, b) { return b.length - a.length; })[0].length;
     var objPad = (longestLength + 2) * 7;
 
@@ -81,9 +81,7 @@ var RowInspect = React.createClass({
     if (thisRow.attr('class') === '') {
       thisRow.attr('class', 'highlight');
       var clicked = $('.wind0w-object').attr('data-id');
-      console.log(objPad);
       newPad = clicked === 'true' ? objPad : oldPad;
-      console.log(newPad);
       table.setState({
         wind0wObj: obj,
         wind0wObjModel: currentModel,

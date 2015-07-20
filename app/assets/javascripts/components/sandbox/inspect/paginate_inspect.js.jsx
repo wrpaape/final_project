@@ -62,10 +62,10 @@ var PaginateInspect = React.createClass({
         var currentModel = table.state.currentModel;
         var newModels = table.state.models;
         newModels[currentModel].offset = newOffset;
-
         table.setState({ loading: true });
         $.getJSON(table.state.data.url,
           {
+            inspect: true,
             search: table.state.search,
             sort: table.state.sort,
             limit: table.state.limit,

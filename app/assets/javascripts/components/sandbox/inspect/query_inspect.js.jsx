@@ -6,7 +6,6 @@ var QueryInspect = React.createClass({
   render: function() {
     var table = this.props.parent;
     var query = table.state.data.query;
-    console.log(query);
     var coloredQuery = [];
     var keys = Object.keys(query);
     keys.forEach(function (key, i) {
