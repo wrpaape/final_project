@@ -615,19 +615,29 @@ input {
         }
         button {
           margin: 5px;
-          min-width: 100px;
+          min-width: 150px;
         }
-        .problems-wrap {
-          padding-left: 50%;
+        .problems-leaders-wrap {
           &.false {
             display: none;
           }
-          div {
-            padding-left: 65px;
-            text-align: left;
-            a {
-              text-align: left;
-              margin: 5px;
+          text-align: left;
+          // padding-left: 85px;
+          .problems-wrap {
+            display: inline-block;
+            div {
+              a {
+                margin: 5px;
+              }
+            }
+          }
+          .leaders-wrap {
+            display: inline-block;
+            float: right;
+            div {
+              button {
+                margin: 5px;
+              }
             }
           }
         }

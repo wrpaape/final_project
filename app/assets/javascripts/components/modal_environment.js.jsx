@@ -16,6 +16,7 @@ var ModalEnvironment = React.createClass({
   },
   render: function() {
     var probButtons = [];
+    var leaderButtons = [];
     var hovered = this.state.hovered;
     var showProbs = this.state.showProbs;
     var environment = this.props.environment;
@@ -27,6 +28,7 @@ var ModalEnvironment = React.createClass({
 
     probs.forEach(function(prob, i) {
       probButtons.push(<div key={ prob.id }><a href={'/problems/' + prob.id } className='btn btn-primary'>{ prob.title }</a></div>);
+      leaderButtons.push(<div key={ 'leader-' + prob.id }><button type='button' className='btn btn-default' data-toggle='modal' data-target={'.env-' + env.id }>leaderboard</button></div>);
     });
 
     return(
@@ -35,18 +37,23 @@ var ModalEnvironment = React.createClass({
           { title }
         </div>
         <div className={ 'env-details ' + hovered } onMouseOut={ this.mouseOut }>
+          <button className='btn btn-default' onClick={ this.clicked }>
+            problems
+          </button>
           <button type='button' className='btn btn-default' data-toggle='modal' data-target={'.env-' + env.id }>
             description
           </button>
           <button type='button' className='btn btn-default' data-toggle='modal' data-target={'.uml-' + env.id }>
             UML
           </button>
-          <button className='btn btn-default' onClick={ this.clicked }>
-            problems
-          </button>
           <br />
-          <div className={ 'problems-wrap ' + showProbs }>
-            { probButtons }
+          <div className={ 'problems-leaders-wrap ' + showProbs }>
+            <div className='problems-wrap '>
+              { probButtons }
+            </div>
+            <div className='leaders-wrap '>
+              { leaderButtons }
+            </div>
           </div>
           <div id={ 'fade-env-' + env.id } className={ 'modal fade env-' + env.id } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
             <div className='modal-dialog modal-lg'>

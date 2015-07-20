@@ -668,11 +668,11 @@ def solution
     genders_of_singles = all_singles.where(generation: gen).pluck(:gender)
     m_and_f_available = genders_of_singles.uniq.size == 2 ? true : false
     if m_and_f_available
-      if genders_of_singles.count("F") > 1
-        the_bachelor = all_singles.find_by({ generation: gen, gender: "M" })
+      if genders_of_singles.count(\"F\") > 1
+        the_bachelor = all_singles.find_by({ generation: gen, gender: \"M\" })
         return the_bachelor
       else
-        the_bachelorette = all_singles.find_by({ generation: gen, gender: "F" })
+        the_bachelorette = all_singles.find_by({ generation: gen, gender: \"F\" })
         return the_bachelorette
       end
     end
