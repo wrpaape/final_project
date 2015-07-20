@@ -13,7 +13,7 @@ var SwitchInspectInteract = React.createClass({
     var showInteract = this.state.showInteract;
     var problem = this.props.problem;
     var instructions = problem.instructions.split('\n');
-    var buttonContents = showInspect ? 'Enter your Solution' : 'Inspect your Environment';
+    var buttonContents = showInspect ? [<span><span>enter your&nbsp;</span><span className='code code-general'>solution</span></span>] : [<span><span>inspect your&nbsp;</span><span className='code code-ar-keyword'>environment</span></span>];
     var umlFilePath = '/assets/environment' + this.props.dataInspect.environmentId + '_uml.png';
     var formattedInstructions = [];
     instructions.forEach(function(line, i) {

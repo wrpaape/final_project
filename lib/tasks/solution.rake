@@ -1,9 +1,9 @@
 require 'timeout'
 task :solution => :environment do
-  Rails.logger = Logger.new(Rails.root.join("log", "solution_queries.log"))
+  ActiveRecord::Base.logger = Logger.new(Rails.root.join("log", "solution_queries.log"))
   def solution
     status = Timeout::timeout(5) do
-    "hello"
+    Person.first
     end
   end
   

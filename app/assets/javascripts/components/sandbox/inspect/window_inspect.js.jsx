@@ -52,7 +52,7 @@ var WindowInspect = React.createClass({
       </div>
     );
     } else {
-      var vertText = 'Show  Inspector'.split('');
+      var vertText = 'show  inspector'.split('');
       vertText = vertText.join('\n');
 
       return(

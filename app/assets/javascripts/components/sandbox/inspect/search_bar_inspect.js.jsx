@@ -52,7 +52,7 @@ var SearchBarInspect = React.createClass({
     if (show) {
       return (
         <div data-id={ show } className='wind0w-button wind0w-search search-bar'>
-          <div onClick={ this.clicked.bind(this, show, table) } className='btn btn-default show-hide search-button'>Search Bar</div>
+          <div onClick={ this.clicked.bind(this, show, table) } className='btn btn-default show-hide search-button'>search bar</div>
           <form onSubmit={ this.submitted }>
             { inputs }
           </form>
@@ -61,7 +61,7 @@ var SearchBarInspect = React.createClass({
     } else {
       return(
         <div data-id={ show } onClick={ this.clicked.bind(this, show, table) } className='wind0w-button wind0w-search btn btn-primary show-hide search-button'>
-          Search Bar
+          search bar
         </div>
       );
     };

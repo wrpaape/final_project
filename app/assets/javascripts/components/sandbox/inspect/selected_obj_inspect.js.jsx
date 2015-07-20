@@ -44,7 +44,7 @@ var SelectedObjInspect = React.createClass({
     if (show) {
       return(
         <div>
-          <div data-id={ show } onClick={ this.clicked.bind(this, show, obj, table, longestLength) } className='wind0w-button wind0w-object btn btn-default show-hide'>Selected Object</div>
+          <div data-id={ show } onClick={ this.clicked.bind(this, show, obj, table, longestLength) } className='wind0w-button wind0w-object btn btn-default show-hide'>selected object</div>
           <section className='object'>
             { attributes }
           </section>
@@ -53,7 +53,7 @@ var SelectedObjInspect = React.createClass({
     } else {
       return(
         <div data-id={ show } onClick={ this.clicked.bind(this, show, obj, table, longestLength) } className='wind0w-button wind0w-object btn btn-primary show-hide'>
-          Selected Object
+          selected object
         </div>
       );
     };

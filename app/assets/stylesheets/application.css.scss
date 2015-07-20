@@ -519,7 +519,7 @@ input {
       display: block;
       .type{
         display: inline-block;
-        color: #33ffdb;
+        color: $code-attribute;
       }
       .value{
         display: inline-block;

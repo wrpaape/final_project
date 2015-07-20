@@ -34,9 +34,9 @@ var DisplayResultsInteract = React.createClass({
 
     return(
       <div className='display-results'>
-        <div className='row'>
+        <div>
           <div className='type'>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total queries:
+            &nbsp;&nbsp;&nbsp;&nbsp;total queries:
           </div>
           <div className='value'>
             { results['numQueries'] }
