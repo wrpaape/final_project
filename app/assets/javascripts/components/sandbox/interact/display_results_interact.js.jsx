@@ -4,8 +4,13 @@
 var DisplayResultsInteract = React.createClass({
   getInitialState: function () {
     return {
-      showCorrect: false
+      showCorrect: this.props.showCorrect
     };
+  },
+  componentWillReceiveProps: function (nextProps) {
+    this.setState({
+      showCorrect: nextProps.showCorrect
+    });
   },
   render: function () {
     var table = this.props.parent;
@@ -24,10 +29,27 @@ var DisplayResultsInteract = React.createClass({
       }
     });
 
+    var user = table.state.user;
     var isCorrect = table.state.results.isCorrect;
     var showCorrect = this.state.showCorrect;
-    var dispCorrect = showCorrect ? results.isCorrect.toString() : '????';
-    var buttonContents = (showCorrect && isCorrect) ? 'submit solution' : 'check answer';
+    var dispCorrect = showCorrect ? results.isCorrect.toString() : '?????';
+    var buttonContents = (showCorrect && isCorrect) ? (user === null ? 'sign in to\nsubmit |solution' : 'submit |solution') : 'check answer';
+    var splitContents = buttonContents.split('\n');
+    var formatteddContents = [];
+
+
+    splitContents.forEach(function(line, i){
+      if (i === (splitContents.length - 1)) {
+        var formattedSegs = [];
+        var segs = line.split('|');
+        segs.forEach(function(seg, j){
+          formattedSegs.push(<span key={ 'seg-' + j } className={ j === 1 ? 'code code-general' : '' }>{ seg }</span>);
+        });
+        formatteddContents.push(<span key={ 'plain-' + i }>{ formattedSegs }</span>)
+      } else {
+        formatteddContents.push(<p key={ 'plain-' + i }>{ line }</p>)
+      }
+    });
 
     return(
       <div className='display-results'>
@@ -95,7 +117,7 @@ var DisplayResultsInteract = React.createClass({
             { dispCorrect }
           </div>
           <div className='btn btn-primary' onClick={ this.clicked }>
-            { buttonContents }
+            { formatteddContents }
           </div>
         </div>
       </div>

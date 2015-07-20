@@ -155,9 +155,12 @@ var EditorInteract = React.createClass({
             solution: formattedSolution,
             problem_id: table.props.problem.id
           },
-          function(newData) {
+          function(newDataWUser) {
+            var user = newDataWUser.user;
+            var newData = newDataWUser.newData;
             var data = newData.results;
             table.setState({
+              user: user,
               data: data,
               results: {
                 'isCorrect': newData.isCorrect,

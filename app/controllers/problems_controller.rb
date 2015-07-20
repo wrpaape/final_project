@@ -18,6 +18,7 @@ class ProblemsController < ApplicationController
       url = "/problems/#{@problem.id}/"
       @data_inspect = model.get_data(url, params, environment.id)
       @models_inspect = get_default_model_states(available_models)
+
     end
     unless params[:inspect]
       @data_interact = ["The Results of your 'solution' Method will be Displayed Here.",
@@ -28,7 +29,7 @@ class ProblemsController < ApplicationController
     if params[:inspect]
       render json: @data_inspect
     elsif params[:interact]
-      render json: get_solution_data(params)
+      render json: { "newData"=>get_solution_data(params), "user"=>current_user }
     end
   end
 

@@ -4,6 +4,7 @@
 var TableInteract = React.createClass({
   getInitialState: function () {
     return {
+      user: null,
       data: this.props.data,
       results: {
         'isCorrect': false,
@@ -84,7 +85,7 @@ var TableInteract = React.createClass({
           </div>
           <div className='results-wrap'>
             <Img src={ '/assets/newman' + this.state.newmanLevel + '.gif' } className={ newmanClassName } />
-            <DisplayResultsInteract parent={ this } />
+            <DisplayResultsInteract parent={ this } showCorrect={ false } />
           </div>
         </div>
       </div>

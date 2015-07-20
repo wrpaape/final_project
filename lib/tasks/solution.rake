@@ -3,7 +3,7 @@ task :solution => :environment do
   ActiveRecord::Base.logger = Logger.new(Rails.root.join("log", "solution_queries.log"))
   def solution
     status = Timeout::timeout(5) do
-    Person.limit(10)
+    Person.where(:children_count=> [1, 2]).order(:name)
     end
   end
   
