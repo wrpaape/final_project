@@ -121,8 +121,13 @@ module HandleData
         end
       end
       sq_hash.each_with_index do |(key, value), i|
-        search_query += '|#.where(||?"|' if i == 0
-        search_query += "|?LOWER(||*#{key}|?) = '||`#{value.downcase}||?'|"
+        value = "\"#{value}\".to_datetime.to_s.downcase" if ["created_at", "updated_at"].include?(key)
+        if ar_hash.size == 0 && i == 0
+          search_query += '|#(||?"|'
+        elsif i == 0
+          search_query += '|#.where(||?"|'
+        end
+        search_query += "|?LOWER(||*#{key}||?) = '||`#{value.downcase}||?'|"
         search_query += i == (sq_hash.size - 1) ? '|?"||#)|' : " |?AND| "
       end
     end
