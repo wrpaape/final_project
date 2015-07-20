@@ -8,7 +8,7 @@ var EditorInteract = React.createClass({
     };
   },
   render: function() {
-    var initialText = 'def solution\n\nend\n\nsolution';
+    var initialText = '# hold [cmd + shift + return] or [ctr + shift + return]\n# to reload your results.\n\ndef solution\n\nend\n\nsolution';
     var pressedKeys = [-1, -1, -1];
     var loadingClassName = 'loading-' + this.state.loading +' db-editor';
     var editorClassName = 'lighten-' + this.state.loading;

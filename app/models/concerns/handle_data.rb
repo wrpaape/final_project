@@ -76,7 +76,7 @@ module HandleData
     if fuzzy == "on" && case_sens == "on"
       search_hash.each_with_index do |(key, value), i|
         search_query += '|#(||?"|' if i == 0
-        if type_of(value) == 'Numeric'
+        if type_of(value) == "Numeric"
           value = "\"#{value}\".to_datetime.to_s" if ["created_at", "updated_at"].include?(key)
           search_query += "|?CAST(||*#{key}| |?AS TEXT) LIKE '%||`#{value}||?%'|"
         else
@@ -87,7 +87,7 @@ module HandleData
     elsif fuzzy == "on" && case_sens == ""
       search_hash.each_with_index do |(key, value), i|
         search_query += '|#(||?"|' if i == 0
-        if type_of(value) == 'Numeric'
+        if type_of(value) == "Numeric"
            if ["created_at", "updated_at"].include?(key)
             value = "\"#{value}\".to_datetime.to_s.downcase"
             search_query += "|?LOWER(CAST(||*#{key}| |?AS TEXT)) LIKE '%||`#{value}||?%'|"
@@ -101,7 +101,11 @@ module HandleData
       end
     elsif fuzzy == "" && case_sens == "on"
       search_hash.each_with_index do |(key, value), i|
-        value = "\"#{value}\".to_datetime" if ["created_at", "updated_at"].include?(key)
+        if ["created_at", "updated_at"].include?(key)
+          value = "\"#{value}\".to_datetime"
+        elsif type_of(value) == "String"
+          value = "\"#{value}\""
+        end
         if search_hash.size == 1
           search_query += "|#(||*#{key}:| |`#{value}||#)|"
         else
@@ -113,9 +117,13 @@ module HandleData
     else
       sq_hash = {}
       ar_hash = {}
-      search_hash.each { |(key, value)| type_of(value) == 'Numeric' ? ar_hash[key] = value : sq_hash[key] = value }
+      search_hash.each { |(key, value)| type_of(value) == "Numeric" ? ar_hash[key] = value : sq_hash[key] = value }
       ar_hash.each_with_index do |(key, value), i|
-        value = "\"#{value}\".to_datetime" if ["created_at", "updated_at"].include?(key)
+        if ["created_at", "updated_at"].include?(key)
+          value = "\"#{value}\".to_datetime"
+        elsif type_of(value) == "String"
+          value = "\"#{value}\""
+        end
         if ar_hash.size == 1
           search_query += "|#(||*#{key}:| |`#{value}||#)|"
         else
@@ -159,6 +167,6 @@ module HandleData
 
 
   def type_of(value)
-    value.to_s.ord >= 46 && value.to_s.ord <= 57 ? 'Numeric' : 'String'
+    value.to_s.ord >= 46 && value.to_s.ord <= 57 ? "Numeric" : 'String'
   end
 end

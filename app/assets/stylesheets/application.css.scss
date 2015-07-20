@@ -12,6 +12,46 @@ $code-attribute: #AE81FF;
 $code-model: #66D9EF;
 $code-value: #F46AEE;
 
+@keyframes glow1 {
+  to {
+    text-shadow: 0 0 10px yellow,
+      3px 3px 0 yellow,
+      -1px -1px 0 yellow,
+      1px -1px 0 yellow,
+      -1px  1px 0 yellow,
+      1px  1px 0 yellow;
+    -webkit-box-shadow:
+      3px 3px 0 $code-green,
+      -3px -3px 0 $code-green,
+      3px -3px 0 $code-green,
+      -3px  3px 0 $code-green,
+      3px  3px 0 $code-green;
+    -moz-box-shadow:
+      3px 3px 0 $code-green,
+      -3px -3px 0 $code-green,
+      3px -3px 0 $code-green,
+      -3px  3px 0 $code-green,
+      3px  3px 0 $code-green;
+    box-shadow:
+      3px 3px 0 $code-green,
+      -3px -3px 0 $code-green,
+      3px -3px 0 $code-green,
+      -3px  3px 0 $code-green,
+      3px  3px 0 $code-green;
+  }
+}
+
+@keyframes glow2 {
+  to {
+    text-shadow: 0 0 10px yellow,
+      3px 3px 0 yellow,
+      -1px -1px 0 yellow,
+      1px -1px 0 yellow,
+      -1px  1px 0 yellow,
+      1px  1px 0 yellow;
+  }
+}
+
 @mixin vertical-align {
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -137,15 +177,14 @@ section {
         1px -1px 0 #66FFFF,
         -1px  1px 0 #66FFFF,
         1px  1px 0 #66FFFF;
-        td {
-          font-size: 0.8em;
-          &.td{
-            color: black!important;
-            border-top: 1px solid $code-green!important;
-          }
+      td {
+        font-size: 0.8em;
+        &.td{
+          color: black!important;
+          border-top: 1px solid $code-green!important;
         }
+      }
     }
-
     td {
       font-size: 0.8em;
       color: $code-value;
@@ -167,6 +206,10 @@ section {
     font-size: 1.2em;
     width: 25px;
     height: 100%;
+    &.true {
+      color: black;
+      animation: glow2 1s infinite alternate ease-in-out;
+    }
   }
   .inspector-hide {
     position: fixed;
@@ -451,31 +494,7 @@ input {
     margin-right: 10px;
     &.instructions-highlight-true {
       color: black!important;
-      text-shadow:
-        0 0 1.5em yellow,
-        3px 3px 0 yellow,
-        -1px -1px 0 yellow,
-        1px -1px 0 yellow,
-        -1px  1px 0 yellow,
-        1px  1px 0 yellow;
-      -webkit-box-shadow:
-        3px 3px 0 $code-green,
-        -3px -3px 0 $code-green,
-        3px -3px 0 $code-green,
-        -3px  3px 0 $code-green,
-        3px  3px 0 $code-green;
-      -moz-box-shadow:
-        3px 3px 0 $code-green,
-        -3px -3px 0 $code-green,
-        3px -3px 0 $code-green,
-        -3px  3px 0 $code-green,
-        3px  3px 0 $code-green;
-      box-shadow:
-        3px 3px 0 $code-green,
-        -3px -3px 0 $code-green,
-        3px -3px 0 $code-green,
-        -3px  3px 0 $code-green,
-        3px  3px 0 $code-green;
+      animation: glow1 1s infinite alternate ease-in-out;
     }
   }
   a {

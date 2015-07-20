@@ -38,7 +38,7 @@ var setEditor = function () {
   editor.$blockScrolling = Infinity
   editor = document.querySelector('.ace_editor').env.editor;
   editor.getSession().setTabSize(2);
-  editor.gotoLine(2);
+  editor.gotoLine(5);
   editor.insert('  ');
   updateHiddenInput();
   editor.getSession().on('change', function() {

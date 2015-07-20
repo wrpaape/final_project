@@ -57,7 +57,7 @@ var SwitchInspectInteract = React.createClass({
             <span>back to&nbsp;</span><span className='code code-ar-keyword'>environment</span><span>s</span>
           </a>
           <button type='button' className={ 'btn btn-primary instructions-highlight-' + this.state.highlightInstructions } data-toggle='modal' data-target='.instructions' onClick={ this.switchIntructionsHighlight }>
-            { '\'' + problem.title + '\' instructions' }
+            { '\'' + problem.title + '\'' }
           </button>
           <button type='button' className='btn btn-primary' data-toggle='modal' data-target='.uml'>
             UML

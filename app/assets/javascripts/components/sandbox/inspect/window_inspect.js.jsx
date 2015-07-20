@@ -4,6 +4,7 @@
 var WindowInspect = React.createClass({
   getInitialState: function () {
     return {
+      highlight: true,
       show: false
     };
   },
@@ -56,14 +57,17 @@ var WindowInspect = React.createClass({
       vertText = vertText.join('\n');
 
       return(
-        <div className='inspector-show' onMouseEnter={ this.mouseEnter.bind(this, show, table) }>
+        <div className={ 'inspector-show ' + this.state.highlight } onMouseEnter={ this.mouseEnter.bind(this, show, table) }>
           { vertText }
         </div>
       )
     }
   },
   mouseEnter: function(show, table) {
-    this.setState({ show: !show });
+    this.setState({
+      highlight: false,
+      show: !show
+    });
     table.setState({ padding: 165 });
   },
   mouseLeave: function(show, table, noneSelected) {
