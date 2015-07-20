@@ -9,11 +9,17 @@ var RowLeaderboard = React.createClass({
 
     for (var i = 0; i < keys.length; i++) {
       var className = i % 2 === 0 ? 'darker td' : 'lighter td';
-      var val = solvedProb[keys[i]];
+      var key = keys[i];
+      var val = solvedProb[key];
+      val = val === null ? 'nil' : val;
 
-      if (val === null) {
-        val = 'nil';
+      if (key === 'solution') {
+
+      } else if (key.match(/(_query_)/) !== null) [
+
       }
+
+
 
       cols.push(<td id={ 'leaderboard-row-' + solvedProb.id + '-col-' + i } key={ 'row-' + solvedProb.id + '-col-' + i } className={ className } onMouseOver={ this.mouseOver.bind(this, val, solvedProb, i) } onMouseOut={ this.mouseOut.bind(this, val, solvedProb, i) }>{ val }</td>);
     }
