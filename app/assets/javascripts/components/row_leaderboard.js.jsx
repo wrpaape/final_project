@@ -13,11 +13,11 @@ var RowLeaderboard = React.createClass({
       var val = solvedProb[key];
       val = val === null ? 'nil' : val;
 
-      if (key === 'solution') {
+      // if (key === 'solution') {
 
-      } else if (key.match(/(_query_)/) !== null) [
+      // } else if (key.match(/(_query_)/) !== null) [
 
-      }
+      // }
 
 
 
