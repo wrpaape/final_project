@@ -12,7 +12,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
 //= require react
@@ -26,6 +25,7 @@
 //= require ace/mode-ruby
 //= require ace/ext-language_tools
 //= require react_rails_img
+//= require bootstrap.min.js
 
 'use strict';
 
@@ -69,4 +69,11 @@ $(document).on('click', '#sign-in', function() {
     $('#sign-in-name-field').focus();
   }, 500);
 });
+
+$(document).on('click', '#sign-in-up-submit', function() {
+  setTimeout(function(){
+    $('#sign-in-name-field').focus();
+  }, 500);
+});
+
 

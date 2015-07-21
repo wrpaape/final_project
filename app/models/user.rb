@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
   belongs_to :problem
 
   def self.find_first_by_auth_conditions(warden_conditions)
-    100.times { puts "hello" }
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
       where(conditions).where(["lower(name) = :value OR lower(email) = :value", { :value => login.downcase }]).first

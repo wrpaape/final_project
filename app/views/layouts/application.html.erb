@@ -14,10 +14,14 @@
       <p class="alert alert-danger"><%= alert %></p>
     <% end %>
     <%= yield %>
-    <div class="sign-up-form modal fade" tab-index="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div id="modal-sign-up" class="sign-up-form modal fade" tab-index="-1" role="dialog" aria-labelledby="myLargeModalLabel">
       <div class="modal-dialog modal-lg">
         <div class="modal-content form">
-          <%= form_for(User.new, url: registration_path(User.new)) do |f| %>
+          <%= form_for(resource, :as => resource_name,
+                     :url => registration_path(resource_name) ,
+                     :html => {:id => "sign-in-up-form-tag"},
+                     :format => :json,
+                     :remote => true ) do |f| %>
             <div class="form-query-wrap">
               <span class="code code-model">User</span><span class="code code-ar-keyword">.create(</span><!--
            --><%= f.label :name, "name: ", class: "code code-attribute" %><span class="code code-value">"</span><!--
@@ -36,16 +40,20 @@
            --><%= f.password_field :password_confirmation, autocomplete: "off", size: 12 %><span class="code code-value">"</span><span class="code code-ar-keyword">)</span>
             </div>
             <div class="actions sign-up">
-              <%= f.submit "sign up", class:  "btn btn-primary" %>
+              <%= f.submit "sign up", class: "btn btn-primary", id: "sign-in-up-submit" %>
             </div>
           <% end %>
         </div>
       </div>
     </div>
-    <div class="sign-in-form modal fade" tab-index="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div id="modal-sign-in" class="sign-in-form modal fade" tab-index="-1" role="dialog" aria-labelledby="myLargeModalLabel">
       <div class="modal-dialog modal-lg">
         <div class="modal-content form">
-          <%= form_for(User.new, url: session_path(User.new)) do |f| %>
+          <%= form_for(resource, :as => resource_name,
+                     :url => session_path(resource_name) ,
+                     :html => {:id => "sign-in-up-form-tag"},
+                     :format => :json,
+                     :remote => true ) do |f| %>
             <div class="form-query-wrap">
               <span class="code code-model">User</span><span class="code code-ar-keyword">.where(</span><!--
            --><span class="code code-sql">"</span><!--
@@ -63,7 +71,7 @@
            --><span class="code code-ar-keyword">).take</span>
             </div>
             <div class="actions sign-in">
-              <%= f.submit "sign in", class:  "btn btn-primary" %>
+              <%= f.submit "sign in", class: "btn btn-primary", id: "sign-in-up-submit" %>
             </div>
           <% end %>
         </div>

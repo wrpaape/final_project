@@ -1,25 +1,5 @@
 <canvas id='arb-matrix'></canvas>
-<div class="home-container">
-  <div class="home-wrap">
-    <div class="presents-home">tastyham presents...</div>
-    <%= image_tag("mvc.gif") %>
-    <div class="title-home">ActiveRecord Baby</div>
-    <button id="sign-up" type="button" class="btn btn-primary" data-toggle="modal" data-target=".sign-up-form">
-      sign up
-    </button>
-    <% if current_user %>
-      <%= link_to "sign out", destroy_user_session_path, :method => :delete, class: "btn btn-primary" %>
-      <%= link_to "enter", environments_path, class: "btn btn-primary" %>
-    <% else %>
-      <button id="sign-in" class="btn btn-primary" data-toggle="modal" data-target=".sign-in-form">
-        sign in
-      </button>
-      <%= link_to "guest", environments_path, class: "btn btn-primary" %>
-    <% end %>
-    <div class="subtitle-home">where baby Rails devs hone their db:fu</div>
-  </div>
-</div>
-
+<%= react_component("HomePage", { urls: @urls, user: @user }) %>
 
 <script type='text/javascript'>
 'use strict';
