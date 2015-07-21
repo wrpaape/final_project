@@ -52,6 +52,53 @@ $code-value: #F46AEE;
   }
 }
 
+@keyframes glow3 {
+  to {
+    text-shadow: 0 0 10px red,
+      3px 3px 0 red,
+      -1px -1px 0 red,
+      1px -1px 0 red,
+      -1px  1px 0 red,
+      1px  1px 0 red;
+  }
+}
+
+@keyframes glow4 {
+  to {
+    text-shadow: 0 0 10px green,
+      3px 3px 0 green,
+      -1px -1px 0 green,
+      1px -1px 0 green,
+      -1px  1px 0 green,
+      1px  1px 0 green;
+  }
+}
+
+@keyframes glow5 {
+  to {
+    text-shadow: 0 0 10px $code-value,
+      3px 3px 0 $code-value,
+      -1px -1px 0 $code-value,
+      1px -1px 0 $code-value,
+      -1px  1px 0 $code-value,
+      1px  1px 0 $code-value;
+  }
+}
+
+@-webkit-keyframes scale {
+  0% { -webkit-transform: scale(1); }
+  50% { -webkit-transform: scale(0.9); }
+  100% { -webkit-transform: scale(1); }
+}
+
+@-webkit-keyframes stretch {
+  0% { -webkit-transform: scale(1); }
+  25% { -webkit-transform: scale(0.5, 2); }
+  50% { -webkit-transform: scale(2, 0.5); }
+  50% { -webkit-transform: scale(2, 0.5); }
+  100% { -webkit-transform: scale(1); }
+}
+
 @mixin vertical-align {
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -634,6 +681,22 @@ input {
           display: inline-block;
           padding-left: 1em;
           color: $code-value;
+          &.correct {
+            color: black;
+            &.show-correct-true {
+              &.is-correct-false {
+                animation: glow3 0.5s ease-in forwards,
+                           scale 0.5s infinite;
+              }
+              &.is-correct-true {
+                -webkit-animation: glow4 2s infinite alternate-reverse ease-in-out,
+                                  stretch 0.5s ease-in forwards;
+              }
+            }
+            &.show-correct-false {
+              animation: glow5 1.5s infinite alternate-reverse cubic-bezier(1, 0, 0, 1);
+            }
+          }
         }
       }
       .btn {

@@ -113,17 +113,25 @@ var DisplayResultsInteract = React.createClass({
           <div className='type'>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;correct:
           </div>
-          <div className='value'>
+          <div className={ 'correct value show-correct-' + showCorrect + ' is-correct-' + isCorrect }>
             { dispCorrect }
           </div>
-          <div className='btn btn-primary' onClick={ this.clicked }>
+          <div className='btn btn-primary' onClick={ this.clicked.bind(this, user, showCorrect, isCorrect) }>
             { formatteddContents }
           </div>
         </div>
       </div>
     );
   },
-  clicked: function () {
-    this.setState({ showCorrect: true });
+  clicked: function (user, showCorrect, isCorrect) {
+    if (showCorrect && isCorrect) {
+      if (user === null) {
+
+      } else {
+
+      }
+    } else {
+      this.setState({ showCorrect: true });
+    }
   }
 });

@@ -21,8 +21,8 @@ class ProblemsController < ApplicationController
 
     end
     unless params[:inspect]
-      @data_interact = ["the results of your 'solution' method will be displayed here.",
-               "hold [cmd + shift + return] or [ctr + shift + return] to reload your results."]
+      @data_interact = ["the results of your 'solution' method will be displayed here",
+               "hold [cmd + shift + return] or [ctr + shift + return] to reload your results"]
       # @url_interact = "https://active-record-baby.herokuapp.com/problems/#{params[:id]}/"
       @url_interact = "/problems/#{params[:id]}/"
     end
