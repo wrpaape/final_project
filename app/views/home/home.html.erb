@@ -4,13 +4,13 @@
     <div class="presents-home">tastyham presents...</div>
     <%= image_tag("mvc.gif") %>
     <div class="title-home">ActiveRecord Baby</div>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".sign-up-form">
+    <button id="sign-up-home" type="button" class="btn btn-primary" data-toggle="modal" data-target=".sign-up-form-home">
       sign up
     </button>
     <% if current_user %>
       <%= link_to "sign out", destroy_user_session_path, :method => :delete, class: "btn btn-primary" %>
     <% else %>
-      <button class="btn btn-primary" data-toggle="modal" data-target=".sign-in-form">
+      <button id="sign-in-home" class="btn btn-primary" data-toggle="modal" data-target=".sign-in-form-home">
         sign in
       </button>
     <% end %>
@@ -18,26 +18,26 @@
     <div class="subtitle-home">where baby Rails devs hone their db:fu</div>
   </div>
 </div>
-<div class="sign-up-form modal fade" tab-index="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="sign-up-form-home modal fade" tab-index="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg">
     <div class="modal-content form">
       <%= form_for(@user, url: registration_path(@user)) do |f| %>
         <div class="form-query-wrap">
           <span class="code code-model">User</span><span class="code code-ar-keyword">.create(</span><!--
-       --><%= f.label :name, "name: ", class: "code code-attribute" %><!--
-       --><%= f.text_field :name, autofocus: true, autocomplete: "off", size: 12 %><span class="code code-ar-keyword">,</span>
+       --><%= f.label :name, "name: ", class: "code code-attribute" %><span class="code code-value">"</span><!--
+       --><%= f.text_field :name, autocomplete: "off", size: 12, id: "sign-up-name-field" %><span class="code code-value">"</span><span class="code code-ar-keyword">,</span>
         </div>
         <div class="form-query-wrap">
-          <%= f.label :email, "email: ", class: "code code-attribute" %><!--
-       --><%= f.email_field :email, autocomplete: "off", size: 12 %><span class="code code-ar-keyword">,</span>
+          <%= f.label :email, "email: ", class: "code code-attribute" %><span class="code code-value">"</span><!--
+       --><%= f.email_field :email, autocomplete: "off", size: 12 %><span class="code code-value">"</span><span class="code code-ar-keyword">,</span>
         </div>
         <div class="form-query-wrap">
-          <%= f.label :password, "password: ", class: "code code-attribute" %><!--
-       --><%= f.password_field :password, autocomplete: "off", size: 12 %><span class="code code-ar-keyword">,</span>
+          <%= f.label :password, "password: ", class: "code code-attribute" %><span class="code code-value">"</span><!--
+       --><%= f.password_field :password, autocomplete: "off", size: 12 %><span class="code code-value">"</span><span class="code code-ar-keyword">,</span>
         </div>
         <div class="form-query-wrap">
-          <%= f.label :password_confirmation, "password_confirmation: ", class: "code code-attribute" %><!--
-       --><%= f.password_field :password_confirmation, autocomplete: "off", size: 12 %><span class="code code-ar-keyword">)</span>
+          <%= f.label :password_confirmation, "password_confirmation: ", class: "code code-attribute" %><span class="code code-value">"</span><!--
+       --><%= f.password_field :password_confirmation, autocomplete: "off", size: 12 %><span class="code code-value">"</span><span class="code code-ar-keyword">)</span>
         </div>
         <div class="actions sign-up">
           <%= f.submit "sign up", class:  "btn btn-primary" %>
@@ -46,7 +46,7 @@
     </div>
   </div>
 </div>
-<div class="sign-in-form modal fade" tab-index="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div class="sign-in-form-home modal fade" tab-index="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg">
     <div class="modal-content form">
       <%= form_for(@user, url: session_path(@user)) do |f| %>
@@ -54,7 +54,7 @@
           <span class="code code-model">User</span><span class="code code-ar-keyword">.where(</span><!--
        --><span class="code code-sql">"</span><!--
        --><%= f.label :name, "name = '", class: "code code-sql" %><!--
-       --><%= f.text_field :name, autofocus: true, autocomplete: "off", size: 12 %><span class="code code-sql">'&nbsp;OR&nbsp;&nbsp;&nbsp;&nbsp;</span>
+       --><%= f.text_field :name, autocomplete: "off", size: 12, id: "sign-in-name-field" %><span class="code code-sql">'&nbsp;OR&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </div>
         <div class="form-query-wrap">
           <%= f.label :email, "email = '", class: "code code-sql" %><!--
@@ -76,6 +76,7 @@
 
 <script type='text/javascript'>
 'use strict';
+
 var arbMatrix = document.getElementById('arb-matrix');
 var arbMatrixTx = arbMatrix.getContext('2d');
 

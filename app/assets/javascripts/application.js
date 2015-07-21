@@ -58,4 +58,15 @@ var setEditor = function () {
 
 
 $(document).on('click', '#editor-switch-false', setEditor);
+$(document).on('click', '#sign-up-home', function() {
+  setTimeout(function(){
+    $('#sign-up-name-field').focus();
+  }, 300);
+});
+
+$(document).on('click', '#sign-in-home', function() {
+  setTimeout(function(){
+    $('#sign-in-name-field').focus();
+  }, 300);
+});
 

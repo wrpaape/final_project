@@ -95,8 +95,22 @@ $code-value: #F46AEE;
   0% { -webkit-transform: scale(1); }
   25% { -webkit-transform: scale(0.5, 2); }
   50% { -webkit-transform: scale(2, 0.5); }
-  50% { -webkit-transform: scale(2, 0.5); }
+  75% { -webkit-transform: scale(2, 0.5); }
   100% { -webkit-transform: scale(1); }
+}
+
+@-webkit-keyframes shakeX {
+  0% { -webkit-transform: translateX(0); }
+  33% { -webkit-transform: translateX(3px); }
+  67% { -webkit-transform: translateX(0); }
+  100% { -webkit-transform: translateX(-3px); }
+}
+
+@-webkit-keyframes shakeY {
+  0% { -webkit-transform: translateY(0); }
+  33% { -webkit-transform: translateY(-3px); }
+  67% { -webkit-transform: translateY(0); }
+  100% { -webkit-transform: translateY(3px); }
 }
 
 @mixin vertical-align {
@@ -589,7 +603,7 @@ input {
                 width: 156px;
               }
               &.sign-up {
-                padding-right: 12px;
+                padding-right: 23px;
               }
               &.sign-in {
                 padding-right: 94px;
@@ -703,6 +717,33 @@ input {
         position: absolute;
         top: 10px;
         right: 10px;
+        button {
+          background-color: transparent!important;
+          text-shadow:
+            0 0 1.5em black,
+            3px 3px 0 black,
+            -1px -1px 0 black,
+            1px -1px 0 black,
+            -1px  1px 0 black,
+            1px  1px 0 black;
+          padding: 0;
+          border: 0;
+          &:hover {
+            color: black;
+            text-shadow: 0 0 10px yellow,
+              3px 3px 0 yellow,
+              -1px -1px 0 yellow,
+              1px -1px 0 yellow,
+              -1px  1px 0 yellow,
+              1px  1px 0 yellow;
+            &.sign-in {
+              animation: shakeX 0.5s infinite;
+            }
+            &.sign-up {
+              animation: shakeY 0.5s infinite;
+            }
+          }
+        }
       }
     }
   }

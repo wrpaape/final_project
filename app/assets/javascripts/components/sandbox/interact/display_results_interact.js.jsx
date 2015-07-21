@@ -33,7 +33,7 @@ var DisplayResultsInteract = React.createClass({
     var isCorrect = table.state.results.isCorrect;
     var showCorrect = this.state.showCorrect;
     var dispCorrect = showCorrect ? results.isCorrect.toString() : '?????';
-    var buttonContents = (showCorrect && isCorrect) ? (user === null ? 'sign in to\nsubmit |solution' : 'submit |solution') : 'check answer';
+    var buttonContents = (showCorrect && isCorrect) ? (user === null ? 'sign in/up to\nsubmit |solution' : 'submit |solution') : 'check answer';
     var splitContents = buttonContents.split('\n');
     var formatteddContents = [];
 
@@ -47,7 +47,7 @@ var DisplayResultsInteract = React.createClass({
         });
         formatteddContents.push(<span key={ 'plain-' + i }>{ formattedSegs }</span>)
       } else {
-        formatteddContents.push(<p key={ 'plain-' + i }>{ line }</p>)
+        formatteddContents.push(<p key={ 'sign-in-up-' + i }>sign <button className='sign-in' data-toggle="modal" data-target=".sign-in-form">in</button> or <button className='sign-up' data-toggle="modal" data-target=".sign-up-form">up</button>&nbsp;to</p>)
       }
     });
 
