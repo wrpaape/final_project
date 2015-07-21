@@ -25,11 +25,12 @@ class ProblemsController < ApplicationController
                "hold [cmd + shift + return] or [ctr + shift + return] to reload your results"]
       # @url_interact = "https://active-record-baby.herokuapp.com/problems/#{params[:id]}/"
       @url_interact = "/problems/#{params[:id]}/"
+
     end
     if params[:inspect]
       render json: @data_inspect
     elsif params[:interact]
-      render json: { "newData"=>get_solution_data(params), "loggedIn"=>current_user.nil? ? false : true }
+      render json: { "newData"=>get_solution_data(params), "loggedIn"=>current_user.nil? ? false : true, "newSolvedProblem"=>new_solved_problem_path }
     end
   end
 

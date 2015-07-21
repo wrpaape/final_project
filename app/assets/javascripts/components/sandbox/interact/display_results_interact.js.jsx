@@ -136,7 +136,28 @@ var DisplayResultsInteract = React.createClass({
   clicked: function (loggedIn, showCorrect, isCorrect) {
     if (showCorrect && isCorrect) {
       if (loggedIn) {
+        var table = this.props.parent;
+        var results = table.state.results;
+        var params = {
+          "solution": table.state.solution,
+          "sol_char_count": results.solCharCount,
+          "time_exec_total": results.timeExecTotal,
+          "time_query_total": results.timeQueryTotal,
+          "time_query_min": results.timeQueryMin,
+          "time_query_max": results.timeQueryMax,
+          "time_query_avg": results.timeQueryAvg,
+          "num_queries": results.numQueries
+        };
+        var keys = Object.keys(params);
+        var serialized = keys.map(function(key, i) {
+          var seg = i === 0 ? '?' : '';
+          seg += key + '=' + params[key]
+          return seg;
+        });
+        var urlParams = serialized.join('&');
+        console.log(urlParams);
 
+        window.location.href = table.state.newSolvedProblem + urlParams;
       } else {
 
       }

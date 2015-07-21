@@ -1,5 +1,5 @@
 class Problem < ActiveRecord::Base
-  has_many :users
-  has_many :solved_problems, through: :users
+  has_many :solved_problems
+  has_many :users, through: :solved_problems
   belongs_to :environment
 end

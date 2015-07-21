@@ -14,7 +14,13 @@ class SolvedProblemsController < ApplicationController
 
   # GET /solved_problems/new
   def new
-    @solved_problem = SolvedProblem.new
+    problem_solved = Problem.find(params[:problem_id])
+    environment = problem_solved.environment.id
+    post_params = params.permit(:solution, :sol_char_count, :time_exec_total, :time_query_total, :time_query_min, :time_query_max, :time_query_avg, :num_queries, :user_id, :problem_id)
+    post_params[:user_id] = current_user.id
+    post_params[:environment_id] = problem_solved.environment.id
+    @solved_problem = SolvedProblem.create(post_params)
+    redirect_to environments_path
   end
 
   # GET /solved_problems/1/edit

@@ -155,13 +155,16 @@ var EditorInteract = React.createClass({
             solution: formattedSolution,
             problem_id: table.props.problem.id
           },
-          function(newDataWUser) {
-            var loggedIn = newDataWUser.loggedIn;
-            var newData = newDataWUser.newData;
+          function(dataHash) {
+            var newSolvedProblem = dataHash.newSolvedProblem;
+            var loggedIn = dataHash.loggedIn;
+            var newData = dataHash.newData;
             var data = newData.results;
             table.setState({
+              newSolvedProblem: newSolvedProblem + '/' + table.props.problem.id,
               loggedIn: loggedIn,
               data: data,
+              solution: inputSolution,
               results: {
                 'isCorrect': newData.isCorrect,
                 'numQueries': newData.numQueries,
