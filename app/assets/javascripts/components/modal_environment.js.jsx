@@ -44,7 +44,7 @@ var ModalEnvironment = React.createClass({
           <button className='btn btn-default' onClick={ this.clicked }>
             problems
           </button>
-          <button type='button' className='btn btn-default' data-toggle='modal' data-target={'.env-' + env.id }>
+          <button id={ 'env-' + env.id +'-descrip'  } type='button' className={ 'btn btn-default glow1 env-descrip' } onClick={ this.extinguish } data-toggle='modal' data-target={'.env-' + env.id }>
             description
           </button>
           <button type='button' className='btn btn-default' data-toggle='modal' data-target={'.uml-' + env.id }>
@@ -86,5 +86,9 @@ var ModalEnvironment = React.createClass({
   clicked: function() {
     var oldShowProbs = this.state.showProbs;
     this.setState({ showProbs: !oldShowProbs });
+  },
+  extinguish: function() {
+    var env = this.props.environment.env;
+    $('button#env-' + env.id + '-descrip').removeClass('glow1');
   }
 });

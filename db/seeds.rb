@@ -216,7 +216,7 @@ prob_instruct =
 Every |~Person| was |*name|d by their |&mother| and |&father| corresponding to a |~BabyName| of the same |*yob|.
 Accordingly, for every |~Person|, |person_example|, born in the year |person_example.yob|, there were
 
-|~BabyName||#.find_by({| |*name:| |`person_example.name||#,| |*gender:| |`person_example.gender||#,| |*yob:| |`person_example.yob||#})||*.frequency|| - 1|
+|~BabyName||#.find_by({| |*name:| |`person_example.name||#,| |*gender:| |`person_example.gender||#,| |*yob:| |`person_example.yob||#})||*.frequency|| - 1|
 
 other |~Person|s born in the States that year sharing the same |*name|. To save you some time and to
 spare our servers the cost of querying a 1825433-entry table thousands of times, the |*frequency| of a |~Person|s

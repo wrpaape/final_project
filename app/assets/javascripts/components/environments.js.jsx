@@ -77,7 +77,7 @@ var Environments = React.createClass({
       });
       envs.push(
         <div key={'env-' + env.id } onMouseLeave={ parent.mouseLeave } >
-        <ModalEnvironment environment={ environment } title={ formattedTitle } descrip={ formattedDescrip } parent={ parent } hovered={ env.id === envIdHovered ? true : false } />
+          <ModalEnvironment environment={ environment } title={ formattedTitle } descrip={ formattedDescrip } parent={ parent } hovered={ env.id === envIdHovered ? true : false } />
         </div>
       );
     });

@@ -90,7 +90,7 @@ class ApplicationController < ActionController::Base
 
   def get_query_stats
     all_times = []
-    log_url = Rails.root.join("log", "solution_queries.log")
+    log_url = Rails.root.join("solution_queries.log")
     IO.foreach(log_url) do |line|
       all_times << line.scan(/(?<=\()[^m]*/).first.to_f
      end
