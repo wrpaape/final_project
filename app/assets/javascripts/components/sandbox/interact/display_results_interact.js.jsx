@@ -47,7 +47,7 @@ var DisplayResultsInteract = React.createClass({
         });
         formatteddContents.push(<span key={ 'plain-' + i }>{ formattedSegs }</span>)
       } else {
-        formatteddContents.push(<p key={ 'sign-in-up-' + i }>sign <button className='sign-in' data-toggle="modal" data-target=".sign-in-form">in</button> or <button className='sign-up' data-toggle="modal" data-target=".sign-up-form">up</button>&nbsp;to</p>)
+        formatteddContents.push(<p key={ 'sign-in-up-' + i }>sign <button id='sign-up' className='sign-up' data-toggle="modal" data-target=".sign-up-form">up</button> or <button id='sign-in' className='sign-in' data-toggle="modal" data-target=".sign-in-form">in</button>&nbsp;to</p>)
       }
     });
 

@@ -554,6 +554,7 @@ input {
   button {
     margin-right: 10px;
     &.instructions-highlight-true {
+      border: none!important;
       color: black!important;
       animation: glow1 1s infinite alternate ease-in-out;
     }

@@ -58,15 +58,15 @@ var setEditor = function () {
 
 
 $(document).on('click', '#editor-switch-false', setEditor);
-$(document).on('click', '#sign-up-home', function() {
+$(document).on('click', '#sign-up', function() {
   setTimeout(function(){
     $('#sign-up-name-field').focus();
-  }, 300);
+  }, 500);
 });
 
-$(document).on('click', '#sign-in-home', function() {
+$(document).on('click', '#sign-in', function() {
   setTimeout(function(){
     $('#sign-in-name-field').focus();
-  }, 300);
+  }, 500);
 });
 
