@@ -4,7 +4,7 @@
 var TableInteract = React.createClass({
   getInitialState: function () {
     return {
-      user: null,
+      loggedIn: false,
       data: this.props.data,
       results: {
         'isCorrect': false,
@@ -25,6 +25,7 @@ var TableInteract = React.createClass({
     };
   },
   render: function () {
+    var loggedIn = this.state.loggedIn;
     var url = this.props.url;
     var rows = [];
     var dataTypes = [];
@@ -85,7 +86,7 @@ var TableInteract = React.createClass({
           </div>
           <div className='results-wrap'>
             <Img src={ '/assets/newman' + this.state.newmanLevel + '.gif' } className={ newmanClassName } />
-            <DisplayResultsInteract parent={ this } showCorrect={ false } />
+            <DisplayResultsInteract parent={ this } showCorrect={ false } loggedIn={ loggedIn } />
           </div>
         </div>
       </div>

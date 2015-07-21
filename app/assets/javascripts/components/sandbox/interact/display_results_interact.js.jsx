@@ -4,15 +4,25 @@
 var DisplayResultsInteract = React.createClass({
   getInitialState: function () {
     return {
-      showCorrect: this.props.showCorrect
+      showCorrect: this.props.showCorrect,
+      loggedIn: this.props.loggedIn
     };
   },
   componentWillReceiveProps: function (nextProps) {
+    var newTable = nextProps.parent;
+    var oldLoggedIn = this.state.loggedIn;
+    var newLoggedIn = newTable.state.loggedIn;
+    var showCorrect = false;
+    if (newLoggedIn && !oldLoggedIn) {
+      showCorrect = true;
+    }
     this.setState({
-      showCorrect: nextProps.showCorrect
+      showCorrect: showCorrect,
+      loggedIn: newLoggedIn
     });
   },
   render: function () {
+    var displayResults = this;
     var table = this.props.parent;
     var results = table.state.results;
     var times = results.times;
@@ -29,11 +39,11 @@ var DisplayResultsInteract = React.createClass({
       }
     });
 
-    var user = table.state.user;
+    var loggedIn = table.state.loggedIn;
     var isCorrect = table.state.results.isCorrect;
     var showCorrect = this.state.showCorrect;
     var dispCorrect = showCorrect ? results.isCorrect.toString() : '?????';
-    var buttonContents = (showCorrect && isCorrect) ? (user === null ? 'sign in/up to\nsubmit |solution' : 'submit |solution') : 'check answer';
+    var buttonContents = (showCorrect && isCorrect) ? (loggedIn ? 'submit |solution' : 'sign in/up to\nsubmit |solution') : 'check answer';
     var splitContents = buttonContents.split('\n');
     var formatteddContents = [];
 
@@ -47,7 +57,7 @@ var DisplayResultsInteract = React.createClass({
         });
         formatteddContents.push(<span key={ 'plain-' + i }>{ formattedSegs }</span>)
       } else {
-        formatteddContents.push(<p key={ 'sign-in-up-' + i }>sign <button id='sign-up' className='sign-up' data-toggle="modal" data-target=".sign-up-form">up</button> or <button id='sign-in' className='sign-in' data-toggle="modal" data-target=".sign-in-form">in</button>&nbsp;to</p>)
+        formatteddContents.push(<p key={ 'sign-in-up-' + i }>sign <button onClick={ displayResults.listenForAjax } id='sign-up' className='sign-up' data-toggle="modal" data-target=".sign-up-form">up</button> or <button onClick={ displayResults.listenForAjax } id='sign-in' className='sign-in' data-toggle="modal" data-target=".sign-in-form">in</button>&nbsp;to</p>)
       }
     });
 
@@ -116,16 +126,16 @@ var DisplayResultsInteract = React.createClass({
           <div className={ 'correct value show-correct-' + showCorrect + ' is-correct-' + isCorrect }>
             { dispCorrect }
           </div>
-          <div className='btn btn-primary' onClick={ this.clicked.bind(this, user, showCorrect, isCorrect) }>
+          <div className='btn btn-primary' onClick={ this.clicked.bind(this, loggedIn, showCorrect, isCorrect) }>
             { formatteddContents }
           </div>
         </div>
       </div>
     );
   },
-  clicked: function (user, showCorrect, isCorrect) {
+  clicked: function (loggedIn, showCorrect, isCorrect) {
     if (showCorrect && isCorrect) {
-      if (user === null) {
+      if (loggedIn) {
 
       } else {
 
@@ -133,5 +143,14 @@ var DisplayResultsInteract = React.createClass({
     } else {
       this.setState({ showCorrect: true });
     }
+  },
+  listenForAjax: function () {
+    var table = this.props.parent;
+    $(document).ajaxSuccess(function(){
+      $('#modal-sign-up').modal('hide');
+      $('#modal-sign-in').modal('hide');
+      table.setState({ loggedIn : true });
+      $(document).unbind("ajaxSuccess");
+    });
   }
 });

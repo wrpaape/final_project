@@ -156,11 +156,11 @@ var EditorInteract = React.createClass({
             problem_id: table.props.problem.id
           },
           function(newDataWUser) {
-            var user = newDataWUser.user;
+            var loggedIn = newDataWUser.loggedIn;
             var newData = newDataWUser.newData;
             var data = newData.results;
             table.setState({
-              user: user,
+              loggedIn: loggedIn,
               data: data,
               results: {
                 'isCorrect': newData.isCorrect,

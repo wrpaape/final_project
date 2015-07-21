@@ -4,8 +4,20 @@
 var HomePage = React.createClass({
   getInitialState: function() {
     return {
-      loggedIn: this.props.user !== null ? true : false
+      loggedIn: this.props.loggedIn
     };
+  },
+  componentDidMount: function() {
+    var loggedIn = this.state.loggedIn;
+    $(document).ajaxSuccess(function(){
+      var loggedIn = this.state.loggedIn;
+      $('#modal-sign-up').modal('hide');
+      $('#modal-sign-in').modal('hide');
+      this.setState({ loggedIn : !loggedIn });
+    }.bind(this));
+  },
+  componentWillUnmount: function() {
+    $(document).unbind("ajaxSuccess");
   },
   render: function() {
     var buttons = [];
@@ -45,13 +57,5 @@ var HomePage = React.createClass({
 
         }.bind(this)
     });
-  },
-  listenForAjax: function() {
-    $(document).ajaxComplete(function(){
-      var loggedIn = this.state.loggedIn;
-      $('#modal-sign-up').modal('hide');
-      $('#modal-sign-in').modal('hide');
-      this.setState({ loggedIn : !loggedIn });
-    }.bind(this));
   }
 });

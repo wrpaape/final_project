@@ -29,7 +29,7 @@ class ProblemsController < ApplicationController
     if params[:inspect]
       render json: @data_inspect
     elsif params[:interact]
-      render json: { "newData"=>get_solution_data(params), "user"=>current_user }
+      render json: { "newData"=>get_solution_data(params), "loggedIn"=>current_user.nil? ? false : true }
     end
   end
 
