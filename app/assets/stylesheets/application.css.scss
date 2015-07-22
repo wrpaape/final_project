@@ -243,9 +243,6 @@ select {
       min-width: 100px;
       &.shine {
         animation: glow1 1s infinite alternate ease-in-out;
-          &.sign-in-home {
-            animation-delay: 1s;
-          }
       }
     }
     .subtitle-home {
@@ -1004,6 +1001,11 @@ input {
   padding: 10px;
   text-align: center;
   div {
+    .btn {
+      &.show-envs-false {
+        animation: glow1 1s infinite alternate ease-in-out;
+      }
+    }
     &.envs-wrap {
       display: inline-block;
       &.false {
@@ -1013,9 +1015,11 @@ input {
         margin: 90px;
         .env-title {
           font-size: 1.5em;
+          &.false {
+            animation: glow2 1s infinite alternate ease-in-out;
+          }
           &.true {
             font-size: 2em;
-            color: black;
             text-shadow:
               0 0 1.5em yellow,
               3px 3px 0 yellow,

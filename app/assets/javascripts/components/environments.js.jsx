@@ -8,10 +8,14 @@ var Environments = React.createClass({
       showEnvs: false
     };
   },
+  componentDidMount: function() {
+    $('#page-cover').removeClass('cursor-progress');
+  },
   render: function() {
     var parent = this;
     var envIdHovered = this.state.envIdHovered;
     var showEnvs = this.state.showEnvs;
+    var selectEnvClass = 'btn btn-primary show-envs-' + showEnvs;
     var envs = [];
     var environments = this.props.environments;
     environments.forEach(function(environment) {
@@ -88,7 +92,7 @@ var Environments = React.createClass({
     return(
       <div className='env-index'>
         <div onClick={ this.clicked }>
-          <div className='btn btn-primary'>
+          <div className={ selectEnvClass }>
             <span className='code code-sql'>SELECT</span><span>&nbsp;your&nbsp;</span><span className='code code-ar-keyword'>environment</span>
           </div>
         </div>

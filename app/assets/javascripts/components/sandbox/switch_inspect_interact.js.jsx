@@ -10,6 +10,9 @@ var SwitchInspectInteract = React.createClass({
       editorSwitched: false
     };
   },
+  componentDidMount: function() {
+    $('#page-cover').removeClass('cursor-progress');
+  },
   render: function() {
     var showInspect = this.state.showInspect;
     var showInteract = this.state.showInteract;

@@ -8,6 +8,7 @@ var HomePage = React.createClass({
     };
   },
   componentDidMount: function() {
+    $('#page-cover').removeClass('cursor-progress');
     $(document).ajaxSuccess(function(){
       var loggedIn = this.state.loggedIn;
       $('#modal-sign-up').modal('hide');

@@ -3,14 +3,13 @@
 
 var SolutionLeaderboard = React.createClass({
   render: function () {
-    var formattedSol;
+    var formattedSol = [];
     var show = this.props.show;
     var solvedProb = this.props.raw;
     var sol = solvedProb.solution;
     if (sol === null) {
-      formattedSol = 'nil';
+      formattedSol.push(<span key={ 'sol-' + solvedProb.id + '-line-nil' } className='code code-general'>nil</span>);
     } else {
-      formattedSol = [];
       var splitLines = sol.split('\n');
       splitLines.forEach(function(line, i) {
         var padIndex = line.search(/[^ ]/);
