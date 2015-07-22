@@ -36,6 +36,7 @@ var EditorInteract = React.createClass({
       var table = this.props.parent;
       this.setState({ loading: true });
       table.setState({ loading: true });
+      var originalInputSolution = $('#editor-content').val();
       var inputSolution = $('#editor-content').val();
       var lastLine = inputSolution.match(/[^\n].*[\n]*$/)[0].replace(/\n*$/,'');
       var methodName = lastLine.split(' ')[0];
@@ -164,7 +165,7 @@ var EditorInteract = React.createClass({
               newSolvedProblem: newSolvedProblem + '/' + table.props.problem.id,
               loggedIn: loggedIn,
               data: data,
-              solution: inputSolution,
+              solution: originalInputSolution,
               results: {
                 'isCorrect': newData.isCorrect,
                 'numQueries': newData.numQueries,

@@ -152,15 +152,17 @@ var DisplayResultsInteract = React.createClass({
         var keys = Object.keys(params);
         var serialized = keys.map(function(key, i) {
           var seg = i === 0 ? '?' : '';
-          seg += key + '=' + params[key]
+          var val = params[key];
+          if (key === "solution") {
+            val = val.replace(/\n/g, '%0A');
+            val = val.replace(/%20/g, '%0A');
+          }
+          seg += key + '=' + val
           return seg;
         });
         var urlParams = serialized.join('&');
-        console.log(urlParams);
-
+        // console.log(urlParams);
         window.location.href = table.state.newSolvedProblem + urlParams;
-      } else {
-
       }
     } else {
       this.setState({ showCorrect: true });

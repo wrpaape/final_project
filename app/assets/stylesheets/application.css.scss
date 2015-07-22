@@ -238,7 +238,7 @@ section {
       font-size: 1.2em;
       text-align: center;
       color: $code-attribute;
-      border-bottom: 2px solid $code-green;
+      border-bottom: 3px solid $code-green!important;
     }
     .highlight {
       text-shadow:
@@ -260,6 +260,7 @@ section {
       font-size: 0.8em;
       color: $code-value;
       &.td{
+        text-align: left;
         border-top: 1px solid $code-green!important;
       }
     }
