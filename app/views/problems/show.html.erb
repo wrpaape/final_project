@@ -1,1 +1,2 @@
+<% content_for :title, @problem.title %>
 <%= react_component("SwitchInspectInteract", { dataInspect: @data_inspect, modelsInspect: @models_inspect, dataInteract: @data_interact, urlInteract: @url_interact, problem: @problem, loggedIn: @logged_in }) %>

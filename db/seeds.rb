@@ -154,7 +154,7 @@ avg_household = family_tree.problems.create(
 
 prob_instruct =
 """
-~Here's the story, of a lovely lady...~
+~♪ Here's the story, of a lovely lady... ♪~
 
 Hidden within the |@people| table is a |&mother|, a |&father|, and 6 |&children|
 having |*name|s of the Brady Bunch and |*yob|s corresponding to the years of birth

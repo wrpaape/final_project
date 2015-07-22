@@ -241,9 +241,13 @@ select {
       font-size: 0.8em;
       margin: 0.5em;
       min-width: 100px;
+      &.shine {
+        animation: glow1 1s infinite alternate ease-in-out;
+      }
     }
     .subtitle-home {
-      margin-top: 58px;
+      background-color: black;
+      padding-top: 58px;
     }
   }
 }
@@ -307,7 +311,6 @@ section {
     width: 25px;
     height: 100%;
     &.true {
-      color: black;
       animation: glow2 1s infinite alternate ease-in-out;
     }
   }
@@ -593,8 +596,6 @@ input {
   button {
     margin-right: 10px;
     &.instructions-highlight-true {
-      border: none!important;
-      color: black!important;
       animation: glow1 1s infinite alternate ease-in-out;
     }
   }
@@ -1028,8 +1029,6 @@ input {
           min-width: 150px;
           &.env-descrip {
             &.glow1 {
-              color: black!important;
-              border: none!important;
               animation: glow1 1s infinite alternate ease-in-out;
             }
           }

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get "solved_problems/new/:problem_id", to: "solved_problems#new"
-  devise_for :users, :controllers => {sessions: "sessions", registrations: "registrations"}
+  devise_for :users, :controllers => { sessions: "sessions", registrations: "registrations" }
   devise_for :views
   resources :contracts
   resources :crops
