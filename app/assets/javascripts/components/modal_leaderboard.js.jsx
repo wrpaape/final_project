@@ -14,9 +14,9 @@ var ModalLeaderboard = React.createClass({
       <div className={ this.props.className } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
         <div className='modal-dialog modal-lg'>
           <div className='modal-content image'>
-            <section>
-              <table>
-                <TableHeadLeaderboard colNames={ keys } />
+            <section className='leader-section'>
+              <table className='leader-root-table'>
+                <TableHeadLeaderboard />
                 <tbody>
                   { rows }
                 </tbody>

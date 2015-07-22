@@ -15,40 +15,44 @@ var RowLeaderboard = React.createClass({
     var solvedProbHash = this.props.solvedProb;
     var solvedProb = solvedProbHash.solvedProb;
     var user = solvedProbHash.user;
+    var time = solvedProb.time_exec_total;
+    var createdAt = solvedProb.created_at;
 
-    cols.push(<td key={ 'row-' + solvedProb.id + '-time-exec'}>{ solvedProb.time_exec }</td>);
+    var units = [' s', ' ms', ' μs'];
+    var unit = '';
+    if (time === null) {
+      time = 'nil';
+    } else if (time === 0) {
+      unit += ' s';
+    } else if (time !== 'N/A' && !isNaN(time)) {
+      var n = 0;
+      while (time < 1) {
+        time *= 1000;
+        n++;
+      }
+      unit += units[n];
+      time = Number(time).toPrecision(4);
+    }
+
     cols.push(<td key={ 'row-' + solvedProb.id + '-name'}>{ user.name }</td>);
-    cols.push(<td key={ 'row-' + solvedProb.id + '-sol'} id={ 'solved-prob-' + solvedProb.id + '-sol' } onClick={ this.revealSolution }><Img src='/assets/spoilers.png' /></td>);
-    cols.push(<td key={ 'row-' + solvedProb.id + '-stats'} id={ 'solved-prob-' + solvedProb.id + '-stats' } onClick={ this.revealStats }><Img src='/assets/spoilers.png' /></td>);
-
-
-
+    cols.push(<td key={ 'row-' + solvedProb.id + '-time-exec'}>{ time + unit }</td>);
+    cols.push(<td key={ 'row-' + solvedProb.id + '-sol'} id={ 'solved-prob-' + solvedProb.id + '-sol' } onClick={ this.revealSolution } className='center'><Img src='/assets/spoilers.png' /></td>);
+    cols.push(<td key={ 'row-' + solvedProb.id + '-stats'} id={ 'solved-prob-' + solvedProb.id + '-stats' } onClick={ this.revealStats } className='center'><Img src='/assets/spoilers.png' /></td>);
+    cols.push(<td key={ 'row-' + solvedProb.id + '-created-at'} id={ 'row-' + solvedProb.id + '-created-at'} onMouseOver={ this.mouseOver.bind(this, createdAt, solvedProb) } onMouseOut={ this.mouseOut.bind(this, createdAt, solvedProb) }>{ createdAt }</td>);
 
     return (
       <tr>
-        <table>
-          <tr id={ solvedProb.id } className={ className }>
-            { cols }
-          </tr>
-          <Solution raw={ solvedProb.solution } show={ showSol } />
-          <Stats raw={ solvedProb } show={ showStats } />
-        </table>
+        <tr>
+          { cols }
+        </tr>
+        <tr>
+          <SolutionLeaderboard raw={ solvedProb.solution } show={ showSol } />
+        </tr>
+        <tr>
+          <StatsLeaderboard raw={ solvedProb } show={ showStats } />
+        </tr>
       </tr>
     );
-  },
-  mouseOver: function(val, solvedProb, i) {
-    var isDatetime = val.toString().match(/^(\d{4})-(\d{2})-(\d{2})([a-zA-Z])(\d{2}):(\d{2}):(\d{2})/);
-    if (isDatetime !== null) {
-      var valFormatted = (moment(val).format('MM/DD/YYYY hh:mm a'));
-      var idSelector = '#leaderboard-row-' + solvedProb.id + '-col-' + i;
-      $(idSelector).html(valFormatted);
-      $(idSelector).addClass("formatted-time");
-    }
-  },
-  mouseOut: function(val, solvedProb, i) {
-    var idSelector = '#leaderboard-row-' + solvedProb.id + '-col-' + i;
-    $(idSelector).html(val);
-    $(idSelector).removeClass("formatted-time");
   },
   revealSolution: function() {
     this.setState({
@@ -61,5 +65,16 @@ var RowLeaderboard = React.createClass({
       showSol: false,
       showStats: true
     });
-  }
+  },
+  mouseOver: function(val, obj) {
+    var valFormatted = (moment(val).format('MM/DD/YYYY hh:mm a'));
+    var idSelector = '#row-' + obj.id + '-created-at';
+    $(idSelector).html(valFormatted);
+    $(idSelector).addClass('formatted-time');
+  },
+  mouseOut: function(val, obj) {
+    var idSelector = '#row-' + obj.id + '-created-at';
+    $(idSelector).html(val);
+    $(idSelector).removeClass('formatted-time');
+  },
 });

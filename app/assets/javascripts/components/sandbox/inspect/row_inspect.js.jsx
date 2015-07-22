@@ -66,13 +66,13 @@ var RowInspect = React.createClass({
       var valFormatted = (moment(val).format('MM/DD/YYYY hh:mm a'));
       var idSelector = '#inspect-row-' + obj.id + '-col-' + i;
       $(idSelector).html(valFormatted);
-      $(idSelector).addClass("formatted-time");
+      $(idSelector).addClass('formatted-time');
     }
   },
   mouseOut: function(val, obj, i) {
     var idSelector = '#inspect-row-' + obj.id + '-col-' + i;
     $(idSelector).html(val);
-    $(idSelector).removeClass("formatted-time");
+    $(idSelector).removeClass('formatted-time');
   },
   clicked: function (table, obj, wind0wObjModel, currentModel, objPad) {
     var thisId = '#' + currentModel + '-' + obj.id;

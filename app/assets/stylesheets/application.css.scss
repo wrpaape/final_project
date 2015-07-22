@@ -267,6 +267,8 @@ section {
   }
 }
 
+
+
 .container-inspect {
   box-sizing: border-box;
   width: 100%;
@@ -596,6 +598,42 @@ input {
           text-align: center;
           background: none;
           width: 100%;
+          section {
+            &.leader-section {
+              table {
+                &.leader-root-table {
+                  width: 100%;
+                  th {
+                    font-size: 2em;
+                  }
+                  tbody {
+                    text-align: left;
+                    tr {
+                      font-size: 1.5em;
+                      .sol-false {
+                        display: none;
+                      }
+
+                      .stats-false {
+                        display: none;
+                      }
+                      td {
+                        padding: 1em;
+                        &.center {
+                          text-align: center;
+                          img {
+                            cursor: pointer;
+                            height: 150px;
+                            width: 150px;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
           img {
             width: 100%;
           }
