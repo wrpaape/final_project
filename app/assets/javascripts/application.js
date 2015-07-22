@@ -58,6 +58,7 @@ var setEditor = function () {
 
 
 $(document).on('click', '#editor-switch-false', setEditor);
+
 $(document).on('click', '#sign-up', function() {
   setTimeout(function(){
     $('#sign-up-name-field').focus();

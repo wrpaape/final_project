@@ -47,7 +47,7 @@ var ModalEnvironment = React.createClass({
           <button id={ 'env-' + env.id +'-descrip'  } type='button' className={ 'btn btn-default glow1 env-descrip' } onClick={ this.extinguish } data-toggle='modal' data-target={'.env-' + env.id }>
             description
           </button>
-          <button type='button' className='btn btn-default' data-toggle='modal' data-target={'.uml-' + env.id }>
+          <button type='button' className='btn btn-default' data-toggle='modal' data-target={'.uml-' + env.id } onClick={ this.ensureShow }>
             UML
           </button>
           <br />
@@ -59,14 +59,14 @@ var ModalEnvironment = React.createClass({
               { leaderButtons }
             </div>
           </div>
-          <div id={ 'fade-env-' + env.id } className={ 'modal fade env-' + env.id } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
+          <div id={ 'modal-env-' + env.id + '-descip'} className={ 'modal fade env-' + env.id } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
             <div className='modal-dialog modal-lg'>
               <div className='modal-content'>
                 { descrip }
               </div>
             </div>
           </div>
-          <div className={ 'modal fade uml-' + env.id } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
+          <div id={ 'modal-env-' + env.id + '-uml'} className={ 'modal fade uml-' + env.id } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
             <div className='modal-dialog modal-lg'>
               <div className='modal-content image'>
                 <Img src={ umlFilePath } className='image-uml'/>

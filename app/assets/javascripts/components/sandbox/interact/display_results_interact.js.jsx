@@ -25,7 +25,7 @@ var DisplayResultsInteract = React.createClass({
     var displayResults = this;
     var table = this.props.parent;
     var results = table.state.results;
-    var times = results.times;
+    var times = $.extend({}, results.times);
     var units = [' s', ' ms', ' μs'];
 
     Object.keys(times).forEach(function (key) {
@@ -138,15 +138,16 @@ var DisplayResultsInteract = React.createClass({
       if (loggedIn) {
         var table = this.props.parent;
         var results = table.state.results;
+        var times = results.times;
         var params = {
           "solution": table.state.solution,
           "sol_char_count": results.solCharCount,
-          "time_exec_total": results.timeExecTotal,
-          "time_query_total": results.timeQueryTotal,
-          "time_query_min": results.timeQueryMin,
-          "time_query_max": results.timeQueryMax,
-          "time_query_avg": results.timeQueryAvg,
-          "num_queries": results.numQueries
+          "time_exec_total": times.timeExecTotal,
+          "time_query_total": times.timeQueryTotal,
+          "time_query_min": times.timeQueryMin,
+          "time_query_max": times.timeQueryMax,
+          "time_query_avg": times.timeQueryAvg,
+          "num_queries": times.numQueries
         };
         var keys = Object.keys(params);
         var serialized = keys.map(function(key, i) {

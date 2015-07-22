@@ -4,11 +4,10 @@
 var HomePage = React.createClass({
   getInitialState: function() {
     return {
-      loggedIn: this.props.loggedIn
+      loggedIn: this.props.user
     };
   },
   componentDidMount: function() {
-    var loggedIn = this.state.loggedIn;
     $(document).ajaxSuccess(function(){
       var loggedIn = this.state.loggedIn;
       $('#modal-sign-up').modal('hide');
@@ -17,7 +16,7 @@ var HomePage = React.createClass({
     }.bind(this));
   },
   componentWillUnmount: function() {
-    $(document).unbind("ajaxSuccess");
+    $(document).unbind('ajaxSuccess');
   },
   render: function() {
     var buttons = [];
@@ -27,23 +26,23 @@ var HomePage = React.createClass({
     var enter = urls.enter;
     var loggedIn = this.state.loggedIn;
 
-    buttons.push(<button key='button-1' id="sign-up" type="button" className="btn btn-primary" data-toggle="modal" data-target=".sign-up-form" onClick={ homePage.listenForAjax }>sign up</button>);
+    buttons.push(<button key='button-1' id='sign-up' type='button' className='btn btn-primary' data-toggle='modal' data-target='.sign-up-form' onClick={ homePage.listenForAjax }>sign up</button>);
     if (loggedIn) {
-      buttons.push(<a key='button-2' className="btn btn-primary" onClick={ homePage.clicked }>sign out</a>);
-      buttons.push(<a key='button-3' href={ enter } className="btn btn-primary">enter</a>);
+      buttons.push(<a key='button-2' className='btn btn-primary' onClick={ homePage.clicked }>sign out</a>);
+      buttons.push(<a key='button-3' href={ enter } className='btn btn-primary'>enter</a>);
     } else {
-      buttons.push(<button key='button-2' id="sign-in" className="btn btn-primary" data-toggle="modal" data-target=".sign-in-form" onClick={ homePage.listenForAjax }>sign in</button>);
-      buttons.push(<a key='button-3' href={ enter } className="btn btn-primary">guest</a>);
+      buttons.push(<button key='button-2' id='sign-in' className='btn btn-primary' data-toggle='modal' data-target='.sign-in-form' onClick={ homePage.listenForAjax }>sign in</button>);
+      buttons.push(<a key='button-3' href={ enter } className='btn btn-primary'>guest</a>);
     }
 
     return(
-      <div className="home-container">
-        <div className="home-wrap">
-          <div className="presents-home">tastyham presents...</div>
+      <div className='home-container'>
+        <div className='home-wrap'>
+          <div className='presents-home'>tastyham presents...</div>
           <Img src='/assets/mvc.gif' />
-          <div className="title-home">ActiveRecord Baby</div>
+          <div className='title-home'>ActiveRecord Baby</div>
             { buttons }
-          <div className="subtitle-home">where baby Rails devs hone their db:fu</div>
+          <div className='subtitle-home'>where baby Rails devs hone their db:fu</div>
         </div>
       </div>
     );

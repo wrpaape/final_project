@@ -1,12 +1,9 @@
 require 'timeout'
 task :solution => :environment do
   ActiveRecord::Base.logger = Logger.new(Rails.root.join("solution_queries.log"))
-  # hold [cmd + shift + return] or [ctr + shift + return]
-  # to reload your results
-  
   def solution
     status = Timeout::timeout(5) do
-    Person.where(name: "Mike")
+    Person.where(:children_count=> [1, 2]).order(:name)
     end
   end
   
