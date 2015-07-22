@@ -1,14 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
-#   after_filter :clear_sign_signout_flash, :only => [:create, :destroy]
-
-#   protected
-
-#   def clear_sign_signout_flash
-#     if flash.keys.include?(:notice)
-#       flash.delete(:notice)
-#     end
-#   end
-# end
+# before_filter :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
   # def new
@@ -31,4 +22,4 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.for(:sign_in) << :attribute
   # end
-# end
+end
