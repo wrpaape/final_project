@@ -127,7 +127,7 @@ All of the problems in this set can be solved by querying just the |@people| tab
 """
 family_tree = Environment.create(
   title: "The |@people| Family Tree",
-  description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
+  description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   models: { "Person"=>"person.rb", "BabyName"=>"baby_name.rb" }.to_json)
 
 prob_instruct =
@@ -149,7 +149,7 @@ def answer_avg_household
 end
 avg_household = family_tree.problems.create(
   title: "...and here are our 1.5 kids",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   answer: Array.wrap(answer_avg_household).to_json)
 
 prob_instruct =
@@ -176,7 +176,7 @@ def answer_brady_bunch
 end
 the_brady_bunch = family_tree.problems.create(
   title: "The Brady Bunch",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   answer: Array.wrap(answer_brady_bunch).to_json)
 
 prob_instruct =
@@ -208,7 +208,7 @@ def answer_bachelor
 end
 the_bachelor = family_tree.problems.create(
   title: "The Bachelor(ette?)",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   answer: Array.wrap(answer_bachelor).to_json)
 
 prob_instruct =
@@ -242,7 +242,7 @@ def answer_lazy_parents
 end
 lazy_parents_award = family_tree.problems.create(
   title: "The Laziest Parents Award",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   answer: Array.wrap(answer_lazy_parents).to_json)
 
 
@@ -531,7 +531,7 @@ In addition to the |*upkeep| of their |&farm|'s |&fields|, every |~Farmer| must 
 """
 old_mac = Environment.create(
   title: "Old MacDonald |#has_one| |~Farm|",
-  description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
+  description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   models: { "Farmer"=>"farmer.rb", "Farm"=>"farm.rb", "Crop"=>"crop.rb", "Field"=>"field.rb", "Client"=>"client.rb", "Contract"=>"Contract.rb" }.to_json)
 
 prob_instruct =
@@ -555,7 +555,7 @@ def answer_technically_3_years
 end
 technically_3_years = old_mac.problems.create(
   title: "Technically 3 Years",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   answer: Array.wrap(answer_technically_3_years).to_json)
 
 prob_instruct =
@@ -576,7 +576,7 @@ def answer_bandwagon_crops
 end
 bandwagon_crops = old_mac.problems.create(
   title: "Bandwagon Crops",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   answer: Array.wrap(answer_bandwagon_crops).to_json)
 
 prob_instruct =
@@ -594,7 +594,7 @@ def answer_smitty_w
 end
 smitty_w = old_mac.problems.create(
   title: "Old Farmer Werbenjagermanjensen",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   answer: Array.wrap(answer_smitty_w).to_json)
 
 prob_instruct =
@@ -628,7 +628,7 @@ def answer_the_red_line
 end
 the_red_line = old_mac.problems.create(
   title: "The Red Line and the Black Thumb",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n\n"),
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   answer: Array.wrap(answer_the_red_line).to_json)
 
 raw_avg_household =

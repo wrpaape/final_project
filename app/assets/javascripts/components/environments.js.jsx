@@ -46,6 +46,9 @@ var Environments = React.createClass({
       var formattedDescrip = [];
       var descrip = env.description.split('\n');
       descrip.forEach(function(line, i) {
+        if (line.length === 0) {
+          line = ' ';
+        }
         var splitLine = line.split('|');
         var formattedLine = [];
         splitLine.forEach(function(seg, j) {

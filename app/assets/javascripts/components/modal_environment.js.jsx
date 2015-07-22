@@ -59,18 +59,18 @@ var ModalEnvironment = React.createClass({
               { leaderButtons }
             </div>
           </div>
-          <div id={ 'modal-env-' + env.id + '-descip'} className={ 'modal fade env-' + env.id } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
-            <div className='modal-dialog modal-lg'>
-              <div className='modal-content'>
-                { descrip }
-              </div>
+        </div>
+        <div id={ 'modal-env-' + env.id + '-descip'} className={ 'modal fade env-' + env.id } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
+          <div className='modal-dialog modal-lg'>
+            <div className='modal-content'>
+              { descrip }
             </div>
           </div>
-          <div id={ 'modal-env-' + env.id + '-uml'} className={ 'modal fade uml-' + env.id } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
-            <div className='modal-dialog modal-lg'>
-              <div className='modal-content image'>
-                <Img src={ umlFilePath } className='image-uml'/>
-              </div>
+        </div>
+        <div id={ 'modal-env-' + env.id + '-uml'} className={ 'modal fade uml-' + env.id } tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
+          <div className='modal-dialog modal-lg'>
+            <div className='modal-content image'>
+              <Img src={ umlFilePath } className='image-uml'/>
             </div>
           </div>
         </div>
