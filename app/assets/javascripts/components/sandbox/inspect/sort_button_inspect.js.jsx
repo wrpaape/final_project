@@ -49,8 +49,8 @@ var SortButtonInspect = React.createClass({
     }
 
     var newSort = '';
-    var all_buttons = $('th');
-    all_buttons.each(function () {
+    var allButtons = $('th');
+    allButtons.each(function () {
       if ($(this).attr('id')) {
         newSort += $(this).attr('id').slice(currentModel.length + 6) + '░' + $(this).attr('data-id') + '▓';
       }

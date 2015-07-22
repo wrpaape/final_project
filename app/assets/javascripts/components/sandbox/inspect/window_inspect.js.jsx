@@ -20,7 +20,7 @@ var WindowInspect = React.createClass({
     var migrationFileName = data.migrationFileName.split('\n');
 
     availableModels.forEach(function (model) {
-      modelOptions.push(<option key={ model + 'option' } className='model-option' value={ model }>{ model }</option>);
+      modelOptions.push(<option key={ model + 'option' } selected={ model === currentModel ? 'selected' : '' } className='model-option' value={ model }>{ model }</option>);
     });
 
     var noneSelected = function() {
@@ -76,7 +76,7 @@ var WindowInspect = React.createClass({
       table.setState({ padding: 25 });
     }
   },
-  selected: function (table) {
+  selected: function(table) {
     var currentModel = table.state.currentModel;
     var newModel = $('#current-model').val();
     if (currentModel !== newModel) {
@@ -87,6 +87,11 @@ var WindowInspect = React.createClass({
       var newSort = models[newModel].sort;
       var newCaseSens = models[newModel].caseSens;
       var newFuzzy = models[newModel].fuzzy;
+
+      var el = $('#whole-query')
+      var clonedEl = el.clone(true);
+      el.before(clonedEl);
+      $("." + el.attr("class") + ":last").remove();
 
       table.setState({ loading: true });
       $.getJSON(table.state.data.url,

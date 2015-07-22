@@ -125,6 +125,16 @@ $code-value: #F46AEE;
   align-items: center;
 }
 
+.cursor-progress {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9001;
+  cursor: progress !important;
+}
+
 canvas {
   position: absolute;
   left: 0;
@@ -228,7 +238,7 @@ section {
       font-size: 1.2em;
       text-align: center;
       color: $code-attribute;
-      border-bottom: 2px solid $code-green!important;
+      border-bottom: 2px solid $code-green;
     }
     .highlight {
       text-shadow:
@@ -260,6 +270,9 @@ section {
   box-sizing: border-box;
   width: 100%;
   margin-top: 40px;
+  th {
+    cursor: pointer;
+  }
   .inspector-show {
     position: fixed;
     top: 48px;
@@ -645,6 +658,10 @@ input {
     padding-right: 290px;
     margin-bottom: 5px;
     background: black;
+    .shine {
+      animation: glow2 0.5s alternate cubic-bezier(0, 1, 0, 1);
+      animation-iteration-count: 2;
+    }
   }
   .results-wrap{
     position: relative;

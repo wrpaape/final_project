@@ -76,4 +76,8 @@ $(document).on('click', '#sign-in-up-submit', function() {
   }, 500);
 });
 
-
+$(document).bind('ajaxSend', function(){
+  $('#page-cover').addClass('cursor-progress');
+}).bind('ajaxComplete', function(){
+  $('#page-cover').removeClass('cursor-progress');
+});

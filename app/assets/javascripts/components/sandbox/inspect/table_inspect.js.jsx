@@ -23,6 +23,7 @@ var TableInspect = React.createClass({
   },
   render: function () {
     var rows = [];
+    var lastQuery = $('.colored-query-line');
     var data = this.state.data;
     var modelFile = data.modelFile;
     var migrationFile = data.migrationFile;
@@ -93,7 +94,7 @@ var TableInspect = React.createClass({
           <div className='sticky-footer paginate sticky-footer-inspect'>
             <PaginateInspect parent={ this } />
             <LimitBarInspect parent={ this} />
-            <QueryInspect parent={ this } />
+            <QueryInspect parent={ this } lastQuery={ lastQuery } />
           </div>
         </div>
         <WindowInspect parent={ this } />

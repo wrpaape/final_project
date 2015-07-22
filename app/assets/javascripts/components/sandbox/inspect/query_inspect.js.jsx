@@ -2,7 +2,6 @@
 'use strict';
 
 var QueryInspect = React.createClass({
-
   render: function() {
     var table = this.props.parent;
     var query = table.state.data.query;
@@ -19,31 +18,31 @@ var QueryInspect = React.createClass({
             if (seg[0] === '%') {
               className += 'code-general';
             } else if (seg[0] === '?') {
-              className += ' code-sql';
+              className += 'code-sql';
             } else if (seg[0] === '#') {
-              className += ' code-ar-keyword';
+              className += 'code-ar-keyword';
             } else if (seg[0] === '@') {
-              className += ' code-table';
+              className += 'code-table';
             } else if (seg[0] === '&') {
-              className += ' code-relation';
+              className += 'code-relation';
             } else if (seg[0] === '*') {
-              className += ' code-attribute';
+              className += 'code-attribute';
             } else if (seg[0] === '~') {
-              className += ' code-model';
+              className += 'code-model';
             } else if (seg[0] === '`') {
-              className += ' code-value';
+              className += 'code-value';
             }
             seg = seg.slice(1);
           } else {
             className += 'code-general';
           }
-          formattedLine.push(<span key={ 'query-seg-' + j } className={ className }>{ seg }</span>);
+          formattedLine.push(<span id='query-seg' key={ 'query-seg-' + j } className={ className + ' shine' }>{ seg }</span>);
         });
       }
-      coloredQuery.push(<span key={ 'query ' + i }>{ formattedLine }</span>);
+      coloredQuery.push(<span ref={ key.split(' ')[1] } className='colored-query-line' key={ 'query ' + i }>{ formattedLine }</span>);
     }.bind(this));
     return(
-      <div className='query-wrap'>
+      <div id='whole-query' className='query-wrap'>
         { coloredQuery }
       </div>
     );
