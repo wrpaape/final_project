@@ -6,7 +6,7 @@ task :solution => :environment do
   
   def solution
     status = Timeout::timeout(5) do
-    "no bachelor(ette)s!"
+    
     end
   end
   

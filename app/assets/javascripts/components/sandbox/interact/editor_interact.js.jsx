@@ -184,6 +184,7 @@ var EditorInteract = React.createClass({
               loading: false
             });
             this.setState({ loading: false });
+            $('#check-answer').addClass('shine');
           }.bind(this)
         )
       }

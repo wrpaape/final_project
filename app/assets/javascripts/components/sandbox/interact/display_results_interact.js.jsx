@@ -46,6 +46,8 @@ var DisplayResultsInteract = React.createClass({
     var buttonContents = (showCorrect && isCorrect) ? (loggedIn ? 'submit |solution' : 'sign in/up to\nsubmit |solution') : 'check answer';
     var splitContents = buttonContents.split('\n');
     var formatteddContents = [];
+    var buttonClass = 'btn btn-primary';
+    buttonClass += (showCorrect && isCorrect && loggedIn) ? ' shine' : '';
 
 
     splitContents.forEach(function(line, i){
@@ -126,7 +128,7 @@ var DisplayResultsInteract = React.createClass({
           <div className={ 'correct value show-correct-' + showCorrect + ' is-correct-' + isCorrect }>
             { dispCorrect }
           </div>
-          <div className='btn btn-primary' onClick={ this.clicked.bind(this, loggedIn, showCorrect, isCorrect) }>
+          <div id='check-answer' className={ buttonClass } onClick={ this.clicked.bind(this, loggedIn, showCorrect, isCorrect) }>
             { formatteddContents }
           </div>
         </div>
@@ -164,6 +166,7 @@ var DisplayResultsInteract = React.createClass({
         window.location.href = table.state.newSolvedProblem + urlParams;
       }
     } else {
+      $('#check-answer').removeClass('shine');
       this.setState({ showCorrect: true });
     }
   },
