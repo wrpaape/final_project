@@ -73,7 +73,7 @@ var SwitchInspectInteract = React.createClass({
           <TableInspect data={ this.props.dataInspect } models={ this.props.modelsInspect } />
         </div>
         <div className={ 'show-' + showInteract }>
-          <TableInteract data={ this.props.dataInteract } url={ this.props.urlInteract } problem={ problem } />
+          <TableInteract data={ this.props.dataInteract } url={ this.props.urlInteract } problem={ problem } loggedIn={ this.props.loggedIn } />
         </div>
         <div className='modal fade instructions' tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
           <div className='modal-dialog modal-lg'>

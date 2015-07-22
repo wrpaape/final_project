@@ -4,7 +4,7 @@
 var TableInteract = React.createClass({
   getInitialState: function () {
     return {
-      loggedIn: false,
+      loggedIn: this.props.loggedIn,
       data: this.props.data,
       results: {
         'isCorrect': false,

@@ -17,12 +17,6 @@ var RowLeaderboard = React.createClass({
     var solvedProbHash = this.props.solvedProb;
     var solvedProb = solvedProbHash.solvedProb;
     var user = solvedProbHash.user;
-    if (solvedProb.id === 20) {
-       console.log(solvedProbHash);
-      console.log(user);
-      console.log(user.name);
-    }
-
     var name = user.name === null ? 'nil' : user.name;
     var solCharCount = solvedProb.sol_char_count === null ? 'nil' : solvedProb.sol_char_count;
     var numQueries = solvedProb.num_queries === null ? 'nil' : solvedProb.num_queries;

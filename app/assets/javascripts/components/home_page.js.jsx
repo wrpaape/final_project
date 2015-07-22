@@ -4,7 +4,7 @@
 var HomePage = React.createClass({
   getInitialState: function() {
     return {
-      loggedIn: this.props.user
+      loggedIn: this.props.loggedIn
     };
   },
   componentDidMount: function() {

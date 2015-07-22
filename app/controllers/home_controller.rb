@@ -4,10 +4,10 @@ class HomeController < ApplicationController
       "signOut"=> destroy_user_session_path,
       "enter"=> environments_path
     }
-    @user = current_user
+    @logged_in = current_user.nil? ? false : true
     respond_to do |format|
       format.html
-      format.json { render json: current_user }
+      format.json { render json: @logged_in }
     end
   end
 end
