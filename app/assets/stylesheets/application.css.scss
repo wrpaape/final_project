@@ -243,6 +243,9 @@ select {
       min-width: 100px;
       &.shine {
         animation: glow1 1s infinite alternate ease-in-out;
+          &.sign-in-home {
+            animation-delay: 1s;
+          }
       }
     }
     .subtitle-home {

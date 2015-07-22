@@ -25,7 +25,7 @@ var HomePage = React.createClass({
     var signOut = urls.signOut;
     var enter = urls.enter;
     var loggedIn = this.state.loggedIn;
-    var signUpClass = 'btn btn-primary';
+    var signUpClass = 'btn btn-primary sign-up-home';
     signUpClass += loggedIn ? '' : ' shine';
 
     buttons.push(<button key='button-1' id='sign-up' type='button' className={ signUpClass } data-toggle='modal' data-target='.sign-up-form' onClick={ homePage.listenForAjax }>sign up</button>);
@@ -33,7 +33,7 @@ var HomePage = React.createClass({
       buttons.push(<a key='button-2' className='btn btn-primary' onClick={ homePage.clicked }>sign out</a>);
       buttons.push(<a key='button-3' href={ enter } className='btn btn-primary shine'>enter</a>);
     } else {
-      buttons.push(<button key='button-2' id='sign-in' className='btn btn-primary shine' data-toggle='modal' data-target='.sign-in-form' onClick={ homePage.listenForAjax }>sign in</button>);
+      buttons.push(<button key='button-2' id='sign-in' className='btn btn-primary shine sign-in-home' data-toggle='modal' data-target='.sign-in-form' onClick={ homePage.listenForAjax }>sign in</button>);
       buttons.push(<a key='button-3' href={ enter } className='btn btn-primary'>guest</a>);
     }
 
