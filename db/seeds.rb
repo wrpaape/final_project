@@ -102,7 +102,7 @@ remaining_generations.each do |gen|
       the_bachelor_ette = gx_bachleors.sample
     end
 
-    gx_bachelors_ettes = gx_bachelors_ettes.where.not(id: the_bachelor_ette.id)
+    gx_bachelors_ettes = Person.where(spouse_id: nil).where(generation: gen).where.not(id: the_bachelor_ette.id)
   end
 
 
