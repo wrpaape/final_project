@@ -62,6 +62,7 @@ gem 'ace-rails-ap'
 gem 'react-rails-img'
 gem 'faker'
 gem 'devise'
+gem 'rack-timeout'
 
 source "https://rails-assets.org" do
   gem 'rails-assets-moment'

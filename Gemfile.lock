@@ -110,6 +110,7 @@ GEM
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
+    rack-timeout (0.2.4)
     rails (4.2.3)
       actionmailer (= 4.2.3)
       actionpack (= 4.2.3)
@@ -214,6 +215,7 @@ DEPENDENCIES
   jquery-rails
   pg
   pry
+  rack-timeout
   rails (= 4.2.3)
   rails-assets-datetimepicker!
   rails-assets-moment!
