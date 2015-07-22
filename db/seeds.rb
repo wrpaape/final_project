@@ -79,9 +79,30 @@ remaining_generations.each do |gen|
       child = Person.create(kid)
     end
 
-    gx_bachelors_ettes = Person.where(spouse_id: nil).where(generation: gen)
-    the_bachelor_ette_id = gx_bachelors_ettes.sample.id
-    gx_bachelors_ettes = gx_bachelors_ettes.where.not(id: the_bachelor_ette_id)
+    gx_bachelors = Person.where(spouse_id: nil).where(generation: gen).where(gender: "M");
+    gx_bachelorettes = Person.where(spouse_id: nil).where(generation: gen).where(gender: "F");
+
+    if gx_bachleors.count == gx_bachleorettes.count
+      mother = Person.where.not(spouse_id: nil).where(generation: gen - 1).where(gender: "F")
+      b_gender = genders.sample
+      b_yob = (mother.yob + father.yob) / 2 + rand(20..35)
+      b_yob = b_yob > 2014 ? 2014 : b_yob
+      b_baby_name = BabyName.where("yob = #{b_yob} AND gender = '#{b_gender}'").sample
+      b_name = b_baby_name.name
+      b_frequency = b_baby_name.frequency
+      the_bachelor_ette = Person.create(name: b_name,
+                                      gender: b_gender,
+                                         yob: b_yob,
+                                   frequency: b_frequency,
+                                   mother_id: mother.id,
+                                   father_id: mother.spouse.id)
+    elsif gx_bachleors.count > gx_bachleorettes.count
+      the_bachelor_ette = gx_bachleorettes.sample
+    else
+      the_bachelor_ette = gx_bachleors.sample
+    end
+
+    gx_bachelors_ettes = gx_bachelors_ettes.where.not(id: the_bachelor_ette.id)
   end
 
 
@@ -244,10 +265,6 @@ lazy_parents_award = family_tree.problems.create(
   title: "The Laziest Parents Award",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   answer: Array.wrap(answer_lazy_parents).to_json)
-
-
-
-
 
 
 crops = {
@@ -761,164 +778,4 @@ solution
 """
 raw_the_red_line = raw_the_red_line[1..-2]
 
-admin = User.create(name: "admin", password: "admin", password_confirmation: "admin", admin: true, email: "admin@admin.com")
-
-# SolvedProblem.create(
-#   solution: raw_avg_household,
-#   total queries: 1,
-#    shortest query: 3.400 ms,
-#     longest query: 3.400 ms,
-#     average query: 3.400 ms,
-#  total query time: 3.400 ms,
-#   time to execute: 506.5 ms,
-# non-ws char count: 80,
-#   user_id: admin.id,
-#   problem_id: avg_household.id,
-#   environment_id: family_tree.id)
-#     total queries:1
-#    shortest query:2.700 ms
-#     longest query:2.700 ms
-#     average query:2.700 ms
-#  total query time:2.700 ms
-#   time to execute:76.39 ms
-# non-ws char count:49
-#           correct:true
-
-# SolvedProblem.create(
-#   solution: raw_brady_bunch,
-#     total queries:3
-#    shortest query:200.0 μs
-#     longest query:500.0 μs
-#     average query:333.3 μs
-#  total query time:1.000 ms
-#   time to execute:309.1 ms
-# non-ws char count:317
-#   user_id: admin.id,
-#   problem_id: the_brady_bunch.id,
-#   environment_id: family_tree.id)
-#     total queries:5
-#    shortest query:700.0 μs
-#     longest query:16.90 ms
-#     average query:4.800 ms
-#  total query time:24.00 ms
-#   time to execute:165.8 ms
-# non-ws char count:286
-#           correct:true
-
-# SolvedProblem.create(
-#   solution: raw_bachelor,
-#   sol_char_count: 479,
-#   time_exec_total: 0.2358,
-#   time_query_total: 0.0013,
-#   time_query_min: 0.000002,
-#   time_query_max: 0.000006,
-#   time_query_avg: 0.00000325,
-#   num_queries: 4,
-#   user_id: admin.id,
-#   problem_id: the_bachelor.id,
-#   environment_id: family_tree.id)
-
-# SolvedProblem.create(
-#   solution: raw_lasy_parents,
-#   sol_char_count: 479,
-#   time_exec_total: 0.2358,
-#   time_query_total: 0.0013,
-#   time_query_min: 0.000002,
-#   time_query_max: 0.000006,
-#   time_query_avg: 0.00000325,
-#   num_queries: 4,
-#   user_id: admin.id,
-#   problem_id: the_lasy_parents.id,
-#   environment_id: family_tree.id)
-#     total queries:12
-#    shortest query:100.0 μs
-#     longest query:2.600 ms
-#     average query:558.3 μs
-#  total query time:6.700 ms
-#   time to execute:82.42 ms
-# non-ws char count:205
-#           correct:true
-
-# SolvedProblem.create(
-#   solution: raw_technically_3_years,
-#   sol_char_count: 479,
-#   time_exec_total: 0.2358,
-#   time_query_total: 0.0013,
-#   time_query_min: 0.000002,
-#   time_query_max: 0.000006,
-#   time_query_avg: 0.00000325,
-#   num_queries: 4,
-#   user_id: admin.id,
-#   problem_id: the_technically_3_years.id,
-#   environment_id: old_mac.id)
-#     total queries:1
-#    shortest query:20.60 ms
-#     longest query:20.60 ms
-#     average query:20.60 ms
-#  total query time:20.60 ms
-#   time to execute:26.22 ms
-# non-ws char count:316
-#           correct:true
-
-# SolvedProblem.create(
-#   solution: raw_technically_3_years,
-#   sol_char_count: 479,
-#   time_exec_total: 0.2358,
-#   time_query_total: 0.0013,
-#   time_query_min: 0.000002,
-#   time_query_max: 0.000006,
-#   time_query_avg: 0.00000325,
-#   num_queries: 4,
-#   user_id: admin.id,
-#   problem_id: the_technically_3_years.id,
-#   environment_id: old_mac.id)
-#     total queries:1
-#    shortest query:20.60 ms
-#     longest query:20.60 ms
-#     average query:20.60 ms
-#  total query time:20.60 ms
-#   time to execute:26.22 ms
-# non-ws char count:316
-#           correct:true
-
-# SolvedProblem.create(
-#   solution: raw_smitty_w,
-#   sol_char_count: 479,
-#   time_exec_total: 0.2358,
-#   time_query_total: 0.0013,
-#   time_query_min: 0.000002,
-#   time_query_max: 0.000006,
-#   time_query_avg: 0.00000325,
-#   num_queries: 4,
-#   user_id: admin.id,
-#   problem_id: smitty_w.id,
-#   environment_id: old_mac.id)
-#     total queries:3
-#    shortest query:18.60 ms
-#     longest query:57.40 ms
-#     average query:39.07 ms
-#  total query time:117.2 ms
-#   time to execute:488.5 ms
-# non-ws char count:655
-#           correct:true
-
-# SolvedProblem.create(
-#   solution: raw_the_red_line,
-#   sol_char_count: 479,
-#   time_exec_total: 0.2358,
-#   time_query_total: 0.0013,
-#   time_query_min: 0.000002,
-#   time_query_max: 0.000006,
-#   time_query_avg: 0.00000325,
-#   num_queries: 4,
-#   user_id: admin.id,
-#   problem_id: the_red_line.id,
-#   environment_id: old_mac.id)
-#     total queries:3
-#    shortest query:18.60 ms
-#     longest query:57.40 ms
-#     average query:39.07 ms
-#  total query time:117.2 ms
-#   time to execute:488.5 ms
-# non-ws char count:655
-#           correct:true
+admin = User.create(name: "tastyham", password: "taoontop", password_confirmation: "taoontop", admin: true, email: "example@example.com")
