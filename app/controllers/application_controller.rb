@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_env_info
-    Environment.all.map{ |env| { "env"=>env, "probs"=>env.problems.map{ |prob| { "prob"=>prob, "solvedProbs"=>prob.solved_problems.count < 10 ? (prob.solved_problems.order(:time_exec_total).as_json << [SolvedProblem.new] * (10 - prob.solved_problems.count)).flatten.map { |solved_prob| { "solvedProb"=> solved_prob, "user"=> solved_prob.as_json.fetch("user", User.new) } } : prob.solved_problems.order(:time_exec_total).limit(10).map { |solved_prob| { "solvedProb"=> solved_prob, "user"=> solved_prob.user } } } } } }
+    Environment.all.map{ |env| { "env"=>env, "probs"=>env.problems.map{ |prob| { "prob"=>prob, "solvedProbs"=>prob.solved_problems.count < 10 ? (prob.solved_problems.order(:time_exec_total).as_json << [SolvedProblem.new] * (10 - prob.solved_problems.count)).flatten.map { |solved_prob| { "solvedProb"=> solved_prob, "user"=> User.find_by(id: solved_prob.as_json["user_id"]) || User.new } } : prob.solved_problems.order(:time_exec_total).limit(10).map { |solved_prob| { "solvedProb"=> solved_prob, "user"=> solved_prob.user || User.new } } } } } }
   end
 
   private

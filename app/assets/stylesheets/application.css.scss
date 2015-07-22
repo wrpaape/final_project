@@ -640,6 +640,21 @@ input {
                             display: none;
                           }
                           .stats-wrap {
+                            -webkit-box-shadow:
+                            -4px -4px 6px yellow,
+                            4px -4px 6px yellow,
+                            -4px  4px 6px yellow,
+                            4px  4px 6px yellow;
+                            -moz-box-shadow:
+                            -4px -4px 6px yellow,
+                            4px -4px 6px yellow,
+                            -4px  4px 6px yellow,
+                            4px  4px 6px yellow;
+                            box-shadow:
+                            -4px -4px 6px yellow,
+                            4px -4px 6px yellow,
+                            -4px  4px 6px yellow,
+                            4px  4px 6px yellow;
                             display: inline-block;
                             test-align: center;
                             table {
@@ -658,9 +673,25 @@ input {
                         }
                       }
                       .sol {
-                        background: black;
                         text-align: center;
                         div {
+                          -webkit-box-shadow:
+                          -4px -4px 6px yellow,
+                          4px -4px 6px yellow,
+                          -4px  4px 6px yellow,
+                          4px  4px 6px yellow;
+                          -moz-box-shadow:
+                          -4px -4px 6px yellow,
+                          4px -4px 6px yellow,
+                          -4px  4px 6px yellow,
+                          4px  4px 6px yellow;
+                          box-shadow:
+                          -4px -4px 6px yellow,
+                          4px -4px 6px yellow,
+                          -4px  4px 6px yellow,
+                          4px  4px 6px yellow;
+                          background: black;
+                          padding: 1em;
                           display: inline-block;
                           text-align: left;
                             .pad {

@@ -147,7 +147,7 @@ var DisplayResultsInteract = React.createClass({
           "time_query_min": times.timeQueryMin,
           "time_query_max": times.timeQueryMax,
           "time_query_avg": times.timeQueryAvg,
-          "num_queries": times.numQueries
+          "num_queries": results.numQueries
         };
         var keys = Object.keys(params);
         var serialized = keys.map(function(key, i) {
@@ -161,7 +161,6 @@ var DisplayResultsInteract = React.createClass({
           return seg;
         });
         var urlParams = serialized.join('&');
-        // console.log(urlParams);
         window.location.href = table.state.newSolvedProblem + urlParams;
       }
     } else {

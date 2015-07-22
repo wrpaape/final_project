@@ -6,8 +6,9 @@ var ModalLeaderboard = React.createClass({
   render: function() {
     var rows = [];
     var solvedProbs = this.props.solvedProbs;
+    var probId = this.props.probId;
     solvedProbs.forEach(function(solvedProb, i){
-      rows.push(<RowLeaderboard key={ 'row-leader-' + i } solvedProb={ solvedProb } />);
+      rows.push(<RowLeaderboard key={ 'row-leader-' + i } row={ i } probId={ probId } solvedProb={ solvedProb } />);
     });
 
     return(

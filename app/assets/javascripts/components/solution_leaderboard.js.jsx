@@ -14,7 +14,7 @@ var SolutionLeaderboard = React.createClass({
       var splitLines = sol.split('\n');
       splitLines.forEach(function(line, i) {
         var padIndex = line.search(/[^ ]/);
-        var pad = new Array(padIndex + 1).join('~');
+        var pad = new Array(padIndex + 1).join(' ');
         if (line.length === 0) {
           line = ' ';
         }

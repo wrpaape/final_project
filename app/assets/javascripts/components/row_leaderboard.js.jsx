@@ -12,11 +12,22 @@ var RowLeaderboard = React.createClass({
     var cols = [];
     var showSol = this.state.showSol;
     var showStats = this.state.showStats;
+    var row = this.props.row;
+    var probId = this.props.probId;
     var solvedProbHash = this.props.solvedProb;
     var solvedProb = solvedProbHash.solvedProb;
     var user = solvedProbHash.user;
+    if (solvedProb.id === 20) {
+       console.log(solvedProbHash);
+      console.log(user);
+      console.log(user.name);
+    }
+
+    var name = user.name === null ? 'nil' : user.name;
+    var solCharCount = solvedProb.sol_char_count === null ? 'nil' : solvedProb.sol_char_count;
+    var numQueries = solvedProb.num_queries === null ? 'nil' : solvedProb.num_queries;
+    var createdAt = solvedProb.created_at === null ? 'nil' : solvedProb.created_at;
     var time = solvedProb.time_exec_total;
-    var createdAt = solvedProb.created_at;
 
     var units = [' s', ' ms', ' μs'];
     var unit = '';
@@ -34,7 +45,7 @@ var RowLeaderboard = React.createClass({
       time = Number(time).toPrecision(4);
     }
 
-    cols.push(<td key={ 'row-' + solvedProb.id + '-name'}>{ user.name }</td>);
+    cols.push(<td key={ 'row-' + solvedProb.id + '-name'}>{ name }</td>);
     cols.push(<td key={ 'row-' + solvedProb.id + '-time-exec'}>{ time + unit }</td>);
     cols.push(<td key={ 'row-' + solvedProb.id + '-sol'} id={ 'solved-prob-' + solvedProb.id + '-sol' } onClick={ this.revealSolution } className='center'>
       <Img className={ 'spoiler-sol ' + !showSol } src='/assets/spoilers.png' />
@@ -42,7 +53,7 @@ var RowLeaderboard = React.createClass({
         <p>method body</p>
         <p>char count:</p>
         <br />
-        <p>{ solvedProb.sol_char_count }</p>
+        <p>{ solCharCount }</p>
       </div>
     </td>);
     cols.push(<td key={ 'row-' + solvedProb.id + '-stats'} id={ 'solved-prob-' + solvedProb.id + '-stats' } onClick={ this.revealStats } className='center'>
@@ -51,10 +62,10 @@ var RowLeaderboard = React.createClass({
         <p>total num</p>
         <p>queries:</p>
         <br />
-        <p>{ solvedProb.num_queries }</p>
+        <p>{ numQueries }</p>
       </div>
     </td>);
-    cols.push(<td key={ 'row-' + solvedProb.id + '-created-at'} id={ 'row-' + solvedProb.id + '-created-at'} onMouseOver={ this.mouseOver.bind(this, createdAt, solvedProb) } onMouseOut={ this.mouseOut.bind(this, createdAt, solvedProb) }>{ createdAt }</td>);
+    cols.push(<td key={ 'row-' + solvedProb.id + '-created-at-' + row + '-prob-' + probId } id={ 'row-' + solvedProb.id + '-created-at-' + row + '-prob-' + probId } onMouseOver={ this.mouseOver.bind(this, createdAt, solvedProb, row, probId) } onMouseOut={ this.mouseOut.bind(this, createdAt, solvedProb, row, probId) }>{ createdAt }</td>);
 
     return (
       <tr>
@@ -71,25 +82,32 @@ var RowLeaderboard = React.createClass({
     );
   },
   revealSolution: function() {
+    var oldState = this.state.showSol;
     this.setState({
-      showSol: true,
+      showSol: !oldState,
       showStats: false
     });
   },
   revealStats: function() {
+    var oldState = this.state.showStats;
     this.setState({
       showSol: false,
-      showStats: true
+      showStats: !oldState
     });
   },
-  mouseOver: function(val, obj) {
-    var valFormatted = (moment(val).format('MM/DD/YYYY hh:mm a'));
-    var idSelector = '#row-' + obj.id + '-created-at';
-    $(idSelector).html(valFormatted);
-    $(idSelector).addClass('formatted-time');
+  mouseOver: function(val, obj, row, probId) {
+    var valFormatted;
+    if (val === 'nil') {
+      valFormatted = 'Invalid Date';
+    } else {
+      valFormatted = (moment(val).format('MM/DD/YYYY hh:mm a'));
+    }
+      var idSelector = '#row-' + obj.id + '-created-at-' + row + '-prob-' + probId ;
+      $(idSelector).html(valFormatted);
+      $(idSelector).addClass('formatted-time');
   },
-  mouseOut: function(val, obj) {
-    var idSelector = '#row-' + obj.id + '-created-at';
+  mouseOut: function(val, obj, row, probId) {
+    var idSelector = '#row-' + obj.id + '-created-at-' + row + '-prob-' + probId ;
     $(idSelector).html(val);
     $(idSelector).removeClass('formatted-time');
   },
