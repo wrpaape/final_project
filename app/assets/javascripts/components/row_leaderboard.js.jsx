@@ -36,8 +36,24 @@ var RowLeaderboard = React.createClass({
 
     cols.push(<td key={ 'row-' + solvedProb.id + '-name'}>{ user.name }</td>);
     cols.push(<td key={ 'row-' + solvedProb.id + '-time-exec'}>{ time + unit }</td>);
-    cols.push(<td key={ 'row-' + solvedProb.id + '-sol'} id={ 'solved-prob-' + solvedProb.id + '-sol' } onClick={ this.revealSolution } className='center'><Img src='/assets/spoilers.png' /></td>);
-    cols.push(<td key={ 'row-' + solvedProb.id + '-stats'} id={ 'solved-prob-' + solvedProb.id + '-stats' } onClick={ this.revealStats } className='center'><Img src='/assets/spoilers.png' /></td>);
+    cols.push(<td key={ 'row-' + solvedProb.id + '-sol'} id={ 'solved-prob-' + solvedProb.id + '-sol' } onClick={ this.revealSolution } className='center'>
+      <Img className={ 'spoiler-sol ' + !showSol } src='/assets/spoilers.png' />
+      <div className={ 'sol-char-count btn btn-primary ' + showSol } >
+        <p>method body</p>
+        <p>char count:</p>
+        <br />
+        <p>{ solvedProb.sol_char_count }</p>
+      </div>
+    </td>);
+    cols.push(<td key={ 'row-' + solvedProb.id + '-stats'} id={ 'solved-prob-' + solvedProb.id + '-stats' } onClick={ this.revealStats } className='center'>
+      <Img className={ 'spoiler-stats ' + !showStats } src='/assets/spoilers.png' />
+      <div className={ 'num-queries btn btn-primary ' + showStats } >
+        <p>total num</p>
+        <p>queries:</p>
+        <br />
+        <p>{ solvedProb.num_queries }</p>
+      </div>
+    </td>);
     cols.push(<td key={ 'row-' + solvedProb.id + '-created-at'} id={ 'row-' + solvedProb.id + '-created-at'} onMouseOver={ this.mouseOver.bind(this, createdAt, solvedProb) } onMouseOut={ this.mouseOut.bind(this, createdAt, solvedProb) }>{ createdAt }</td>);
 
     return (
@@ -46,7 +62,7 @@ var RowLeaderboard = React.createClass({
           { cols }
         </tr>
         <tr>
-          <SolutionLeaderboard raw={ solvedProb.solution } show={ showSol } />
+          <SolutionLeaderboard raw={ solvedProb } show={ showSol } />
         </tr>
         <tr>
           <StatsLeaderboard raw={ solvedProb } show={ showStats } />

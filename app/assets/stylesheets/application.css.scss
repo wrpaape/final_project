@@ -85,6 +85,26 @@ $code-value: #F46AEE;
   }
 }
 
+@keyframes glow6 {
+  to {
+    -webkit-box-shadow:
+      -6px -6px 0 yellow,
+      6px -6px 0 yellow,
+      -6px  6px 0 yellow,
+      6px  6px 0 yellow;
+    -moz-box-shadow:
+      -6px -6px 0 yellow,
+      6px -6px 0 yellow,
+      -6px  6px 0 yellow,
+      6px  6px 0 yellow;
+    box-shadow:
+      -6px -6px 0 yellow,
+      6px -6px 0 yellow,
+      -6px  6px 0 yellow,
+      6px  6px 0 yellow;
+  }
+}
+
 @-webkit-keyframes scale {
   0% { -webkit-transform: scale(1); }
   50% { -webkit-transform: scale(0.9); }
@@ -125,14 +145,17 @@ $code-value: #F46AEE;
   align-items: center;
 }
 
-.cursor-progress {
+#page-cover {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 9001;
-  cursor: progress !important;
+  z-index: -1000;
+  &.cursor-progress {
+    z-index: 9001;
+    cursor: progress !important;
+  }
 }
 
 canvas {
@@ -601,21 +624,52 @@ input {
           section {
             &.leader-section {
               table {
+                table-layout: auto!important;
                 &.leader-root-table {
                   width: 100%;
                   th {
-                    font-size: 2em;
+                    font-size: 1.5em;
                   }
                   tbody {
-                    text-align: left;
                     tr {
-                      font-size: 1.5em;
-                      .sol-false {
-                        display: none;
+                      td {
+                        font-size: 1.2em;
+                        &.stats {
+                          text-align: center;
+                          &.false {
+                            display: none;
+                          }
+                          .stats-wrap {
+                            display: inline-block;
+                            test-align: center;
+                            table {
+                              table-layout: auto!important;
+                              background: black;
+                              width: 100%;
+                              th {
+                                font-size: 20px;
+                                padding: 1em;
+                              }
+                              td {
+                                font-size: 20px;
+                              }
+                            }
+                          }
+                        }
                       }
-
-                      .stats-false {
-                        display: none;
+                      .sol {
+                        background: black;
+                        text-align: center;
+                        div {
+                          display: inline-block;
+                          text-align: left;
+                            .pad {
+                              opacity: 0;
+                            }
+                        }
+                        &.false {
+                          display: none;
+                        }
                       }
                       td {
                         padding: 1em;
@@ -625,6 +679,70 @@ input {
                             cursor: pointer;
                             height: 150px;
                             width: 150px;
+                          }
+                          .spoiler-sol {
+                            &:hover {
+                              -webkit-box-shadow:
+                               -4px -4px 6px white,
+                               4px -4px 6px white,
+                               -4px  4px 6px white,
+                               4px  4px 6px white;
+                              -moz-box-shadow:
+                               -4px -4px 6px white,
+                               4px -4px 6px white,
+                               -4px  4px 6px white,
+                               4px  4px 6px white;
+                              box-shadow:
+                               -4px -4px 6px white,
+                               4px -4px 6px white,
+                               -4px  4px 6px white,
+                               4px  4px 6px white;
+                            }
+                            &.false {
+                              display: none;
+                            }
+                          }
+                          .sol-char-count {
+                            width: 150px;
+                            height: 150px;
+                            padding: 22px;
+                            font-size: 16px;
+                            box-sizing: border-box;
+                            &.false {
+                              display: none;
+                            }
+                          }
+                          .spoiler-stats {
+                            &:hover {
+                              -webkit-box-shadow:
+                               -4px -4px 6px white,
+                               4px -4px 6px white,
+                               -4px  4px 6px white,
+                               4px  4px 6px white;
+                              -moz-box-shadow:
+                               -4px -4px 6px white,
+                               4px -4px 6px white,
+                               -4px  4px 6px white,
+                               4px  4px 6px white;
+                              box-shadow:
+                               -4px -4px 6px white,
+                               4px -4px 6px white,
+                               -4px  4px 6px white,
+                               4px  4px 6px white;
+                            }
+                            &.false {
+                              display: none;
+                            }
+                          }
+                          .num-queries {
+                            width: 150px;
+                            height: 150px;
+                            padding: 22px;
+                            font-size: 16px;
+                            box-sizing: border-box;
+                            &.false {
+                              display: none;
+                            }
                           }
                         }
                       }

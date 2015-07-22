@@ -15,7 +15,7 @@ var StatsLeaderboard = React.createClass({
       'average query': raw.time_query_avg
     };
 
-    var units = [' (s)', ' (ms)', ' (μs)'];
+    var units = [' s', ' ms', ' μs'];
     Object.keys(times).forEach(function (key, i) {
       var unit = '';
       var th = key;
@@ -23,7 +23,7 @@ var StatsLeaderboard = React.createClass({
       if (td === null) {
         td = 'nil';
       } else if (td === 0) {
-        unit += ' (s)';
+        unit += ' s';
       } else if (td !== 'N/A' && !isNaN(td)) {
         var n = 0;
         while (td < 1) {
@@ -33,24 +33,26 @@ var StatsLeaderboard = React.createClass({
         unit += units[n];
         td = Number(td).toPrecision(4);
       }
-      ths.push(<th key={ 'stats-th-' + raw.id + '-col-' + i }>{ th + unit }</th>);
-      tds.push(<td key={ 'stats-td-' + raw.id + '-col-' + i }>{ td }</td>);
+      ths.push(<th key={ 'stats-th-' + raw.id + '-col-' + i }>{ th }</th>);
+      tds.push(<td key={ 'stats-td-' + raw.id + '-col-' + i }>{ td + unit }</td>);
     });
 
     return (
-      <td className={ 'stats-' + show }>
-        <table>
-          <thead>
-            <tr>
-              { ths }
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              { tds }
-            </tr>
-          </tbody>
-        </table>
+      <td colSpan='5' className={ 'stats ' + show }>
+        <div className='stats-wrap'>
+          <table>
+            <thead>
+              <tr>
+                { ths }
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                { tds }
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </td>
     );
   }
