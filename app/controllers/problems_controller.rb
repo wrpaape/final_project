@@ -15,8 +15,8 @@ class ProblemsController < ApplicationController
     unless params[:interact]
       available_models = JSON.parse(environment.models)
       model = Object.const_get(params.fetch("current_model", available_models.keys.first))
-      url = "https://active-record-baby.herokuapp.com/problems/#{@problem.id}/"
-      # url = "/problems/#{@problem.id}/"
+      # url = "https://active-record-baby.herokuapp.com/problems/#{@problem.id}/"
+      url = "/problems/#{@problem.id}/"
       @data_inspect = model.get_data(url, params, environment.id)
       @models_inspect = get_default_model_states(available_models)
 
@@ -24,8 +24,8 @@ class ProblemsController < ApplicationController
     unless params[:inspect]
       @data_interact = ["the results of your 'solution' method will be displayed here",
                "hold [cmd + shift + return] or [ctr + shift + return] to reload your results"]
-      @url_interact = "https://active-record-baby.herokuapp.com/problems/#{params[:id]}/"
-      # @url_interact = "/problems/#{params[:id]}/"
+      # @url_interact = "https://active-record-baby.herokuapp.com/problems/#{params[:id]}/"
+      @url_interact = "/problems/#{params[:id]}/"
     end
     if params[:inspect]
       render json: @data_inspect
