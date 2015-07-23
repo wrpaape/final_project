@@ -82,7 +82,7 @@ remaining_generations.each do |gen|
     gx_bachelors = Person.where(spouse_id: nil).where(generation: gen).where(gender: "M");
     gx_bachelorettes = Person.where(spouse_id: nil).where(generation: gen).where(gender: "F");
 
-    if gx_bachleors.count == gx_bachleorettes.count
+    if gx_bachelors.count == gx_bachelorettes.count
       mother = Person.where.not(spouse_id: nil).where(generation: gen - 1).where(gender: "F")
       b_gender = genders.sample
       b_yob = (mother.yob + father.yob) / 2 + rand(20..35)
@@ -96,10 +96,10 @@ remaining_generations.each do |gen|
                                    frequency: b_frequency,
                                    mother_id: mother.id,
                                    father_id: mother.spouse.id)
-    elsif gx_bachleors.count > gx_bachleorettes.count
-      the_bachelor_ette = gx_bachleorettes.sample
+    elsif gx_bachelors.count > gx_bachelorettes.count
+      the_bachelor_ette = gx_bachelorettes.sample
     else
-      the_bachelor_ette = gx_bachleors.sample
+      the_bachelor_ette = gx_bachelors.sample
     end
 
     gx_bachelors_ettes = Person.where(spouse_id: nil).where(generation: gen).where.not(id: the_bachelor_ette.id)
