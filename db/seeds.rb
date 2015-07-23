@@ -583,7 +583,7 @@ Which |~Crop| was planted over the greatest acreage?
 Complete the |%solution| method so that it returns an array of the |*name|s of the two ActiveRecord |~Crop| objects representing the |~Crop| with the greatest
 |#count| of |&contracts| and the |~Crop| with the greatest |#sum|med |*size| of its |&fields| in the following format:
 
-|%[|`most_contracts_crop_name||%,| |`greatest_acreage_crop_name||%]|
+|%[||`most_contracts_crop_name||%,| |`greatest_acreage_crop_name||%]|
 """
 def answer_bandwagon_crops
   most_contracts_crop_name = Crop.select("crops.*, COUNT(contracts.id) AS contracts_count").joins(:contracts).group(:id).order("contracts_count DESC").take.name
