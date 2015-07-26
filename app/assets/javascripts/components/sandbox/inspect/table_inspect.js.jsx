@@ -82,7 +82,7 @@ var TableInspect = React.createClass({
     return(
       <div className='container-inspect' style={ styles }>
         <div className='container-table'>
-          <section>
+          <section className='inspect'>
             <table className={ tableClassName }>
               <Img src='/assets/pig_glow.gif' className={ loadingClassName } />
               <TableHeadInspect parent={ this } />

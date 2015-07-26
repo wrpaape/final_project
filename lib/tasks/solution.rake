@@ -6,9 +6,7 @@ task :solution => :environment do
   
   def solution
     status = Timeout::timeout(5) do
-    dad = Person.find_by(name: "Cindy").father
-    mom = dad.spouse
-    dad.children.order(yob: :desc) << mom << dad
+    Person.limit(10)
     end
   end
   

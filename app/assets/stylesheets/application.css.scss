@@ -105,6 +105,17 @@ $code-value: #F46AEE;
   }
 }
 
+@keyframes glow7 {
+  to {
+    text-shadow: 0 0 10px white,
+      3px 3px 0 white,
+      -1px -1px 0 white,
+      1px -1px 0 white,
+      -1px  1px 0 white,
+      1px  1px 0 white;
+  }
+}
+
 @-webkit-keyframes scale {
   0% { -webkit-transform: scale(1); }
   50% { -webkit-transform: scale(0.9); }
@@ -259,6 +270,9 @@ select {
 
 section {
   padding: 15px 15px 240px 10px;
+  &.inspect {
+    padding-bottom: 75px;
+  }
   table {
     table-layout: fixed;
     word-wrap: break-word;
@@ -583,6 +597,11 @@ input {
   }
   div{
     &.ace_layer {
+      &.ace_text-layer {
+        .ace_line {
+          color: $code-green;
+        }
+      }
       &.ace_gutter-layer {
         font-family: monaco, Consolas, 'Lucida Console', monospace;
         color: $code-green;
@@ -610,6 +629,11 @@ input {
           }
         }
       }
+      &.ace_language {
+        &.ace_boolean {
+          color: $code-attribute;
+        }
+      }
       &.ace_numeric {
         color: $code-value;
       }
@@ -619,9 +643,11 @@ input {
     }
     &.ace_comment {
       color: $code-table;
+      animation: glow7 1s alternate ease-in-out;
+      animation-iteration-count: 4;
     }
     &.ace_keyword {
-      color: $code-green;
+      color: $code-relation;
       &.ace_operator {
         color: $code-sql;
       }
