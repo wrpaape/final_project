@@ -171,7 +171,7 @@ end
 avg_household = family_tree.problems.create(
   title: "...and here are our 1.5 kids",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_avg_household).to_json)
+  answer: Array.wrap(answer_avg_household)).to_json
 
 prob_instruct =
 """
@@ -198,7 +198,7 @@ end
 the_brady_bunch = family_tree.problems.create(
   title: "The Brady Bunch",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_brady_bunch).to_json)
+  answer: Array.wrap(answer_brady_bunch)).to_json
 
 prob_instruct =
 """
@@ -230,12 +230,12 @@ end
 the_bachelor = family_tree.problems.create(
   title: "The Bachelor(ette?)",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_bachelor).to_json)
+  answer: Array.wrap(answer_bachelor)).to_json
 
 prob_instruct =
 """
 Every |~Person| was |*name|d by their |&mother| and |&father| corresponding to a |~BabyName| of the same |*yob|.
-Accordingly, for every |~Person|, |person_example|, born in the year |person_example.yob|, there were
+Accordingly, for every |~Person|, |~person_example|, born in the year |`person_example.yob|, there were
 
 |~BabyName||#.find_by({| |*name:| |`person_example.name||#,| |*gender:| |`person_example.gender||#,| |*yob:| |`person_example.yob||#})||*.frequency|| - 1|
 
@@ -264,7 +264,7 @@ end
 lazy_parents_award = family_tree.problems.create(
   title: "The Laziest Parents Award",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_lazy_parents).to_json)
+  answer: Array.wrap(answer_lazy_parents)).to_json
 
 
 crops = {
@@ -573,7 +573,7 @@ end
 technically_3_years = old_mac.problems.create(
   title: "Technically 3 Years",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_technically_3_years).to_json)
+  answer: Array.wrap(answer_technically_3_years)).to_json
 
 prob_instruct =
 """
@@ -594,7 +594,7 @@ end
 bandwagon_crops = old_mac.problems.create(
   title: "Bandwagon Crops",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_bandwagon_crops).to_json)
+  answer: Array.wrap(answer_bandwagon_crops)).to_json
 
 prob_instruct =
 """
@@ -612,7 +612,7 @@ end
 smitty_w = old_mac.problems.create(
   title: "Old Farmer Werbenjagermanjensen",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_smitty_w).to_json)
+  answer: Array.wrap(answer_smitty_w)).to_json
 
 prob_instruct =
 """
@@ -646,7 +646,7 @@ end
 the_red_line = old_mac.problems.create(
   title: "The Red Line and the Black Thumb",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_the_red_line).to_json)
+  answer: Array.wrap(answer_the_red_line)).to_json
 
 raw_avg_household =
 """

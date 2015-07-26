@@ -19,11 +19,10 @@
 //= require components
 //= require moment
 //= require_tree .
-//= require ace/ace
-//= require ace/worker-html
-//= require ace/theme-terminal
-//= require ace/mode-ruby
-//= require ace/ext-language_tools
+//= require ace-builds/src-min-noconflict/ace
+//= require ace-builds/src-min-noconflict/theme-terminal
+//= require ace-builds/src-min-noconflict/ext-language_tools
+//= require ace-builds/src-min-noconflict/mode-ruby
 //= require react_rails_img
 //= require bootstrap.min.js
 
@@ -34,8 +33,7 @@ var setEditor = function () {
   var editor = ace.edit('editor');
   editor.setTheme('ace/theme/terminal');
   editor.session.setMode('ace/mode/ruby');
-
-  editor.$blockScrolling = Infinity
+  editor.$blockScrolling = Infinity;
   editor = document.querySelector('.ace_editor').env.editor;
   editor.getSession().setTabSize(2);
   editor.gotoLine(5);
