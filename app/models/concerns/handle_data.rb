@@ -77,7 +77,7 @@ module HandleData
       search_hash.each_with_index do |(key, value), i|
         search_query += '|#(||?"|' if i == 0
         if type_of(value) == "Numeric"
-          value = "\"#{value}\".to_datetime.to_s" if ["created_at", "updated_at"].include?(key)
+          value = "#\{\"#{value}\".to_datetime.to_s}" if ["created_at", "updated_at"].include?(key)
           search_query += "|?CAST(||*#{key}| |?AS TEXT) LIKE '%||`#{value}||?%'|"
         else
           search_query += "|*#{key}| |?LIKE '%||`#{value}||?%'|"
@@ -89,7 +89,7 @@ module HandleData
         search_query += '|#(||?"|' if i == 0
         if type_of(value) == "Numeric"
            if ["created_at", "updated_at"].include?(key)
-            value = "\"#{value}\".to_datetime.to_s.downcase"
+            value = "#\{\"#{value}\".to_datetime.to_s.downcase}"
             search_query += "|?LOWER(CAST(||*#{key}| |?AS TEXT)) LIKE '%||`#{value}||?%'|"
            else
             search_query += "|?CAST(||*#{key}| |?AS TEXT) LIKE '%||`#{value}||?%'|"
@@ -133,7 +133,7 @@ module HandleData
         end
       end
       sq_hash.each_with_index do |(key, value), i|
-        value = "\"#{value}\".to_datetime.to_s.downcase" if ["created_at", "updated_at"].include?(key)
+        value = "#\{\"#{value}\".to_datetime.to_s.downcase}" if ["created_at", "updated_at"].include?(key)
         if ar_hash.size == 0 && i == 0
           search_query += '|#(||?"|'
         elsif i == 0
