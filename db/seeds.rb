@@ -159,7 +159,7 @@ refrains from tracking pregnancies and the heights of its tenants, let us define
 of |~Person|s as one having either 1 |?OR| 2 |&children|.
 
 Complete the |%solution| method so that it returns an array of ActiveRecord |~Person| objects
-representing the |&mother| and |&father| of a typical household, |#order|ed alphabetically by |*name|.
+representing the |&mother|s and |&father|s of a typical household, |#order|ed alphabetically by |*name|.
 
 Note that |&children| is a custom method (see person.rb in the inspector) and not a pure ActiveRecord relation.
 This method allows for |&mother|s and |&father|s to access the same ActiveRecord collection of |&children| without having to create an additional join table,

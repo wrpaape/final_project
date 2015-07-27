@@ -153,17 +153,9 @@ var DisplayResultsInteract = React.createClass({
         };
         var keys = Object.keys(params);
         var serialized = keys.map(function(key, i) {
-          var seg = i === 0 ? '?' : '';
-          var val = params[key];
-          if (key === 'solution') {
-            val = val.replace(/\n/g, '%0A');
-            val = val.replace(/%20/g, '%0A');
-          }
-          seg += key + '=' + val
-          return seg;
+          return key + '=' + encodeURIComponent(params[key]);
         });
-        var urlParams = serialized.join('&');
-        console.log(table.state.newSolvedProblem + urlParams);
+        var urlParams = '?' + serialized.join('&');
         window.location.href = table.state.newSolvedProblem + urlParams;
       }
     } else {
