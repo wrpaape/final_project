@@ -29,7 +29,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-define("ace/mode/my_ruby", function(require, exports, module) {
+define(function(require, exports, module) {
 "use strict";
 
 var oop = require("../lib/oop");
