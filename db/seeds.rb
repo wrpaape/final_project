@@ -204,7 +204,7 @@ prob_instruct =
 """
 Within the |@people| family tree, all |~Person|s were able to find a non-sibling |&spouse|
 of the opposite gender who was also born in their |*generation|. In other words, all within
-a |*generation| were married off two by two until a lonely pool of |\"M\"|s or |\"F\"|s remained. All,
+a |*generation| were married off two by two until a lonely pool of |`\"M\"|s or |`\"F\"|s remained. All,
 that is, except for one lucky individual.
 
 Complete the |%solution| method so that it returns the ActiveRecord |~Person| object representing the Bachelor(ette).
@@ -554,7 +554,7 @@ old_mac = Environment.create(
 prob_instruct =
 """
 In the magical realm of |?SQL|ville, the terms of each |~Contract| remain the same year to year (as does every other value stored) and are never broken.
-Each |~Contract| may last 1 year (harvest) or longer. Which |~Contract|s were negotiated to |*start| after the last Friday of 2013 |#AND| |*finish| before the first Monday
+Each |~Contract| may last 1 year (harvest) or longer. Which |~Contract|s were negotiated to |*start| after the last Friday of 2013 |?AND| |*finish| before the first Monday
 of 2016?
 
 Complete the |%solution| method so that it returns an array of ActiveRecord |~Contract| objects representing those that |*start|

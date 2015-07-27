@@ -30,7 +30,7 @@ class ProblemsController < ApplicationController
     if params[:inspect]
       render json: @data_inspect
     elsif params[:interact]
-      render json: { "newData"=> get_solution_data(params), "loggedIn"=> @logged_in, "newSolvedProblem"=> new_solved_problem_path }
+      render json: { "newData"=> get_solution_data(params), "loggedIn"=> @logged_in, "newSolvedProblem"=> "https://active-record-baby.herokuapp.com" + new_solved_problem_path }
     end
   end
 
