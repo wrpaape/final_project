@@ -19,10 +19,10 @@
 //= require components
 //= require moment
 //= require_tree .
-//= require vendor/assets/javascripts/ace-builds/src-min-noconflict/ace
-//= require vendor/assets/javascripts/ace-builds/src-min-noconflict/theme-terminal
-//= require vendor/assets/javascripts/ace-builds/src-min-noconflict/ext-language_tools
-//= require vendor/assets/javascripts/ace-builds/src-min-noconflict/mode-ruby
+//= require ace-builds/src-min-noconflict/ace
+//= require ace-builds/src-min-noconflict/theme-terminal
+//= require ace-builds/src-min-noconflict/ext-language_tools
+//= require ace-builds/src-min-noconflict/mode-ruby
 //= require react_rails_img
 //= require bootstrap.min.js
 
