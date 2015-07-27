@@ -26,7 +26,7 @@
 //= require react_rails_img
 //= require bootstrap.min.js
 
-'use strict';
+// 'use strict';
 
 var setEditor = function () {
 
