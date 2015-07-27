@@ -142,20 +142,20 @@ var DisplayResultsInteract = React.createClass({
         var results = table.state.results;
         var times = results.times;
         var params = {
-          "solution": table.state.solution,
-          "sol_char_count": results.solCharCount,
-          "time_exec_total": times.timeExecTotal,
-          "time_query_total": times.timeQueryTotal,
-          "time_query_min": times.timeQueryMin,
-          "time_query_max": times.timeQueryMax,
-          "time_query_avg": times.timeQueryAvg,
-          "num_queries": results.numQueries
+          'solution': table.state.solution,
+          'sol_char_count': results.solCharCount,
+          'time_exec_total': times.timeExecTotal,
+          'time_query_total': times.timeQueryTotal,
+          'time_query_min': times.timeQueryMin,
+          'time_query_max': times.timeQueryMax,
+          'time_query_avg': times.timeQueryAvg,
+          'num_queries': results.numQueries
         };
         var keys = Object.keys(params);
         var serialized = keys.map(function(key, i) {
           var seg = i === 0 ? '?' : '';
           var val = params[key];
-          if (key === "solution") {
+          if (key === 'solution') {
             val = val.replace(/\n/g, '%0A');
             val = val.replace(/%20/g, '%0A');
           }
@@ -163,6 +163,7 @@ var DisplayResultsInteract = React.createClass({
           return seg;
         });
         var urlParams = serialized.join('&');
+        console.log(table.state.newSolvedProblem + urlParams);
         window.location.href = table.state.newSolvedProblem + urlParams;
       }
     } else {
