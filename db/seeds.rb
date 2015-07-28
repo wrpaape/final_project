@@ -185,7 +185,7 @@ Complete the |%solution| method so that it returns an array of ActiveRecord |~Pe
 representing the Brady Bunch that is |#order|ed from youngest to oldest.
 """
 def answer_brady_bunch
-  mike_brady = Person.find_by({name: "Mike", children_count: 6})
+  mike_brady = Person.find_by({name: "Mike", children_count: 6, yob: 1932})
   carol_brady = mike_brady.spouse
   brady_bunch = mike_brady.children.order(yob: :desc).map{ |brady_child| brady_child }
   if mike_brady.yob > carol_brady.yob
@@ -602,7 +602,7 @@ Weary of his relentless success, Smitty W has decided to get away from it all to
 Although their family has a rich history of being the best, it appears the leftover mediocrity was funneled into Smitty's cousin's |~Farm|ing operation.
 
 In terms of |~Contract| income, Smitty's cousin is by definition |#average|--an equal number of |~Farmer|s will make more money than them this year as will make less than them.
-If the money a |~Farmer| makes = the |#sum| of the money made from their |&clients|, who is Smitty's cousin?
+If the money a |~Farmer| makes = the |#sum| of the money made from their |&contracts|, who is Smitty's cousin?
 
 Complete the |%solution| method so that it returns the |*name| of the ActiveRecord |~Farmer| object representing Smitty W's Cousin.
 """
@@ -661,7 +661,7 @@ raw_avg_household = raw_avg_household[1..-2]
 raw_brady_bunch =
 """
 def solution
-  mike_brady = Person.find_by({name: \"Mike\", children_count: 6})
+  mike_brady = Person.find_by({ name: \"Mike\", children_count: 6, yob: 1932 })
   carol_brady = mike_brady.spouse
   brady_bunch = mike_brady.children.order(yob: :desc).map{ |brady_child|  brady_child }
   if mike_brady.yob > carol_brady.yob
