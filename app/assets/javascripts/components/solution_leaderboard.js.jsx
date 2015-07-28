@@ -17,11 +17,14 @@ var SolutionLeaderboard = React.createClass({
       var splitLines = sol.split('\n');
       var lineStartMethodBody;
       var lineEndMethodBody;
+      var linesComment = [];
       splitLines.forEach(function(line, i) {
         if (line.search(RegExp(' *def +' + methodName)) !== -1) {
           lineStartMethodBody = i + 1;
         } else if (line.replace('end', '') === '') {
           lineEndMethodBody = i - 2;
+        } else if (line.replace(' ', '')[0] === '#') {
+          linesComment.push(i);
         }
       });
 
@@ -32,8 +35,8 @@ var SolutionLeaderboard = React.createClass({
           var className = 'code code-general';
           if (seg.indexOf(' ') !== -1) {
             seg = new Array(seg.length + 1).join(' ');
-          } else if (i >= lineStartMethodBody && i <= lineEndMethodBody) {
-            className += ' sol-' + solvedProb.id + ' method-body-' + highlightBody ;
+          } else if (i >= lineStartMethodBody && i <= lineEndMethodBody && linesComment.indexOf(i) === -1) {
+            className += ' method-body-' + highlightBody ;
           }
           lineContent.push(<span key={ 'sol-' + solvedProb.id + '-line-' + i + '-seg-' + j } className={ className }>{ seg }</span>);
         });
