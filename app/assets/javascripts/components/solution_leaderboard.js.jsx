@@ -23,7 +23,7 @@ var SolutionLeaderboard = React.createClass({
           lineStartMethodBody = i + 1;
         } else if (line.replace('end', '') === '') {
           lineEndMethodBody = i - 2;
-        } else if (line.replace(' ', '')[0] === '#') {
+        } else if (line.replace(/\s+/, '')[0] === '#') {
           linesComment.push(i);
         }
       });

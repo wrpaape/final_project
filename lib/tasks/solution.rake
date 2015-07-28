@@ -6,7 +6,13 @@ task :solution => :environment do
   
   def solution
     status = Timeout::timeout(5) do
+    str = "I am not a comment"
+    Person.where(children_count: [1, 2]).order(:name)
+    # comment
     
+    #lol comment
+            #comment
+    Person.where(children_count: [1, 2]).order(:name)
     end
   end
   
@@ -15,6 +21,4 @@ task :solution => :environment do
   finish = Time.now
   results_hash = { "results"=> results, "time_exec"=> finish - start }
   puts results_hash.to_json
-  
-  #comment
 end
