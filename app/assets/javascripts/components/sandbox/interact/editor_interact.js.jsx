@@ -40,7 +40,7 @@ var EditorInteract = React.createClass({
       var inputSolution = $('#editor-content').val();
       var lastLine = inputSolution.match(/[^\n].*[\n]*$/)[0].replace(/\n*$/,'');
       var methodName = lastLine.split(' ')[0];
-      methodName = methodName === 'end' ? inputSolution.match(/def +([a-zA-Z_\?\d]*)/)[1] : methodName;
+      methodName = (methodName === 'end' || methodName[0] === '#') ? inputSolution.match(/ *def +([a-zA-Z_\?\d]*)/g)[1] : methodName;
       var solCharCount = inputSolution.replace(/#.*/g,'').replace(/\n/g,'').replace(/ /g,'').replace(RegExp('def' + methodName),'').replace(RegExp('end' + methodName),'').length;
       var splitSolution = inputSolution.split('\n');
       for (var i = 0; i < splitSolution.length; i++)  {

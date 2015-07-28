@@ -5,12 +5,14 @@ var RowLeaderboard = React.createClass({
   getInitialState: function () {
     return {
       showSol: false,
+      highlightBody: false,
       showStats: false
     };
   },
   render: function () {
     var cols = [];
     var showSol = this.state.showSol;
+    var highlightBody = this.state.highlightBody;
     var showStats = this.state.showStats;
     var row = this.props.row;
     var probId = this.props.probId;
@@ -47,7 +49,7 @@ var RowLeaderboard = React.createClass({
         <p>method body</p>
         <p>char count:</p>
         <br />
-        <p>{ solCharCount }</p>
+        <p className={ 'sol-char-count-' + highlightBody } onMouseOver={ this.highlightOn } onMouseOut={ this.highlightOff } >{ solCharCount }</p>
       </div>
     </td>);
     cols.push(<td key={ 'row-' + solvedProb.id + '-stats'} id={ 'solved-prob-' + solvedProb.id + '-stats' } onClick={ this.revealStats } className='center'>
@@ -67,7 +69,7 @@ var RowLeaderboard = React.createClass({
           { cols }
         </tr>
         <tr>
-          <SolutionLeaderboard raw={ solvedProb } show={ showSol } />
+          <SolutionLeaderboard raw={ solvedProb } show={ showSol } highlightBody={ highlightBody } />
         </tr>
         <tr>
           <StatsLeaderboard raw={ solvedProb } show={ showStats } />
@@ -105,4 +107,10 @@ var RowLeaderboard = React.createClass({
     $(idSelector).html(val);
     $(idSelector).removeClass('formatted-time');
   },
+  highlightOn: function() {
+    this.setState({ highlightBody: true });
+  },
+  highlightOff: function() {
+    this.setState({ highlightBody: false });
+  }
 });

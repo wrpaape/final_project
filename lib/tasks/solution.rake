@@ -6,7 +6,7 @@ task :solution => :environment do
   
   def solution
     status = Timeout::timeout(5) do
-    "help"
+    
     end
   end
   
@@ -15,4 +15,6 @@ task :solution => :environment do
   finish = Time.now
   results_hash = { "results"=> results, "time_exec"=> finish - start }
   puts results_hash.to_json
+  
+  #comment
 end

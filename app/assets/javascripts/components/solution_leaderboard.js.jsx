@@ -3,21 +3,41 @@
 
 var SolutionLeaderboard = React.createClass({
   render: function () {
-    var formattedSol = [];
     var show = this.props.show;
+    var highlightBody = this.props.highlightBody;
     var solvedProb = this.props.raw;
     var sol = solvedProb.solution;
+    var formattedSol = [];
     if (sol === null) {
       formattedSol.push(<span key={ 'sol-' + solvedProb.id + '-line-nil' } className='code code-general'>nil</span>);
     } else {
+      var lastLine = sol.match(/[^\n].*[\n]*$/)[0].replace(/\n*$/,'');
+      var methodName = lastLine.split(' ')[0];
+      methodName = (methodName === 'end' || methodName[0] === '#') ? sol.match(/ *def +([a-zA-Z_\?\d]*)/g)[1] : methodName;
       var splitLines = sol.split('\n');
+      var lineStartMethodBody;
+      var lineEndMethodBody;
       splitLines.forEach(function(line, i) {
-        var padIndex = line.search(/[^ ]/);
-        var pad = new Array(padIndex + 1).join(' ');
-        if (line.length === 0) {
-          line = ' ';
+        if (line.search(RegExp(' *def +' + methodName)) !== -1) {
+          lineStartMethodBody = i + 1;
+        } else if (line.replace('end', '') === '') {
+          lineEndMethodBody = i - 2;
         }
-        formattedSol.push(<span key={ 'sol-' + solvedProb.id + '-line-' + i }><span className='pad'>{ pad }</span><span className='code code-general'>{ line.slice(padIndex) }</span><br /></span>);
+      });
+
+      splitLines.forEach(function(line, i) {
+        var lineContent = []
+        var splitSegs = line.split(/(\s+)/).filter(Boolean);
+        splitSegs.forEach(function(seg, j) {
+          var className = 'code code-general';
+          if (seg.indexOf(' ') !== -1) {
+            seg = new Array(seg.length + 1).join(' ');
+          } else if (i >= lineStartMethodBody && i <= lineEndMethodBody) {
+            className += ' sol-' + solvedProb.id + ' method-body-' + highlightBody ;
+          }
+          lineContent.push(<span key={ 'sol-' + solvedProb.id + '-line-' + i + '-seg-' + j } className={ className }>{ seg }</span>);
+        });
+        formattedSol.push(<span key={ 'sol-' + solvedProb.id + '-line-' + i }>{ lineContent }<br /></span>);
       });
     }
 
