@@ -14,7 +14,7 @@ var PaginateInspect = React.createClass({
       <div className='paginate'>
         <div onClick={ this.clicked.bind(this, 1, table, lastPage) } className='btn btn-default next-prev'>First</div>
         <div onClick={ this.clicked.bind(this, currentPage - 1, table, lastPage) } className='btn btn-default next-prev'>Prev</div>
-        <input className='btn btn-primary next-prev' type='text' size={ currentPage.toString().length } placeholder={ currentPage } onKeyUp={ this.changed } />
+        <input id='go-to-page' className='btn btn-primary next-prev' type='text' size={ currentPage.toString().length } placeholder={ currentPage } onKeyUp={ this.changed } />
         <div onClick={ this.clicked.bind(this, currentPage + 1, table, lastPage) } className='btn btn-default next-prev'>Next</div>
         <div onClick={ this.clicked.bind(this, lastPage, table, lastPage) } className='btn btn-default next-prev'>Last</div>
       </div>
@@ -63,6 +63,7 @@ var PaginateInspect = React.createClass({
         var newModels = table.state.models;
         newModels[currentModel].offset = newOffset;
         table.setState({ loading: true });
+        $('#go-to-page').val('');
         $.getJSON(table.state.data.url,
           {
             inspect: true,
