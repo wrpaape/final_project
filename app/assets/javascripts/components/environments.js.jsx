@@ -5,7 +5,8 @@ var Environments = React.createClass({
   getInitialState: function() {
     return {
       envIdHovered: 0,
-      showEnvs: false
+      showEnvs: false,
+      showDocs: false
     };
   },
   componentDidMount: function() {
@@ -15,6 +16,7 @@ var Environments = React.createClass({
     var parent = this;
     var envIdHovered = this.state.envIdHovered;
     var showEnvs = this.state.showEnvs;
+    var showDocs = this.state.showDocs;
     var selectEnvClass = 'btn btn-primary show-envs-' + showEnvs;
     var envs = [];
     var environments = this.props.environments;
@@ -83,21 +85,44 @@ var Environments = React.createClass({
         formattedDescrip.push(<p key={ 'env-' + env.id + '-descrip-line' + i }>{ formattedLine }</p>);
       });
       envs.push(
-        <div key={'env-' + env.id } onMouseLeave={ parent.mouseLeave } >
+        <div key={ 'env-' + env.id } onMouseLeave={ parent.mouseLeave } >
           <ModalEnvironment environment={ environment } title={ formattedTitle } descrip={ formattedDescrip } parent={ parent } hovered={ env.id === envIdHovered ? true : false } />
         </div>
       );
     });
+    var arDocs = {
+      'basics': 'http://guides.rubyonrails.org/active_record_basics.html',
+      'migrations': 'http://guides.rubyonrails.org/active_record_migrations.html',
+      'validations': 'http://guides.rubyonrails.org/active_record_validations.html',
+      'callbacks': 'http://guides.rubyonrails.org/active_record_callbacks.html',
+      'associations': 'http://guides.rubyonrails.org/association_basics.html',
+      'query interface': 'http://guides.rubyonrails.org/active_record_querying.html'
+    }
+    var docs = [];
+    Object.keys(arDocs).forEach(function(doc) {
+      docs.push(<a key={ doc } href={ arDocs[doc] } target='_blank' className='btn btn-primary ar-docs'>{ doc }</a>);
+    });
 
     return(
-      <div className='env-index'>
-        <div onClick={ this.clicked }>
-          <div className={ selectEnvClass }>
-            <span className='code code-sql'>SELECT</span><span>&nbsp;your&nbsp;</span><span className='code code-ar-keyword'>environment</span>
+      <div>
+        <div className='env-index'>
+          <div className='root-buttons-wrap'>
+            <a href='/' className='btn btn-primary home'>
+              home
+            </a>
+            <div className={ selectEnvClass } onClick={ this.toggleEnvs }>
+              <span className='code code-sql'>SELECT</span><span>&nbsp;your&nbsp;</span><span className='code code-ar-keyword'>environment</span>
+            </div>
+            <div className='btn btn-primary ar-docs' onClick={ this.toggleDocs }>
+              <span className='code code-ar-keyword'>ActiveRecord </span><span>docs</span>
+            </div>
+          </div>
+          <div className={ 'envs-wrap ' + showEnvs }>
+            { envs }
           </div>
         </div>
-        <div className={ 'envs-wrap ' + showEnvs }>
-          { envs }
+        <div className={ 'docs-wrap ' + showDocs }>
+          { docs }
         </div>
       </div>
     );
@@ -105,9 +130,13 @@ var Environments = React.createClass({
   mouseLeave: function() {
     this.setState({ envIdHovered: 0 });
   },
-  clicked: function() {
+  toggleEnvs: function() {
     var showEnvs = this.state.showEnvs;
     this.setState({ showEnvs: !showEnvs });
+  },
+  toggleDocs: function() {
+    var showDocs = this.state.showDocs;
+    this.setState({ showDocs: !showDocs });
   }
 });
 

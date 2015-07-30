@@ -179,9 +179,8 @@ canvas {
 
 select {
   &.ar-docs {
-    color: $code-ar-keyword!important;
     position: absolute;
-    top: 6px;
+    bottom: 6px;
     left: 120px;
   }
   option {
@@ -1106,14 +1105,38 @@ input {
   }
 }
 
+div {
+  &.docs-wrap {
+    position: absolute;
+    top: 54px;
+    right: 10px;
+    width: 168px;
+    &.false {
+      display: none;
+    }
+    a {
+      display: block;
+      margin-bottom: 10px;
+    }
+  }
+}
+
 .env-index {
   padding: 10px;
   text-align: center;
   div {
+    .home {
+      float: left;
+      margin-right: 69px;
+      width: 100px;
+    }
     .btn {
       &.show-envs-false {
         animation: glow1 1s infinite alternate ease-in-out;
       }
+    }
+    .ar-docs {
+      float: right;
     }
     &.envs-wrap {
       display: inline-block;

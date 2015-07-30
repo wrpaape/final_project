@@ -8,8 +8,7 @@ var SwitchInspectInteract = React.createClass({
       showInspect: true,
       showInteract: false,
       editorSwitched: false,
-      selectedDoc: 'http://guides.rubyonrails.org/active_record_querying.html',
-      activated: true
+      selectedDoc: 'http://guides.rubyonrails.org/active_record_querying.html'
     };
   },
   componentDidMount: function() {
@@ -20,7 +19,6 @@ var SwitchInspectInteract = React.createClass({
     var showInteract = this.state.showInteract;
     var editorSwitched = this.state.editorSwitched;
     var selectedDoc = this.state.selectedDoc;
-    var activated = this.state.activated;
     var problem = this.props.problem;
     var instructions = problem.instructions.split('\n');
     var buttonContents = showInspect ? [<span key='solution'><span>enter your&nbsp;</span><span className='code code-general'>solution</span></span>] : [<span key='environment'><span>inspect your&nbsp;</span><span className='code code-ar-keyword'>environment</span></span>];
@@ -70,7 +68,7 @@ var SwitchInspectInteract = React.createClass({
     }
     var docOptions = [];
     Object.keys(arDocs).forEach(function(doc) {
-      docOptions.push(<option key={ doc + '-option' } value={ arDocs[doc] } onMouseLeave={ this.activateAnchor }>{ doc }</option>);
+      docOptions.push(<option key={ doc + '-option' } value={ arDocs[doc] }>{ doc }</option>);
     }.bind(this));
 
     return(
@@ -84,7 +82,7 @@ var SwitchInspectInteract = React.createClass({
               <span className='code code-ar-keyword'>ActiveRecord</span>
               <span className='docs'>doc</span>
             </a>
-            <select className='btn btn-primary ar-docs' id='current-doc' onChange={ this.selectDoc } onMouseEnter={ this.deactivateAnchor }>
+            <select className='btn btn-primary ar-docs' id='current-doc' onChange={ this.selectDoc }>
               { docOptions }
             </select>
           </div>
@@ -132,12 +130,6 @@ var SwitchInspectInteract = React.createClass({
   },
   switchIntructionsHighlight: function() {
     this.setState({ highlightInstructions: false });
-  },
-  deactivateAnchor: function() {
-    this.setState({ activated: false });
-  },
-  activateAnchor: function() {
-    this.setState({ activated: true });
   },
   selectDoc: function() {
     var newDoc = $('#current-doc').val();
