@@ -7,7 +7,8 @@ var SwitchInspectInteract = React.createClass({
       highlightInstructions: true,
       showInspect: true,
       showInteract: false,
-      editorSwitched: false
+      editorSwitched: false,
+      selectedDoc: 'http://guides.rubyonrails.org/active_record_querying.html'
     };
   },
   componentDidMount: function() {
@@ -17,6 +18,7 @@ var SwitchInspectInteract = React.createClass({
     var showInspect = this.state.showInspect;
     var showInteract = this.state.showInteract;
     var editorSwitched = this.state.editorSwitched;
+    var selectedDoc = this.state.selectedDoc;
     var problem = this.props.problem;
     var instructions = problem.instructions.split('\n');
     var buttonContents = showInspect ? [<span key='solution'><span>enter your&nbsp;</span><span className='code code-general'>solution</span></span>] : [<span key='environment'><span>inspect your&nbsp;</span><span className='code code-ar-keyword'>environment</span></span>];
@@ -56,11 +58,31 @@ var SwitchInspectInteract = React.createClass({
       formattedInstructions.push(<p key={ 'line' + i }>{ formattedLine }</p>);
     });
 
+    var arDocs = {
+      'query interface': 'http://guides.rubyonrails.org/active_record_querying.html',
+      'associations': 'http://guides.rubyonrails.org/association_basics.html',
+      'basics': 'http://guides.rubyonrails.org/active_record_basics.html',
+      'migrations': 'http://guides.rubyonrails.org/active_record_migrations.html',
+      'validations': 'http://guides.rubyonrails.org/active_record_validations.html',
+      'callbacks': 'http://guides.rubyonrails.org/active_record_callbacks.html'
+    }
+    var docOptions = [];
+    Object.keys(arDocs).forEach(function(doc) {
+      docOptions.push(<option key={ doc + '-option' } value={ arDocs[doc] }>{ doc }</option>);
+    });
+
     return(
       <div className='switch'>
         <div className='sticky-header'>
           <a href='/environments/' className='btn btn-primary'>
             <span>back to&nbsp;</span><span className='code code-ar-keyword'>environment</span><span>s</span>
+          </a>
+          <a href={ selectedDoc } target='_blank' className='btn btn-primary ar-docs'>
+            <span className='code code-ar-keyword'>ActiveRecord </span>
+            <select className='btn btn-primary' id='current-doc' onChange={ this.selected } >
+              { docOptions }
+            </select>
+            <span>&nbsp;docs</span>
           </a>
           <button type='button' className={ 'btn btn-primary instructions-highlight-' + this.state.highlightInstructions } data-toggle='modal' data-target='.instructions' onClick={ this.switchIntructionsHighlight }>
             { '\'' + problem.title + '\'' }
@@ -106,5 +128,9 @@ var SwitchInspectInteract = React.createClass({
   },
   switchIntructionsHighlight: function() {
     this.setState({ highlightInstructions: false });
+  },
+  selected: function() {
+    var newDoc = $('#current-doc').val();
+    this.setState({ selectedDoc: newDoc })
   }
 });

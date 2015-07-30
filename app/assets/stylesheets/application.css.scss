@@ -485,6 +485,10 @@ input {
   &.smaller {
     font-size: 0.7em;
   }
+  &.select-model {
+    color: $code-model!important;
+    height: 29px;
+  }
 }
 
 .model {

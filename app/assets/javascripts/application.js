@@ -75,7 +75,7 @@ $(document).on('click', '#sign-in-up-submit', function() {
   }, 500);
 });
 
-$(document).on('click', 'a', function() {
+$(document).on('click', 'a:not(.ar-docs)', function() {
   $('#page-cover').addClass('cursor-progress');
 });
 

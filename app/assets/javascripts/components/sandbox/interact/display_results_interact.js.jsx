@@ -136,28 +136,27 @@ var DisplayResultsInteract = React.createClass({
     );
   },
   clicked: function (loggedIn, showCorrect, isCorrect) {
-    if (showCorrect && isCorrect) {
-      if (loggedIn) {
-        var table = this.props.parent;
-        var results = table.state.results;
-        var times = results.times;
-        var params = {
-          'solution': table.state.solution,
-          'sol_char_count': results.solCharCount,
-          'time_exec_total': times.timeExecTotal,
-          'time_query_total': times.timeQueryTotal,
-          'time_query_min': times.timeQueryMin,
-          'time_query_max': times.timeQueryMax,
-          'time_query_avg': times.timeQueryAvg,
-          'num_queries': results.numQueries
-        };
-        var keys = Object.keys(params);
-        var serialized = keys.map(function(key, i) {
-          return key + '=' + encodeURIComponent(params[key]);
-        });
-        var urlParams = '?' + serialized.join('&');
-        window.location.href = table.state.newSolvedProblem + urlParams;
-      }
+    if (loggedIn && showCorrect && isCorrect) {
+      var table = this.props.parent;
+      var results = table.state.results;
+      var times = results.times;
+      var params = {
+        'solution': table.state.solution,
+        'sol_char_count': results.solCharCount,
+        'time_exec_total': times.timeExecTotal,
+        'time_query_total': times.timeQueryTotal,
+        'time_query_min': times.timeQueryMin,
+        'time_query_max': times.timeQueryMax,
+        'time_query_avg': times.timeQueryAvg,
+        'num_queries': results.numQueries
+      };
+      var keys = Object.keys(params);
+      var serialized = keys.map(function(key, i) {
+        return key + '=' + encodeURIComponent(params[key]);
+      });
+      var urlParams = '?' + serialized.join('&');
+      $('#page-cover').addClass('cursor-progress');
+      window.location.href = table.state.newSolvedProblem + urlParams;
     } else {
       $('#check-answer').removeClass('shine');
       this.setState({ showCorrect: true });
