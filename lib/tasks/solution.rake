@@ -6,13 +6,7 @@ task :solution => :environment do
   
   def solution
     status = Timeout::timeout(5) do
-    str = "I am not a comment"
-    Person.where(children_count: [1, 2]).order(:name)
-    # comment
-    
-    #lol comment
-            #comment
-    Person.where(children_count: [1, 2]).order(:name)
+    Farmer.all.map { |farmer| { name: farmer.name, income: farmer.contracts.sum("price * weight") } }.sort { |obj1, obj2| obj2[:income] <=> obj1[:income] }[Farmer.count / 2][:name]
     end
   end
   

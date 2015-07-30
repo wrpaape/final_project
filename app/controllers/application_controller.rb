@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
     results_hash = get_output_json(params[:solution])
     results = Array.wrap(results_hash["results"])
     query_stats = get_query_stats
-    time_exec = results_hash["time_exec"] == 'N/A' ? 'N/A' : results_hash["time_exec"] + query_stats.fetch("query_tot_time", 0)
+    time_exec = results_hash["time_exec"] == 'N/A' ? 'N/A' : results_hash["time_exec"] < query_stats.fetch("query_tot_time", 0) ? results_hash["time_exec"] + query_stats.fetch("query_tot_time", 0) : results_hash["time_exec"]
     {
       "results"=> results,
       "isCorrect"=> results_correct?(results, params[:problem_id]),
