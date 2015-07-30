@@ -178,6 +178,12 @@ canvas {
 }
 
 select {
+  &.ar-docs {
+    color: $code-ar-keyword!important;
+    position: absolute;
+    top: 6px;
+    left: 120px;
+  }
   option {
     &.open {
       &.model-option {
@@ -673,6 +679,9 @@ input {
     position: relative;
     display: inline-block;
     margin-right: 10px;
+    &.select-wrap {
+      margin-right: 0;
+    }
   }
   button {
     margin-right: 10px;
@@ -682,6 +691,11 @@ input {
   }
   a {
     margin-right: 10px;
+    span {
+      &.docs {
+        padding-left: 172px;
+      }
+    }
   }
 }
 

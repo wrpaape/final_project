@@ -20,7 +20,7 @@ var WindowInspect = React.createClass({
     var migrationFileName = data.migrationFileName.split('\n');
 
     availableModels.forEach(function (model) {
-      modelOptions.push(<option key={ model + '-option' } selected={ model === currentModel ? 'selected' : '' } className='model-option' value={ model }>{ model }</option>);
+      modelOptions.push(<option key={ model + '-option' } className='model-option' value={ model }>{ model }</option>);
     });
 
     var noneSelected = function() {
@@ -37,7 +37,7 @@ var WindowInspect = React.createClass({
     if (show) {
     return(
       <div className='inspector-hide' onMouseLeave={ this.mouseLeave.bind(this, show, table, noneSelected) }>
-        <select className='btn btn-primary show-hide select-model' id='current-model' onChange={ this.selected.bind(this, table) } >
+        <select className='btn btn-primary show-hide select-model' id='current-model' defaultValue={ currentModel } onChange={ this.selected.bind(this, table) }>
           { modelOptions }
         </select>
         <button type='button' className='btn btn-primary show-hide' data-toggle='modal' data-target='.model-file'>
