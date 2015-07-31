@@ -1,11 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  name: MyString
+  module: MyString
   syntax: MyString
+  description: MyString
   example: MyText
   source: MyText
 
 two:
+  name: MyString
+  module: MyString
   syntax: MyString
+  description: MyString
   example: MyText
   source: MyText

@@ -18,7 +18,7 @@ class ARMethodsControllerTest < ActionController::TestCase
 
   test "should create a_r_method" do
     assert_difference('ARMethod.count') do
-      post :create, a_r_method: { example: @a_r_method.example, source: @a_r_method.source, syntax: @a_r_method.syntax }
+      post :create, a_r_method: { description: @a_r_method.description, example: @a_r_method.example, module: @a_r_method.module, name: @a_r_method.name, source: @a_r_method.source, syntax: @a_r_method.syntax }
     end
 
     assert_redirected_to a_r_method_path(assigns(:a_r_method))
@@ -35,7 +35,7 @@ class ARMethodsControllerTest < ActionController::TestCase
   end
 
   test "should update a_r_method" do
-    patch :update, id: @a_r_method, a_r_method: { example: @a_r_method.example, source: @a_r_method.source, syntax: @a_r_method.syntax }
+    patch :update, id: @a_r_method, a_r_method: { description: @a_r_method.description, example: @a_r_method.example, module: @a_r_method.module, name: @a_r_method.name, source: @a_r_method.source, syntax: @a_r_method.syntax }
     assert_redirected_to a_r_method_path(assigns(:a_r_method))
   end
 
