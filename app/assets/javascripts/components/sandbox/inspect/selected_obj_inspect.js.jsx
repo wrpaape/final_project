@@ -27,7 +27,7 @@ var SelectedObjInspect = React.createClass({
     var attributes = [];
     attributes.push(<span key='obj-open'>{ '{' }</span>);
     if (obj.id !== 0) {
-      var indent = '~~';
+      var indent = '  ';
       keysCopy.forEach(function(key, i) {
         var diff = longestLengthKeys - key.length;
         var pad = new Array(diff + 1).join('~') + indent;

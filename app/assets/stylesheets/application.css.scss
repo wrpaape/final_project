@@ -360,7 +360,7 @@ section {
         display: block;
         float: right;
         clear: both;
-        width: 350px;
+        width: 285px;
         text-align: right;
         font-family: monaco, Consolas, 'Lucida Console', monospace;
         margin-top: 0.25em;
@@ -944,6 +944,7 @@ input {
     padding-bottom: 10px;
     .next-prev {
       margin-right: 10px;
+      cursor: text;
     }
   }
   .limit {

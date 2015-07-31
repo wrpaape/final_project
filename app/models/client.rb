@@ -6,8 +6,8 @@ class Client < ActiveRecord::Base
   def self.get_model_file
 """
 class $~Client$ < ActiveRecord::Base
-~~$#has_many$ $&:contracts$
-~~$#has_many$ $&:farmers$, $#through:$ $&:contracts$
+  $#has_many$ $&:contracts$
+  $#has_many$ $&:farmers$, $#through:$ $&:contracts$
 end
 """
   end
@@ -15,14 +15,14 @@ end
   def self.get_migration_file
 """
 class CreateClients < ActiveRecord::Migration
-~~def change
-~~~~create_table $@:clients$ do |t|
-~~~~~~t.string $*:name$
-~~~~~~t.float $*:revenue$
+  def change
+    create_table $@:clients$ do |t|
+      t.string $*:name$
+      t.float $*:revenue$
 
-~~~~~~t$*.timestamps$ null: false
-~~~~end
-~~end
+      t$*.timestamps$ null: false
+    end
+  end
 end
 """
   end
