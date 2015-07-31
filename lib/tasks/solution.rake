@@ -6,7 +6,10 @@ task :solution => :environment do
   
   def solution
     status = Timeout::timeout(5) do
-    Person.where(children_count: [1, 2]).order(:name)
+  """
+  \n\nhello and welcome
+  to the show
+  """
     end
   end
   

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :a_r_methods
   get "solved_problems/new/:problem_id", to: "solved_problems#new"
   devise_for :users, :controllers => { sessions: "sessions", registrations: "registrations" }
   devise_for :views
