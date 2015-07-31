@@ -1970,7 +1970,28 @@ end"
   }
 ]
 
-all_methods.each { |meth_params| ARMethod.create(meth_params) }
+all_methods.each { |meth_params| ActRecMethod.create(meth_params) }
+
+env_descrip =
+"""
+nil
+"""
+stupid_sexy_queries = Environment.create(
+  title: "feels |?LIKE| i'm |#find|ing nothing at |#all|!",
+  description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  models: { "ActRecMethod"=>"act_rec_method.rb" }.to_json)
+
+prob_instruct =
+"""
+nothing at all! nothing at all!
+"""
+def answer_test
+  nil
+end
+test = stupid_sexy_queries.problems.create(
+  title: "...and here are our 1.5 kids",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: Array.wrap(answer_test).to_json)
 
 # g0_yobs = (1880..1890).to_a
 # genders = ["M", "F"]

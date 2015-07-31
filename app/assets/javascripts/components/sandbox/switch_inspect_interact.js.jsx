@@ -8,7 +8,8 @@ var SwitchInspectInteract = React.createClass({
       showInspect: true,
       showInteract: false,
       editorSwitched: false,
-      selectedDoc: 'http://guides.rubyonrails.org/active_record_querying.html'
+      selectedDoc: 'http://guides.rubyonrails.org/active_record_querying.html',
+      hoveredText: [<span key='hovered-text-init'></span>]
     };
   },
   componentDidMount: function() {
@@ -19,6 +20,7 @@ var SwitchInspectInteract = React.createClass({
     var showInteract = this.state.showInteract;
     var editorSwitched = this.state.editorSwitched;
     var selectedDoc = this.state.selectedDoc;
+    var hoveredText = this.state.hoveredText;
     var problem = this.props.problem;
     var instructions = problem.instructions.split('\n');
     var buttonContents = showInspect ? [<span key='solution'><span>enter your&nbsp;</span><span className='code code-general'>solution</span></span>] : [<span key='environment'><span>inspect your&nbsp;</span><span className='code code-ar-keyword'>environment</span></span>];
@@ -113,6 +115,13 @@ var SwitchInspectInteract = React.createClass({
           <div className='modal-dialog modal-lg'>
             <div className='modal-content image'>
               <Img src={ umlFilePath } className='image-uml'/>
+            </div>
+          </div>
+        </div>
+        <div className='modal fade disp-text' tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
+          <div className='modal-dialog modal-lg'>
+            <div className='modal-content text'>
+              { hoveredText }
             </div>
           </div>
         </div>

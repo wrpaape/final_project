@@ -1,6 +1,6 @@
-class CreateARMethods < ActiveRecord::Migration
+class CreateActRecMethods < ActiveRecord::Migration
   def change
-    create_table :a_r_methods do |t|
+    create_table :act_rec_methods do |t|
       t.string :name
       t.string :module
       t.string :syntax

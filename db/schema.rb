@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731180926) do
+ActiveRecord::Schema.define(version: 20150731222119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "a_r_methods", force: :cascade do |t|
+  create_table "act_rec_methods", force: :cascade do |t|
     t.string   "name"
     t.string   "module"
     t.string   "syntax"

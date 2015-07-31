@@ -29,9 +29,12 @@ var RowInspect = React.createClass({
     var displayValues = keysCopy.map(function(key) {
       var val = obj[key];
       if (val === null) {
-        return 'nil';
+        val =  'nil';
+      } else {
+        val = val.toString();
+        val = val.length > 48 ? val.slice(0,45) + '...' : val;
       }
-      return val.toString();
+      return val;
     });
     var longestLengthValues = displayValues.sort(function (a, b) { return b.length - a.length; })[0].length;
     var longestLength = longestLengthKeys + 2 + longestLengthValues;
