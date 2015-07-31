@@ -21,7 +21,7 @@ var SelectedObjInspect = React.createClass({
       if (val === null) {
         val =  'nil';
       } else {
-        val = val.toString();
+        val = val.toString().replace(/\s/g,' ');
         val = val.length > 48 ? val.slice(0,45) + '...' : val;
       }
       displayHash[key] = val;

@@ -26,15 +26,19 @@ var RowInspect = React.createClass({
     var keys = Object.keys(obj);
     var keysCopy = $.extend([], keys);
     var longestLengthKeys = keysCopy.sort(function (a, b) { return b.length - a.length; })[0].length;
-    var displayValues = keysCopy.map(function(key) {
+    var displayHash = {};
+    keysCopy.forEach(function(key) {
       var val = obj[key];
       if (val === null) {
         val =  'nil';
       } else {
-        val = val.toString();
+        val = val.toString().replace(/\s/g,' ');
         val = val.length > 48 ? val.slice(0,45) + '...' : val;
       }
-      return val;
+      displayHash[key] = val;
+    });
+    var displayValues = keysCopy.map(function(key){
+      return displayHash[key];
     });
     var longestLengthValues = displayValues.sort(function (a, b) { return b.length - a.length; })[0].length;
     var longestLength = longestLengthKeys + 2 + longestLengthValues;
@@ -43,12 +47,9 @@ var RowInspect = React.createClass({
     for (var i = 0; i < keys.length; i++) {
       var className = i % 2 === 0 ? 'darker td' : 'lighter td';
       var val = obj[keys[i]];
+      var displayVal = displayHash[keys[i]];
 
-      if (val === null) {
-        val = 'nil';
-      }
-
-      cols.push(<td id={ 'inspect-row-' + obj.id + '-col-' + i } key={ currentModel + '-row-' + obj.id + '-col-' + i } className={ className } onMouseOver={ this.mouseOver.bind(this, val, obj, i) } onMouseOut={ this.mouseOut.bind(this, val, obj, i) }>{ val }</td>);
+      cols.push(<td data-id={ val } id={ 'inspect-row-' + obj.id + '-col-' + i } key={ currentModel + '-row-' + obj.id + '-col-' + i } className={ className } onMouseOver={ this.mouseOver.bind(this, displayVal, obj, i) } onMouseOut={ this.mouseOut.bind(this, displayVal, obj, i) }>{ displayVal }</td>);
     }
 
     if (wind0wObj.id === obj.id && wind0wObjModel === currentModel) {
