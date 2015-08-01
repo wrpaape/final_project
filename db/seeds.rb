@@ -2004,22 +2004,31 @@ babys_first = stupid_sexy_queries.problems.create(
 
 prob_instruct =
 """
-If you haven't noticed, some of the documentation for these methods are missing an |*example|,
-the |*source| code, or even a |*description|. These uninitialized |*attribute|s are assigned the
-|`value| |`nil| upon their record's |#create|ion as per the ActiveRecord default.
+The methods included in the |@act_rec_methods| table are taken from the following 8 ActiveRecord modules:
 
-Complete the |%solution| method so that it returns an array of ActiveRecord |~ActRecMethod| objects representing |#all|
-ActiveRecord methods with a provided |*example|, |*source| code, |?AND| |*description| in their documentation
-(i.e. |~ActRecMethod|s |#where| the |`value|s of |*example|, |*source|, |?AND| |*description| are |#not| |`nil|).
-Please return your |%solution| |#order|ed by |*id| (default for un|#order|ed queries).
+|`ActiveRecord::QueryMethods|^
+|`ActiveRecord::Persistence|^
+|`ActiveRecord::FinderMethods|^
+|`ActiveRecord::Persistence::ClassMethods|^
+|`ActiveRecord::Batches|^
+|`ActiveRecord::Scoping::Named::ClassMethods|^
+|`ActiveRecord::Calculations|^
+|`ActiveRecord::Querying|^
+
+How many methods belong to each |*module|?
+
+Complete the |%solution| method so that it returns a key-value hash representing
+the |#count| of methods belonging to each |*module| in the following format:
+
+|%{ \"||*module0||%\"=>| |`num_methods7||%, ..., \"||*module7||%\"=>| |`num_methods7| |%}|
 """
-def answer_nothing_at_all
-  ActRecMethod.where.not({ example: nil, source: nil, description: nil })
+def answer_count_modulea
+  ActRecMethod.group(:module).count
 end
-nothing_at_all = stupid_sexy_queries.problems.create(
-  title: "|#not|hing at |#all|!, |?NOT|hing at |?*|!...",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_nothing_at_all).to_json)
+count_modulea = stupid_sexy_queries.problems.create(
+  title: "|#count| |*module|a",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
+  answer: Array.wrap(answer_count_modulea).to_json)
 
 prob_instruct =
 """

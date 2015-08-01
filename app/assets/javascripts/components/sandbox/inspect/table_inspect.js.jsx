@@ -31,9 +31,10 @@ var TableInspect = React.createClass({
     var loadingClassName = 'loading-' + this.state.loading +' db-table';
     var tableClassName = 'table inspect lighten-' + this.state.loading;
 
+    var firstKeys = Object.keys(pageData[0]);
     var rows = [];
-    pageData.forEach(function (obj) {
-      rows.push(<RowInspect key={ 'row-' + obj.id } obj={ obj } url={ data.url + obj.id } grandparent={ switchTable } parent={ this } />);
+    pageData.forEach(function(obj) {
+      rows.push(<RowInspect key={ 'row-' + obj.id } obj={ obj } firstKeys={ firstKeys } url={ data.url + obj.id } grandparent={ switchTable } parent={ this } />);
     }.bind(this));
     var styles = {
       paddingRight: this.state.padding + 'px'

@@ -6,7 +6,7 @@ task :solution => :environment do
   
   def solution
     status = Timeout::timeout(5) do
-    ActRecMethod.all
+    ActRecMethod.group(:contents).count
     end
   end
   

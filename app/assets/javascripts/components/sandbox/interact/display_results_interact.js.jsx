@@ -31,10 +31,13 @@ var DisplayResultsInteract = React.createClass({
     Object.keys(times).forEach(function (key) {
       if (times[key] !== 'N/A' && !isNaN(times[key])) {
         var n = 0;
-        while (times[key] < 1) {
-          times[key] *= 1000;
-          n++;
+        if (times[key] !== 0) {
+          while (times[key] < 1) {
+            times[key] *= 1000;
+            n++;
+          }
         }
+
         times[key] = Number(times[key]).toPrecision(4) + units[n];
       }
     });
