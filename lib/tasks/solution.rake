@@ -6,7 +6,10 @@ task :solution => :environment do
   
   def solution
     status = Timeout::timeout(5) do
-    ActRecMethod.group(:contents).count
+    bang_methods = ActRecMethod.where("name LIKE '%!'")
+    non_bang_methods = bang_methods.map do |method|
+      non_bang_counterpart = ActRecMethod.find_by(name: method.name.chop)
+    end
     end
   end
   

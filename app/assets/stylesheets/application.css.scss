@@ -1163,6 +1163,7 @@ div {
           }
         }
         .env-details {
+          text-align: center;
           &.false {
             display: none;
           }
@@ -1177,6 +1178,8 @@ div {
           }
         }
         .problems-leaders-wrap {
+          width: 480px;
+          display: inline-block;
           &.false {
             display: none;
           }

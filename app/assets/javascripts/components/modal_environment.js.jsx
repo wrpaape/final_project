@@ -30,7 +30,34 @@ var ModalEnvironment = React.createClass({
     probs.forEach(function(probHash, i) {
       var prob = probHash.prob;
       var solvedProbs = probHash.solvedProbs;
-      probButtons.push(<div key={ prob.id }><a href={'/problems/' + prob.id } className='btn btn-primary'>{ prob.title }</a></div>);
+      var formattedTitle = [];
+      var splitLine = prob.title.split('|');
+      splitLine.forEach(function(seg, j) {
+        var className = '';
+        if (j % 2 !== 0) {
+          className += 'code ';
+          if (seg[0] === '%') {
+            className += 'code-general';
+          } else if (seg[0] === '?') {
+            className += ' code-sql';
+          } else if (seg[0] === '#') {
+            className += ' code-ar-keyword';
+          } else if (seg[0] === '@') {
+            className += ' code-table';
+          } else if (seg[0] === '&') {
+            className += ' code-relation';
+          } else if (seg[0] === '*') {
+            className += ' code-attribute';
+          } else if (seg[0] === '~') {
+            className += ' code-model';
+          } else if (seg[0] === '`') {
+            className += ' code-value';
+          }
+          seg = seg.slice(1);
+        }
+        formattedTitle.push(<span key={ 'prob-' + prob.id + '-title-seg-' + j } className={ className }>{ seg }</span>);
+      });
+      probButtons.push(<div key={ prob.id }><a href={'/problems/' + prob.id } className='btn btn-primary'>{ formattedTitle }</a></div>);
       leaderButtons.push(<div key={ 'leader-' + prob.id }><button type='button' className='btn btn-default' data-toggle='modal' data-target={'.leader-' + prob.id }>leaderboard</button></div>);
       leaderModals.push(<ModalLeaderboard key={ 'modal-leader-' + prob.id } className={ 'modal fade leader-' + prob.id } probId={ prob.id } solvedProbs={ solvedProbs } />);
     });

@@ -69,8 +69,6 @@ var TableInteract = React.createClass({
       });
     }
 
-    console.log(showHead);
-    console.log(this.state.results.times);
     var rows = [];
     if (showHead) {
       data.forEach(function(obj, i) {

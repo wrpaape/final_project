@@ -1976,12 +1976,12 @@ env_descrip =
 """
 This problem set involves the ActiveRecord model |~ActRecMethod|.
 
-The corresponding database table |@act_rec_models| is seeded with documenatation on public instance methods
+The corresponding database table |@act_rec_methods| is seeded with documenatation on public instance methods
 from the ActiveRecord module that may come in handy when contructing and interacting
 with the database of an app powered by |%Ruby| on Rails.
 """
 stupid_sexy_queries = Environment.create(
-  title: "feels |?LIKE| i'm |#find|ing nothing at |#all|!",
+  title: "feels |?LIKE| i'm |#find|ing nothing at all!",
   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   models: { "ActRecMethod"=>"act_rec_method.rb" }.to_json)
 
@@ -1989,7 +1989,7 @@ prob_instruct =
 """
 The bread and butter of any Rails controller's 'show' page action, this ActiveRecord method can be used to |#find|
 records by their primary |*key| provided its |`value| is an |`integer|. Speaking of primary |*key|s, this method is stored
-as an |~ActRecMethod| object in |@act_rec_models| with an |*id| of |`28|.
+as an |~ActRecMethod| object in |@act_rec_methods| with an |*id| of |`28|.
 
 Complete the |%solution| method so that it returns the ActiveRecord |~ActRecMethod| object representing the
 ActiveRecord method described above.
@@ -2013,14 +2013,14 @@ The methods included in the |@act_rec_methods| table are taken from the followin
 |`ActiveRecord::Batches|^
 |`ActiveRecord::Scoping::Named::ClassMethods|^
 |`ActiveRecord::Calculations|^
-|`ActiveRecord::Querying|^
+|`ActiveRecord::Querying|
 
 How many methods belong to each |*module|?
 
 Complete the |%solution| method so that it returns a key-value hash representing
 the |#count| of methods belonging to each |*module| in the following format:
 
-|%{ \"||*module0||%\"=>| |`num_methods7||%, ..., \"||*module7||%\"=>| |`num_methods7| |%}|
+|%{ \"||*module0||%\"=>| |`num_methods0||%, ..., \"||*module7||%\"=>| |`num_methods7| |%}|
 """
 def answer_count_modulea
   ActRecMethod.group(:module).count
@@ -2048,6 +2048,42 @@ nothing_at_all = stupid_sexy_queries.problems.create(
   title: "|#not|hing at |#all|!, |?NOT|hing at |?*|!...",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   answer: Array.wrap(answer_nothing_at_all).to_json)
+
+prob_instruct =
+"""
+A handful of the ActiveRecord methods in the |@act_rec_methods| table can be paired as
+'bang' and 'non-bang' versions of the same method. The 'bang' counterparts of 'non-bang' methods
+have the same |*name| with an '!' tacked onto the end (i.e. |#update!| is the 'bang' counterpart to |#update|).
+
+In vanilla Ruby, 'bang' methods perform the same task as their 'non-bang' counterpart but will also modify the object it's called on.
+
+ActiveRecord 'bang' methods also perform the same task as their counterpart but will raise an ActiveRecord exception
+upon failure to execute, usually due to a validation failure or failure to |#find| or operate on a record.
+
+For example:
+
+|%class| |~User| |%< ActiveRecord::Base|^
+  |#validates| |*:name||%, presence: true|^
+|%end|
+
+|%user =| |~User||#.new|^
+|%user||#.save|  |@# => false|^
+    |%user||#.save!| |@# => ActiveRecord::RecordInvalid: Validation failed: Name can't be blank|
+
+Complete the |%solution| method so that it returns an array of ActiveRecord |~ActRecMethod| objects representing |#all|
+ActiveRecord methods that have a 'bang' counterpart (only the 'non-bang' versions).
+Please return your |%solution| |#order|ed by |*id| (default for un|#order|ed queries).
+"""
+def answer_feuer_frei
+  bang_methods = ActRecMethod.where("name LIKE '%!'")
+  non_bang_methods = bang_methods.map do |method|
+    non_bang_counterpart = ActRecMethod.find_by(name: method.name.chop)
+  end
+end
+feuer_frei = stupid_sexy_queries.problems.create(
+  title: "Feuer Frei|#!|",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
+  answer: Array.wrap(answer_feuer_frei).to_json)
 
 # g0_yobs = (1880..1890).to_a
 # genders = ["M", "F"]

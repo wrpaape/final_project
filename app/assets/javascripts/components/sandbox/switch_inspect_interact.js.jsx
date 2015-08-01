@@ -31,6 +31,35 @@ var SwitchInspectInteract = React.createClass({
     var instructions = problem.instructions.split('\n');
     var buttonContents = showInspect ? [<span key='solution'><span>enter your&nbsp;</span><span className='code code-general'>solution</span></span>] : [<span key='environment'><span>inspect your&nbsp;</span><span className='code code-ar-keyword'>environment</span></span>];
     var umlFilePath = '/assets/environment' + this.props.dataInspect.environmentId + '_uml.png';
+    var formattedTitle = [<span key={ 'prob-' + problem.id + '-title-open' }>'</span>];
+    var splitLine = problem.title.split('|');
+    splitLine.forEach(function(seg, i) {
+      var className = '';
+      if (i % 2 !== 0) {
+        className += 'code ';
+        if (seg[0] === '%') {
+          className += 'code-general';
+        } else if (seg[0] === '?') {
+          className += ' code-sql';
+        } else if (seg[0] === '#') {
+          className += ' code-ar-keyword';
+        } else if (seg[0] === '@') {
+          className += ' code-table';
+        } else if (seg[0] === '&') {
+          className += ' code-relation';
+        } else if (seg[0] === '*') {
+          className += ' code-attribute';
+        } else if (seg[0] === '~') {
+          className += ' code-model';
+        } else if (seg[0] === '`') {
+          className += ' code-value';
+        }
+        seg = seg.slice(1);
+      }
+      formattedTitle.push(<span key={ 'prob-' + problem.id + '-title-seg-' + i } className={ className }>{ seg }</span>);
+    });
+    formattedTitle.push(<span key={ 'prob-' + problem.id + '-title-close' }>'</span>);
+
     var formattedInstructions = [];
     instructions.forEach(function(line, i) {
       if (line.length === 0) {
@@ -95,7 +124,7 @@ var SwitchInspectInteract = React.createClass({
             </select>
           </div>
           <button type='button' className={ 'btn btn-primary instructions-highlight-' + this.state.highlightInstructions } data-toggle='modal' data-target='.instructions' onClick={ this.switchIntructionsHighlight }>
-            { '\'' + problem.title + '\'' }
+            { formattedTitle }
           </button>
           <button type='button' className='btn btn-primary' data-toggle='modal' data-target='.uml'>
             UML
