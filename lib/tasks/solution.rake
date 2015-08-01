@@ -6,7 +6,7 @@ task :solution => :environment do
   
   def solution
     status = Timeout::timeout(5) do
-    ActRecMethod.find(78)
+    ActRecMethod.where.not({ example: nil, source: nil, description: nil })
     end
   end
   

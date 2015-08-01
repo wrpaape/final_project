@@ -1974,7 +1974,11 @@ all_methods.each { |meth_params| ActRecMethod.create(meth_params) }
 
 env_descrip =
 """
-nil
+This problem set involves the ActiveRecord model |~ActRecMethod|.
+
+The corresponding database table |@act_rec_models| is seeded with documenatation on public instance methods
+from the ActiveRecord module that may come in handy when contructing and interacting
+with the database of an app powered by |%Ruby| on Rails.
 """
 stupid_sexy_queries = Environment.create(
   title: "feels |?LIKE| i'm |#find|ing nothing at |#all|!",
@@ -1983,15 +1987,39 @@ stupid_sexy_queries = Environment.create(
 
 prob_instruct =
 """
-nothing at all! nothing at all!
+The bread and butter of any Rails controller's 'show' page action, this ActiveRecord method can be used to |#find|
+records by their primary |*key| provided its |`value| is an |`integer|. Speaking of primary |*key|s, this method is stored
+as an |~ActRecMethod| object in |@act_rec_models| with an |*id| of |`28|.
+
+Complete the |%solution| method so that it returns the ActiveRecord |~ActRecMethod| object representing the
+ActiveRecord method described above.
 """
-def answer_test
-  nil
+def answer_babys_first
+  ActRecMethod.find(28)
 end
-test = stupid_sexy_queries.problems.create(
-  title: "...and here are our 1.5 kids",
+babys_first = stupid_sexy_queries.problems.create(
+  title: "baby's |#first| query",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_test).to_json)
+  answer: Array.wrap(answer_babys_first).to_json)
+
+prob_instruct =
+"""
+If you haven't noticed, some of the documentation for these methods are missing an |*example|,
+the |*source| code, or even a |*description|. These uninitialized |*attribute|s are assigned the
+|`value| |`nil| upon their record's |#create|ion as per the ActiveRecord default.
+
+Complete the |%solution| method so that it returns an array of ActiveRecord |~ActRecMethod| objects representing |#all|
+ActiveRecord methods with a provided |*example|, |*source| code, |?AND| |*description| in their documentation
+(i.e. |~ActRecMethod|s |#where| the |`value|s of |*example|, |*source|, |?AND| |*description| are |#not| |`nil|).
+Please return your |%solution| |#order|ed by |*id| (default for un|#order|ed queries).
+"""
+def answer_nothing_at_all
+  ActRecMethod.where.not({ example: nil, source: nil, description: nil })
+end
+nothing_at_all = stupid_sexy_queries.problems.create(
+  title: "|#not|hing at |#all|!, |?NOT|hing at |?*|!...",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: Array.wrap(answer_nothing_at_all).to_json)
 
 # g0_yobs = (1880..1890).to_a
 # genders = ["M", "F"]
