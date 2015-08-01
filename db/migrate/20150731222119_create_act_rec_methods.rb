@@ -4,7 +4,7 @@ class CreateActRecMethods < ActiveRecord::Migration
       t.string :name
       t.string :module
       t.string :syntax
-      t.string :description
+      t.text :description
       t.text :example
       t.text :source
 

@@ -48,7 +48,7 @@ var RowInspect = React.createClass({
       var className = i % 2 === 0 ? 'darker td' : 'lighter td';
       var val = obj[keys[i]];
       var displayVal = displayHash[keys[i]];
-      if (displayVal.length === 48 && displayVal.search(/\.\.\.$/) !== -1) {
+      if (val !== null && val.length > 48) {
         className += ' cropped-text';
       }
 
@@ -73,7 +73,7 @@ var RowInspect = React.createClass({
       var idSelector = '#inspect-row-' + obj.id + '-col-' + i;
       $(idSelector).html(displayValFormatted);
       $(idSelector).addClass('formatted-time');
-    } else if (val.length > 48) {
+    } else if (val !== null && val.length > 48) {
       this.timeoutID = window.setTimeout(function() {
         var switchTable = this.props.grandparent;
         var hoveredTextToggle = switchTable.state.hoveredTextToggle;
@@ -96,7 +96,7 @@ var RowInspect = React.createClass({
       var idSelector = '#inspect-row-' + obj.id + '-col-' + i;
       $(idSelector).html(displayVal);
       $(idSelector).removeClass('formatted-time');
-    } else if (val.length > 48) {
+    } else if (val !== null && val.length > 48) {
       window.clearTimeout(this.timeoutID);
     }
   },

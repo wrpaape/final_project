@@ -9,6 +9,7 @@ var WindowInspect = React.createClass({
     };
   },
   render: function() {
+    var switchTable = this.props.grandparent;
     var show = this.state.show;
     var enableToggle = this.state.enableToggle;
     var table = this.props.parent;
@@ -48,7 +49,7 @@ var WindowInspect = React.createClass({
           <br />
           <span>{ migrationFileName[1] }</span>
         </button>
-        <SelectedObjInspect key='selected-obj' grandparent={ table } parent={ this } />
+        <SelectedObjInspect key='selected-obj' greatgrandparent={ switchTable } grandparent={ table } parent={ this } />
         <SearchBarInspect key='search-bar' grandparent={ table } parent={ this } />
       </div>
     );

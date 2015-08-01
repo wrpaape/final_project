@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20150731222119) do
     t.string   "name"
     t.string   "module"
     t.string   "syntax"
-    t.string   "description"
+    t.text     "description"
     t.text     "example"
     t.text     "source"
     t.datetime "created_at",  null: false

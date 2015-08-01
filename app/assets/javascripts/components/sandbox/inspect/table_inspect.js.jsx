@@ -98,7 +98,7 @@ var TableInspect = React.createClass({
             <QueryInspect parent={ this } lastQuery={ lastQuery } />
           </div>
         </div>
-        <WindowInspect parent={ this } />
+        <WindowInspect grandparent={ switchTable } parent={ this } />
         <div className='modal fade model-file' tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
           <div className='modal-dialog modal-lg'>
             <div className='modal-content model'>
