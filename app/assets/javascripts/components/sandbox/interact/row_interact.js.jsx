@@ -17,7 +17,7 @@ var RowInteract = React.createClass({
       } else {
         displayVal = val.toString().replace(/\s/g, ' ');
         if (displayVal.length > 48) {
-          displayVal = displayVal.slice(0,45) + '...';
+          displayVal = displayVal.slice(0, 45) + '...';
           className += ' cropped-text';
         }
       }
@@ -44,7 +44,7 @@ var RowInteract = React.createClass({
         var splitLines = val.split('\n');
         var formattedLines = [];
         splitLines.forEach(function(line, j) {
-          line = line.length === 0 ? ' ' : line.replace(/\s/g, ' ');
+          line = line.length === 0 ? ' ' : line.replace(/^\s+/, new Array(line.search(/[^\s]/) + 1).join(' '));
           formattedLines.push(<p key={'hovered-text-' + obj.id + '-col-' + i + '-line-' + j }>{ line }</p>)
         })
         switchTable.setState({

@@ -22,7 +22,7 @@ var SelectedObjInspect = React.createClass({
         val =  'nil';
       } else {
         val = val.toString().replace(/\s/g,' ');
-        val = val.length > 48 ? val.slice(0,45) + '...' : val;
+        val = val.length > 48 ? val.slice(0, 45) + '...' : val;
       }
       displayHash[key] = val;
     });
@@ -88,7 +88,7 @@ var SelectedObjInspect = React.createClass({
         var splitLines = val.split('\n');
         var formattedLines = [];
         splitLines.forEach(function(line, j) {
-          line = line.length === 0 ? ' ' : line.replace(/\s/g, ' ');
+          line = line.length === 0 ? ' ' : line.replace(/^\s+/, new Array(line.search(/[^\s]/) + 1).join(' '));
           formattedLines.push(<p key={'hovered-text-' +  i + '-line-' + j }>{ line }</p>)
         })
         switchTable.setState({
