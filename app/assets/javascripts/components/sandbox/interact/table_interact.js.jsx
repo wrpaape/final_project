@@ -51,21 +51,32 @@ var TableInteract = React.createClass({
       }
     }
 
-    var dataTypes = [];
-    data.forEach(function (obj) {
-      dataTypes.push(typeof(obj));
-    });
-    var areSameType = dataTypes.reduce(function(a, b){return (a === b) ? a : false;});
-    var isHash = Object.prototype.toString.call(data[0]) === '[object Object]';
-    var showHead = (areSameType && isHash) ? true: false;
+    var showHead = false;
+    var firstIsHash = Object.prototype.toString.call(data[0]) === '[object Object]';
+    if (firstIsHash) {
+      var firstKeys = Object.keys(data[0]);
+      showHead = true;
+      var keysMatch = true;
+      data.forEach(function(obj) {
+        if (keysMatch) {
+          firstKeys.forEach(function(key) {
+            if (!(key in obj)) {
+              showHead = false;
+              return showHead;
+            }
+          });
+        }
+      });
+    }
+
 
     var rows = [];
     if (showHead) {
-      data.forEach(function (obj) {
-        rows.push(<RowInteract key={ 'row-' + obj.id } obj={ obj } url={ url } grandparent={ switchTable } parent={ this } />);
+      data.forEach(function(obj, i) {
+        rows.push(<RowInteract key={ 'row-' + i } obj={ obj } url={ url } firstKeys={ firstKeys } grandparent={ switchTable } parent={ this } />);
       }.bind(this));
     } else {
-      data.forEach(function (obj, i) {
+      data.forEach(function(obj, i) {
         rows.push(<tr key={ 'misc-row-' + i }><td key={ 'misc-col-' + i } className='td'>{ JSON.stringify(obj) }</td></tr>);
       });
       rows.push(<tr key={ 'misc-row-empty' }><td key={ 'misc-col-empty' } className='td'></td></tr>);

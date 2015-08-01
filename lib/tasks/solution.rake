@@ -6,7 +6,7 @@ task :solution => :environment do
   
   def solution
     status = Timeout::timeout(5) do
-    [{'key': 'value', 'key2': 'val2'},1,'hello']
+    ActRecMethod.all
     end
   end
   

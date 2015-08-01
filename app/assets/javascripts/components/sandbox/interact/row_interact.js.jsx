@@ -6,7 +6,7 @@ var RowInteract = React.createClass({
     var cols = [];
     var table = this.props.parent;
     var obj = this.props.obj;
-    var keys = Object.keys(obj);
+    var keys = this.props.firstKeys;
 
     for (var i = 0; i < keys.length; i++) {
       var className = i % 2 === 0 ? 'darker td' : 'lighter td';
