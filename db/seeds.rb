@@ -2021,6 +2021,25 @@ nothing_at_all = stupid_sexy_queries.problems.create(
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   answer: Array.wrap(answer_nothing_at_all).to_json)
 
+prob_instruct =
+"""
+If you haven't noticed, some of the documentation for these methods are missing an |*example|,
+the |*source| code, or even a |*description|. These uninitialized |*attribute|s are assigned the
+|`value| |`nil| upon their record's |#create|ion as per the ActiveRecord default.
+
+Complete the |%solution| method so that it returns an array of ActiveRecord |~ActRecMethod| objects representing |#all|
+ActiveRecord methods with a provided |*example|, |*source| code, |?AND| |*description| in their documentation
+(i.e. |~ActRecMethod|s |#where| the |`value|s of |*example|, |*source|, |?AND| |*description| are |#not| |`nil|).
+Please return your |%solution| |#order|ed by |*id| (default for un|#order|ed queries).
+"""
+def answer_nothing_at_all
+  ActRecMethod.where.not({ example: nil, source: nil, description: nil })
+end
+nothing_at_all = stupid_sexy_queries.problems.create(
+  title: "|#not|hing at |#all|!, |?NOT|hing at |?*|!...",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: Array.wrap(answer_nothing_at_all).to_json)
+
 # g0_yobs = (1880..1890).to_a
 # genders = ["M", "F"]
 
@@ -2170,7 +2189,7 @@ nothing_at_all = stupid_sexy_queries.problems.create(
 # All of the problems in this set can be solved by querying just the |@people| table.
 # """
 # family_tree = Environment.create(
-#   title: "The |@people| Family Tree",
+#   title: "the |@people| family tree",
 #   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   models: { "Person"=>"person.rb", "BabyName"=>"baby_name.rb" }.to_json)
 
@@ -2192,7 +2211,7 @@ nothing_at_all = stupid_sexy_queries.problems.create(
 #   Person.where(children_count: [1, 2]).order(:name)
 # end
 # avg_household = family_tree.problems.create(
-#   title: "...and here are our 1.5 kids",
+#   title: "...and here are our |`1.5| kids",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   answer: Array.wrap(answer_avg_household).to_json)
 
@@ -2219,7 +2238,7 @@ nothing_at_all = stupid_sexy_queries.problems.create(
 #   brady_bunch
 # end
 # the_brady_bunch = family_tree.problems.create(
-#   title: "The Brady Bunch",
+#   title: "the Brady Bunch",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   answer: Array.wrap(answer_brady_bunch).to_json)
 
@@ -2251,7 +2270,7 @@ nothing_at_all = stupid_sexy_queries.problems.create(
 #   return "no bachelor(ette)s!"
 # end
 # the_bachelor = family_tree.problems.create(
-#   title: "The Bachelor(ette?)",
+#   title: "the Bachelor(ette?)",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   answer: Array.wrap(answer_bachelor).to_json)
 
@@ -2285,7 +2304,7 @@ nothing_at_all = stupid_sexy_queries.problems.create(
 #   laziest_parents.flatten
 # end
 # lazy_parents_award = family_tree.problems.create(
-#   title: "The Laziest Parents Award",
+#   title: "the laziest parents award",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   answer: Array.wrap(answer_lazy_parents).to_json)
 
@@ -2570,7 +2589,7 @@ nothing_at_all = stupid_sexy_queries.problems.create(
 # In addition to the |*upkeep| of their |&farm|'s |&fields|, every |~Farmer| must acquire the cost of |*maintenance| of its |&farm|
 # """
 # old_mac = Environment.create(
-#   title: "Old MacDonald |#has_one| |~Farm|",
+#   title: "old MacDonald |#has_one| |~Farm|",
 #   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   models: { "Farmer"=>"farmer.rb", "Farm"=>"farm.rb", "Crop"=>"crop.rb", "Field"=>"field.rb", "Client"=>"client.rb", "Contract"=>"Contract.rb" }.to_json)
 
@@ -2594,7 +2613,7 @@ nothing_at_all = stupid_sexy_queries.problems.create(
 #   Contract.where("start > '#{last_friday_2013}' and finish < '#{first_monday_2016}'").order(:start)
 # end
 # technically_3_years = old_mac.problems.create(
-#   title: "Technically 3 Years",
+#   title: "technically 3 years",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   answer: Array.wrap(answer_technically_3_years).to_json)
 
@@ -2615,7 +2634,7 @@ nothing_at_all = stupid_sexy_queries.problems.create(
 #   [most_contracts_crop_name, greatest_acreage_crop_name]
 # end
 # bandwagon_crops = old_mac.problems.create(
-#   title: "Bandwagon Crops",
+#   title: "bandwagon |~Crop|s",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   answer: Array.wrap(answer_bandwagon_crops).to_json)
 
@@ -2633,7 +2652,7 @@ nothing_at_all = stupid_sexy_queries.problems.create(
 #   farmer_w_name = Farmer.select("farmers.*, SUM(contracts.price * contracts.weight) AS total_income").joins(:contracts).group(:id).order("total_income DESC").offset(Farmer.count / 2).take.name
 # end
 # smitty_w = old_mac.problems.create(
-#   title: "Old Farmer Werbenjagermanjensen",
+#   title: "old |~Farmer| Werbenjagermanjensen",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   answer: Array.wrap(answer_smitty_w).to_json)
 
@@ -2667,7 +2686,7 @@ nothing_at_all = stupid_sexy_queries.problems.create(
 #   end
 # end
 # the_red_line = old_mac.problems.create(
-#   title: "The Red Line and the Black Thumb",
+#   title: "the red line and the black thumb",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   answer: Array.wrap(answer_the_red_line).to_json)
 

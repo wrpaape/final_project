@@ -56,8 +56,9 @@ var TableInteract = React.createClass({
       dataTypes.push(typeof(obj));
     });
     var areSameType = dataTypes.reduce(function(a, b){return (a === b) ? a : false;});
+    var isHash = Object.prototype.toString.call(data[0]) === '[object Object]';
+    var showHead = (areSameType && isHash) ? true: false;
 
-    var showHead = (areSameType && data[0].id !== undefined) ? true: false;
     var rows = [];
     if (showHead) {
       data.forEach(function (obj) {
