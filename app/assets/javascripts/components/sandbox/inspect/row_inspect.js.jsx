@@ -32,7 +32,7 @@ var RowInspect = React.createClass({
       if (val === null) {
         val =  'nil';
       } else {
-        val = val.toString().replace(/\s/g,' ');
+        val = val.toString().replace(/\s/g, ' ');
         val = val.length > 48 ? val.slice(0,45) + '...' : val;
       }
       displayHash[key] = val;
@@ -48,14 +48,16 @@ var RowInspect = React.createClass({
       var className = i % 2 === 0 ? 'darker td' : 'lighter td';
       var val = obj[keys[i]];
       var displayVal = displayHash[keys[i]];
+      if (displayVal.length === 48 && displayVal.search(/\.\.\.$/) !== -1) {
+        className += ' cropped-text';
+      }
 
-      cols.push(<td data-id={ val } id={ 'inspect-row-' + obj.id + '-col-' + i } key={ currentModel + '-row-' + obj.id + '-col-' + i } className={ className } onMouseOver={ this.mouseOver.bind(this, displayVal, obj, i) } onMouseOut={ this.mouseOut.bind(this, displayVal, obj, i) }>{ displayVal }</td>);
+      cols.push(<td data-id={ val } id={ 'inspect-row-' + obj.id + '-col-' + i } key={ currentModel + '-row-' + obj.id + '-col-' + i } className={ className } onMouseOver={ this.mouseOver.bind(this, displayVal, val, obj, i) } onMouseOut={ this.mouseOut.bind(this, displayVal, val, obj, i) }>{ displayVal }</td>);
     }
 
+    var className = '';
     if (wind0wObj.id === obj.id && wind0wObjModel === currentModel) {
-      var className = 'highlight';
-    } else {
-      var className = '';
+      className += 'highlight';
     }
 
     return (
@@ -64,19 +66,39 @@ var RowInspect = React.createClass({
       </tr>
     );
   },
-  mouseOver: function(val, obj, i) {
-    var isDatetime = val.toString().match(/^(\d{4})-(\d{2})-(\d{2})([a-zA-Z])(\d{2}):(\d{2}):(\d{2})/);
+  mouseOver: function(displayVal, val, obj, i) {
+    var isDatetime = displayVal.toString().match(/^(\d{4})-(\d{2})-(\d{2})([a-zA-Z])(\d{2}):(\d{2}):(\d{2})/);
     if (isDatetime !== null) {
-      var valFormatted = (moment(val).format('MM/DD/YYYY hh:mm a'));
+      var displayValFormatted = (moment(displayVal).format('MM/DD/YYYY hh:mm a'));
       var idSelector = '#inspect-row-' + obj.id + '-col-' + i;
-      $(idSelector).html(valFormatted);
+      $(idSelector).html(displayValFormatted);
       $(idSelector).addClass('formatted-time');
+    } else if (val.length > 48) {
+      this.timeoutID = window.setTimeout(function() {
+        var switchTable = this.props.grandparent;
+        var hoveredTextToggle = switchTable.state.hoveredTextToggle;
+        var splitLines = val.split('\n');
+        var formattedLines = [];
+        splitLines.forEach(function(line, j) {
+          line = line.length === 0 ? ' ' : line.replace(/\s/g, ' ');
+          formattedLines.push(<p key={'hovered-text-' + obj.id + '-col-' + i + '-line-' + j }>{ line }</p>)
+        })
+        switchTable.setState({
+          hoveredText: formattedLines,
+          hoveredTextToggle: !hoveredTextToggle
+        });
+      }.bind(this), 1000);
     }
   },
-  mouseOut: function(val, obj, i) {
-    var idSelector = '#inspect-row-' + obj.id + '-col-' + i;
-    $(idSelector).html(val);
-    $(idSelector).removeClass('formatted-time');
+  mouseOut: function(displayVal, val, obj, i) {
+    var isDatetime = displayVal.toString().match(/^(\d{4})-(\d{2})-(\d{2})([a-zA-Z])(\d{2}):(\d{2}):(\d{2})/);
+    if (isDatetime !== null) {
+      var idSelector = '#inspect-row-' + obj.id + '-col-' + i;
+      $(idSelector).html(displayVal);
+      $(idSelector).removeClass('formatted-time');
+    } else if (val.length > 48) {
+      window.clearTimeout(this.timeoutID);
+    }
   },
   clicked: function (table, obj, wind0wObjModel, currentModel, objPad) {
     var thisId = '#' + currentModel + '-' + obj.id;

@@ -165,7 +165,7 @@ $code-value: #F46AEE;
   z-index: -1000;
   &.cursor-progress {
     z-index: 9001;
-    cursor: progress !important;
+    cursor: wait !important;
   }
 }
 
@@ -1207,7 +1207,9 @@ div {
   }
 }
 
-
+.cropped-text {
+  cursor: progress;
+}
 
 
 

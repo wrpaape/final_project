@@ -25,10 +25,9 @@ var TableInteract = React.createClass({
     };
   },
   render: function () {
-    var loggedIn = this.state.loggedIn;
+    var switchTable = this.props.parent;
     var url = this.props.url;
-    var rows = [];
-    var dataTypes = [];
+    var loggedIn = this.state.loggedIn;
     var data = this.state.data;
     var loading = this.state.loading;
     var loadingClassName = 'loading-' + loading +' db-table interact';
@@ -52,16 +51,17 @@ var TableInteract = React.createClass({
       }
     }
 
+    var dataTypes = [];
     data.forEach(function (obj) {
       dataTypes.push(typeof(obj));
     });
     var areSameType = dataTypes.reduce(function(a, b){return (a === b) ? a : false;});
 
     var showHead = (areSameType && data[0].id !== undefined) ? true: false;
-
+    var rows = [];
     if (showHead) {
       data.forEach(function (obj) {
-        rows.push(<RowInteract key={ 'row-' + obj.id } obj={ obj } url={ url } parent={ this } />);
+        rows.push(<RowInteract key={ 'row-' + obj.id } obj={ obj } url={ url } grandparent={ switchTable } parent={ this } />);
       }.bind(this));
     } else {
       data.forEach(function (obj, i) {

@@ -9,11 +9,17 @@ var SwitchInspectInteract = React.createClass({
       showInteract: false,
       editorSwitched: false,
       selectedDoc: 'http://guides.rubyonrails.org/active_record_querying.html',
-      hoveredText: [<span key='hovered-text-init'></span>]
+      hoveredText: [<span key='hovered-text-init'></span>],
+      hoveredTextToggle: false
     };
   },
   componentDidMount: function() {
     $('#page-cover').removeClass('cursor-progress');
+  },
+  componentWillUpdate: function(nextProps, nextState) {
+    if (nextState.hoveredTextToggle !== this.state.hoveredTextToggle) {
+      $('#modal-hovered-text').modal('show');
+    }
   },
   render: function() {
     var showInspect = this.state.showInspect;
@@ -99,10 +105,10 @@ var SwitchInspectInteract = React.createClass({
           </div>
         </div>
         <div className={ 'show-' + showInspect }>
-          <TableInspect data={ this.props.dataInspect } models={ this.props.modelsInspect } />
+          <TableInspect parent={ this } data={ this.props.dataInspect } models={ this.props.modelsInspect } />
         </div>
         <div className={ 'show-' + showInteract }>
-          <TableInteract data={ this.props.dataInteract } url={ this.props.urlInteract } problem={ problem } loggedIn={ this.props.loggedIn } />
+          <TableInteract parent={ this } data={ this.props.dataInteract } url={ this.props.urlInteract } problem={ problem } loggedIn={ this.props.loggedIn } />
         </div>
         <div className='modal fade instructions' tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
           <div className='modal-dialog modal-lg'>
@@ -118,7 +124,7 @@ var SwitchInspectInteract = React.createClass({
             </div>
           </div>
         </div>
-        <div className='modal fade disp-text' tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
+        <div id="modal-hovered-text" className='modal fade hovered-text' tabIndex='-1' role='dialog' aria-labelledby='myLargeModalLabel'>
           <div className='modal-dialog modal-lg'>
             <div className='modal-content text'>
               { hoveredText }
