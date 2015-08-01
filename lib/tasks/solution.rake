@@ -6,10 +6,7 @@ task :solution => :environment do
   
   def solution
     status = Timeout::timeout(5) do
-  """
-  \n\nhello and welcome'hieefe'
-  to the show
-  """
+    ActRecMethod.take
     end
   end
   

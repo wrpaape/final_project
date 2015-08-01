@@ -30,7 +30,7 @@ var RowInspect = React.createClass({
     keysCopy.forEach(function(key) {
       var val = obj[key];
       if (val === null) {
-        val =  'nil';
+        val = 'nil';
       } else {
         val = val.toString().replace(/\s/g, ' ');
         val = val.length > 48 ? val.slice(0,45) + '...' : val;
