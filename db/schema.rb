@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731222119) do
+ActiveRecord::Schema.define(version: 20150802180945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,17 @@ ActiveRecord::Schema.define(version: 20150731222119) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "applications", force: :cascade do |t|
+    t.datetime "applied_at"
+    t.integer  "programmer_id"
+    t.integer  "position_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "applications", ["position_id"], name: "index_applications_on_position_id", using: :btree
+  add_index "applications", ["programmer_id"], name: "index_applications_on_programmer_id", using: :btree
 
   create_table "baby_names", force: :cascade do |t|
     t.string   "name"
@@ -104,6 +115,26 @@ ActiveRecord::Schema.define(version: 20150731222119) do
   add_index "fields", ["crop_id"], name: "index_fields_on_crop_id", using: :btree
   add_index "fields", ["farm_id"], name: "index_fields_on_farm_id", using: :btree
 
+  create_table "language_predecessors", force: :cascade do |t|
+    t.integer  "language_id"
+    t.integer  "predecessor_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "yob"
+    t.string   "creator"
+    t.integer  "programmer_id"
+    t.integer  "position_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "languages", ["position_id"], name: "index_languages_on_position_id", using: :btree
+  add_index "languages", ["programmer_id"], name: "index_languages_on_programmer_id", using: :btree
+
   create_table "people", force: :cascade do |t|
     t.string   "name"
     t.string   "gender"
@@ -122,6 +153,18 @@ ActiveRecord::Schema.define(version: 20150731222119) do
   add_index "people", ["mother_id"], name: "index_people_on_mother_id", using: :btree
   add_index "people", ["spouse_id"], name: "index_people_on_spouse_id", using: :btree
 
+  create_table "positions", force: :cascade do |t|
+    t.string   "name"
+    t.float    "salary"
+    t.integer  "shift"
+    t.datetime "posted_at"
+    t.integer  "programmer_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "positions", ["programmer_id"], name: "index_positions_on_programmer_id", using: :btree
+
   create_table "problems", force: :cascade do |t|
     t.string   "title"
     t.text     "instructions"
@@ -134,6 +177,12 @@ ActiveRecord::Schema.define(version: 20150731222119) do
   end
 
   add_index "problems", ["environment_id"], name: "index_problems_on_environment_id", using: :btree
+
+  create_table "programmers", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "solved_problems", force: :cascade do |t|
     t.text     "solution"
@@ -202,12 +251,17 @@ ActiveRecord::Schema.define(version: 20150731222119) do
   add_index "views", ["email"], name: "index_views_on_email", unique: true, using: :btree
   add_index "views", ["reset_password_token"], name: "index_views_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "applications", "positions"
+  add_foreign_key "applications", "programmers"
   add_foreign_key "contracts", "clients"
   add_foreign_key "contracts", "crops"
   add_foreign_key "contracts", "farmers"
   add_foreign_key "farms", "farmers"
   add_foreign_key "fields", "crops"
   add_foreign_key "fields", "farms"
+  add_foreign_key "languages", "positions"
+  add_foreign_key "languages", "programmers"
+  add_foreign_key "positions", "programmers"
   add_foreign_key "problems", "environments"
   add_foreign_key "solved_problems", "environments"
   add_foreign_key "solved_problems", "problems"
