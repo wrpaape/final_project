@@ -21,7 +21,7 @@ var SelectedObjInspect = React.createClass({
       if (val === null) {
         val =  'nil';
       } else {
-        val = val.toString().replace(/\s/g,' ');
+        val = val.toString().replace(/\s/g,' ').replace(/(▓@|▓#|▓?|▓&|▓%|▓\*|▓`|▓~|▓)/g, '');
         val = val.length > 48 ? val.slice(0, 45) + '...' : val;
       }
       displayHash[key] = val;
@@ -85,14 +85,43 @@ var SelectedObjInspect = React.createClass({
       this.timeoutID = window.setTimeout(function() {
         var switchTable = this.props.greatgrandparent;
         var hoveredTextToggle = switchTable.state.hoveredTextToggle;
+        var formattedText = [];
         var splitLines = val.split('\n');
-        var formattedLines = [];
         splitLines.forEach(function(line, j) {
-          line = line.length === 0 ? ' ' : line.replace(/^\s+/, new Array(line.search(/[^\s]/) + 1).join(' '));
-          formattedLines.push(<p key={'hovered-text-' +  i + '-line-' + j }>{ line }</p>)
-        })
+          if (line.length === 0) {
+            line = ' ';
+          }
+          var splitLine = line.replace(/^\s+/, ' ').split('▓');
+          var formattedLine = [];
+          splitLine.forEach(function(seg, k) {
+            var className = '';
+            if (k % 2 !== 0) {
+              className += 'code ';
+              if (seg[0] === '%') {
+                className += 'code-general';
+              } else if (seg[0] === '?') {
+                className += ' code-sql';
+              } else if (seg[0] === '#') {
+                className += ' code-ar-keyword';
+              } else if (seg[0] === '@') {
+                className += ' code-table';
+              } else if (seg[0] === '&') {
+                className += ' code-relation';
+              } else if (seg[0] === '*') {
+                className += ' code-attribute';
+              } else if (seg[0] === '~') {
+                className += ' code-model';
+              } else if (seg[0] === '`') {
+                className += ' code-value';
+              }
+              seg = seg.slice(1);
+            }
+            formattedLine.push(<span key={ 'hovered-text-seg-' + k + '-line-' + j } className={ className }>{ seg }</span>);
+          });
+          formattedText.push(<p key={ 'hovered-text-line-' + j }>{ formattedLine }</p>);
+        });
         switchTable.setState({
-          hoveredText: formattedLines,
+          hoveredText: formattedText,
           hoveredTextToggle: !hoveredTextToggle
         });
       }.bind(this), 1000);

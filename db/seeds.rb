@@ -1983,27 +1983,27 @@ def format_text(raw, ar_keywords)
         end
         sql_keywords = comment_seg.scan(/(?<![#])([A-H][A-Z]+|[J-Z][A-Z]+|[A-Z][A-C][A-Z]*|[A-Z][E-Z][A-Z]*|[A-Z][A-Z][A-Z]+|\(\*\)|\'\*\'| \* )/).flatten.uniq.compact
         sql_keywords.each do |sql_key|
-          comment_seg.gsub!(sql_key, "▓?#{sql_key}▓")
+          comment_seg.gsub!(/(?<![?])[#{sql_key.split('').join('][')}]/, "▓?#{sql_key}▓")
         end
         rel_keywords = comment_seg.scan(/(?<![#?])([.:]*(address|friends|followers|posts|visible_posts)[:]*|relation(?=[\s\.]))/).flatten.uniq.compact
         rel_keywords.each do |rel_key|
-          comment_seg.gsub!(rel_key, "▓&#{rel_key}▓")
+          comment_seg.gsub!(/(?<![&])#{rel_key}/, "▓&#{rel_key}▓")
         end
-        gen_keywords = comment_seg.scan(/(?<![#?&])(?<=.)(each|map|with_index|size|midnight|now|com)[!]*/).flatten.uniq.compact
+        gen_keywords = comment_seg.scan(/(?<![#?&])(?<=.)(each|map|with_index|size|midnight|now|com|warn)[!]*/).flatten.uniq.compact
         gen_keywords.each do |gen_key|
-          comment_seg.gsub!(gen_key, "▓%#{gen_key}▓")
+          comment_seg.gsub!(/(?<![%])#{gen_key}/, "▓%#{gen_key}▓")
         end
         attr_keywords = comment_seg.scan(/(?<![#?&%])([:][a-z_0-9]+|(?<![A-Za-z_0-9])[a-z_0-9]+:(?!$|:)|(?<=\.)[a-z_0-9]+)(?![a-z_0-9?!\(])/).flatten.uniq.compact
         attr_keywords.each do |attr_key|
-          comment_seg.gsub!(attr_key, "▓*#{attr_key}▓")
+          comment_seg.gsub!(/(?<![*])#{attr_key}/, "▓*#{attr_key}▓")
         end
         val_keywords = comment_seg.scan(/(?<![#?&%*a-z_0-9])([0-9]+[0-9.]*|true|false|nil|(?<=\()[a-z_0-9]+(?=\))|(?<=#\{)[a-z_0-9]+(?=})|(?<=:▓ ['"])[A-Za-z_0-9]+(?=['"]))/).flatten.uniq.compact
         val_keywords.each do |val_key|
-          comment_seg.gsub!(/(?<![`])#{val_key}/, "▓`#{val_key}▓")
+          comment_seg.gsub!(/(?<![`_])#{val_key}/, "▓`#{val_key}▓")
         end
-        model_keywords = comment_seg.scan(/(?<![#?&%*`])([A-Z][a-z]+(?=[.▓]))/).flatten.uniq.compact
+        model_keywords = comment_seg.scan(/(?<![#?&%*`:])([A-Z][a-z]+(?=[.▓]))/).flatten.uniq.compact
         model_keywords.each do |model_key|
-          comment_seg.gsub!(model_key, "▓~#{model_key}▓")
+          comment_seg.gsub!(/(?<![~])#{model_key}/, "▓~#{model_key}▓")
         end
       end
       comment_seg
