@@ -5,7 +5,7 @@ class CreatePositions < ActiveRecord::Migration
       t.float :salary
       t.integer :shift
       t.datetime :posted_at
-      t.belongs_to :programmer, index: true, foreign_key: true
+      t.belongs_to :programmer, index: true, foreign_key: "hire_id"
 
       t.timestamps null: false
     end

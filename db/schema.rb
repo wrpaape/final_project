@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150802180945) do
+ActiveRecord::Schema.define(version: 20150802191221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,16 +115,9 @@ ActiveRecord::Schema.define(version: 20150802180945) do
   add_index "fields", ["crop_id"], name: "index_fields_on_crop_id", using: :btree
   add_index "fields", ["farm_id"], name: "index_fields_on_farm_id", using: :btree
 
-  create_table "language_predecessors", force: :cascade do |t|
-    t.integer  "language_id"
-    t.integer  "predecessor_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
   create_table "languages", force: :cascade do |t|
     t.string   "name"
-    t.integer  "yob"
+    t.integer  "yoc"
     t.string   "creator"
     t.integer  "programmer_id"
     t.integer  "position_id"
@@ -134,6 +127,14 @@ ActiveRecord::Schema.define(version: 20150802180945) do
 
   add_index "languages", ["position_id"], name: "index_languages_on_position_id", using: :btree
   add_index "languages", ["programmer_id"], name: "index_languages_on_programmer_id", using: :btree
+
+  create_table "languages_predecessors", id: false, force: :cascade do |t|
+    t.integer "language_id"
+    t.integer "predecessor_id"
+  end
+
+  add_index "languages_predecessors", ["language_id"], name: "index_languages_predecessors_on_language_id", using: :btree
+  add_index "languages_predecessors", ["predecessor_id"], name: "index_languages_predecessors_on_predecessor_id", using: :btree
 
   create_table "people", force: :cascade do |t|
     t.string   "name"
