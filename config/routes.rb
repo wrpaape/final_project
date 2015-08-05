@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  resources :studies
+  resources :assignments
+  resources :projects
   resources :languages
-  resources :applications
-  resources :positions
   resources :programmers
+  resources :communities
   resources :act_rec_methods
   get "solved_problems/new/:problem_id", to: "solved_problems#new"
   devise_for :users, :controllers => { sessions: "sessions", registrations: "registrations" }

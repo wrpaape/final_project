@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150802191221) do
+ActiveRecord::Schema.define(version: 20150805011050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,17 +27,6 @@ ActiveRecord::Schema.define(version: 20150802191221) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "applications", force: :cascade do |t|
-    t.datetime "applied_at"
-    t.integer  "programmer_id"
-    t.integer  "position_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  add_index "applications", ["position_id"], name: "index_applications_on_position_id", using: :btree
-  add_index "applications", ["programmer_id"], name: "index_applications_on_programmer_id", using: :btree
-
   create_table "baby_names", force: :cascade do |t|
     t.string   "name"
     t.string   "gender"
@@ -50,6 +39,13 @@ ActiveRecord::Schema.define(version: 20150802191221) do
   create_table "clients", force: :cascade do |t|
     t.string   "name"
     t.float    "revenue"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "communities", force: :cascade do |t|
+    t.string   "name"
+    t.date     "founded_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -119,14 +115,9 @@ ActiveRecord::Schema.define(version: 20150802191221) do
     t.string   "name"
     t.integer  "yoc"
     t.string   "creator"
-    t.integer  "programmer_id"
-    t.integer  "position_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
-
-  add_index "languages", ["position_id"], name: "index_languages_on_position_id", using: :btree
-  add_index "languages", ["programmer_id"], name: "index_languages_on_programmer_id", using: :btree
 
   create_table "languages_predecessors", id: false, force: :cascade do |t|
     t.integer "language_id"
@@ -154,18 +145,6 @@ ActiveRecord::Schema.define(version: 20150802191221) do
   add_index "people", ["mother_id"], name: "index_people_on_mother_id", using: :btree
   add_index "people", ["spouse_id"], name: "index_people_on_spouse_id", using: :btree
 
-  create_table "positions", force: :cascade do |t|
-    t.string   "name"
-    t.float    "salary"
-    t.integer  "shift"
-    t.datetime "posted_at"
-    t.integer  "programmer_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  add_index "positions", ["programmer_id"], name: "index_positions_on_programmer_id", using: :btree
-
   create_table "problems", force: :cascade do |t|
     t.string   "title"
     t.text     "instructions"
@@ -184,6 +163,18 @@ ActiveRecord::Schema.define(version: 20150802191221) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "projects", force: :cascade do |t|
+    t.integer  "manager_id"
+    t.string   "manager_type"
+    t.string   "name"
+    t.integer  "points"
+    t.date     "founded_on"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "projects", ["manager_id"], name: "index_projects_on_manager_id", using: :btree
 
   create_table "solved_problems", force: :cascade do |t|
     t.text     "solution"
@@ -204,6 +195,27 @@ ActiveRecord::Schema.define(version: 20150802191221) do
   add_index "solved_problems", ["environment_id"], name: "index_solved_problems_on_environment_id", using: :btree
   add_index "solved_problems", ["problem_id"], name: "index_solved_problems_on_problem_id", using: :btree
   add_index "solved_problems", ["user_id"], name: "index_solved_problems_on_user_id", using: :btree
+
+  create_table "studies", force: :cascade do |t|
+    t.float    "aptitude"
+    t.integer  "programmer_id"
+    t.integer  "language_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.integer  "assigner_id"
+    t.string   "assigner_type"
+    t.string   "description"
+    t.integer  "points"
+    t.boolean  "completed"
+    t.datetime "assigned_at"
+    t.integer  "project_id"
+    t.integer  "programmer_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -252,17 +264,12 @@ ActiveRecord::Schema.define(version: 20150802191221) do
   add_index "views", ["email"], name: "index_views_on_email", unique: true, using: :btree
   add_index "views", ["reset_password_token"], name: "index_views_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "applications", "positions"
-  add_foreign_key "applications", "programmers"
   add_foreign_key "contracts", "clients"
   add_foreign_key "contracts", "crops"
   add_foreign_key "contracts", "farmers"
   add_foreign_key "farms", "farmers"
   add_foreign_key "fields", "crops"
   add_foreign_key "fields", "farms"
-  add_foreign_key "languages", "positions"
-  add_foreign_key "languages", "programmers"
-  add_foreign_key "positions", "programmers"
   add_foreign_key "problems", "environments"
   add_foreign_key "solved_problems", "environments"
   add_foreign_key "solved_problems", "problems"

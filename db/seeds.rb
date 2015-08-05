@@ -2787,133 +2787,7 @@
 #   title: "the red line and the black thumb",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
 #   answer: Array.wrap(answer_the_red_line).to_json)
-rand(200..300).times do
-  pos_params = {}
-  title_arr = Faker::Name.title.split(" ")
-  title_start = title_arr.shift
-  hacker_str = "#{Faker::Hacker.noun.titleize} #{Faker::Hacker.ingverb.titleize}"
-  pos_params[:name] = "#{title_start} #{hacker_str} " + title_arr.join(" ")
-  pos_params[:shift] = (5..60).step(5).to_a.sample
-  req_langs = Language.all.sample(1..5)
-  pos_params[:salary]
-  pos_params[:posted_at] = rand(3.years.ago..Time.now)
 
-  pos = Position.create
-end
-
-
-env_descrip =
-"""
-This problem set involves the ActiveRecord model |~ActRecMethod|.
-
-The corresponding database table |@act_rec_methods| is seeded with documenatation on public instance methods
-from the ActiveRecord module that may come in handy when contructing and interacting
-with the database of an app powered by |%Ruby| on Rails.
-"""
-stupid_sexy_queries = Environment.create(
-  title: "feels |?LIKE| i'm |#find|ing nothing at all!",
-  description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  models: { "ActRecMethod"=>"act_rec_method.rb" }.to_json)
-
-prob_instruct =
-"""
-The bread and butter of any Rails controller's 'show' page action, this ActiveRecord method can be used to |#find|
-records by their primary |*key| provided its |`value| is an |`integer|. Speaking of primary |*key|s, this method is stored
-as an |~ActRecMethod| object in |@act_rec_methods| with an |*id| of |`28|.
-
-Complete the |%solution| method so that it returns the ActiveRecord |~ActRecMethod| object representing the
-ActiveRecord method described above.
-"""
-def answer_babys_first
-  ActRecMethod.find(28)
-end
-babys_first = stupid_sexy_queries.problems.create(
-  title: "baby's |#first| query",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_babys_first).to_json)
-
-prob_instruct =
-"""
-The methods included in the |@act_rec_methods| table are taken from the following 8 ActiveRecord modules:
-
-|`ActiveRecord::QueryMethods|^
-|`ActiveRecord::Persistence|^
-|`ActiveRecord::FinderMethods|^
-|`ActiveRecord::Persistence::ClassMethods|^
-|`ActiveRecord::Batches|^
-|`ActiveRecord::Scoping::Named::ClassMethods|^
-|`ActiveRecord::Calculations|^
-|`ActiveRecord::Querying|
-
-How many methods belong to each |*module|?
-
-Complete the |%solution| method so that it returns a key-value hash representing
-the |#count| of methods belonging to each |*module| in the following format:
-
-|%{ \"||*module0||%\"=>| |`num_methods0||%, ..., \"||*module7||%\"=>| |`num_methods7| |%}|
-"""
-def answer_count_modulea
-  ActRecMethod.group(:module).count
-end
-count_modulea = stupid_sexy_queries.problems.create(
-  title: "|#count| |*module|a",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-  answer: Array.wrap(answer_count_modulea).to_json)
-
-prob_instruct =
-"""
-If you haven't noticed, some of the documentation for these methods are missing an |*example|,
-the |*source| code, or even a |*description|. These uninitialized |*attribute|s are assigned the
-|`value| |`nil| upon their record's |#create|ion as per the ActiveRecord default.
-
-Complete the |%solution| method so that it returns an array of ActiveRecord |~ActRecMethod| objects representing |#all|
-ActiveRecord methods with a provided |*example|, |*source| code, |?AND| |*description| in their documentation
-(i.e. |~ActRecMethod|s |#where| the |`value|s of |*example|, |*source|, |?AND| |*description| are |#not| |`nil|).
-Please return your |%solution| |#order|ed by |*id| (default for un|#order|ed queries).
-"""
-def answer_nothing_at_all
-  ActRecMethod.where.not({ example: nil, source: nil, description: nil })
-end
-nothing_at_all = stupid_sexy_queries.problems.create(
-  title: "|#not|hing at |#all|!, |?NOT|hing at |?*|!...",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_nothing_at_all).to_json)
-
-prob_instruct =
-"""
-A handful of the ActiveRecord methods in the |@act_rec_methods| table can be paired as
-'bang' and 'non-bang' versions of the same method. The 'bang' counterparts of 'non-bang' methods
-have the same |*name| with an '!' tacked onto the end (i.e. |#update!| is the 'bang' counterpart to |#update|).
-
-In vanilla Ruby, 'bang' methods perform the same task as their 'non-bang' counterpart but will also modify the object it's called on.
-
-ActiveRecord 'bang' methods also perform the same task as their counterpart but will raise an ActiveRecord exception
-upon failure to execute, usually due to a validation failure or failure to |#find| or operate on a record.
-
-For example:
-
-|%class| |~User| |%< ActiveRecord::Base|^
-  |#validates| |*:name||%, presence: true|^
-|%end|
-
-|%user =| |~User||#.new|^
-|%user||#.save|  |@# => false|^
-    |%user||#.save!| |@# => ActiveRecord::RecordInvalid: Validation failed: Name can't be blank|
-
-Complete the |%solution| method so that it returns an array of ActiveRecord |~ActRecMethod| objects representing |#all|
-ActiveRecord methods that have a 'bang' counterpart (only the 'non-bang' versions).
-Please return your |%solution| |#order|ed by |*id| (default for un|#order|ed queries).
-"""
-def answer_feuer_frei
-  bang_methods = ActRecMethod.where("name LIKE '%!'")
-  non_bang_methods = bang_methods.map do |method|
-    non_bang_counterpart = ActRecMethod.find_by(name: method.name.chop)
-  end
-end
-feuer_frei = stupid_sexy_queries.problems.create(
-  title: "Feuer Frei|#!|",
-  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-  answer: Array.wrap(answer_feuer_frei).to_json)
 
 # raw_avg_household =
 # """
@@ -3046,3 +2920,146 @@ feuer_frei = stupid_sexy_queries.problems.create(
 # raw_the_red_line = raw_the_red_line[1..-2]
 
 # admin = User.create(name: "tastyham", password: "taoontop", password_confirmation: "taoontop", admin: true, email: "example@example.com")
+com_queries = {
+"Ruby Quarry"=> { name: ["Ruby", "Elixir", "Smalltalk", "Smalltalk-76", "Squeak Smalltalk"] },
+"Off da Rails"=> { name: ["Ruby", "JavaScript", "CoffeeScript"] },
+"Python's Monty"=> { name: "Python" },
+"Cs with Degrees"=> "name LIKE '%C%'",
+"Carapace"=> "name LIKE '%Shell%'",
+"MATLAB Babbies"=> { name: "MATLAB" },
+"FORTRAN.org"=> "LOWER(name) LIKE '%fortran%'",
+"Regex Junkies"=> { name: ["Perl", "Perl Data Language"] },
+"Esoteric Etc..."=> ["Ante", "ArnoldC", "Befunge", "Binary lambda calculus", "brainfuck", "Chef", "FALSE", "GolfScript", "INTERCAL", "LOLCODE", "Malbolge", "One instruction set computer", "Ook!", "Piet", "Rocket", "Shakespeare", "Whitespace"].map{ |name| "LOWER(name) LIKE '%#{name.downcase}%'" }.join(" OR "),
+"Javascript Masochists Anonymous"=> { name: "Javascript" },
+"Troglodytes/misc"=> "yoc < 1960",
+"Turing's Tryhards"=>  "yoc < 1950",
+"ALGOL Heroes"=> { name: "Python" },
+"Script Kiddies"=> "LOWER(name) LIKE '%script%'",
+"Millenial Falcon"=> "yoc >= 2000",
+"BASIC B's"=> "LOWER(name) LIKE '%basic%'",
+"Lost In Stupid Parentheses"=> "LOWER(name) LIKE '%lisp%' OR name = 'Intermediate Programming Language'",
+"Baby Boomers"=> "yoc >= 1946 AND yoc <= 1964",
+"Code Club"=> "",
+"Big Blue"=> "creator LIKE '%IBM%'",
+"Query Kids"=> { name: ["SQL", "Ruby"] },
+"I Only Program in Languages with 1 Letter Names"=> "name LIKE '_'"
+}
+com_langs = {}
+com_queries.each { |name, query| com_langs[name] = Language.where(query) }
+
+executives = 25.times.map do
+  Executive.create()
+end
+
+env_descrip =
+"""
+This problem set involves the ActiveRecord model |~ActRecMethod|.
+
+The corresponding database table |@act_rec_methods| is seeded with documenatation on public instance methods
+from the ActiveRecord module that may come in handy when contructing and interacting
+with the database of an app powered by |%Ruby| on Rails.
+"""
+stupid_sexy_queries = Environment.create(
+  title: "feels |?LIKE| i'm |#find|ing nothing at all!",
+  description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  models: { "ActRecMethod"=>"act_rec_method.rb" }.to_json)
+
+prob_instruct =
+"""
+The bread and butter of any Rails controller's 'show' page action, this ActiveRecord method can be used to |#find|
+records by their primary |*key| provided its |`value| is an |`integer|. Speaking of primary |*key|s, this method is stored
+as an |~ActRecMethod| object in |@act_rec_methods| with an |*id| of |`28|.
+
+Complete the |%solution| method so that it returns the ActiveRecord |~ActRecMethod| object representing the
+ActiveRecord method described above.
+"""
+def answer_babys_first
+  ActRecMethod.find(28)
+end
+babys_first = stupid_sexy_queries.problems.create(
+  title: "baby's |#first| query",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: Array.wrap(answer_babys_first).to_json)
+
+prob_instruct =
+"""
+The methods included in the |@act_rec_methods| table are taken from the following 8 ActiveRecord modules:
+
+|`ActiveRecord::QueryMethods|^
+|`ActiveRecord::Persistence|^
+|`ActiveRecord::FinderMethods|^
+|`ActiveRecord::Persistence::ClassMethods|^
+|`ActiveRecord::Batches|^
+|`ActiveRecord::Scoping::Named::ClassMethods|^
+|`ActiveRecord::Calculations|^
+|`ActiveRecord::Querying|
+
+How many methods belong to each |*module|?
+
+Complete the |%solution| method so that it returns a key-value hash representing
+the |#count| of methods belonging to each |*module| in the following format:
+
+|%{ \"||*module0||%\"=>| |`num_methods0||%, ..., \"||*module7||%\"=>| |`num_methods7| |%}|
+"""
+def answer_count_modulea
+  ActRecMethod.group(:module).count
+end
+count_modulea = stupid_sexy_queries.problems.create(
+  title: "|#count| |*module|a",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
+  answer: Array.wrap(answer_count_modulea).to_json)
+
+prob_instruct =
+"""
+If you haven't noticed, some of the documentation for these methods are missing an |*example|,
+the |*source| code, or even a |*description|. These uninitialized |*attribute|s are assigned the
+|`value| |`nil| upon their record's |#create|ion as per the ActiveRecord default.
+
+Complete the |%solution| method so that it returns an array of ActiveRecord |~ActRecMethod| objects representing |#all|
+ActiveRecord methods with a provided |*example|, |*source| code, |?AND| |*description| in their documentation
+(i.e. |~ActRecMethod|s |#where| the |`value|s of |*example|, |*source|, |?AND| |*description| are |#not| |`nil|).
+Please return your |%solution| |#order|ed by |*id| (default for un|#order|ed queries).
+"""
+def answer_nothing_at_all
+  ActRecMethod.where.not({ example: nil, source: nil, description: nil })
+end
+nothing_at_all = stupid_sexy_queries.problems.create(
+  title: "|#not|hing at |#all|!, |?NOT|hing at |?*|!...",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: Array.wrap(answer_nothing_at_all).to_json)
+
+prob_instruct =
+"""
+A handful of the ActiveRecord methods in the |@act_rec_methods| table can be paired as
+'bang' and 'non-bang' versions of the same method. The 'bang' counterparts of 'non-bang' methods
+have the same |*name| with an '!' tacked onto the end (i.e. |#update!| is the 'bang' counterpart to |#update|).
+
+In vanilla Ruby, 'bang' methods perform the same task as their 'non-bang' counterpart but will also modify the object it's called on.
+
+ActiveRecord 'bang' methods also perform the same task as their counterpart but will raise an ActiveRecord exception
+upon failure to execute, usually due to a validation failure or failure to |#find| or operate on a record.
+
+For example:
+
+|%class| |~User| |%< ActiveRecord::Base|^
+  |#validates| |*:name||%, presence: true|^
+|%end|
+
+|%user =| |~User||#.new|^
+|%user||#.save|  |@# => false|^
+    |%user||#.save!| |@# => ActiveRecord::RecordInvalid: Validation failed: Name can't be blank|
+
+Complete the |%solution| method so that it returns an array of ActiveRecord |~ActRecMethod| objects representing |#all|
+ActiveRecord methods that have a 'bang' counterpart (only the 'non-bang' versions).
+Please return your |%solution| |#order|ed by |*id| (default for un|#order|ed queries).
+"""
+def answer_feuer_frei
+  bang_methods = ActRecMethod.where("name LIKE '%!'")
+  non_bang_methods = bang_methods.map do |method|
+    non_bang_counterpart = ActRecMethod.find_by(name: method.name.chop)
+  end
+end
+feuer_frei = stupid_sexy_queries.problems.create(
+  title: "Feuer Frei|#!|",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
+  answer: Array.wrap(answer_feuer_frei).to_json)

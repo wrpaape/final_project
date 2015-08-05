@@ -2,6 +2,12 @@
 
 one:
   string: 
+  integer: 
+  boolean: 
+  assigned_at: 2015-08-04 15:53:41
 
 two:
   string: 
+  integer: 
+  boolean: 
+  assigned_at: 2015-08-04 15:53:41

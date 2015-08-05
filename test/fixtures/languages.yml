@@ -1,15 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  yob: 1
-  creator: MyString
-  programmer_id: 
-  position_id: 
+  string: 
+  integer: 
+  string: 
 
 two:
-  name: MyString
-  yob: 1
-  creator: MyString
-  programmer_id: 
-  position_id: 
+  string: 
+  integer: 
+  string: 
