@@ -3,8 +3,8 @@ class Programmer < ActiveRecord::Base
 
   has_many :studies
   has_many :languages, through: :studies
-  has_many :side_tasks, class_name: "Task", foreign_key: "programmer_id"
-  has_many :side_projects, through: :side_tasks, class_name: "Project", foreign_key: "programmer_id"
-  has_many :communities, through: :side_tasks, source: :assigner, source_type: "Community"
-  has_many :languages, through: :studies
+  has_many :side_tasks, class_name: "Task"
+  has_many :side_projects, through: :side_tasks, source: :project
+  has_many :active_communities, -> { uniq }, through: :side_tasks, class_name: "Community", source: :assigner, source_type: "Community"
+  has_and_belongs_to_many :communities
 end

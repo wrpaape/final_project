@@ -2945,10 +2945,12 @@ com_queries = {
 "I Only Program in Languages with 1 Letter Names"=> "name LIKE '_'"
 }
 com_langs = {}
-com_queries.each { |name, query| com_langs[name] = Language.where(query) }
+com_queries.each { |name, query| com_langs[name] = Language.where(query).map { |lang| [lang] << lang.predecessors }.flatten.uniq } }
 
-executives = 25.times.map do
-  Executive.create()
+all_coms = com_langs.map { |name, langs| Community.create(name: name, founded_on: Date.new(langs.minimum(:yoc)) ) }
+
+executives = rand(20..30).times.map do
+  Executive.create(name: Faker::Name.name)
 end
 
 env_descrip =
