@@ -9,7 +9,7 @@ class Programmer < ActiveRecord::Base
   has_many :side_projects, -> { uniq }, through: :side_tasks, class_name: "Project"
   has_many :active_communities, -> { uniq }, through: :side_tasks, source: :assigner, source_type: "Community", class_name: "Community"
   has_and_belongs_to_many :communities
-  validate :type_same_as_class
+  validate :type_same_as_class_or_subclass
 
   module Superior
     extend ActiveSupport::Concern
@@ -37,9 +37,11 @@ class Programmer < ActiveRecord::Base
     end
   end
 
-  def type_same_as_class
-    unless type == self.class.to_s
-      errors.add(:type, "type must be same as class")
+  def type_same_as_class_or_subclass
+    type_as_class = type.constantize
+    subclasses = self.class.subclasses
+    unless is_a?(type_as_class) || subclasses.include?(type_as_class)
+      errors.add(:type, "must be same as class or subclass")
     end
   end
 end
