@@ -2948,9 +2948,18 @@ com_langs = {}
 com_queries.each { |name, query| com_langs[name] = Language.where(query).map { |lang| [lang] << lang.predecessors }.flatten.uniq } }
 
 all_coms = com_langs.map { |name, langs| Community.create(name: name, founded_on: Date.new(langs.minimum(:yoc)) ) }
+proj_points = (3..10).step(0.1).to_a.map { |x| (x ** Math.exp(1)).round }
+all_coms.each do |com|
+  com.projects.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
+              points_total: proj_points.sample,
+              founded_on: rand(com.founded_on..Date.now))
+end
 
-executives = rand(20..30).times.map do
-  Executive.create(name: Faker::Name.name)
+task_points = (0.8..3).step(0.1).to_a.map { |x| (x ** Math.exp(1)).round }
+
+rand(20..30).times.map do
+  exec = Executive.create(name: Faker::Name.name)
+
 end
 
 env_descrip =

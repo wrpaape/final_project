@@ -1,10 +1,6 @@
 class Executive < Programmer
-  has_many :seniors
-  has_many :juniors, through: :seniors
-  has_many :projects, as: :manager
-  has_many :tasks, as: :assigner
+  include Superior
 
-  def subordinates
-    seniors << juniors
-  end
+  has_many :seniors
+  has_many :work_projects, as: :manager, class_name: "Project"
 end
