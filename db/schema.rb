@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(version: 20150805195539) do
   add_index "problems", ["environment_id"], name: "index_problems_on_environment_id", using: :btree
 
   create_table "programmers", force: :cascade do |t|
+    t.string   "type"
     t.string   "name"
     t.integer  "executive_id"
     t.integer  "senior_id"

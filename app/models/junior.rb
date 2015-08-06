@@ -3,6 +3,6 @@ class Junior < Programmer
 
   belongs_to :senior
   def superiors
-    executive << senior
+    Programmer.where(id: [executive_id, senior_id])
   end
 end

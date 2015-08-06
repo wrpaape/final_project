@@ -2,8 +2,11 @@ module Superior
   extend ActiveSupport::Concern
 
   included do
-    has_many :subordinates, -> { include?(Subordinate) || Programmer.none }, class_name: "Programmer"
     has_many :juniors
     has_many :assigned_tasks, as: :assigner, class_name: "Task"
+
+    def subordinates
+      methods.include?(:seniors) ? seniors.merge(juniors) : juniors
+    end
   end
 end
