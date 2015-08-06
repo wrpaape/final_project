@@ -8,7 +8,7 @@ class CreateTasks < ActiveRecord::Migration
       t.boolean :completed
       t.datetime :assigned_at
       t.belongs_to :project
-      t.belongs_to :programmer
+      t.belongs_to :receiver
 
       t.timestamps null: false
     end

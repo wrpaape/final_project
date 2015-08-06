@@ -164,12 +164,12 @@ ActiveRecord::Schema.define(version: 20150805195539) do
   add_index "problems", ["environment_id"], name: "index_problems_on_environment_id", using: :btree
 
   create_table "programmers", force: :cascade do |t|
-    t.string   "type"
+    t.string   "type",         default: "Programmer"
     t.string   "name"
     t.integer  "executive_id"
     t.integer  "senior_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "projects", force: :cascade do |t|
@@ -220,7 +220,7 @@ ActiveRecord::Schema.define(version: 20150805195539) do
     t.boolean  "completed"
     t.datetime "assigned_at"
     t.integer  "project_id"
-    t.integer  "programmer_id"
+    t.integer  "receiver_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
