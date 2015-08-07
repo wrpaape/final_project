@@ -176,10 +176,10 @@ ActiveRecord::Schema.define(version: 20150805195539) do
     t.integer  "manager_id"
     t.string   "manager_type"
     t.string   "name"
-    t.integer  "points_total"
+    t.integer  "points_total", default: 0
     t.date     "founded_on"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   add_index "projects", ["manager_id"], name: "index_projects_on_manager_id", using: :btree
@@ -205,24 +205,24 @@ ActiveRecord::Schema.define(version: 20150805195539) do
   add_index "solved_problems", ["user_id"], name: "index_solved_problems_on_user_id", using: :btree
 
   create_table "studies", force: :cascade do |t|
-    t.float    "aptitude"
+    t.float    "aptitude",      default: 0.0
     t.integer  "programmer_id"
     t.integer  "language_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "tasks", force: :cascade do |t|
     t.integer  "assigner_id"
     t.string   "assigner_type"
     t.string   "description"
-    t.integer  "points"
-    t.boolean  "completed"
+    t.integer  "points",        default: 0
+    t.boolean  "completed",     default: false
     t.datetime "assigned_at"
     t.integer  "project_id"
     t.integer  "receiver_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "users", force: :cascade do |t|

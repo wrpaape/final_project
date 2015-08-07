@@ -2,7 +2,15 @@ class Programmer < ActiveRecord::Base
   extend HandleData
 
   has_many :studies
+  has_many :novice_studies, -> { novice }, class_name: "Study"
+  has_many :intermediate_studies, -> { intermediate }, class_name: "Study"
+  has_many :advanced_studies, -> { advanced }, class_name: "Study"
+  has_many :expert_studies, -> { expert }, class_name: "Study"
   has_many :languages, through: :studies
+  has_many :novice_languages, through: :novice_studies, source: :language, class_name: "Language"
+  has_many :intermediate_languages, through: :intermediate_studies, source: :language, class_name: "Language"
+  has_many :advanced_languages, through: :advanced_studies, source: :language, class_name: "Language"
+  has_many :expert_languages, through: :expert_studies, source: :language, class_name: "Language"
   has_many :projects_managed, as: :manager, class_name: "Project"
   has_many :side_tasks, -> { where(assigner_type: "Community") }, foreign_key: "receiver_id", class_name: "Task"
   has_many :tasks_assigned, as: :assigner, class_name: "Task"
@@ -12,8 +20,6 @@ class Programmer < ActiveRecord::Base
   has_many :projects_received, -> { uniq }, through: :tasks_received, source: :project, class_name: "Project"
   has_many :communities_involved, -> { uniq }, through: :side_tasks, source: :assigner, source_type: "Community", class_name: "Community"
   has_and_belongs_to_many :communities
-  belongs_to :executive
-  belongs_to :senior
 
   alias_attribute :work_projects_managed, :projects_managed
   alias_attribute :side_tasks_received, :side_tasks
@@ -58,6 +64,7 @@ class Programmer < ActiveRecord::Base
     extend ActiveSupport::Concern
 
     included do
+      belongs_to :executive
       validates :executive_id, presence: true
 
       def superiors
