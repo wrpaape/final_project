@@ -3,13 +3,20 @@ class Programmer < ActiveRecord::Base
 
   has_many :studies
   has_many :languages, through: :studies
-  has_many :tasks
-  has_many :projects, -> { uniq }, through: :tasks
+  has_many :tasks, ->(programmer) { where("(assigner_type = 'Programmer' AND assigner_id = #{programmer.id||0}) OR receiver_id = #{programmer.id||0}") }
   has_many :side_tasks, -> { where(assigner_type: "Community") }, foreign_key: "receiver_id", class_name: "Task"
   has_many :side_projects, -> { uniq }, through: :side_tasks, class_name: "Project"
   has_many :active_communities, -> { uniq }, through: :side_tasks, source: :assigner, source_type: "Community", class_name: "Community"
   has_and_belongs_to_many :communities
   validate :type_same_as_class_or_subclass
+
+  def tasks
+    Task.where("(assigner_type = 'Programmer' AND assigner_id = #{id||0}) OR receiver_id = #{id||0}")
+  end
+
+  def projects
+    Project.where("(manager_type = 'Programmer' AND manager_id = #{id||0}) OR id = ?", tasks.pluck(:project_id).uniq)
+  end
 
   module Superior
     extend ActiveSupport::Concern
@@ -18,6 +25,7 @@ class Programmer < ActiveRecord::Base
       has_many :juniors
       has_many :tasks_assigned, as: :assigner, class_name: "Task"
       validates :senior_id, absence: true
+
       def subordinates
         type == "Executive" ? seniors << juniors : juniors
       end
@@ -31,6 +39,7 @@ class Programmer < ActiveRecord::Base
       has_many :tasks_received, -> { where(assigner_type: "Programmer") }, foreign_key: "receiver_id", class_name: "Task"
       has_many :projects_received, -> { uniq }, through: :tasks_received, class_name: "Project"
       belongs_to :executive
+
       def superiors
         Programmer.where(id: [executive_id, senior_id])
       end
@@ -41,7 +50,7 @@ class Programmer < ActiveRecord::Base
     type_as_class = type.constantize
     subclasses = self.class.subclasses
     unless is_a?(type_as_class) || subclasses.include?(type_as_class)
-      errors.add(:type, "must be same as class or subclass")
+      errors.add(:type, "must be same as its class or subclass!")
     end
   end
 end
