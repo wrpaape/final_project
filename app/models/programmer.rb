@@ -3,8 +3,6 @@ class Programmer < ActiveRecord::Base
 
   has_many :studies
   has_many :languages, through: :studies
-  has_many :seniors
-  has_many :juniors
   has_many :projects_managed, as: :manager, class_name: "Project"
   has_many :side_tasks, -> { where(assigner_type: "Community") }, foreign_key: "receiver_id", class_name: "Task"
   has_many :tasks_assigned, as: :assigner, class_name: "Task"
@@ -47,10 +45,11 @@ class Programmer < ActiveRecord::Base
     extend ActiveSupport::Concern
 
     included do
+      has_many :juniors
       validates :senior_id, absence: true
 
       def subordinates
-        type == "Executive" ? seniors << juniors : juniors
+        Programmer.where("executive_id = #{id} OR senior_id = #{id}")
       end
     end
   end
@@ -59,6 +58,8 @@ class Programmer < ActiveRecord::Base
     extend ActiveSupport::Concern
 
     included do
+      validates :executive_id, presence: true
+
       def superiors
         Programmer.where(id: [executive_id, senior_id])
       end
