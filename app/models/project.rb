@@ -4,6 +4,8 @@ class Project < ActiveRecord::Base
   scope :completed, -> { where("points_total <= #{joins(:tasks).merge(Task.completed).sum(:points)}") }
   validate :subordinates_cant_manage_projects
 
+  alias_attribute :points, :points_total
+
   def points_assigned
     tasks.sum(:points)
   end

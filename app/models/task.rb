@@ -6,7 +6,7 @@ class Task < ActiveRecord::Base
   scope :completed, -> { where(completed: true) }
   validate :assigner_has_project, if: "assigner"
   validate :receiver_must_be_subordinate_of_assigner, if: "assigner && receiver && assigner_type == 'Programmer'"
-  validate :points_must_be_less_than_or_equal_to_project_points_remaining
+  validate :points_cant_be_greater_than_project_points_remaining
   validates :points,
     numericality:
       {
@@ -26,9 +26,9 @@ class Task < ActiveRecord::Base
     end
   end
 
-  def points_must_be_less_than_or_equal_to_project_points_remaining
-    unless points <= project.points_remaining
-      errors.add(:points, "must be less than or equal to project points remaining!")
+  def points_cant_be_greater_than_project_points_remaining
+    if points > project.points_remaining
+      errors.add(:points, "can't be greater than Project points remaining!")
     end
   end
 end

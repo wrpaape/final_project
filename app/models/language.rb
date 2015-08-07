@@ -7,6 +7,7 @@ class Language < ActiveRecord::Base
     class_name: "Language",
     join_table: "languages_predecessors",
     association_foreign_key: "predecessor_id"
+  scope :unique, -> { where.not(id: joins(:predecessors).ids.uniq) }
 
   def self.get_model_file
 """
