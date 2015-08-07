@@ -2,6 +2,7 @@ class Task < ActiveRecord::Base
   belongs_to :assigner, polymorphic: true
   belongs_to :receiver, class_name: "Programmer"
   belongs_to :project
+  scope :completed, -> { where(completed: true) }
   validate :assigner_has_project, :assigner_is_not_junior, if: "assigner"
 
   def assigner_has_project
