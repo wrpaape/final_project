@@ -4,6 +4,7 @@ class Task < ActiveRecord::Base
   alias_attribute :programmer, :receiver
   belongs_to :project
   scope :completed, -> { where(completed: true) }
+  scope :incomplete, -> { where(completed: false) }
   validate :assigner_has_project, if: "assigner"
   validate :receiver_must_be_subordinate_of_assigner, if: "assigner && receiver && assigner_type == 'Programmer'"
   validate :cant_be_assigned_before_project_founded_on, if: "assigned_at"

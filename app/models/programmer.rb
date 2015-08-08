@@ -2,15 +2,19 @@ class Programmer < ActiveRecord::Base
   extend HandleData
 
   has_many :studies
+  has_many :entry_studies, -> { entry }, class_name: "Study"
   has_many :novice_studies, -> { novice }, class_name: "Study"
   has_many :intermediate_studies, -> { intermediate }, class_name: "Study"
-  has_many :advanced_studies, -> { advanced }, class_name: "Study"
+  has_many :competent_studies, -> { competent }, class_name: "Study"
   has_many :expert_studies, -> { expert }, class_name: "Study"
+  has_many :mastered_studies, -> { mastered }, class_name: "Study"
   has_many :languages, through: :studies
+  has_many :entry_languages, through: :entry_studies, source: :language, class_name: "Language"
   has_many :novice_languages, through: :novice_studies, source: :language, class_name: "Language"
   has_many :intermediate_languages, through: :intermediate_studies, source: :language, class_name: "Language"
-  has_many :advanced_languages, through: :advanced_studies, source: :language, class_name: "Language"
+  has_many :competent_languages, through: :competent_studies, source: :language, class_name: "Language"
   has_many :expert_languages, through: :expert_studies, source: :language, class_name: "Language"
+  has_many :mastered_languages, through: :mastered_studies, source: :language, class_name: "Language"
   has_many :projects_managed, as: :manager, class_name: "Project"
   has_many :side_tasks, -> { where(assigner_type: "Community") }, foreign_key: "receiver_id", class_name: "Task"
   has_many :tasks_assigned, as: :assigner, class_name: "Task"
@@ -20,10 +24,13 @@ class Programmer < ActiveRecord::Base
   has_many :projects_received, -> { uniq }, through: :tasks_received, source: :project, class_name: "Project"
   has_many :communities_involved, -> { uniq }, through: :side_tasks, source: :assigner, source_type: "Community", class_name: "Community"
   has_and_belongs_to_many :communities
-  scope :novice, -> { where(id: joins(:novice_languages).ids.uniq) }
-  scope :intermediate, -> { where(id: joins(:intermediate_languages).ids.uniq) }
-  scope :advanced, -> { where(id: joins(:advanced_languages).ids.uniq) }
-  scope :expert, -> { where(id: joins(:expert_languages).ids.uniq) }
+
+  scope :entries, -> { where(id: joins(:entry_languages).ids.uniq) }
+  scope :novices, -> { where(id: joins(:novice_languages).ids.uniq) }
+  scope :intermediates, -> { where(id: joins(:intermediate_languages).ids.uniq) }
+  scope :competents, -> { where(id: joins(:competent_languages).ids.uniq) }
+  scope :experts, -> { where(id: joins(:expert_languages).ids.uniq) }
+  scope :masters, -> { where(id: joins(:mastered_languages).ids.uniq) }
   scope :employed, -> { where.not(type: "Programmer") }
   scope :unemployed, -> { where(type: "Programmer") }
 

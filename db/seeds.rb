@@ -2920,6 +2920,104 @@
 # raw_the_red_line = raw_the_red_line[1..-2]
 
 # admin = User.create(name: "tastyham", password: "taoontop", password_confirmation: "taoontop", admin: true, email: "example@example.com")
+
+def task_description
+  noun = [Faker::Hacker.noun, Faker::Hacker.abbreviation].sample
+  direct_object = ["#{Faker::Hacker.adjective} ","",""].sample
+  verb = Faker::Hacker.verb
+  ["#{verb} the #{direct_object}",
+  Faker::Hacker.say_something_smart].sample
+end
+
+def assign_languages(prog)
+  langs = Language.all.to_a.shuffle
+  case prog.type
+  when "Executive"
+    num_langs_range = 10..30
+    weights = [1, 1, 1, 2, 10, 3]
+  when "Senior"
+    num_langs_range = 4..15
+    weights = [1, 1, 2, 10, 5, 2]
+  when "Junior"
+    num_langs_range = 1..5
+    weights = [2, 5, 10, 5, 2, 1]
+  else
+    num_langs_range = ([1..3] * 5 << [1..20]).flatten.sample
+    weights = [5, 10, 5, 2, 1, 1]
+  end
+
+  rand(num_langs_range).times do
+    apts = [0] * weights[0] << [rand * 2] * weights[1] << [rand * 3 + 2] * weights[2] << [rand * 3 + 5] * weights[3] << [rand * 2 + 8] * weights[4] << [10] * weights[5]
+    apt = apts.flatten.sample
+    langs.pop.studies.create(programmer_id: prog.id,
+      language_id: langs.pop.id,
+      aptitude: apt)
+  end
+end
+
+proj_points = (3..10).step(0.1).to_a.map { |x| (x ** Math.exp(1)).round }
+task_points = (0.8..3).step(0.1).to_a.map { |x| (x ** Math.exp(1)).round }
+
+rand(20..30).times do
+  exec = Executive.create(name: Faker::Name.name)
+  assign_languages(exec)
+  rand(2..10).times do
+    sen = exec.seniors.create(name: Faker::Name.name)
+    assign_languages(sen)
+    rand(2..10).times do
+      jun = sen.juniors.create(name: Faker::Name.name)
+      assign_languages(jun)
+    end
+  end
+  sens = exec.seniors.to_a
+  rand(25..40).times.with_index do |i|
+    proj = exec.projects_managed.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
+      points_total: proj_points.sample,
+      founded_on: rand(10.years.ago.to_date..Date.today))
+    next if sens.present? || [true, false, false].sample
+    project_assignment = exec.tasks_assigned.create(description: "complete #{proj.name}",
+      assigned_at: rand((proj.founded_on.to_datetime + 1.seconds)...Time.now - 1.seconds))
+    sen_assigned = sens.empty? exec.seniors.sample : sens.pop
+    sen_assigned.tasks_received << project_assignment
+
+    next if sens.present? || [true, false, false].sample
+    juns = sen_assigned.juniors.to_a
+
+    assigned_to_completion = [true, true, false].sample
+    proj_points = proj.points
+    points_cutoff = assigned_to_completion ? proj.points : rand((proj_points / 2)...proj_points)
+    loop do
+      task = sen_assigned.tasks_assigned.new(description: task_description,
+        assigned_at: rand((project_assignment.assigned_at + 1.seconds)..Time.now),
+        points: task_points.sample)
+      break unless proj.points_assigned <= points_cutoff && task.save
+      jun_assigned = juns.empty? sen_assigned.juniors.sample : juns.pop
+      jun_assigned.tasks_received << task
+    end
+    if assigned_to_completion
+      task = sen_assigned.tasks_assigned.create(description: task_description,
+        assigned_at: rand((project_assignment.assigned_at + 1.seconds)..Time.now),
+        points: proj.points_unassigned)
+      sen_assigned.juniors.sample.tasks_received << task
+    end
+    sen_tasks = sen_assigned.tasks_assigned
+    all_tasks_completed = [true, false, false].sample
+    num_completed = all_tasks_completed ? sen_tasks.count : rand(0..sen_tasks.count)
+    num_completed.times do
+      sen_assigned.tasks_assigned.incomplete.sample.update(completed: true)
+    end
+    sen_tasks = sen_assigned.tasks_assigned
+    if sen_tasks.incomplete.count.zero?
+      project_assignment.update(completed: true)
+    end
+  end
+end
+
+rand(250..500).times do
+  prog = Progammer.create(name: Faker::Name.name)
+  assign_languages(prog)
+end
+
 com_queries = {
 "Ruby Quarry"=> { name: ["Ruby", "Elixir", "Smalltalk", "Smalltalk-76", "Squeak Smalltalk"] },
 "Off da Rails"=> { name: ["Ruby", "JavaScript", "CoffeeScript"] },
@@ -2944,44 +3042,22 @@ com_queries = {
 "Query Kids"=> { name: ["SQL", "Ruby"] },
 "I Only Program in Languages with 1 Letter Names"=> "name LIKE '_'"
 }
-com_langs = {}
-com_queries.each { |name, query| com_langs[name] = Language.where(query).map { |lang| [lang] << lang.predecessors }.flatten.uniq } }
 
-all_coms = com_langs.map { |name, langs| Community.create(name: name, founded_on: Date.new(langs.minimum(:yoc)) ) }
-proj_points = (3..10).step(0.1).to_a.map { |x| (x ** Math.exp(1)).round }
+all_coms = com_queries.map { |name, query| { name: name, langs: Language.where(query).map { |lang| [lang] << lang.predecessors }.flatten.uniq } } }
+all_coms.each { |com| com[:com] = Community.create(name: name, founded_on: Date.new(langs.minimum(:yoc)) + rand(0..365)) }
 all_coms.each do |com|
-  com.projects.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
+  com[:com].projects.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
     points_total: proj_points.sample,
-    founded_on: rand(com.founded_on..Date.today))
+    founded_on: rand(com[:com].founded_on..Date.today))
 end
 
-task_points = (0.8..3).step(0.1).to_a.map { |x| (x ** Math.exp(1)).round }
-
-rand(20..30).times do
-  exec = Executive.create(name: Faker::Name.name)
-  rand(2..10).times do
-    sen = exec.seniors.create(name: Faker::Name.name)
-    rand(2..10).times do
-      sen.juniors.create(name: Faker::Name.name)
+Programmer.all.each do |prog|
+  all_coms.each do |com|
+    intersecting_langs = prog.languages.to_a & com[:langs].to_a
+    if intersecting_langs.present? && ([true] * 4 << false).sample
+      com[:com].members << prog
     end
   end
-  sens = exec.seniors.to_a
-  rand(10..25).times do
-    proj = exec.projects_managed.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
-      points_total: proj_points.sample,
-      founded_on: rand(10.years.ago.to_date..Date.today))
-    task = exec.tasks_assigned.create(description: "complete #{proj.name}",
-      assigned_at: rand((proj.founded_on.to_datetime + 1.seconds)..Time.now))
-    sen_assigned = sens.empty? exec.seniors.sample : sens.pop
-    sen_assigned.tasks_received << task
-    # sens.each do
-    # loop do
-    #   task = proj.tasks.new(description: "#{Faker::Hacker.verb} the #{Faker::Hacker.noun}", points: task_points.sample)
-    #   break unless task.save
-    # end
-
-  end
-
 end
 
 env_descrip =
