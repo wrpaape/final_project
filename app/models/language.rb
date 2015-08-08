@@ -20,14 +20,14 @@ class Language < ActiveRecord::Base
     join_table: "languages_predecessors",
     association_foreign_key: "predecessor_id"
 
-  scope :with_entries, -> { where(id: joins(:entries).ids.uniq) }
-  scope :with_novices, -> { where(id: joins(:novices).ids.uniq) }
-  scope :with_intermediates, -> { where(id: joins(:intermediates).ids.uniq) }
-  scope :with_competents, -> { where(id: joins(:competents).ids.uniq) }
-  scope :with_experts, -> { where(id: joins(:experts).ids.uniq) }
-  scope :with_masters, -> { where(id: joins(:masters).ids.uniq) }
-  scope :studied, -> { where(id: joins(:studies).ids.uniq) }
-  scope :unstudied, -> { where.not(id: joins(:studies).ids.uniq) }
+  scope :with_entries, -> { joins(:entries).uniq }
+  scope :with_novices, -> { joins(:novices).uniq }
+  scope :with_intermediates, -> { joins(:intermediates).uniq }
+  scope :with_competents, -> { joins(:competents).uniq }
+  scope :with_experts, -> { joins(:experts).uniq }
+  scope :with_masters, -> { joins(:masters).uniq }
+  scope :studied, -> { joins(:studies).uniq }
+  scope :unstudied, -> { where.not(id: studied.ids) }
 
   def self.get_model_file
 """

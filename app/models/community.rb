@@ -7,7 +7,7 @@ class Community < ActiveRecord::Base
   has_many :active_members, -> { uniq }, through: :tasks, class_name: "Programmer"
   has_many :contributors, -> { uniq }, through: :completed_tasks, source: :receiver
   has_many :memberships
-  # has_many :founder_memberships, -> { with_founders }, class_name: "Membership"
+  has_many :founder_memberships, -> { with_founders }, class_name: "Membership"
   has_many :members, through: :memberships, source: :programmer, class_name: "Programmer"
   has_many :founders, -> { founders }, through: :memberships, source: :programmer, class_name: "Programmer"
   has_many :languages, -> { uniq }, through: :members, source: :languages
@@ -22,8 +22,4 @@ class Community < ActiveRecord::Base
   alias_attribute :programmers, :members
   alias_attribute :active_programmers, :active_members
   alias_attribute :contributing_programmers, :contributors
-
-  # def founders
-  #   Programmer.where(id: founder_memberships.pluck(:programmer_id))
-  # end
 end

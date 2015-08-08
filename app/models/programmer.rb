@@ -27,12 +27,12 @@ class Programmer < ActiveRecord::Base
   has_many :founder_memberships, -> { with_founders }, class_name: "Membership"
   has_many :communities, through: :memberships
 
-  scope :entries, -> { where(id: joins(:entry_languages).ids.uniq) }
-  scope :novices, -> { where(id: joins(:novice_languages).ids.uniq) }
-  scope :intermediates, -> { where(id: joins(:intermediate_languages).ids.uniq) }
-  scope :competents, -> { where(id: joins(:competent_languages).ids.uniq) }
-  scope :experts, -> { where(id: joins(:expert_languages).ids.uniq) }
-  scope :masters, -> { where(id: joins(:mastered_languages).ids.uniq) }
+  scope :entries, -> { joins(:entry_languages).uniq }
+  scope :novices, -> { joins(:novice_languages).uniq }
+  scope :intermediates, -> { joins(:intermediate_languages).uniq }
+  scope :competents, -> { joins(:competent_languages).uniq }
+  scope :experts, -> { joins(:expert_languages).uniq }
+  scope :masters, -> { joins(:mastered_languages).uniq }
   scope :employed, -> { where.not(type: "Programmer") }
   scope :unemployed, -> { where(type: "Programmer") }
   scope :founders, -> { joins(memberships: :community).where("communities.founded_on = memberships.joined_on") }
