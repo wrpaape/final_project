@@ -1,4 +1,6 @@
 class Community < ActiveRecord::Base
+  extend HandleData
+
   has_many :projects, as: :manager
   has_many :tasks, as: :assigner
   has_many :completed_tasks, -> { completed }, as: :assigner, class_name: "Task"

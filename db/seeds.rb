@@ -2951,14 +2951,36 @@ all_coms = com_langs.map { |name, langs| Community.create(name: name, founded_on
 proj_points = (3..10).step(0.1).to_a.map { |x| (x ** Math.exp(1)).round }
 all_coms.each do |com|
   com.projects.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
-              points_total: proj_points.sample,
-              founded_on: rand(com.founded_on..Date.now))
+    points_total: proj_points.sample,
+    founded_on: rand(com.founded_on..Date.today))
 end
 
 task_points = (0.8..3).step(0.1).to_a.map { |x| (x ** Math.exp(1)).round }
 
-rand(20..30).times.map do
+rand(20..30).times do
   exec = Executive.create(name: Faker::Name.name)
+  rand(2..10).times do
+    sen = exec.seniors.create(name: Faker::Name.name)
+    rand(2..10).times do
+      sen.juniors.create(name: Faker::Name.name)
+    end
+  end
+  sens = exec.seniors.to_a
+  rand(10..25).times do
+    proj = exec.projects_managed.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
+      points_total: proj_points.sample,
+      founded_on: rand(10.years.ago.to_date..Date.today))
+    task = exec.tasks_assigned.create(description: "complete #{proj.name}",
+      assigned_at: rand((proj.founded_on.to_datetime + 1.seconds)..Time.now))
+    sen_assigned = sens.empty? exec.seniors.sample : sens.pop
+    sen_assigned.tasks_received << task
+    # sens.each do
+    # loop do
+    #   task = proj.tasks.new(description: "#{Faker::Hacker.verb} the #{Faker::Hacker.noun}", points: task_points.sample)
+    #   break unless task.save
+    # end
+
+  end
 
 end
 

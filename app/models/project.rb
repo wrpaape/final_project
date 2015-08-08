@@ -2,7 +2,7 @@ class Project < ActiveRecord::Base
   has_many :tasks
   belongs_to :manager, polymorphic: true
   scope :completed, -> { where("points_total <= #{joins(:tasks).merge(Task.completed).sum(:points)}") }
-  validate :subordinates_cant_manage_projects
+  validate :subordinates_cant_manage_projects, if: "manager"
 
   alias_attribute :points, :points_total
 
@@ -10,12 +10,16 @@ class Project < ActiveRecord::Base
     tasks.sum(:points)
   end
 
+  def points_unassigned
+    points - points_assigned
+  end
+
   def points_completed
     tasks.completed.sum(:points)
   end
 
-  def points_remaining
-    points_total - points_completed
+  def points_uncompleted
+    points - points_completed
   end
 
   def subordinates_cant_manage_projects

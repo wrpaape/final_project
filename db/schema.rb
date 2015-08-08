@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(version: 20150805195539) do
     t.string   "manager_type"
     t.string   "name"
     t.integer  "points_total", default: 0
-    t.date     "founded_on"
+    t.date     "founded_on",               null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
@@ -219,7 +219,7 @@ ActiveRecord::Schema.define(version: 20150805195539) do
     t.integer  "points",        default: 0
     t.boolean  "completed",     default: false
     t.datetime "assigned_at"
-    t.integer  "project_id"
+    t.integer  "project_id",                    null: false
     t.integer  "receiver_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false

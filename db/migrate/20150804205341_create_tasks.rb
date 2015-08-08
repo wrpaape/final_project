@@ -7,7 +7,7 @@ class CreateTasks < ActiveRecord::Migration
       t.integer :points, default: 0
       t.boolean :completed, default: false
       t.datetime :assigned_at
-      t.belongs_to :project
+      t.belongs_to :project, null: false
       t.belongs_to :receiver
 
       t.timestamps null: false

@@ -6,6 +6,7 @@ class Task < ActiveRecord::Base
   scope :completed, -> { where(completed: true) }
   validate :assigner_has_project, if: "assigner"
   validate :receiver_must_be_subordinate_of_assigner, if: "assigner && receiver && assigner_type == 'Programmer'"
+  validate :cant_be_assigned_before_project_founded_on, if: "assigned_at"
   validate :points_cant_be_greater_than_project_points_remaining
   validates :points,
     numericality:
@@ -26,8 +27,14 @@ class Task < ActiveRecord::Base
     end
   end
 
+  def cant_be_assigned_before_project_founded_on
+    if assigned_at < project.founded_on
+      errors.add(:assigned_at, "must be after Project's founded_on!")
+    end
+  end
+
   def points_cant_be_greater_than_project_points_remaining
-    if points > project.points_remaining
+    if points > project.points_unassigned
       errors.add(:points, "can't be greater than Project points remaining!")
     end
   end

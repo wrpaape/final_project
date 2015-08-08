@@ -20,6 +20,12 @@ class Programmer < ActiveRecord::Base
   has_many :projects_received, -> { uniq }, through: :tasks_received, source: :project, class_name: "Project"
   has_many :communities_involved, -> { uniq }, through: :side_tasks, source: :assigner, source_type: "Community", class_name: "Community"
   has_and_belongs_to_many :communities
+  scope :novice, -> { where(id: joins(:novice_languages).ids.uniq) }
+  scope :intermediate, -> { where(id: joins(:intermediate_languages).ids.uniq) }
+  scope :advanced, -> { where(id: joins(:advanced_languages).ids.uniq) }
+  scope :expert, -> { where(id: joins(:expert_languages).ids.uniq) }
+  scope :employed, -> { where.not(type: "Programmer") }
+  scope :unemployed, -> { where(type: "Programmer") }
 
   alias_attribute :work_projects_managed, :projects_managed
   alias_attribute :side_tasks_received, :side_tasks

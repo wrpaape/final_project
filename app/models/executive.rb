@@ -1,4 +1,5 @@
 class Executive < Programmer
+  extend HandleData
   include Superior
 
   has_many :seniors
