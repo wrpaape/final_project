@@ -3046,18 +3046,28 @@ com_queries = {
 all_coms = com_queries.map { |name, query| { name: name, langs: Language.where(query).map { |lang| [lang] << lang.predecessors }.flatten.uniq } } }
 all_coms.each { |com| com[:com] = Community.create(name: name, founded_on: Date.new(langs.minimum(:yoc)) + rand(0..365)) }
 all_coms.each do |com|
-  com[:com].projects.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
-    points_total: proj_points.sample,
-    founded_on: rand(com[:com].founded_on..Date.today))
+  rand(1..20).times do
+    com[:com].projects.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
+      points_total: proj_points.sample,
+      founded_on: rand(com[:com].founded_on..Date.today))
+  end
 end
 
 Programmer.all.each do |prog|
   all_coms.each do |com|
     intersecting_langs = prog.languages.to_a & com[:langs].to_a
     if intersecting_langs.present? && ([true] * 4 << false).sample
-      com[:com].members << prog
+      joined_on = com.members.count.zero? ? com.founded_on : rand(com.founded_on..Date.today)
+
     end
   end
+end
+
+Community.all.each do |com|
+  com.projects.each do |proj|
+
+  end
+  progs = com.members.to_a
 end
 
 env_descrip =

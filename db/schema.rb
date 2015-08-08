@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805195539) do
+ActiveRecord::Schema.define(version: 20150808184231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,11 +48,6 @@ ActiveRecord::Schema.define(version: 20150805195539) do
     t.date     "founded_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "communities_programmers", id: false, force: :cascade do |t|
-    t.integer "community_id",  null: false
-    t.integer "programmer_id", null: false
   end
 
   create_table "contracts", force: :cascade do |t|
@@ -131,6 +126,17 @@ ActiveRecord::Schema.define(version: 20150805195539) do
 
   add_index "languages_predecessors", ["language_id"], name: "index_languages_predecessors_on_language_id", using: :btree
   add_index "languages_predecessors", ["predecessor_id"], name: "index_languages_predecessors_on_predecessor_id", using: :btree
+
+  create_table "memberships", force: :cascade do |t|
+    t.date     "joined_on",     null: false
+    t.integer  "community_id"
+    t.integer  "programmer_id", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "memberships", ["community_id"], name: "index_memberships_on_community_id", using: :btree
+  add_index "memberships", ["programmer_id"], name: "index_memberships_on_programmer_id", using: :btree
 
   create_table "people", force: :cascade do |t|
     t.string   "name"
@@ -278,6 +284,8 @@ ActiveRecord::Schema.define(version: 20150805195539) do
   add_foreign_key "farms", "farmers"
   add_foreign_key "fields", "crops"
   add_foreign_key "fields", "farms"
+  add_foreign_key "memberships", "communities"
+  add_foreign_key "memberships", "programmers"
   add_foreign_key "problems", "environments"
   add_foreign_key "solved_problems", "environments"
   add_foreign_key "solved_problems", "problems"

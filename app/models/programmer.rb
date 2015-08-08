@@ -23,7 +23,9 @@ class Programmer < ActiveRecord::Base
   has_many :projects_assigned, -> { uniq }, through: :tasks_assigned, source: :project, class_name: "Project"
   has_many :projects_received, -> { uniq }, through: :tasks_received, source: :project, class_name: "Project"
   has_many :communities_involved, -> { uniq }, through: :side_tasks, source: :assigner, source_type: "Community", class_name: "Community"
-  has_and_belongs_to_many :communities
+  has_many :memberships
+  has_many :founder_memberships, -> { with_founders }, class_name: "Membership"
+  has_many :communities, through: :memberships
 
   scope :entries, -> { where(id: joins(:entry_languages).ids.uniq) }
   scope :novices, -> { where(id: joins(:novice_languages).ids.uniq) }
@@ -33,6 +35,7 @@ class Programmer < ActiveRecord::Base
   scope :masters, -> { where(id: joins(:mastered_languages).ids.uniq) }
   scope :employed, -> { where.not(type: "Programmer") }
   scope :unemployed, -> { where(type: "Programmer") }
+  scope :founders, -> { joins(memberships: :community).where("communities.founded_on = memberships.joined_on") }
 
   alias_attribute :work_projects_managed, :projects_managed
   alias_attribute :side_tasks_received, :side_tasks
