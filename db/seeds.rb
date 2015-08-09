@@ -2942,7 +2942,7 @@ def assign_languages(prog)
     num_langs_range = 1..5
     weights = [2, 5, 10, 5, 2, 1]
   else
-    num_langs_range = ([1..3] * 5 << [1..20]).flatten.sample
+    num_langs_range = ([1..3] * 5 << (1..20)).sample
     weights = [5, 10, 5, 2, 1, 1]
   end
 
@@ -2975,26 +2975,26 @@ rand(20..30).times do
     proj = exec.projects_managed.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
       points_total: proj_points.sample,
       founded_on: rand(10.years.ago..1.month.ago).to_date)
-    next if ([false] * 3 << true).sample
+    next if ([false] * 2 << true).sample
+    sen_assigned = sens.empty? ? exec.seniors.sample : sens.pop
     project_assignment = exec.tasks_assigned.create(description: "complete #{proj.name}",
       assigned_at: rand(proj.founded_on.to_time...Time.now),
-      project_id: proj.id)
-    sen_assigned = sens.empty? ? exec.seniors.sample : sens.pop
-    project_assignment.update(receiver_id: sen_assigned.id)
+      project_id: proj.id,
+      receiver_id: sen_assigned.id)
 
-    next if [true, false, false].sample
+    next if ([false] * 2 << true).sample
     juns = sen_assigned.juniors.to_a.shuffle
 
-    assigned_to_completion = [true, true, false].sample
+    assigned_to_completion = ([true] * 2 << false).sample
     points_cutoff = assigned_to_completion ? proj.points : rand((proj.points / 4)...proj.points)
     loop do
+      jun_assigned = juns.empty? ? sen_assigned.juniors.sample : juns.pop
       task = sen_assigned.tasks_assigned.new(description: task_description,
         assigned_at: rand(project_assignment.assigned_at..Time.now),
         points: task_points.sample,
-        project_id: proj.id)
-      break unless proj.points_assigned <= points_cutoff && task.save
-      jun_assigned = juns.empty? ? sen_assigned.juniors.sample : juns.pop
-      task.update(receiver_id: jun_assigned.id)
+        project_id: proj.id,
+        receiver_id: jun_assigned.id)
+      break if proj.points_assigned > points_cutoff || !task.save
     end
     if assigned_to_completion
       task = sen_assigned.tasks_assigned.create(description: task_description,
@@ -3003,14 +3003,11 @@ rand(20..30).times do
         project_id: proj.id,
         receiver_id: sen_assigned.juniors.sample.id)
     end
-    sen_tasks = sen_assigned.tasks_assigned.incomplete
-    all_tasks_completed = [true, false, false].sample
-    num_completed = all_tasks_completed ? sen_tasks.count : rand(0..sen_tasks.count)
-    num_completed.times do
-      sen_assigned.tasks_assigned.incomplete.sample.update(completed: true)
-    end
-    sen_tasks = sen_assigned.tasks_assigned
-    if sen_tasks.incomplete.count.zero?
+    all_tasks_completed = ([true] * 3 << false).sample
+    num_to_complete = all_tasks_completed ? proj.tasks.count : rand(0..proj.tasks.count)
+    task_ids = proj.tasks.where.not(receiver_id: sen_assigned.id).ids.sample(num_to_complete)
+    Task.where(id: task_ids).update_all(completed: true)
+    if proj.tasks.incomplete.count == 1
       project_assignment.update(completed: true)
     end
   end
@@ -3072,16 +3069,16 @@ Community.all.shuffle.each do |com|
     next if ([false] * 4 << true).sample
     assigned_to_completion = [true, false, false].sample
     proj_points = proj.points
-    points_cutoff = assigned_to_completion ? proj.points : rand((proj_points / 4)...proj_points)
+    points_cutoff = assigned_to_completion ? proj_points : rand((proj_points / 4)...proj_points)
     mems = com.members.to_a.shuffle
     loop do
       mem = mems.empty? ? com.members.sample : mems.pop
       task = com.tasks_assigned.new(description: task_description,
         assigned_at: rand((mem.memberships.find_by(community_id: com.id).joined_on).to_time..Time.now),
         points: task_points.sample,
-        project_id: proj.id)
-      break unless proj.points_assigned <= points_cutoff && task.save
-      task.update(receiver_id: mem.id)
+        project_id: proj.id,
+        receiver_id: mem.id)
+      break if proj.points_assigned > points_cutoff || !task.save
     end
     if assigned_to_completion
       mem = com.members.sample
@@ -3092,9 +3089,10 @@ Community.all.shuffle.each do |com|
         receiver_id: mem.id)
     end
     next if proj.tasks.count.zero?
-    proj_completed = ([false] * 3 << true).sample
-    tasks_completed = proj_completed ? proj.tasks : proj.tasks.sample(rand(0...proj.tasks.count))
-    tasks_completed.each { |task| task.update(completed: true) }
+    proj_completed = ([true] << false).sample
+    num_completed = proj_completed ? proj.tasks.count : rand(0...proj.tasks.count)
+    task_ids = proj.tasks.ids.sample(num_completed)
+    Task.where(id: task_ids).update_all(completed: true)
   end
 end
 
