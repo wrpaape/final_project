@@ -2965,40 +2965,43 @@ rand(20..30).times do
     sen = exec.seniors.create(name: Faker::Name.name)
     assign_languages(sen)
     rand(2..10).times do
-      jun = sen.juniors.create(name: Faker::Name.name)
+      jun = sen.juniors.create(name: Faker::Name.name,
+        executive_id: exec.id)
       assign_languages(jun)
     end
   end
   sens = exec.seniors.to_a.shuffle
-  rand(25..40).times.with_index do |i|
+  rand(25..40).times do
     proj = exec.projects_managed.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
       points_total: proj_points.sample,
-      founded_on: rand(10.years.ago.to_date..Date.today))
-    next if sens.present? || [true, false, false].sample
+      founded_on: rand(10.years.ago..1.month.ago).to_date)
+    next if ([false] * 3 << true).sample
     project_assignment = exec.tasks_assigned.create(description: "complete #{proj.name}",
-      assigned_at: rand((proj.founded_on.to_datetime + 1.seconds)...Time.now - 1.seconds))
-    sen_assigned = sens.empty? exec.seniors.sample : sens.pop
-    sen_assigned.tasks_received << project_assignment
+      assigned_at: rand(proj.founded_on.to_time...Time.now),
+      project_id: proj.id)
+    sen_assigned = sens.empty? ? exec.seniors.sample : sens.pop
+    project_assignment.update(receiver_id: sen_assigned.id)
 
-    next if sens.present? || [true, false, false].sample
+    next if [true, false, false].sample
     juns = sen_assigned.juniors.to_a.shuffle
 
     assigned_to_completion = [true, true, false].sample
-    proj_points = proj.points
-    points_cutoff = assigned_to_completion ? proj.points : rand((proj_points / 4)...proj_points)
+    points_cutoff = assigned_to_completion ? proj.points : rand((proj.points / 4)...proj.points)
     loop do
       task = sen_assigned.tasks_assigned.new(description: task_description,
-        assigned_at: rand((project_assignment.assigned_at + 1.seconds)..Time.now),
-        points: task_points.sample)
+        assigned_at: rand(project_assignment.assigned_at..Time.now),
+        points: task_points.sample,
+        project_id: proj.id)
       break unless proj.points_assigned <= points_cutoff && task.save
-      jun_assigned = juns.empty? sen_assigned.juniors.sample : juns.pop
-      jun_assigned.tasks_received << task
+      jun_assigned = juns.empty? ? sen_assigned.juniors.sample : juns.pop
+      task.update(receiver_id: jun_assigned.id)
     end
     if assigned_to_completion
       task = sen_assigned.tasks_assigned.create(description: task_description,
-        assigned_at: rand((project_assignment.assigned_at + 1.seconds)..Time.now),
-        points: proj.points_unassigned)
-      sen_assigned.juniors.sample.tasks_received << task
+        assigned_at: rand(project_assignment.assigned_at..Time.now),
+        points: proj.points_unassigned,
+        project_id: proj.id,
+        receiver_id: sen_assigned.juniors.sample.id)
     end
     sen_tasks = sen_assigned.tasks_assigned
     all_tasks_completed = [true, false, false].sample
@@ -3014,7 +3017,7 @@ rand(20..30).times do
 end
 
 rand(250..500).times do
-  prog = Progammer.create(name: Faker::Name.name)
+  prog = Programmer.create(name: Faker::Name.name)
   assign_languages(prog)
 end
 
@@ -3028,7 +3031,7 @@ com_queries = {
 "FORTRAN.org"=> "LOWER(name) LIKE '%fortran%'",
 "Regex Junkies"=> { name: ["Perl", "Perl Data Language"] },
 "Esoteric Etc..."=> ["Ante", "ArnoldC", "Befunge", "Binary lambda calculus", "brainfuck", "Chef", "FALSE", "GolfScript", "INTERCAL", "LOLCODE", "Malbolge", "One instruction set computer", "Ook!", "Piet", "Rocket", "Shakespeare", "Whitespace"].map{ |name| "LOWER(name) LIKE '%#{name.downcase}%'" }.join(" OR "),
-"Javascript Masochists Anonymous"=> { name: "Javascript" },
+"Javascript Masochists Anonymous"=> { name: "JavaScript" },
 "Troglodytes/misc"=> "yoc < 1960",
 "Turing's Tryhards"=>  "yoc < 1950",
 "ALGOL Heroes"=> { name: "Python" },
@@ -3043,8 +3046,8 @@ com_queries = {
 "I Only Program in Languages with 1 Letter Names"=> "name LIKE '_'"
 }
 
-all_coms = com_queries.map { |name, query| { name: name, langs: Language.where(query).map { |lang| [lang] << lang.predecessors }.flatten.uniq } } }
-all_coms.each { |com| com[:com] = Community.create(name: name, founded_on: Date.new(langs.minimum(:yoc)) + rand(0..365)) }
+all_coms = com_queries.map { |name, query| { name: name, langs: Language.where(query).map { |lang| [lang] << lang.predecessors }.flatten.uniq } }
+all_coms.each { |com_name_langs| com_name_langs[:com] = Community.create(name: com_name_langs[:name], founded_on: Date.new(com_name_langs[:langs].map { |lang| lang.yoc}.min) + rand(0..365)) }
 all_coms.each do |com|
   rand(1..20).times do
     com[:com].projects.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
@@ -3053,17 +3056,17 @@ all_coms.each do |com|
   end
 end
 
-Programmer.all.each do |prog|
+Programmer.all.shuffle.each do |prog|
   all_coms.each do |com|
     intersecting_langs = prog.languages.to_a & com[:langs].to_a
-    if intersecting_langs.present? && ([true] * 4 << false).sample
-      joined_on = com.members.count.zero? ? com.founded_on : rand(com.founded_on..Date.today)
-      prog.memberships.create(community_id: com.id, joined_on: joined_on)
+    if intersecting_langs.present? && ([false] * 2 << true).sample
+      joined_on = com[:com].members.count.zero? ? com[:com].founded_on : rand(com[:com].founded_on..Date.today)
+      prog.memberships.create(community_id: com[:com].id, joined_on: joined_on)
     end
   end
 end
 
-Community.all.each do |com|
+Community.all.shuffle.each do |com|
   next if com.members.empty?
   com.projects.each do |proj|
     next if ([false] * 4 << true).sample
@@ -3074,17 +3077,21 @@ Community.all.each do |com|
     loop do
       mem = mems.empty? ? com.members.sample : mems.pop
       task = com.tasks_assigned.new(description: task_description,
-        assigned_at: rand((mem.memberships.find_by(community_id: com.id).joined_on + 1.seconds)..Time.now),
-        points: task_points.sample)
+        assigned_at: rand((mem.memberships.find_by(community_id: com.id).joined_on).to_time..Time.now),
+        points: task_points.sample,
+        project_id: proj.id)
       break unless proj.points_assigned <= points_cutoff && task.save
-      mem.side_tasks << task
+      task.update(receiver_id: mem.id)
     end
     if assigned_to_completion
+      mem = com.members.sample
       task = com.tasks_assigned.create(description: task_description,
-        assigned_at: rand((mem.memberships.find_by(community_id: com.id).joined_on + 1.seconds)..Time.now),
-        points: proj.points_unassigned)
-      com.members.sample.side_tasks << task
+        assigned_at: rand((mem.memberships.find_by(community_id: com.id).joined_on).to_time..Time.now),
+        points: proj.points_unassigned,
+        project_id: proj.id,
+        receiver_id: mem.id)
     end
+    next if proj.tasks.count.zero?
     proj_completed = ([false] * 3 << true).sample
     tasks_completed = proj_completed ? proj.tasks : proj.tasks.sample(rand(0...proj.tasks.count))
     tasks_completed.each { |task| task.update(completed: true) }

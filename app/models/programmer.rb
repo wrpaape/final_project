@@ -48,19 +48,20 @@ class Programmer < ActiveRecord::Base
   validate :type_same_as_class_or_subclass
 
   def work_tasks
-    tasks_assigned << tasks_received
+    Task.where(id: tasks_assigned.ids.concat(tasks_received.ids))
   end
 
   def tasks
-    work_tasks << side_tasks
+    Task.where(id: work_tasks.ids.concat(side_tasks.ids))
+
   end
 
   def work_projects
-    projects_managed << projects_assigned << projects_received
+    Project.where(id: projects_received.ids.concat(projects_assigned.ids).concat(projects_managed.ids))
   end
 
   def projects
-    work_projects << side_projects
+    Project.where(id: work_projects.ids.concat(side_projects.ids))
   end
 
   module Superior
