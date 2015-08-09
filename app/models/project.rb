@@ -2,8 +2,7 @@ class Project < ActiveRecord::Base
   has_many :tasks
   has_many :tasks_completed, -> { completed }, class_name: "Task"
   belongs_to :manager, polymorphic: true
-
-  # scope :completed, -> { joins(:tasks).merge(Task.completed).select("projects.*, WHERE points_total <= SUM(tasks.points)") }
+  scope :completed, -> { joins(:tasks_completed).group(:id).having("points_total <= SUM(tasks.points)") }
   scope :side, -> { where(manager_type: "Community") }
   scope :work, -> { where(manager_type: "Programmer") }
 

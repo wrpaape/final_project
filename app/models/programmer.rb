@@ -53,7 +53,6 @@ class Programmer < ActiveRecord::Base
 
   def tasks
     Task.where(id: work_tasks.ids.concat(side_tasks.ids))
-
   end
 
   def work_projects

@@ -3003,7 +3003,7 @@ rand(20..30).times do
         project_id: proj.id,
         receiver_id: sen_assigned.juniors.sample.id)
     end
-    sen_tasks = sen_assigned.tasks_assigned
+    sen_tasks = sen_assigned.tasks_assigned.incomplete
     all_tasks_completed = [true, false, false].sample
     num_completed = all_tasks_completed ? sen_tasks.count : rand(0..sen_tasks.count)
     num_completed.times do
