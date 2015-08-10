@@ -3057,7 +3057,7 @@ Programmer.all.shuffle.each do |prog|
   all_coms.each do |com|
     intersecting_langs = prog.languages.to_a & com[:langs].to_a
     if intersecting_langs.present? && ([false] * 2 << true).sample
-      joined_on = com[:com].members.count.zero? ? com[:com].founded_on : rand(com[:com].founded_on..Date.today)
+      joined_on = com[:com].members.count.zero? || ([false] * 5 << true).sample ? com[:com].founded_on : rand(com[:com].founded_on..Date.today)
       prog.memberships.create(community_id: com[:com].id, joined_on: joined_on)
     end
   end
@@ -3067,7 +3067,7 @@ Community.all.shuffle.each do |com|
   next if com.members.empty?
   com.projects.each do |proj|
     next if ([false] * 4 << true).sample
-    assigned_to_completion = [true, false, false].sample
+    assigned_to_completion = ([false] * 2 << true).sample
     proj_points = proj.points
     points_cutoff = assigned_to_completion ? proj_points : rand((proj_points / 4)...proj_points)
     mems = com.members.to_a.shuffle

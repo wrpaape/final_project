@@ -2,6 +2,7 @@ class Project < ActiveRecord::Base
   has_many :tasks
   has_many :tasks_completed, -> { completed }, class_name: "Task"
   belongs_to :manager, polymorphic: true
+  scope :incomplete, -> { where.not(id: joins(:tasks_completed).group("projects.id").having("points_total <= SUM(tasks.points)").ids) }
   scope :completed, -> { where(id: joins(:tasks_completed).group("projects.id").having("points_total <= SUM(tasks.points)").ids) }
   scope :side, -> { where(manager_type: "Community") }
   scope :work, -> { where(manager_type: "Programmer") }
@@ -22,7 +23,7 @@ class Project < ActiveRecord::Base
     tasks.completed.sum(:points)
   end
 
-  def points_uncompleted
+  def points_incomplete
     points - points_completed
   end
 
