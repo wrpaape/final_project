@@ -9,12 +9,12 @@ class Language < ActiveRecord::Base
   has_many :expert_studies, -> { expert }, class_name: "Study"
   has_many :mastered_studies, -> { mastered }, class_name: "Study"
   has_many :programmers, through: :studies
-  has_many :entries, through: :entry_studies, source: :programmer, class_name: "Programmer"
-  has_many :novices, through: :novice_studies, source: :programmer, class_name: "Programmer"
-  has_many :intermediates, through: :intermediate_studies, source: :programmer, class_name: "Programmer"
-  has_many :competents, through: :competent_studies, source: :programmer, class_name: "Programmer"
-  has_many :experts, through: :expert_studies, source: :programmer, class_name: "Programmer"
-  has_many :masters, through: :mastered_studies, source: :programmer, class_name: "Programmer"
+  has_many :entries, through: :entry_studies, source: :programmer
+  has_many :novices, through: :novice_studies, source: :programmer
+  has_many :intermediates, through: :intermediate_studies, source: :programmer
+  has_many :competents, through: :competent_studies, source: :programmer
+  has_many :experts, through: :expert_studies, source: :programmer
+  has_many :masters, through: :mastered_studies, source: :programmer
   has_and_belongs_to_many :predecessors,
     class_name: "Language",
     join_table: "languages_predecessors",
@@ -27,7 +27,7 @@ class Language < ActiveRecord::Base
   scope :with_experts, -> { joins(:experts).uniq }
   scope :with_masters, -> { joins(:masters).uniq }
   scope :studied, -> { joins(:studies).uniq }
-  scope :unstudied, -> { where.not(id: studied.ids) }
+  scope :unstudied, -> { where.not(id: studied.select(:id)) }
 
   def self.get_model_file
 """

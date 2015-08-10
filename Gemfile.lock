@@ -21,8 +21,6 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    active_record_group_count (0.0.1)
-      rails (>= 3.1.0)
     activejob (4.2.3)
       activesupport (= 4.2.3)
       globalid (>= 0.3.0)
@@ -203,7 +201,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_record_group_count
   bcrypt
   bootstrap-sass
   bullet

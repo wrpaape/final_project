@@ -2029,7 +2029,7 @@
 # """
 # This problem set involves the ActiveRecord model |~ActRecMethod|.
 
-# The corresponding database table |@act_rec_methods| is seeded with documenatation on public instance methods
+# The corresponding database table |@act_rec_methods| is seeded with documentation on public instance methods
 # from the ActiveRecord module that may come in handy when contructing and interacting
 # with the database of an app powered by |%Ruby| on Rails.
 # """
@@ -3057,7 +3057,7 @@ Programmer.all.shuffle.each do |prog|
   all_coms.each do |com|
     intersecting_langs = prog.languages.to_a & com[:langs].to_a
     if intersecting_langs.present? && ([false] * 2 << true).sample
-      joined_on = com[:com].members.count.zero? || ([false] * 5 << true).sample ? com[:com].founded_on : rand(com[:com].founded_on..Date.today)
+      joined_on = com[:com].members.count.zero? || ([false] * 100 << true).sample ? com[:com].founded_on : rand(com[:com].founded_on..Date.today)
       prog.memberships.create(community_id: com[:com].id, joined_on: joined_on)
     end
   end
@@ -3096,35 +3096,50 @@ Community.all.shuffle.each do |com|
   end
 end
 
-# env_descrip =
-# """
-# This problem set involves the ActiveRecord model |~ActRecMethod|.
+env_descrip =
+"""
+This problem set involves the ActiveRecord models |~Programmer| (|~Executive|,
+|~Senior|, |~Junior|), |~Language|, |~Study|, |~Community|, |~Membership|,
+|~Project|, and |~Task|.
 
-# The corresponding database table |@act_rec_methods| is seeded with documenatation on public instance methods
-# from the ActiveRecord module that may come in handy when contructing and interacting
-# with the database of an app powered by |%Ruby| on Rails.
-# """
-# stupid_sexy_queries = Environment.create(
-#   title: "feels |?LIKE| i'm |#find|ing nothing at all!",
-#   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   models: { "ActRecMethod"=>"act_rec_method.rb" }.to_json)
 
-# prob_instruct =
-# """
-# The bread and butter of any Rails controller's 'show' page action, this ActiveRecord method can be used to |#find|
-# records by their primary |*key| provided its |`value| is an |`integer|. Speaking of primary |*key|s, this method is stored
-# as an |~ActRecMethod| object in |@act_rec_methods| with an |*id| of |`28|.
+The corresponding database table |@languages| is seeded with wikipedia's
+timeline of programming languages.  A |~Language| instance is |#has_and_belongs_to_many|
+|&predecessors| |#through| the model-less |@languages_predecessors| |#join_table|.
+|~Programmer| and its |%subclass| models |~Executive|, |~Senior|, and |~Junior| are
+stored in the single database table |@programmers|.
+"""
+stupid_sexy_queries = Environment.create(
+  title: "database, database, just living in the database!",
+  description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  models: { "Programmer"=>"programmer.rb",
+    "Executive"=>"executive.rb",
+    "Senior"=>"senior.rb",
+    "Junior"=>"junior.rb",
+    "Language"=>"language.rb",
+    "Study"=>"study.rb",
+    "Community"=>"community.rb",
+    "Membership"=>"membership.rb",
+    "Project"=>"project.rb",
+    "Task"=>"task.rb"
+  }.to_json)
 
-# Complete the |%solution| method so that it returns the ActiveRecord |~ActRecMethod| object representing the
-# ActiveRecord method described above.
-# """
-# def answer_babys_first
-#   ActRecMethod.find(28)
-# end
-# babys_first = stupid_sexy_queries.problems.create(
-#   title: "baby's |#first| query",
-#   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: Array.wrap(answer_babys_first).to_json)
+prob_instruct =
+"""
+The bread and butter of any Rails controller's 'show' page action, this ActiveRecord method can be used to |#find|
+records by their primary |*key| provided its |`value| is an |`integer|. Speaking of primary |*key|s, this method is stored
+as an |~ActRecMethod| object in |@act_rec_methods| with an |*id| of |`28|.
+
+Complete the |%solution| method so that it returns the ActiveRecord |~ActRecMethod| object representing the
+ActiveRecord method described above.
+"""
+def answer_babys_first
+  "oogity-boogity"
+end
+babys_first = stupid_sexy_queries.problems.create(
+  title: "baby's |#first| query",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
+  answer: Array.wrap(answer_babys_first).to_json)
 
 # prob_instruct =
 # """
