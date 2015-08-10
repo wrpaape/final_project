@@ -62,6 +62,7 @@ gem 'bcrypt'
 gem 'react-rails-img'
 gem 'faker'
 gem 'devise'
+gem 'active_record_group_count'
 
 source "https://rails-assets.org" do
   gem 'rails-assets-moment'
