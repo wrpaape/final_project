@@ -17,6 +17,7 @@ class Community < ActiveRecord::Base
 
   has_many :languages, -> { uniq }, through: :members, source: :languages
 
+
   alias_attribute :side_projects, :projects
   alias_attribute :projects_managed, :projects
   alias_attribute :side_projects_managed, :projects
