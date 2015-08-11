@@ -6,8 +6,8 @@ class Senior < Programmer
   def self.get_model_file
 """
 class $~Senior$ < $~Programmer$
-  $%include$ $%Superior$
-  $%include$ $%Subordinate$
+  $%include$ $~Superior$
+  $%include$ $~Subordinate$
 end
 """
   end
@@ -26,7 +26,6 @@ class CreateProgrammers < ActiveRecord::Migration
     end
   end
 end
-
 """
   end
 end

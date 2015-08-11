@@ -9,7 +9,7 @@ class Executive < Programmer
   def self.get_model_file
 """
 class $~Executive$ < $~Programmer$
-  $%include$ $%Superior$
+  $%include$ $~Superior$
   
   $#has_many$ $&:seniors$
   
@@ -32,7 +32,6 @@ class CreateProgrammers < ActiveRecord::Migration
     end
   end
 end
-
 """
   end
 end

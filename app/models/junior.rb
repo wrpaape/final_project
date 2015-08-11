@@ -9,7 +9,7 @@ class Junior < Programmer
   def self.get_model_file
 """
 class $~Junior$ < $~Programmer$
-  $%include$ $%Subordinate$
+  $%include$ $~Subordinate$
   
   $#belongs_to$ $&:senior$
   
@@ -32,7 +32,6 @@ class CreateProgrammers < ActiveRecord::Migration
     end
   end
 end
-
 """
   end
 end
