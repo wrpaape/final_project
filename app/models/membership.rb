@@ -30,7 +30,7 @@ class $~Membership$ < ActiveRecord::Base
   $#belongs_to$ $&:community$
   $#belongs_to$ $&:programmer$
   
-  $#scope$ $#:with_founders$, -> { $#joins($$&:community$$#).where($$?\"founded_on = joined_on\"$$#)$ }
+  $#scope :with_founders$, -> { $#joins($$&:community$$#).where($$?\"founded_on = joined_on\"$$#)$ }
 
   $#validates_uniqueness_of$ $*:programmer_id$, $#scope:$ $*:community_id$
   $#validate$ $%:programmer_cant_join_before_community_founded$
@@ -62,11 +62,10 @@ class CreateMemberships < ActiveRecord::Migration
       t$#.belongs_to$ $&:community$, $#index:$ $`true$, $#foreign_key:$ $`true$
       t$#.belongs_to$ $&:programmer$, $#index:$ $`true$, $#foreign_key:$ $`true$, $#null:$ $`false$
   
-      t$#.timestamps$ $#null:$ $`false$
+      t$#.timestamps null:$ $`false$
     end
   end
 end
-
 """
   end
 end

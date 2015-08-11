@@ -49,14 +49,14 @@ class $~Language$ < ActiveRecord::Base
 
   $#has_and_belongs_to_many$ $&:predecessors$, $#class_name:$ $~\"Language\"$, $#join_table:$ $@\"languages_predecessors\"$, $#association_foreign_key:$ $*\"predecessor_id\"$
   
-  $#scope$ $&:with_entries$, -> { $#joins($$&:entries$$#).uniq$ }
-  $#scope$ $&:with_novices$, -> { $#joins($$&:novices$$#).uniq$ }
-  $#scope$ $&:with_intermediates$, -> { $#joins($$&:intermediates$$#).uniq$ }
-  $#scope$ $&:with_competents$, -> { $#joins($$&:competents$$#).uniq$ }
-  $#scope$ $&:with_experts$, -> { $#joins($$&:experts$$#).uniq$ }
-  $#scope$ $&:with_masters$, -> { $#joins($$&:masters$$#).uniq$ }
-  $#scope$ $&:studied$, -> { $#joins($$&:studies$$#).uniq$ }
-  $#scope$ $&:unstudied$, -> { $#where.not($$*id:$ $&studied$$#.select($$*:id$$#))$ }
+  $#scope :with_entries$, -> { $#joins($$&:entries$$#).uniq$ }
+  $#scope :with_novices$, -> { $#joins($$&:novices$$#).uniq$ }
+  $#scope :with_intermediates$, -> { $#joins($$&:intermediates$$#).uniq$ }
+  $#scope :with_competents$, -> { $#joins($$&:competents$$#).uniq$ }
+  $#scope :with_experts$, -> { $#joins($$&:experts$$#).uniq$ }
+  $#scope :with_masters$, -> { $#joins($$&:masters$$#).uniq$ }
+  $#scope :studied$, -> { $#joins($$&:studies$$#).uniq$ }
+  $#scope :unstudied$, -> { $#where.not($$*id:$ $&studied$$#.select($$*:id$$#))$ }
 end
 """
   end
@@ -70,7 +70,7 @@ class CreateLanguages < ActiveRecord::Migration
       t$`.integer$ $*:yoc$
       t$`.string$ $*:creator$
 
-      t$#.timestamps$ $#null:$ $`false$
+      t$#.timestamps null:$ $`false$
     end
   end
 end

@@ -23,7 +23,7 @@ class CreateCrops < ActiveRecord::Migration
       t$`.string$ $*:name$
       t$`.float$ $*:yield$
 
-      t$#.timestamps$ $#null:$ $`false$
+      t$#.timestamps null:$ $`false$
     end
   end
 end

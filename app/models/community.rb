@@ -71,7 +71,7 @@ class CreateCommunities < ActiveRecord::Migration
       t$`.string$ $*:name$
       t$`.date$ $*:founded_on$
 
-      t$#.timestamps$ $#null:$ $`false$
+      t$#.timestamps null:$ $`false$
     end
   end
 end

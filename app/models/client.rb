@@ -20,7 +20,7 @@ class CreateClients < ActiveRecord::Migration
       t$`.string$ $*:name$
       t$`.float$ $*:revenue$
 
-      t$#.timestamps$ $#null:$ $`false$
+      t$#.timestamps null:$ $`false$
     end
   end
 end

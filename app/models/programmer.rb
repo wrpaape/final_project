@@ -154,15 +154,15 @@ class Programmer < ActiveRecord::Base
   $#alias_attribute$ $&:work_projects_assigned$, $&:projects_assigned$
   $#alias_attribute$ $&:work_projects_received$, $&:projects_received$
 
-  $#scope$ $&:entries$, -> { $#joins($$&:entry_languages$$#).uniq$ }
-  $#scope$ $&:novices$, -> { $#joins($$&:novice_languages$$#).uniq$ }
-  $#scope$ $&:intermediates$, -> { $#joins($$&:intermediate_languages$$#).uniq$ }
-  $#scope$ $&:competents$, -> { $#joins($$&:competent_languages$$#).uniq$ }
-  $#scope$ $&:experts$, -> { $#joins($$&:expert_languages$$#).uniq$ }
-  $#scope$ $&:masters$, -> { $#joins($$&:mastered_languages$$#).uniq$ }
-  $#scope$ $&:employed$, -> { $#where.not($$*type:$ $`\"Programmer\"$$#)$ }
-  $#scope$ $&:unemployed$, -> { $#where($$*type:$ $`\"Programmer\"$$#)$ }
-  $#scope$ $&:founders$, -> { $#joins($$&memberships: :community$$#).where($$?\"communities.founded_on = memberships.joined_on\"$$#)$ }
+  $#scope :entries$, -> { $#joins($$&:entry_languages$$#).uniq$ }
+  $#scope :novices$, -> { $#joins($$&:novice_languages$$#).uniq$ }
+  $#scope :intermediates$, -> { $#joins($$&:intermediate_languages$$#).uniq$ }
+  $#scope :competents$, -> { $#joins($$&:competent_languages$$#).uniq$ }
+  $#scope :experts$, -> { $#joins($$&:expert_languages$$#).uniq$ }
+  $#scope :masters$, -> { $#joins($$&:mastered_languages$$#).uniq$ }
+  $#scope :employed$, -> { $#where.not($$*type:$ $`\"Programmer\"$$#)$ }
+  $#scope :unemployed$, -> { $#where($$*type:$ $`\"Programmer\"$$#)$ }
+  $#scope :founders$, -> { $#joins($$&memberships: :community$$#).where($$?\"communities.founded_on = memberships.joined_on\"$$#)$ }
 
   $#validate$ $%:type_same_as_class_or_subclass$
 
@@ -231,7 +231,7 @@ class CreateProgrammers < ActiveRecord::Migration
       t$`.integer$ $*:executive_id$
       t$`.integer$ $*:senior_id$
   
-      t$#.timestamps$ $#null:$ $`false$
+      t$#.timestamps null:$ $`false$
     end
   end
 end

@@ -28,7 +28,7 @@ class CreateContracts < ActiveRecord::Migration
       t$#.belongs_to$ $&:crop$, $#index:$ $`true$, $*foreign_key:$ true
       t$#.belongs_to$ $&:client$, $#index:$ $`true$, $*foreign_key:$ true
 
-      t$#.timestamps$ $#null:$ $`false$
+      t$#.timestamps null:$ $`false$
     end
   end
 end

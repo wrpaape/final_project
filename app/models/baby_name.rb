@@ -18,7 +18,7 @@ class CreateBabyNames < ActiveRecord::Migration
       t$`.integer$ $*:frequency$
       t$`.integer$ $*:yob$
 
-      t$#.timestamps$ $#null:$ $`false$
+      t$#.timestamps null:$ $`false$
     end
   end
 end

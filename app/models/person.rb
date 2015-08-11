@@ -71,7 +71,7 @@ class CreatePeople < ActiveRecord::Migration
       t$#.references$ $&:father$, $#index:$ $`true$
       t$#.references$ $&:spouse$, $#index:$ $`true$
 
-      t$#.timestamps$ $#null:$ $`false$
+      t$#.timestamps null:$ $`false$
     end
   end
 end

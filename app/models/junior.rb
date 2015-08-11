@@ -28,7 +28,7 @@ class CreateProgrammers < ActiveRecord::Migration
       t$`.integer$ $*:executive_id$
       t$`.integer$ $*:senior_id$
   
-      t$#.timestamps$ $#null:$ $`false$
+      t$#.timestamps null:$ $`false$
     end
   end
 end

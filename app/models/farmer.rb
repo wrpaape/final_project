@@ -22,7 +22,7 @@ class CreateFarmers < ActiveRecord::Migration
     $#create_table$ $@:farmers$ do |t|
       t$`.string$ $*:name$
 
-      t$#.timestamps$ $#null:$ $`false$
+      t$#.timestamps null:$ $`false$
     end
   end
 end

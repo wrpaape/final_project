@@ -20,7 +20,7 @@ class CreateActRecMethods < ActiveRecord::Migration
       t$`.text$ $*:example$
       t$`.text$ $*:source$
 
-      t$#.timestamps$ $#null:$ $`false$
+      t$#.timestamps null:$ $`false$
     end
   end
 end
