@@ -12,6 +12,7 @@ class Project < ActiveRecord::Base
   scope :incomplete, -> { where.not(id: completed.select(:id)) }
   scope :side, -> { where(manager_type: "Community") }
   scope :work, -> { where(manager_type: "Programmer") }
+  Language.includes([:studies, { languages_predecessors: { predecessor: :studies } }])
 
   validate :subordinates_cant_manage_projects, if: "manager"
 

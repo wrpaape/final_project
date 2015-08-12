@@ -190,7 +190,7 @@ class Programmer < ActiveRecord::Base
       $#validates$ $*:senior_id$, $#absence:$ $`true$
 
       def $&subordinates$
-        $~Programmer$$#.where($$?\"executive_id = #{id} OR senior_id = #{id}\"$$#)$
+        $~Programmer$$#.where($$?\"executive_id = #\{id} OR senior_id = #\{id}\"$$#)$
       end
     end
   end

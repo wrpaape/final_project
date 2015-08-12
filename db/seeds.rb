@@ -3104,12 +3104,19 @@ This problem set involves the ActiveRecord models |~Programmer| (|~Executive|,
 
 
 The corresponding database table |@languages| is seeded with wikipedia's
-timeline of programming languages.  A |~Language| instance is |#has_and_belongs_to_many|
+timeline of programming languages. A |~Language| instance is |#has_and_belongs_to_many|
 |&predecessors| |#through| the model-less |@languages_predecessors| |#join_table|.
 |~Programmer| and its |%subclass| models |~Executive|, |~Senior|, and |~Junior| are
-stored in the single database table |@programmers|.
+stored in the shared database table |@programmers|.
+
+
+|#polymorphic| associations, nested |#has_many|-|#through|s, single table inheritance, module mixins,
+|#scope|d queries, and much more await. While most problems of earlier |#environment|s could be solved
+by bruteforce looping in RubyLand within the 5 second Timeout limit, this set demands leaner and meaner
+queries pumped full of SQL to process in time. Throw on some coffee, fetch your reading specs,
+and keep that ActiveRecord documentation tabbed.
 """
-stupid_sexy_queries = Environment.create(
+dbdb = Environment.create(
   title: "database, database, just living in the database!",
   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   models: { "Programmer"=>"programmer.rb",
@@ -3126,48 +3133,67 @@ stupid_sexy_queries = Environment.create(
 
 prob_instruct =
 """
-The bread and butter of any Rails controller's 'show' page action, this ActiveRecord method can be used to |#find|
-records by their primary |*key| provided its |`value| is an |`integer|. Speaking of primary |*key|s, this method is stored
-as an |~ActRecMethod| object in |@act_rec_methods| with an |*id| of |`28|.
+The |#unemployed scope|, 'some_progs|#.unemployed|' returns all the |~Programmer|s within an ActiveRecord |#relation| or |#collection|
+not belonging to the |#employed| subclasses |~Executive|, |~Senior|, and |~Junior|, that is, |~Programmer|s with |*type|
+|`\"Programmer\"|.  If you take a glance at the UML and model files, you'll notice that while all |~Programmer|s
 
-Complete the |%solution| method so that it returns the ActiveRecord |~ActRecMethod| object representing the
-ActiveRecord method described above.
+
+|#has_many| |&languages|, |#through:| |&studies|
+
+
+they also can |#has_many| |&mastered_languages| |#through| the |#scope|d relation |&mastered_studies|,
+where |&mastered_studies| returns all |~Study|s for a |~Programmer| instance having the maximum |*aptitude| value of |`10|.
+The |@programmers| table was seeded so that |~Programmer|s with |*type| |`\"Executive\"| or |~Executive|s
+would be more likely to have |&studie(s)|d more |&languages| and have a higher |*aptitude| for each |~Study|
+than their |~Senior| |&subordinates|. The same relation exists between |~Senior|s and their |~Junior| |&subordinates|,
+and between |~Junior|s and their |#unemployed| |~Programmer| counterparts.  Despite the odds, some
+|#unemployed| have read up on their Tony Robbins and found it in themselves to have |#mastered| one
+or more |&languages| sans mentorship.
+
+
+Complete the |%solution| method so that it returns the ActiveRecord |~Programmer| object representing the
+'sleeper', that is, the |#unemployed| |~Programmer| who has |#mastered| the greatest |?COUNT| of |&languages|.
 """
-def answer_babys_first
-  "oogity-boogity"
+def sleeper
+  Programmer.unemployed.joins(:mastered_studies).select("programmers.*, COUNT(studies) AS mastered_studies_count").group(:id).order("mastered_studies_count DESC").take
 end
-babys_first = stupid_sexy_queries.problems.create(
+sleeper = dbdb.problems.create(
   title: "baby's |#first| query",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_babys_first).to_json)
+  answer: Array.wrap(sleeper).to_json)
 
-# prob_instruct =
-# """
-# The methods included in the |@act_rec_methods| table are taken from the following 8 ActiveRecord modules:
+prob_instruct =
+"""
+The methods included in the |@act_rec_methods| table are taken from the following 8 ActiveRecord modules:
 
-# |`ActiveRecord::QueryMethods|^
-# |`ActiveRecord::Persistence|^
-# |`ActiveRecord::FinderMethods|^
-# |`ActiveRecord::Persistence::ClassMethods|^
-# |`ActiveRecord::Batches|^
-# |`ActiveRecord::Scoping::Named::ClassMethods|^
-# |`ActiveRecord::Calculations|^
-# |`ActiveRecord::Querying|
+|`ActiveRecord::QueryMethods|^
+|`ActiveRecord::Persistence|^
+|`ActiveRecord::FinderMethods|^
+|`ActiveRecord::Persistence::ClassMethods|^
+|`ActiveRecord::Batches|^
+|`ActiveRecord::Scoping::Named::ClassMethods|^
+|`ActiveRecord::Calculations|^
+|`ActiveRecord::Querying|
 
-# How many methods belong to each |*module|?
+How many methods belong to each |*module|?
 
-# Complete the |%solution| method so that it returns a key-value hash representing
-# the |#count| of methods belonging to each |*module| in the following format:
+Complete the |%solution| method so that it returns a key-value hash representing
+the |#count| of methods belonging to each |*module| in the following format:
 
-# |%{ \"||*module0||%\"=>| |`num_methods0||%, ..., \"||*module7||%\"=>| |`num_methods7| |%}|
-# """
-# def answer_count_modulea
-#   ActRecMethod.group(:module).count
-# end
-# count_modulea = stupid_sexy_queries.problems.create(
-#   title: "|#count| |*module|a",
-#   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-#   answer: Array.wrap(answer_count_modulea).to_json)
+|%{ \"||*module0||%\"=>| |`num_methods0||%, ..., \"||*module7||%\"=>| |`num_methods7| |%}|
+"""
+def answer_count_modulea
+  Community.all.sort { |a,b| (b.completed_projects.count.to_f/b.projects.count)<=>(a.completed_projects.count.to_f/a.projects.count) }.first
+  most_points_comp = Community.joins(:completed_tasks).select("communities.*, CAST(SUM(points) AS float) / CAST((SELECT SUM(points) FROM tasks WHERE assigner_type = 'Community' AND assigner_id = communities.id) AS float) AS comp_ratio").group(:id).order("comp_ratio DESC").take
+  most_projects_comp = Community.joins(:completed_projects).select("communities.*, CAST(COUNT(projects) AS float) / CAST((SELECT COUNT (id) FROM projects WHERE manager_type = 'Community' AND manager_id = communities.id) AS float) as comp_ratio").group(:id).order("comp_ratio DESC").take
+  Language.joins(:studies).select("languages.*, SUM(studies.aptitude) AS tot_apt").group(:id).order("tot_apt DESC").take
+  Language.joins(predecessors: :studies).select("languages.*, (SELECT SUM(aptitude) FROM studies WHERE language_id = languages.id) + SUM(studies.aptitude) as tot_apt").group(:id).order("tot_apt DESC").take
+  most_productive_com.founders.order(:id)
+end
+count_modulea = stupid_sexy_queries.problems.create(
+  title: "|#count| |*module|a",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
+  answer: Array.wrap(answer_count_modulea).to_json)
 
 # prob_instruct =
 # """

@@ -13,7 +13,7 @@ module HandleData
       "modelFile"=> model_file,
       "migrationFile"=> migration_file,
       "migrationFileName"=> "YYYYMMDDHHMMSS_\ncreate_#{self.table_name}.rb",
-      "keys"=>keys,
+      "keys"=> keys,
       "url"=> url,
       "environmentId"=> environment_id
     }

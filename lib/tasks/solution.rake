@@ -6,10 +6,7 @@ task :solution => :environment do
   
   def solution
     status = Timeout::timeout(5) do
-    bang_methods = ActRecMethod.where("name LIKE '%!'")
-    non_bang_methods = bang_methods.map do |method|
-      non_bang_counterpart = ActRecMethod.find_by(name: method.name.chop)
-    end
+      most_productive_com = Community.joins(:completed_projects).select("communities.*, CAST(COUNT(projects) AS float) / CAST((SELECT COUNT (id) FROM projects WHERE manager_type = 'Community' AND manager_id = communities.id) AS float) as comp_ratio").group(:id).order("comp_ratio DESC").take
     end
   end
   

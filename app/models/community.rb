@@ -2,6 +2,8 @@ class Community < ActiveRecord::Base
   extend HandleData
 
   has_many :projects, as: :manager
+  has_many :incomplete_projects, -> { incomplete }, as: :manager, class_name: "Project"
+  has_many :completed_projects, -> { completed }, as: :manager, class_name: "Project"
 
   has_many :tasks, as: :assigner
   has_many :incomplete_tasks, -> { incomplete }, as: :assigner, class_name: "Task"
@@ -33,7 +35,9 @@ class Community < ActiveRecord::Base
 """
 class $~Community$ < ActiveRecord::Base
   $#has_many$ $&:projects$, $#as:$ $&:manager$
-  
+  $#has_many$ $&:incomplete_projects$, $#as:$ $&:manager&
+  $#has_many$ $&:completed_projects$, $#as:$ $&:manager&
+   
   $#has_many$ $&:tasks$, $#as:$ $&:assigner$
   $#has_many$ $&:incomplete_tasks$, -> { $#incomplete$ }, $#as:$ $&:assigner$, $#class_name:$ \"Task\"
   $#has_many$ $&:completed_tasks$, -> { $#completed$ }, $#as:$ $&:assigner$, $#class_name:$ \"Task\"
