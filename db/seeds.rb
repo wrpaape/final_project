@@ -3188,7 +3188,8 @@ def answer_count_modulea
   most_projects_comp = Community.joins(:completed_projects).select("communities.*, CAST(COUNT(projects) AS float) / CAST((SELECT COUNT (id) FROM projects WHERE manager_type = 'Community' AND manager_id = communities.id) AS float) as comp_ratio").group(:id).order("comp_ratio DESC").take
   Language.joins(:studies).select("languages.*, SUM(studies.aptitude) AS tot_apt").group(:id).order("tot_apt DESC").take
   Language.joins(predecessors: :studies).select("languages.*, (SELECT SUM(aptitude) FROM studies WHERE language_id = languages.id) + SUM(studies.aptitude) as tot_apt").group(:id).order("tot_apt DESC").take
-  most_productive_com.founders.order(:id)
+  Community.joins(members: :memberships).select("communities.*, CAST(COUNT(memberships) AS float) / CAST(COUNT(DISTINCT programmers) AS float) AS avg_ms_count").group(:id).order("avg_ms_count").take
+  Senior.joins(:juniors).select("programmers.*, COUNT(programmers) AS jun_count").group(:id).order("executive_id ASC, jun_count DESC").to_a.uniq(&:executive_id)
 end
 count_modulea = stupid_sexy_queries.problems.create(
   title: "|#count| |*module|a",
