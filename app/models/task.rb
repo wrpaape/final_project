@@ -12,7 +12,7 @@ class Task < ActiveRecord::Base
 
   validate :assigner_has_project, if: "assigner"
   validate :receiver_must_be_subordinate_of_assigner, if: "assigner && receiver && assigner_type == 'Programmer'"
-  validate :cant_be_assigned_before_project_founded_on, if: "assigned_at"
+  validate :cant_be_assigned_before_project_started_on, if: "assigned_at"
   validate :points_cant_be_greater_than_project_points_remaining
   validates :points, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
@@ -30,9 +30,9 @@ class Task < ActiveRecord::Base
     end
   end
 
-  def cant_be_assigned_before_project_founded_on
-    if assigned_at < project.founded_on
-      errors.add(:assigned_at, "must be after Project's founded_on!")
+  def cant_be_assigned_before_project_started_on
+    if assigned_at < project.started_on
+      errors.add(:assigned_at, "must be after Project's started_on!")
     end
   end
 
@@ -56,7 +56,7 @@ class $~Task$ < ActiveRecord::Base
 
   $#validate$ $%:assigner_has_project$, $#if:$ \"$&assigner$\"
   $#validate$ $%:receiver_must_be_subordinate_of_assigner$, $#if:$ \"$&assigner$ && $&receiver$ && $*assigner_type$ == $`'Programmer'$\"
-  $#validate$ $%:cant_be_assigned_before_project_founded_on$, $#if:$ \"$*assigned_at$\"
+  $#validate$ $%:cant_be_assigned_before_project_started_on$, $#if:$ \"$*assigned_at$\"
   $#validate$ $%:points_cant_be_greater_than_project_points_remaining$
   $#validates$ $*:points$, $#numericality:$ { $#only_integer:$ $`true$, $#greater_than_or_equal_to:$ $`0$ }
 
@@ -74,9 +74,9 @@ class $~Task$ < ActiveRecord::Base
     end
   end
 
-  def $%cant_be_assigned_before_project_founded_on$
-    if $*assigned_at$ < $&project$$*.founded_on$
-      errors.add($*:assigned_at$, \"must be after Project's founded_on!\")
+  def $%cant_be_assigned_before_project_started_on$
+    if $*assigned_at$ < $&project$$*.started_on$
+      errors.add($*:assigned_at$, \"must be after Project's started_on!\")
     end
   end
 

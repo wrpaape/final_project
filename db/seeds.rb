@@ -2976,11 +2976,11 @@ rand(20..30).times do
   rand(25..40).times do
     proj = exec.projects_managed.create(name: Faker::App.name + ([" v#{Faker::App.version}"] * 3 << "").sample,
       points_total: proj_points.sample,
-      founded_on: rand(10.years.ago..1.month.ago).to_date)
+      started_on: rand(10.years.ago..1.month.ago).to_date)
     next if ([false] * 2 << true).sample
     sen_assigned = sens.empty? ? exec.seniors.sample : sens.pop
     project_assignment = exec.tasks_assigned.create(todo: ["complete #{proj.name}"],
-      assigned_at: rand(proj.founded_on.to_time...Time.now),
+      assigned_at: rand(proj.started_on.to_time...Time.now),
       project_id: proj.id,
       receiver_id: sen_assigned.id)
 
@@ -3051,7 +3051,7 @@ all_coms.each do |com|
   rand(1..20).times do
     com[:com].projects.create(name: Faker::App.name + ([" v#{Faker::App.version}"] * 3 << "").sample,
       points_total: proj_points.sample,
-      founded_on: rand(com[:com].founded_on..Date.today))
+      started_on: rand(com[:com].founded_on..Date.today))
   end
 end
 
@@ -3153,108 +3153,74 @@ and between |~Junior|s and their |#unemployed| |~Programmer| counterparts.  Desp
 or more |&languages| sans mentorship.
 
 
-Complete the |%solution| method so that it returns the ActiveRecord |~Programmer| object representing the
+Complete the |%solution| method so that it returns the |*name| of the ActiveRecord |~Programmer| object representing the
 'sleeper', that is, the |#unemployed| |~Programmer| who has |#mastered| the greatest |?COUNT| of |&languages|.
 """
-def sleeper
-  Programmer.unemployed.joins(:mastered_studies).select("programmers.*, COUNT(studies) AS mastered_studies_count").group(:id).order("mastered_studies_count DESC").take
+def answer_sleeper
+  sleeper = Programmer.unemployed.joins(:mastered_studies).select("programmers.*, COUNT(studies) AS mastered_studies_count").group(:id).order("mastered_studies_count DESC").take
+  sleeper.name
 end
 sleeper = dbdb.problems.create(
   title: "baby's |#first| query",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(sleeper).as_json(methods: :type))
+  answer: Array.wrap(answer_sleeper).as_json(methods: :type))
 
 prob_instruct =
 """
-The methods included in the |@act_rec_methods| table are taken from the following 8 ActiveRecord modules:
+After making a killing in the tech industry slinging queries and running db rake tasks,
+ActiveRecord Man decided its finally time to retire. But being the savvy opportunist that
+he is he decides to publish his own series of programming textbooks to be reissued anually
+that render the previous edition worthless in time for the next batch of piggy ba-er-students.
+In order to make this gravy train last, he decides to tailor his series according to the most-|#studied| |~Language|,
+that is, the |~Language| with the greatest |?SUM| of |*aptitude| amongst its |&studies|.
 
-|`ActiveRecord::QueryMethods|^
-|`ActiveRecord::Persistence|^
-|`ActiveRecord::FinderMethods|^
-|`ActiveRecord::Persistence::ClassMethods|^
-|`ActiveRecord::Batches|^
-|`ActiveRecord::Scoping::Named::ClassMethods|^
-|`ActiveRecord::Calculations|^
-|`ActiveRecord::Querying|
+What |~Language| will AcitiveRecord Man's hardcover-only textbooks teach?
 
-How many methods belong to each |*module|?
-
-Complete the |%solution| method so that it returns a key-value hash representing
-the |#count| of methods belonging to each |*module| in the following format:
-
-|%{ \"||*module0||%\"=>| |`num_methods0||%, ..., \"||*module7||%\"=>| |`num_methods7| |%}|
+Complete the |%solution| method so that it returns the |*name| of the ActiveRecord |~Language| object
+representing the |~Language| with the greatest combined |*aptitude| of its |&studies|.
 """
-def answer_count_modulea
-  Community.all.sort { |a,b| (b.completed_projects.count.to_f/b.projects.count)<=>(a.completed_projects.count.to_f/a.projects.count) }.first
-  most_points_comp = Community.joins(:completed_tasks).select("communities.*, CAST(SUM(points) AS float) / CAST((SELECT SUM(points) FROM tasks WHERE assigner_type = 'Community' AND assigner_id = communities.id) AS float) AS comp_ratio").group(:id).order("comp_ratio DESC").take
-  most_projects_comp = Community.joins(:completed_projects).select("communities.*, CAST(COUNT(projects) AS float) / CAST((SELECT COUNT (id) FROM projects WHERE manager_type = 'Community' AND manager_id = communities.id) AS float) as comp_ratio").group(:id).order("comp_ratio DESC").take
-  Language.joins(:studies).select("languages.*, SUM(studies.aptitude) AS tot_apt").group(:id).order("tot_apt DESC").take
-  Language.joins(predecessors: :studies).select("languages.*, (SELECT SUM(aptitude) FROM studies WHERE language_id = languages.id) + SUM(studies.aptitude) as tot_apt").group(:id).order("tot_apt DESC").take
-  Community.joins(members: :memberships).select("communities.*, CAST(COUNT(memberships) AS float) / CAST(COUNT(DISTINCT programmers) AS float) AS avg_ms_count").group(:id).order("avg_ms_count").take
-  Senior.joins(:juniors).select("programmers.*, COUNT(programmers) AS jun_count").group(:id).order("executive_id ASC, jun_count DESC").to_a.uniq(&:executive_id)
-  execs = Executive.joins(:projects_managed).merge(Project.incomplete).select("programmers.*, MIN(founded_on) AS date_oldest").group(:id)
-  query = execs.map { |exec| "manager_id = #{exec.id} AND founded_on = '#{exec.date_oldest}'" }.join(" OR ")
-  Project.where(query)
-  Programmer.joins(:tasks_received).merge(Task.completed).select("programmers.*, SUM(points) as points_comp").group(:id).order("points_comp DESC").take
-  Programmer.joins(:side_tasks_completed).select("programmers.*, SUM(points) as points_comp").group(:id).order("points_comp DESC").take
-  Programmer.joins(:side_tasks_completed).select("programmers.*, SUM(ARRAY_LENGTH(todo,1)) as todos_comp").group(:id).order("todos_comp DESC").take
+def answer_textbook_entrepreneur
+  most_studied_lang = Language.joins(:studies).select("languages.*, SUM(studies.aptitude) AS tot_apt").group(:id).order("tot_apt DESC").take
+  most_studied_lang.name
 end
-count_modulea = stupid_sexy_queries.problems.create(
-  title: "|#count| |*module|a",
+textbook_entrepreneur = dbdb.problems.create(
+  title: "textbook entrepreneur",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-  answer: Array.wrap(answer_count_modulea).as_json(methods: :type))
+  answer: Array.wrap(answer_textbook_entrepreneur).as_json(methods: :type))
 
-# prob_instruct =
-# """
-# If you haven't noticed, some of the documentation for these methods are missing an |*example|,
-# the |*source| code, or even a |*description|. These uninitialized |*attribute|s are assigned the
-# |`value| |`nil| upon their record's |#create|ion as per the ActiveRecord default.
+prob_instruct =
+"""
+In leiu of the previous problem, ActiveRecord Man has decided to halt production of his latest
+edition of $|`200| doorstops after some professional consultation. It turns out the popularity of
+|&languages| amongst |~Programmer| |&studies| is a fickle thing, flip-flopping with the turning of the leaves.
+The |~Language| that will maintain the steadiest flow of student lunch money is the one that has the
+strongest historical foundation of popularity, that is, the |~Language| with the greatest aggregate
+|?SUM| of |*aptitude| amongst its |&studies| |?AND| its |&predecessors| |&studies|.
 
-# Complete the |%solution| method so that it returns an array of ActiveRecord |~ActRecMethod| objects representing |#all|
-# ActiveRecord methods with a provided |*example|, |*source| code, |?AND| |*description| in their documentation
-# (i.e. |~ActRecMethod|s |#where| the |`value|s of |*example|, |*source|, |?AND| |*description| are |#not| |`nil|).
-# Please return your |%solution| |#order|ed by |*id| (default for un|#order|ed queries).
-# """
-# def answer_nothing_at_all
-#   ActRecMethod.where.not({ example: nil, source: nil, description: nil })
-# end
-# nothing_at_all = stupid_sexy_queries.problems.create(
-#   title: "|#not|hing at |#all|!, |?NOT|hing at |?*|!...",
-#   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: Array.wrap(answer_nothing_at_all).as_json(methods: :type))
+Complete the |%solution| method so that it returns the |*name| of the ActiveRecord |~Language| object
+representing the |~Language| having the greatest total combined |*aptitude| including its |&studies|
+and its |&predecessors| |&studies|.
+"""
+def answer_hedging_bets
+  new_lang = Language.joins(predecessors: :studies).select("languages.*, (SELECT SUM(aptitude) FROM studies WHERE language_id = languages.id) + SUM(studies.aptitude) as tot_apt").group(:id).order("tot_apt DESC").take
+  new_lang.name
+end
+hedging_bets = dbdb.problems.create(
+  title: "hedging bets",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
+  answer: Array.wrap(answer_hedging_bets).as_json(methods: :type))
 
-# prob_instruct =
-# """
-# A handful of the ActiveRecord methods in the |@act_rec_methods| table can be paired as
-# 'bang' and 'non-bang' versions of the same method. The 'bang' counterparts of 'non-bang' methods
-# have the same |*name| with an '!' tacked onto the end (i.e. |#update!| is the 'bang' counterpart to |#update|).
-
-# In vanilla Ruby, 'bang' methods perform the same task as their 'non-bang' counterpart but will also modify the object it's called on.
-
-# ActiveRecord 'bang' methods also perform the same task as their counterpart but will raise an ActiveRecord exception
-# upon failure to execute, usually due to a validation failure or failure to |#find| or operate on a record.
-
-# For example:
-
-# |%class| |~User| |%< ActiveRecord::Base|^
-#   |#validates| |*:name||%, presence: true|^
-# |%end|
-
-# |%user =| |~User||#.new|^
-# |%user||#.save|  |@# => false|^
-#     |%user||#.save!| |@# => ActiveRecord::RecordInvalid: Validation failed: Name can't be blank|
-
-# Complete the |%solution| method so that it returns an array of ActiveRecord |~ActRecMethod| objects representing |#all|
-# ActiveRecord methods that have a 'bang' counterpart (only the 'non-bang' versions).
-# Please return your |%solution| |#order|ed by |*id| (default for un|#order|ed queries).
-# """
-# def answer_feuer_frei
-#   bang_methods = ActRecMethod.where("name LIKE '%!'")
-#   non_bang_methods = bang_methods.map do |method|
-#     non_bang_counterpart = ActRecMethod.find_by(name: method.name.chop)
-#   end
-# end
-# feuer_frei = stupid_sexy_queries.problems.create(
-#   title: "Feuer Frei|#!|",
-#   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-#   answer: Array.wrap(answer_feuer_frei).as_json(methods: :type))
+prob_instruct =
+"""
+Almost like Mama always said. It turns out that volunteer coding |~Community|s are not all that different
+from profit-driven corporations when it comes to juggling |&projects|. Much like Ajax requests, one
+|~Project| need not be |#completed| before the next one is |*started(_on)|.
+"""
+def answer_mama_says
+  new_lang = Language.joins(predecessors: :studies).select("languages.*, (SELECT SUM(aptitude) FROM studies WHERE language_id = languages.id) + SUM(studies.aptitude) as tot_apt").group(:id).order("tot_apt DESC").take
+  new_lang.name
+end
+mama_says = dbdb.problems.create(
+  title: "|#complete(d)| what you |*started(_on)|",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
+  answer: Array.wrap(answer_mama_says).as_json(methods: :type))

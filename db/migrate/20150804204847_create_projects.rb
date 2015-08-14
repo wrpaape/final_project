@@ -5,7 +5,7 @@ class CreateProjects < ActiveRecord::Migration
       t.string :manager_type
       t.string :name
       t.integer :points_total, default: 0
-      t.date :founded_on, null: false
+      t.date :started_on, null: false
 
       t.timestamps null: false
     end
