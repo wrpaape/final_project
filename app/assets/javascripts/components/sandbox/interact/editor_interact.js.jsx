@@ -59,7 +59,7 @@ var EditorInteract = React.createClass({
 
       inputSolution = reverseSplitSolution.reverse().join('\n');
       var indentedSolution = inputSolution.replace(/\n/g, '\n  ');
-      var putsSolution = indentedSolution.replace(RegExp('\n  ' + methodName, 'g'), '\n  start = Time.now\n  results = ' + methodName + '\n  finish = Time.now\n  results_hash = { "results"=> results, "time_exec"=> finish - start }\n  puts results_hash.to_json');
+      var putsSolution = indentedSolution.replace(RegExp('\n  ' + methodName, 'g'), '\n  start = Time.now\n  results = ' + methodName + '\n  finish = Time.now\n  results_hash = { "results"=> results.as_json(methods: :type), "time_exec"=> finish - start }\n  puts results_hash');
       var formattedSolution = 'require \'timeout\'\ntask :solution => :environment do\n  ActiveRecord::Base.logger = Logger.new(Rails.root.join("solution_queries.log"))\n  ' + putsSolution + '\nend';
 
 

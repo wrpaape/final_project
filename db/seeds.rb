@@ -2053,7 +2053,7 @@
 # babys_first = stupid_sexy_queries.problems.create(
 #   title: "baby's |#first| query",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: Array.wrap(answer_babys_first).to_json)
+#   answer: Array.wrap(answer_babys_first).as_json(methods: :type))
 
 # prob_instruct =
 # """
@@ -2081,7 +2081,7 @@
 # count_modulea = stupid_sexy_queries.problems.create(
 #   title: "|#count| |*module|a",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-#   answer: Array.wrap(answer_count_modulea).to_json)
+#   answer: Array.wrap(answer_count_modulea).as_json(methods: :type))
 
 # prob_instruct =
 # """
@@ -2100,7 +2100,7 @@
 # nothing_at_all = stupid_sexy_queries.problems.create(
 #   title: "|#not|hing at |#all|!, |?NOT|hing at |?*|!...",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: Array.wrap(answer_nothing_at_all).to_json)
+#   answer: Array.wrap(answer_nothing_at_all).as_json(methods: :type))
 
 # prob_instruct =
 # """
@@ -2136,7 +2136,7 @@
 # feuer_frei = stupid_sexy_queries.problems.create(
 #   title: "Feuer Frei|#!|",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-#   answer: Array.wrap(answer_feuer_frei).to_json)
+#   answer: Array.wrap(answer_feuer_frei).as_json(methods: :type))
 
 # g0_yobs = (1880..1890).to_a
 # genders = ["M", "F"]
@@ -2311,7 +2311,7 @@
 # avg_household = family_tree.problems.create(
 #   title: "...and here are our |`1.5| kids",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: Array.wrap(answer_avg_household).to_json)
+#   answer: Array.wrap(answer_avg_household).as_json(methods: :type))
 
 # prob_instruct =
 # """
@@ -2338,7 +2338,7 @@
 # the_brady_bunch = family_tree.problems.create(
 #   title: "the Brady Bunch",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: Array.wrap(answer_brady_bunch).to_json)
+#   answer: Array.wrap(answer_brady_bunch).as_json(methods: :type))
 
 # prob_instruct =
 # """
@@ -2370,7 +2370,7 @@
 # the_bachelor = family_tree.problems.create(
 #   title: "the Bachelor(ette?)",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: Array.wrap(answer_bachelor).to_json)
+#   answer: Array.wrap(answer_bachelor).as_json(methods: :type))
 
 # prob_instruct =
 # """
@@ -2404,7 +2404,7 @@
 # lazy_parents_award = family_tree.problems.create(
 #   title: "the laziest parents award",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: Array.wrap(answer_lazy_parents).to_json)
+#   answer: Array.wrap(answer_lazy_parents).as_json(methods: :type))
 
 
 # crops = {
@@ -2713,7 +2713,7 @@
 # technically_3_years = old_mac.problems.create(
 #   title: "technically 3 years",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: Array.wrap(answer_technically_3_years).to_json)
+#   answer: Array.wrap(answer_technically_3_years).as_json(methods: :type))
 
 # prob_instruct =
 # """
@@ -2734,7 +2734,7 @@
 # bandwagon_crops = old_mac.problems.create(
 #   title: "bandwagon |~Crop|s",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: Array.wrap(answer_bandwagon_crops).to_json)
+#   answer: Array.wrap(answer_bandwagon_crops).as_json(methods: :type))
 
 # prob_instruct =
 # """
@@ -2752,7 +2752,7 @@
 # smitty_w = old_mac.problems.create(
 #   title: "old |~Farmer| Werbenjagermanjensen",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: Array.wrap(answer_smitty_w).to_json)
+#   answer: Array.wrap(answer_smitty_w).as_json(methods: :type))
 
 # prob_instruct =
 # """
@@ -2786,7 +2786,7 @@
 # the_red_line = old_mac.problems.create(
 #   title: "the red line and the black thumb",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: Array.wrap(answer_the_red_line).to_json)
+#   answer: Array.wrap(answer_the_red_line).as_json(methods: :type))
 
 
 # raw_avg_household =
@@ -2921,12 +2921,14 @@
 
 # admin = User.create(name: "tastyham", password: "taoontop", password_confirmation: "taoontop", admin: true, email: "example@example.com")
 
-def task_description
-  noun = [Faker::Hacker.noun, Faker::Hacker.abbreviation].sample
-  direct_object = ["#{Faker::Hacker.adjective} ","",""].sample
-  verb = Faker::Hacker.verb
-  ["#{verb} the #{direct_object}",
-  Faker::Hacker.say_something_smart].sample
+def task_todo
+  rand(1..15).times.map do
+    noun = [Faker::Hacker.noun, Faker::Hacker.abbreviation].sample
+    direct_object = ["#{Faker::Hacker.adjective} ","",""].sample + noun
+    verb = Faker::Hacker.verb
+    ["#{verb} the #{direct_object}",
+    Faker::Hacker.say_something_smart].sample
+  end
 end
 
 def assign_languages(prog)
@@ -2972,12 +2974,12 @@ rand(20..30).times do
   end
   sens = exec.seniors.to_a.shuffle
   rand(25..40).times do
-    proj = exec.projects_managed.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
+    proj = exec.projects_managed.create(name: Faker::App.name + ([" v#{Faker::App.version}"] * 3 << "").sample,
       points_total: proj_points.sample,
       founded_on: rand(10.years.ago..1.month.ago).to_date)
     next if ([false] * 2 << true).sample
     sen_assigned = sens.empty? ? exec.seniors.sample : sens.pop
-    project_assignment = exec.tasks_assigned.create(description: "complete #{proj.name}",
+    project_assignment = exec.tasks_assigned.create(todo: ["complete #{proj.name}"],
       assigned_at: rand(proj.founded_on.to_time...Time.now),
       project_id: proj.id,
       receiver_id: sen_assigned.id)
@@ -2989,7 +2991,7 @@ rand(20..30).times do
     points_cutoff = assigned_to_completion ? proj.points : rand((proj.points / 4)...proj.points)
     loop do
       jun_assigned = juns.empty? ? sen_assigned.juniors.sample : juns.pop
-      task = sen_assigned.tasks_assigned.new(description: task_description,
+      task = sen_assigned.tasks_assigned.new(todo: task_todo,
         assigned_at: rand(project_assignment.assigned_at..Time.now),
         points: task_points.sample,
         project_id: proj.id,
@@ -2997,7 +2999,7 @@ rand(20..30).times do
       break if proj.points_assigned > points_cutoff || !task.save
     end
     if assigned_to_completion
-      task = sen_assigned.tasks_assigned.create(description: task_description,
+      task = sen_assigned.tasks_assigned.create(todo: task_todo,
         assigned_at: rand(project_assignment.assigned_at..Time.now),
         points: proj.points_unassigned,
         project_id: proj.id,
@@ -3047,7 +3049,7 @@ all_coms = com_queries.map { |name, query| { name: name, langs: Language.where(q
 all_coms.each { |com_name_langs| com_name_langs[:com] = Community.create(name: com_name_langs[:name], founded_on: Date.new(com_name_langs[:langs].map { |lang| lang.yoc}.min) + rand(0..365)) }
 all_coms.each do |com|
   rand(1..20).times do
-    com[:com].projects.create(name: Faker::App.name + ([""] * 3 << " v#{Faker::App.version}").sample,
+    com[:com].projects.create(name: Faker::App.name + ([" v#{Faker::App.version}"] * 3 << "").sample,
       points_total: proj_points.sample,
       founded_on: rand(com[:com].founded_on..Date.today))
   end
@@ -3073,7 +3075,7 @@ Community.all.shuffle.each do |com|
     mems = com.members.to_a.shuffle
     loop do
       mem = mems.empty? ? com.members.sample : mems.pop
-      task = com.tasks_assigned.new(description: task_description,
+      task = com.tasks_assigned.new(todo: task_todo,
         assigned_at: rand((mem.memberships.find_by(community_id: com.id).joined_on).to_time..Time.now),
         points: task_points.sample,
         project_id: proj.id,
@@ -3082,7 +3084,7 @@ Community.all.shuffle.each do |com|
     end
     if assigned_to_completion
       mem = com.members.sample
-      task = com.tasks_assigned.create(description: task_description,
+      task = com.tasks_assigned.create(todo: task_todo,
         assigned_at: rand((mem.memberships.find_by(community_id: com.id).joined_on).to_time..Time.now),
         points: proj.points_unassigned,
         project_id: proj.id,
@@ -3117,7 +3119,7 @@ queries pumped full of SQL to process in time. Throw on some coffee, fetch your 
 and keep that ActiveRecord documentation tabbed.
 """
 dbdb = Environment.create(
-  title: "database, database, just living in the database!",
+  title: "database, database, just |#joins|ing in the database!",
   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   models: { "Programmer"=>"programmer.rb",
     "Executive"=>"executive.rb",
@@ -3160,7 +3162,7 @@ end
 sleeper = dbdb.problems.create(
   title: "baby's |#first| query",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(sleeper).to_json)
+  answer: Array.wrap(sleeper).as_json(methods: :type))
 
 prob_instruct =
 """
@@ -3190,11 +3192,17 @@ def answer_count_modulea
   Language.joins(predecessors: :studies).select("languages.*, (SELECT SUM(aptitude) FROM studies WHERE language_id = languages.id) + SUM(studies.aptitude) as tot_apt").group(:id).order("tot_apt DESC").take
   Community.joins(members: :memberships).select("communities.*, CAST(COUNT(memberships) AS float) / CAST(COUNT(DISTINCT programmers) AS float) AS avg_ms_count").group(:id).order("avg_ms_count").take
   Senior.joins(:juniors).select("programmers.*, COUNT(programmers) AS jun_count").group(:id).order("executive_id ASC, jun_count DESC").to_a.uniq(&:executive_id)
+  execs = Executive.joins(:projects_managed).merge(Project.incomplete).select("programmers.*, MIN(founded_on) AS date_oldest").group(:id)
+  query = execs.map { |exec| "manager_id = #{exec.id} AND founded_on = '#{exec.date_oldest}'" }.join(" OR ")
+  Project.where(query)
+  Programmer.joins(:tasks_received).merge(Task.completed).select("programmers.*, SUM(points) as points_comp").group(:id).order("points_comp DESC").take
+  Programmer.joins(:side_tasks_completed).select("programmers.*, SUM(points) as points_comp").group(:id).order("points_comp DESC").take
+  Programmer.joins(:side_tasks_completed).select("programmers.*, SUM(ARRAY_LENGTH(todo,1)) as todos_comp").group(:id).order("todos_comp DESC").take
 end
 count_modulea = stupid_sexy_queries.problems.create(
   title: "|#count| |*module|a",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-  answer: Array.wrap(answer_count_modulea).to_json)
+  answer: Array.wrap(answer_count_modulea).as_json(methods: :type))
 
 # prob_instruct =
 # """
@@ -3213,7 +3221,7 @@ count_modulea = stupid_sexy_queries.problems.create(
 # nothing_at_all = stupid_sexy_queries.problems.create(
 #   title: "|#not|hing at |#all|!, |?NOT|hing at |?*|!...",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-#   answer: Array.wrap(answer_nothing_at_all).to_json)
+#   answer: Array.wrap(answer_nothing_at_all).as_json(methods: :type))
 
 # prob_instruct =
 # """
@@ -3249,4 +3257,4 @@ count_modulea = stupid_sexy_queries.problems.create(
 # feuer_frei = stupid_sexy_queries.problems.create(
 #   title: "Feuer Frei|#!|",
 #   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-#   answer: Array.wrap(answer_feuer_frei).to_json)
+#   answer: Array.wrap(answer_feuer_frei).as_json(methods: :type))

@@ -14,7 +14,7 @@ class Community < ActiveRecord::Base
 
   has_many :members, through: :memberships, source: :programmer
   has_many :founders, -> { founders }, through: :memberships, source: :programmer
-  has_many :active_members, -> { uniq }, through: :tasks, source: :programmer
+  has_many :active_members, -> { uniq }, through: :tasks, source: :receiver
   has_many :contributors, -> { uniq }, through: :completed_tasks, source: :receiver
 
   has_many :languages, -> { uniq }, through: :members, source: :languages

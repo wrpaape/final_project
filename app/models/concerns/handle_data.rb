@@ -61,7 +61,7 @@ module HandleData
     total_count = self.where(search_query).count
     model_name = self.model_name.human.split(" ").map { |word| word.titleize }.join
     {
-      "page_data"=> self.where(search_query).order(sort_query).limit(limit).offset(offset).as_json(only: column_names),
+      "page_data"=> self.where(search_query).order(sort_query).limit(limit).offset(offset).as_json(methods: :type),
       "length_data"=> total_count,
       "query"=> build_query(query_hash, fuzzy, case_sens, total_count, "|~#{model_name}|")
     }

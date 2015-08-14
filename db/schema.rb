@@ -221,7 +221,7 @@ ActiveRecord::Schema.define(version: 20150808184231) do
   create_table "tasks", force: :cascade do |t|
     t.integer  "assigner_id"
     t.string   "assigner_type"
-    t.string   "description"
+    t.string   "todo",                                       array: true
     t.integer  "points",        default: 0
     t.boolean  "completed",     default: false
     t.datetime "assigned_at"
