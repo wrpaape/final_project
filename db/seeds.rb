@@ -3161,9 +3161,41 @@ def answer_sleeper
   sleeper.name
 end
 sleeper = dbdb.problems.create(
-  title: "baby's |#first| query",
+  title: "the sleeper",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   answer: Array.wrap(answer_sleeper).as_json(methods: :type))
+
+prob_instruct =
+"""
+Nobody likes a tryhard |~Junior| |~Programmer|. Nobody, that is, except the |#assigners|
+of their |&tasks|. In the |@programmers| table there exists |`3| such tryhards
+who excel at |#complete|ing their |&work_tasks| (more specifically, their |&tasks_received|)
+in |`3| particular manners:
+
+|%tryhard0| has the greatest |?COUNT| of |#completed| |&tasks_received|.^
+|%tryhard1| has the greatest |?SUM| of |*points| from their |#completed| |&tasks_received|.^
+|%tryhard2| has the greatest |?SUM| of |*todo|s from their |#completed| |&tasks_received|, where
+every element in the array stored under the |~Task| column |*todo| represents a single todo.
+
+Who are the |`3| nerds that are making their fellow |~Junior|s look so bad?
+
+Complete the |%solution| method so that it returns an array of the |*name|s of the
+ActiveRecord |~Junior| objects representing the |`3| tryhards in the following format:
+
+|%[||`tryhard0_name|, |`tryhard1_name|, |`tryhard2_name||%]|
+"""
+def answer_tryhard
+  tryhards = {}
+  juniors_tasks = Junior.joins(:tasks_received).merge(Task.completed)
+  tryhards["tryhard0"] = juniors_tasks.select("programmers.*, COUNT(tasks) as tasks_comp").group(:id).order("tasks_comp DESC").take
+  tryhards["tryhard1"] = juniors_tasks.select("programmers.*, SUM(points) as points_comp").group(:id).order("points_comp DESC").take
+  tryhards["tryhard2"] = juniors_tasks.select("programmers.*, SUM(ARRAY_LENGTH(todo,1)) as todos_comp").group(:id).order("todos_comp DESC").take
+  tryhards.map { |k, v| v.name }
+end
+tryhard = dbdb.problems.create(
+  title: "try(hard)fecta",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
+  answer: Array.wrap(answer_tryhard).as_json(methods: :type))
 
 prob_instruct =
 """
@@ -3212,15 +3244,91 @@ hedging_bets = dbdb.problems.create(
 
 prob_instruct =
 """
-Almost like Mama always said. It turns out that volunteer coding |~Community|s are not all that different
+Just like Mama used to say. It turns out that volunteer coding |~Community|s are not all that different
 from profit-driven corporations when it comes to juggling |&projects|. Much like Ajax requests, one
-|~Project| need not be |#completed| before the next one is |*started(_on)|.
+|~Project| need not be |#completed| before the next one is |*started(_on)|. One |~Community|, however,
+stands out from the crowd in that it has the highest rate of |~Project| |#complet|ion. Which
+|~Community| has the greatest ratio of |#completed| |&projects| to |&projects| |*started(_on)|?
+
+Complete the |%solution| method so that it returns the |*name| of the ActiveRecord |~Community| object
+representing the |~Community| having the greatest fractional portion of its |&projects| |#completed|.
 """
 def answer_mama_says
-  new_lang = Language.joins(predecessors: :studies).select("languages.*, (SELECT SUM(aptitude) FROM studies WHERE language_id = languages.id) + SUM(studies.aptitude) as tot_apt").group(:id).order("tot_apt DESC").take
-  new_lang.name
+  most_projs_comp = Community.joins(:completed_projects).select("communities.*, CAST(COUNT(projects) AS float) / CAST((SELECT COUNT (id) FROM projects WHERE manager_type = 'Community' AND manager_id = communities.id) AS float) as comp_ratio").group(:id).order("comp_ratio DESC").take
+  most_projs_comp.name
 end
 mama_says = dbdb.problems.create(
-  title: "|#complete(d)| what you |*started(_on)|",
+  title: "|#complete(d)| what you've |*started(_on)|",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
   answer: Array.wrap(answer_mama_says).as_json(methods: :type))
+
+prob_instruct =
+"""
+If it wasn't already apparent, coding |~Community|s come in all shapes and sizes and can
+attract either a wide swath of |&members| or a more |#uniq| crowd. In light of the latter case,
+the |@communities| database table store one such |~Community| whose |&members| |&belongs_to|,
+on |?AVG|, the fewest |?COUNT| of outside |~Community|s. Which |~Community|, in this sense,
+has the most |?DISTINCT|ive |&memberships|?
+
+Complete the |%solution| method so that it returns the |*name| of the ActiveRecord |~Community| object
+representing the |~Community| having |&members| with the lowest |&memberships| |?COUNT|.
+"""
+def answer_distinct_programmers
+  most_dist_com = Community.joins(members: :memberships).select("communities.*, CAST(COUNT(memberships) AS float) / CAST(COUNT(DISTINCT programmers) AS float) AS avg_ms_count").group(:id).order("avg_ms_count").take
+  most_dist_comp.name
+end
+distinct_programmers = dbdb.problems.create(
+  title: "a |?DISTINCT| |~Community| for |?DISTINCT| |~Programmer|s",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
+  answer: Array.wrap(answer_distinct_programmers).as_json(methods: :type))
+
+prob_instruct =
+"""
+The dreaded backlog. |~Executive| |~Programmer|s, while |#complete|ing no work-related |~Task|s
+of their own, hold the burden of |&manage(r)|ing the |&projects| of the |&tasks| they |&assign(er)|.
+While every |~Executive| should have a list of |#incomplete| |&projects_managed|, there exists one (or more)
+|&projects| for each that has been waiting to be |#completed| the longest.
+
+Complete the |%solution| method so that it returns an array of ActiveRecord |~Project| objects
+representing the |#incomplete| |~Project|s |&manage(r)| by |~Executive|s with the earliest |*started_on|
+|%Date|s, |#order|ed by |*id| (default for un|#order|ed queries). If more than one of an |~Executive|'s
+|#incomplete| |&projects_manged| |*started_on| the same |%Date|, include them all in your array. Please
+exclude aliased |?SQL| columns from your |%solution|.
+"""
+def answer_backlog
+  execs = Executive.joins(:projects_managed).merge(Project.incomplete).select("programmers.*, MIN(started_on) AS date_oldest").group(:id)
+  query = execs.map { |exec| "manager_id = #{exec.id} AND started_on = '#{exec.date_oldest}'" }.join(" OR ")
+  Project.where(query)
+end
+backlog = dbdb.problems.create(
+  title: "have you finished those |&projects|?",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
+  answer: Array.wrap(answer_backlog).as_json(methods: :type))
+
+prob_instruct =
+"""
+There exists a uniform pecking order amongst the |#employed| of the in the |@programmers| table.
+Every |~Junior| |#belongs_to| a single |&senior|-|&executive| pair of |&superiors|,
+with its |&senior| belonging only to that same |&executive|. As odds would have it,
+there also exists at least one |~Senior| for every |~Executive| who is in charge
+of the greatest |?COUNT| of their |&executive|'s |&juniors|.
+
+Complete the |%solution| method so that it returns an array of ActiveRecord |~Senior| objects
+representing the |~Senior|(s) with the greatest |?COUNT| of |&juniors| out of their |&executive|'s |&subordinates|,
+|#order|ed by |*executive_id|.  If more than one |~Senior|s belonging to the same
+|&executive| share the same greatest |?COUNT| of |&juniors|, include them all in your array and
+assign them priority of |#order| by individual |*id| (default for un|#order|ed queries).
+Please exclude aliased |?SQL| columns from your |%solution|.
+"""
+def answer_right_hand
+  sens_by_jun_count = Senior.joins(:juniors).select("programmers.*, COUNT(programmers) AS jun_count").group(:id).order("executive_id ASC, jun_count DESC")
+  sens_by_jun_count.as_json.uniq do |sen|
+    sen["executive_id"] || sen["jun_count"]
+    sen.delete("jun_count")
+  end
+end
+right_hand = dbdb.problems.create(
+  title: "right-hand |~Senior|s",
+  instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
+  answer: Array.wrap(answer_right_hand).as_json(methods: :type))
+
