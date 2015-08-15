@@ -2987,7 +2987,7 @@ queries pumped full of SQL to process in time. Throw on some coffee, fetch yours
 and keep that ActiveRecord documentation tabbed.
 """
 dbdb = Environment.create(
-  title: "database, database, just |#joins|ing in the database!",
+  title: "database! database! |#joins|ing in the database!",
   description: env_descrip[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   models: { "Programmer"=>"programmer.rb",
     "Executive"=>"executive.rb",
@@ -3061,7 +3061,7 @@ def answer_tryhard
   tryhards.map { |k, v| v.name }
 end
 tryhard = dbdb.problems.create(
-  title: "try(hard)fecta",
+  title: "tryhard trifecta",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
   answer: Array.wrap(answer_tryhard).as_json(methods: :type))
 
