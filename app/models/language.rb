@@ -56,7 +56,7 @@ class $~Language$ < ActiveRecord::Base
   $#scope :with_experts$, -> { $#joins($$&:experts$$#).uniq$ }
   $#scope :with_masters$, -> { $#joins($$&:masters$$#).uniq$ }
   $#scope :studied$, -> { $#joins($$&:studies$$#).uniq$ }
-  $#scope :unstudied$, -> { $#where.not($$*id:$ $&studied$$#.select($$*:id$$#))$ }
+  $#scope :unstudied$, -> { $#where.not($$*id:$ $#studied.select($$*:id$$#))$ }
 end
 """
   end
@@ -64,29 +64,29 @@ end
   def self.get_migration_file
 """
 class CreateLanguages < ActiveRecord::Migration
-  def change
-    $#create_table$ $@:languages$ do |t|
-      t$`.string$ $*:name$
-      t$`.integer$ $*:yoc$
-      t$`.string$ $*:creator$
-
-      t$#.timestamps null:$ $`false$
-    end
-  end
+  def change
+    $#create_table$ $@:languages$ do |t|
+      t$`.string$ $*:name$
+      t$`.integer$ $*:yoc$
+      t$`.string$ $*:creator$
+  
+      t$#.timestamps null:$ $`false$
+    end
+  end
 end
-
+  
 $@# YYYYMMDDHHMMSS_create_languages_predecessors_join_table.rb$
-
+  
 class CreateLanguagesPredecessorsJoinTable < ActiveRecord::Migration
-  def change
-    $#create_table$ $@:languages_predecessors$, $*id:$ false do |t|
-      t$`.integer$ $*:language_id$
-      t$`.integer$ $*:predecessor_id$
-    end
-
-    $#add_index$ $@:languages_predecessors$, $*:language_id$
-    $#add_index$ $@:languages_predecessors$, $*:predecessor_id$
-  end
+  def change
+    $#create_table$ $@:languages_predecessors$, $*id:$ $`false$ do |t|
+      t$`.integer$ $*:language_id$
+      t$`.integer$ $*:predecessor_id$
+    end
+  
+    $#add_index$ $@:languages_predecessors$, $*:language_id$
+    $#add_index$ $@:languages_predecessors$, $*:predecessor_id$
+  end
 end
 """
   end

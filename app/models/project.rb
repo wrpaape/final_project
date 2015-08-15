@@ -48,7 +48,7 @@ class $~Project$ < ActiveRecord::Base
   $#alias_attribute$ $&:points$, $&:points_total$
 
   $#scope :completed$, -> { $#where($$*id:$ $#joins($$&:tasks_completed$$#).group($$*:id$$#).having($$?\"points_total <= SUM(tasks.points)\"$$#).select($$*:id$$#))$ }
-  $#scope :incomplete$, -> { $#where.not($$*id:$ $#completed.select($$*:id$#))$ }
+  $#scope :incomplete$, -> { $#where.not($$*id:$ $#completed.select($$*:id$$#))$ }
   $#scope :side$, -> { $#where($$*manager_type:$ $`\"Community\"$$#)$ }
   $#scope :work$, -> { $#where($$*manager_type:$ $`\"Programmer\"$$#)$ }
 

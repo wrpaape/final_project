@@ -110,7 +110,7 @@ class Programmer < ActiveRecord::Base
 
   def self.get_model_file
 """
-class Programmer < ActiveRecord::Base
+class $~Programmer$ < ActiveRecord::Base
   $#has_many$ $&:studies$
   $#has_many$ $&:entry_studies$, -> { $#entry$ }, $#class_name:$ $~\"Study\"$
   $#has_many$ $&:novice_studies$, -> { $#novice$ }, $#class_name:$ $~\"Study\"$
@@ -135,9 +135,9 @@ class Programmer < ActiveRecord::Base
   $#has_many$ $&:projects_managed$, $#as:$ $&:manager$, $#class_name:$ $~\"Project\"$
 
   $#has_many$ $&:side_tasks$, -> { $#where($$*assigner_type:$ $`\"Community\"$$#)$ }, $#foreign_key:$ $*\"receiver_id\"$, $#class_name:$ $~\"Task\"$
-  $#has_many$ $&:side_tasks_completed$, -> { $#where($$*assigner_type:$ $`\"Community\").completed$ }, $#foreign_key:$ $*\"receiver_id\"$, $#class_name:$ $~\"Task\"$
+  $#has_many$ $&:side_tasks_completed$, -> { $#where($$*assigner_type:$ $`\"Community\"$$#).completed$ }, $#foreign_key:$ $*\"receiver_id\"$, $#class_name:$ $~\"Task\"$
   $#has_many$ $&:tasks_assigned$, $#as:$ $&:assigner$, $#class_name:$ $~\"Task\"$
-  $#has_many$ $&:tasks_received$, -> { $#where($$*assigner_type:$ $`\"Programmer\")$ }, $#foreign_key:$ $*\"receiver_id\"$, $#class_name:$ $~\"Task\"$
+  $#has_many$ $&:tasks_received$, -> { $#where($$*assigner_type:$ $`\"Programmer\"$$#)$ }, $#foreign_key:$ $*\"receiver_id\"$, $#class_name:$ $~\"Task\"$
 
   $#has_many$ $&:side_projects$, -> { $#uniq$ }, $#through:$ $&:side_tasks$, $#source:$ $&:project$, $#class_name:$ $~\"Project\"$
   $#has_many$ $&:projects_assigned$, -> { $#uniq$ }, $#through:$ $&:tasks_assigned$, $#source:$ $&:project$
@@ -193,7 +193,7 @@ class Programmer < ActiveRecord::Base
         $~Programmer$$#.where($$?\"executive_id = #\{id} OR senior_id = #\{id}\"$$#)$
       end
     end
-  end
+  end
 
   module $~Subordinate$
     $%extend$ ActiveSupport::Concern
@@ -206,7 +206,7 @@ class Programmer < ActiveRecord::Base
         $~Programmer$$#.where($$*id:$ [$*executive_id$, $*senior_id$]$#)$
       end
     end
-  end
+  end
 
   private
 
@@ -225,7 +225,7 @@ end
 """
 class CreateProgrammers < ActiveRecord::Migration
   def change
-    create_table :programmers do |t|
+    $#create_table$ $@:programmers$ do |t|
       t$`.string$ $*:type$, $#default:$ $`\"Programmer\"$
       t$`.string$ $*:name$
       t$`.integer$ $*:executive_id$

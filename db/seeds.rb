@@ -3115,7 +3115,7 @@ stored in the shared database table |@programmers|.
 |#polymorphic| associations, nested |#has_many|-|#through|s, single table inheritance, module mixins,
 |#scope|d queries, and much more await. While most problems of earlier |#environment|s could be solved
 by bruteforce looping in RubyLand within the 5 second Timeout limit, this set demands leaner and meaner
-queries pumped full of SQL to process in time. Throw on some coffee, fetch your reading specs,
+queries pumped full of SQL to process in time. Throw on some coffee, fetch yourself a box of tissues,
 and keep that ActiveRecord documentation tabbed.
 """
 dbdb = Environment.create(
@@ -3216,7 +3216,7 @@ def answer_textbook_entrepreneur
   most_studied_lang.name
 end
 textbook_entrepreneur = dbdb.problems.create(
-  title: "textbook entrepreneur",
+  title: "we want the ___ audience",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
   answer: Array.wrap(answer_textbook_entrepreneur).as_json(methods: :type))
 
@@ -3244,7 +3244,7 @@ hedging_bets = dbdb.problems.create(
 
 prob_instruct =
 """
-Just like Mama used to say. It turns out that volunteer coding |~Community|s are not all that different
+It turns out that volunteer coding |~Community|s are not all that different
 from profit-driven corporations when it comes to juggling |&projects|. Much like Ajax requests, one
 |~Project| need not be |#completed| before the next one is |*started(_on)|. One |~Community|, however,
 stands out from the crowd in that it has the highest rate of |~Project| |#complet|ion. Which
@@ -3258,7 +3258,7 @@ def answer_mama_says
   most_projs_comp.name
 end
 mama_says = dbdb.problems.create(
-  title: "|#complete(d)| what you've |*started(_on)|",
+  title: "following |#through|",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
   answer: Array.wrap(answer_mama_says).as_json(methods: :type))
 
@@ -3275,10 +3275,10 @@ representing the |~Community| having |&members| with the lowest |&memberships| |
 """
 def answer_distinct_programmers
   most_dist_com = Community.joins(members: :memberships).select("communities.*, CAST(COUNT(memberships) AS float) / CAST(COUNT(DISTINCT programmers) AS float) AS avg_ms_count").group(:id).order("avg_ms_count").take
-  most_dist_comp.name
+  most_dist_com.name
 end
 distinct_programmers = dbdb.problems.create(
-  title: "a |?DISTINCT| |~Community| for |?DISTINCT| |~Programmer|s",
+  title: "|?DISTINCT| |~Programmer|s",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
   answer: Array.wrap(answer_distinct_programmers).as_json(methods: :type))
 
@@ -3296,9 +3296,9 @@ representing the |#incomplete| |~Project|s |&manage(r)| by |~Executive|s with th
 exclude aliased |?SQL| columns from your |%solution|.
 """
 def answer_backlog
-  execs = Executive.joins(:projects_managed).merge(Project.incomplete).select("programmers.*, MIN(started_on) AS date_oldest").group(:id)
-  query = execs.map { |exec| "manager_id = #{exec.id} AND started_on = '#{exec.date_oldest}'" }.join(" OR ")
-  Project.where(query)
+  execs_w_dates = Executive.joins(:projects_managed).merge(Project.incomplete).select("programmers.*, MIN(started_on) AS date_oldest").group(:id)
+  where_clause = execs_w_dates.map { |exec| "manager_id = #{exec.id} AND started_on = '#{exec.date_oldest}'" }.join(" OR ")
+  Project.where(where_clause)
 end
 backlog = dbdb.problems.create(
   title: "have you finished those |&projects|?",
@@ -3321,11 +3321,10 @@ assign them priority of |#order| by individual |*id| (default for un|#order|ed q
 Please exclude aliased |?SQL| columns from your |%solution|.
 """
 def answer_right_hand
-  sens_by_jun_count = Senior.joins(:juniors).select("programmers.*, COUNT(programmers) AS jun_count").group(:id).order("executive_id ASC, jun_count DESC")
-  sens_by_jun_count.as_json.uniq do |sen|
-    sen["executive_id"] || sen["jun_count"]
-    sen.delete("jun_count")
-  end
+  sens_w_counts = Senior.joins(:juniors).select("programmers.*, COUNT(programmers) AS jun_count").group(:id)
+  clause_targets = sens_w_counts.order("programmers.executive_id ASC, jun_count DESC").as_json.uniq{ |sen| sen["executive_id"] }
+  group_clause = clause_targets.map { |sen| "programmers.executive_id = #{sen["executive_id"]} AND COUNT(programmers) = '#{sen["jun_count"]}'" }.join(" OR ")
+  sens_w_counts.having(group_clause).order(:executive_id)
 end
 right_hand = dbdb.problems.create(
   title: "right-hand |~Senior|s",

@@ -183,7 +183,7 @@ ActiveRecord::Schema.define(version: 20150808184231) do
     t.string   "manager_type"
     t.string   "name"
     t.integer  "points_total", default: 0
-    t.date     "founded_on",               null: false
+    t.date     "started_on",               null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end

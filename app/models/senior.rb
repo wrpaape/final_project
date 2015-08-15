@@ -6,7 +6,7 @@ class Senior < Programmer
   def self.get_model_file
 """
 class $~Senior$ < $~Programmer$
-  $%include$ $~Superior$
+  $%include$ $~Superior$
   $%include$ $~Subordinate$
 end
 """
