@@ -37,12 +37,12 @@ var RowInteract = React.createClass({
       var idSelector = '#interact-row-' + obj.id + '-col-' + i;
       $(idSelector).html(displayValFormatted);
       $(idSelector).addClass('formatted-time');
-    } else if (val !== null && val.length > 48) {
+    } else if (val !== null && val.toString().length > 48) {
       this.timeoutID = window.setTimeout(function() {
         var switchTable = this.props.grandparent;
         var hoveredTextToggle = switchTable.state.hoveredTextToggle;
         var formattedText = [];
-        var splitLines = val.split('\n');
+        var splitLines = val.length > 48 ? val.split('\n') : val;
         splitLines.forEach(function(line, j) {
           if (line.length === 0) {
             line = ' ';
@@ -89,7 +89,7 @@ var RowInteract = React.createClass({
       var idSelector = '#interact-row-' + obj.id + '-col-' + i;
       $(idSelector).html(displayVal);
       $(idSelector).removeClass('formatted-time');
-    } else if (val !== null && val.length > 48) {
+    } else if (val !== null && val.toString().length > 48) {
       window.clearTimeout(this.timeoutID);
     }
   }

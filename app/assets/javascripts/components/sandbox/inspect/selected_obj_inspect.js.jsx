@@ -41,7 +41,7 @@ var SelectedObjInspect = React.createClass({
         var val = obj[key];
         var displayVal = displayHash[key];
         var className = 'value';
-        if (val !== null && val.length > 48) {
+        if (val !== null && val.toString().length > 48) {
           className += ' cropped-text';
         }
 
@@ -81,12 +81,12 @@ var SelectedObjInspect = React.createClass({
       var idSelector = '#row-' + i;
       $(idSelector).html(displayValFormatted);
       $(idSelector).addClass('formatted-time');
-    } else if (val !== null && val.length > 48) {
+    } else if (val !== null && val.toString().length > 48) {
       this.timeoutID = window.setTimeout(function() {
         var switchTable = this.props.greatgrandparent;
         var hoveredTextToggle = switchTable.state.hoveredTextToggle;
         var formattedText = [];
-        var splitLines = val.split('\n');
+        var splitLines = val.length > 48 ? val.split('\n') : val;
         splitLines.forEach(function(line, j) {
           if (line.length === 0) {
             line = ' ';
@@ -133,7 +133,7 @@ var SelectedObjInspect = React.createClass({
       var idSelector = '#row-' + i;
       $(idSelector).html(val);
       $(idSelector).removeClass("formatted-time");
-    } else if (val !== null && val.length > 48) {
+    } else if (val !== null && val.toString().length > 48) {
       window.clearTimeout(this.timeoutID);
     }
   },

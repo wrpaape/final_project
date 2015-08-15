@@ -31,7 +31,7 @@ var SwitchInspectInteract = React.createClass({
     var instructions = problem.instructions.split('\n');
     var buttonContents = showInspect ? [<span key='solution'><span>enter your&nbsp;</span><span className='code code-general'>solution</span></span>] : [<span key='environment'><span>inspect your&nbsp;</span><span className='code code-ar-keyword'>environment</span></span>];
     var umlFilePath = '/assets/environment' + this.props.dataInspect.environmentId + '_uml.png';
-    var formattedTitle = [<span key={ 'prob-' + problem.id + '-title-open' }>'\''</span>];
+    var formattedTitle = [<span key={ 'prob-' + problem.id + '-title-open' }>'</span>];
     var splitLine = problem.title.split('|');
     splitLine.forEach(function(seg, i) {
       var className = '';
