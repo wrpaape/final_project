@@ -2711,7 +2711,7 @@ def answer_technically_3_years
   Contract.where("start > '#{last_friday_2013}' and finish < '#{first_monday_2016}'").order(:start)
 end
 technically_3_years = old_mac.problems.create(
-  title: "technically 3 years",
+  title: "technically |`3| years",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
   answer: Array.wrap(answer_technically_3_years).as_json(methods: :type))
 
