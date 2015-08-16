@@ -2053,7 +2053,7 @@ end
 babys_first = stupid_sexy_queries.problems.create(
   title: "baby's |#first| query",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_babys_first).as_json(methods: :type))
+  answer: Array.wrap(answer_babys_first).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -2081,7 +2081,7 @@ end
 count_modulea = stupid_sexy_queries.problems.create(
   title: "|#count| |*module|a",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-  answer: Array.wrap(answer_count_modulea).as_json(methods: :type))
+  answer: Array.wrap(answer_count_modulea).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -2100,7 +2100,7 @@ end
 nothing_at_all = stupid_sexy_queries.problems.create(
   title: "|#not|hing at |#all|!, |?NOT|hing at |?*|!...",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_nothing_at_all).as_json(methods: :type))
+  answer: Array.wrap(answer_nothing_at_all).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -2136,7 +2136,7 @@ end
 feuer_frei = stupid_sexy_queries.problems.create(
   title: "Feuer Frei|#!|",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-  answer: Array.wrap(answer_feuer_frei).as_json(methods: :type))
+  answer: Array.wrap(answer_feuer_frei).as_json(methods: :type).to_json)
 
 g0_yobs = (1880..1890).to_a
 genders = ["M", "F"]
@@ -2311,7 +2311,7 @@ end
 avg_household = family_tree.problems.create(
   title: "...and here are our |`1.5| kids",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_avg_household).as_json(methods: :type))
+  answer: Array.wrap(answer_avg_household).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -2338,7 +2338,7 @@ end
 the_brady_bunch = family_tree.problems.create(
   title: "the Brady Bunch",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_brady_bunch).as_json(methods: :type))
+  answer: Array.wrap(answer_brady_bunch).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -2370,7 +2370,7 @@ end
 the_bachelor = family_tree.problems.create(
   title: "the Bachelor(ette?)",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_bachelor).as_json(methods: :type))
+  answer: Array.wrap(answer_bachelor).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -2404,7 +2404,7 @@ end
 lazy_parents_award = family_tree.problems.create(
   title: "the laziest parents award",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_lazy_parents).as_json(methods: :type))
+  answer: Array.wrap(answer_lazy_parents).as_json(methods: :type).to_json)
 
 
 crops = {
@@ -2713,7 +2713,7 @@ end
 technically_3_years = old_mac.problems.create(
   title: "technically |`3| years",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_technically_3_years).as_json(methods: :type))
+  answer: Array.wrap(answer_technically_3_years).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -2734,7 +2734,7 @@ end
 bandwagon_crops = old_mac.problems.create(
   title: "bandwagon |~Crop|s",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_bandwagon_crops).as_json(methods: :type))
+  answer: Array.wrap(answer_bandwagon_crops).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -2752,7 +2752,7 @@ end
 smitty_w = old_mac.problems.create(
   title: "old |~Farmer| Werbenjagermanjensen",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_smitty_w).as_json(methods: :type))
+  answer: Array.wrap(answer_smitty_w).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -2786,7 +2786,7 @@ end
 the_red_line = old_mac.problems.create(
   title: "the red line and the black thumb",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_the_red_line).as_json(methods: :type))
+  answer: Array.wrap(answer_the_red_line).as_json(methods: :type).to_json)
 
 
 def task_todo
@@ -3031,7 +3031,7 @@ end
 sleeper = dbdb.problems.create(
   title: "the sleeper",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n"),
-  answer: Array.wrap(answer_sleeper).as_json(methods: :type))
+  answer: Array.wrap(answer_sleeper).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -3063,7 +3063,7 @@ end
 tryhard = dbdb.problems.create(
   title: "tryhard trifecta",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-  answer: Array.wrap(answer_tryhard).as_json(methods: :type))
+  answer: Array.wrap(answer_tryhard).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -3086,7 +3086,7 @@ end
 textbook_entrepreneur = dbdb.problems.create(
   title: "we want the ___ audience",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-  answer: Array.wrap(answer_textbook_entrepreneur).as_json(methods: :type))
+  answer: Array.wrap(answer_textbook_entrepreneur).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -3108,7 +3108,7 @@ end
 hedging_bets = dbdb.problems.create(
   title: "hedging bets",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-  answer: Array.wrap(answer_hedging_bets).as_json(methods: :type))
+  answer: Array.wrap(answer_hedging_bets).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -3128,7 +3128,7 @@ end
 mama_says = dbdb.problems.create(
   title: "following |#through|",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-  answer: Array.wrap(answer_mama_says).as_json(methods: :type))
+  answer: Array.wrap(answer_mama_says).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -3148,7 +3148,7 @@ end
 distinct_programmers = dbdb.problems.create(
   title: "|?DISTINCT| |~Programmer|s",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-  answer: Array.wrap(answer_distinct_programmers).as_json(methods: :type))
+  answer: Array.wrap(answer_distinct_programmers).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -3171,7 +3171,7 @@ end
 backlog = dbdb.problems.create(
   title: "have you finished those |&projects|?",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-  answer: Array.wrap(answer_backlog).as_json(methods: :type))
+  answer: Array.wrap(answer_backlog).as_json(methods: :type).to_json)
 
 prob_instruct =
 """
@@ -3197,7 +3197,7 @@ end
 right_hand = dbdb.problems.create(
   title: "right-hand |~Senior|s",
   instructions: prob_instruct[1..-2].gsub(/\n/," ").gsub(/  /,"\n\n").gsub(/\^/,"\n"),
-  answer: Array.wrap(answer_right_hand).as_json(methods: :type))
+  answer: Array.wrap(answer_right_hand).as_json(methods: :type).to_json)
 
 raw_avg_household =
 """
