@@ -70,7 +70,7 @@ var EditorInteract = React.createClass({
         '(\\.send)': 'pls don\'t call \'send\'',
         '(\\.public_send)': 'pls don\'t call \'public_send\'',
         '(%x[-({])': 'pls don\'t use \'%x\'',
-        '([\\s([{.]exec)': 'pls don\'t call \'exec\'',
+        '(([\\s([{.]exec)[\\s.())])': 'pls don\'t call \'exec\'',
         '([\\s([{.]require)': 'pls don\'t call \'require\'',
         '([\\s([{.]require_relative)': 'pls don\'t call \'require_relative\'',
         '([\\s([{.]load)': 'pls don\'t call \'load\'',
