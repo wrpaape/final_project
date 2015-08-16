@@ -3192,7 +3192,7 @@ def answer_right_hand
   sens_w_counts = Senior.joins(:juniors).select("programmers.*, COUNT(programmers) AS jun_count").group(:id)
   clause_targets = sens_w_counts.order("programmers.executive_id ASC, jun_count DESC").as_json.uniq{ |sen| sen["executive_id"] }
   group_clause = clause_targets.map { |sen| "programmers.executive_id = #{sen["executive_id"]} AND COUNT(programmers) = '#{sen["jun_count"]}'" }.join(" OR ")
-  sens_w_counts.having(group_clause).order(:executive_id)
+  Senior.where(id: sens_w_counts.having(group_clause).order(:executive_id).ids)
 end
 right_hand = dbdb.problems.create(
   title: "right-hand |~Senior|s",
