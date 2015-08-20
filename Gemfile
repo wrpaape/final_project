@@ -67,3 +67,7 @@ source "https://rails-assets.org" do
   gem 'rails-assets-moment'
   gem 'rails-assets-datetimepicker'
 end
+
+group :profile do
+ gem 'ruby-prof'
+end
