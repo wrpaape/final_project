@@ -158,6 +158,7 @@ var EditorInteract = React.createClass({
       } else {
         $.getJSON(table.props.url,
           {
+            // profile_request: true,
             interact: true,
             solution: formattedSolution,
             problem_id: table.props.problem.id
