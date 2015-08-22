@@ -77,6 +77,7 @@ class ApplicationController < ActionController::Base
     file.write(solution)
     file.close
     output = Open3.capture2e("rake solution").first
+    10.times { puts eval(solution) }
     error_match = /(?<=^rake aborted!\n)((.|\n)*)/.match(output)
     if output.empty?
       output = { "results"=> "pls call your method after its definition", "time_exec"=> "N/A" }
