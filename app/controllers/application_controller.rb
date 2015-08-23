@@ -72,22 +72,19 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def get_output_json(solution)
-    file = File.open(Rails.root.join("lib", "tasks", "solution.rake"), "w")
-    file.write(solution)
-    file.close
-    output = Open3.capture2e("rake solution").first
-    10.times { puts eval(solution) }
-    error_match = /(?<=^rake aborted!\n)((.|\n)*)/.match(output)
+  def get_output_json(input)
+    begin
+      output = eval(input)
+    rescue => error
+      output = { "results"=> ["#{error.name}: #{error.message}"] << error.backtrace, "time_exec"=> "N/A" }
+    end
+
     if output.empty?
       output = { "results"=> "pls call your method after its definition", "time_exec"=> "N/A" }
-    elsif error_match.nil?
-      output = JSON.parse(output)
+    else
       output["results"] = "nil" if output["results"].nil?
       output["results"] = "[]" if output["results"] == []
       output["results"] = "{}" if output["results"] == {}
-    else
-      output = { "results"=> error_match.captures.first.split("\n"), "time_exec"=> "N/A" }
     end
 
     output
