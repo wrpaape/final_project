@@ -1,1 +1,3 @@
-D, [2015-08-24T12:37:22.172648 #6797] DEBUG -- :   [1m[36mCACHE (0.1ms)[0m  [1mSELECT  "problems".* FROM "problems" WHERE "problems"."id" = $1 LIMIT 1[0m  [["id", "20"]]
+D, [2015-08-24T13:11:06.616025 #10062] DEBUG -- :   [1m[36mPerson Load (0.5ms)[0m  [1mSELECT  "people".* FROM "people" LIMIT 1[0m
+D, [2015-08-24T13:11:06.617385 #10062] DEBUG -- :   [1m[35mCACHE (0.0ms)[0m  SELECT  "people".* FROM "people" LIMIT 1
+D, [2015-08-24T13:11:06.618832 #10062] DEBUG -- :   [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "problems".* FROM "problems" WHERE "problems"."id" = $1 LIMIT 1[0m  [["id", "20"]]

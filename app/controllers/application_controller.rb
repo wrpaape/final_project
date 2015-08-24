@@ -31,7 +31,6 @@ class ApplicationController < ActionController::Base
     session[:previous_url] || root_path
   end
 
-
   def get_default_model_states(available_models)
     states = {}
     available_models.each do |model, file_name|
@@ -73,7 +72,7 @@ class ApplicationController < ActionController::Base
 
   def get_output_json(input)
     begin
-      ActiveRecord::Base.logger = Logger.new(Rails.root.join("solution_queries.log"))
+      ActiveRecord::Base.logger = Logger.new(LOG_PATH)
       output = ''
       start = Time.now
       status = Timeout::timeout(5) do
@@ -102,11 +101,9 @@ class ApplicationController < ActionController::Base
 
   def get_query_stats
     all_times = []
-    log_url = Rails.root.join("solution_queries.log")
-    IO.foreach(log_url) do |line|
+    IO.foreach(LOG_PATH) do |line|
       all_times << line.scan(/(?<=\()[^m]*/).first.to_f
     end
-    File.truncate(log_url, 0)
     num_queries = all_times.size
     return {} if num_queries.zero?
     min_time = all_times.min
