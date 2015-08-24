@@ -1,4 +1,3 @@
-require 'open3'
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -51,11 +50,10 @@ class ApplicationController < ActionController::Base
 
   def get_solution_data(params)
     results_hash = get_output_json(params[:solution])
-    results = Array.wrap(results_hash["results"])
     query_stats = get_query_stats
-    time_exec = results_hash["time_exec"] == 'N/A' ? 'N/A' : results_hash["time_exec"] < query_stats.fetch("query_tot_time", 0) ? results_hash["time_exec"] + query_stats.fetch("query_tot_time", 0) : results_hash["time_exec"]
+    time_exec = results_hash["time_exec"] == "N/A" ? "N/A" : results_hash["time_exec"] < query_stats.fetch("query_tot_time", 0) ? results_hash["time_exec"] + query_stats.fetch("query_tot_time", 0) : results_hash["time_exec"]
     {
-      "results"=> results,
+      "results"=> results_hash["results"],
       "isCorrect"=> results_correct?(results, params[:problem_id]),
       "timeExecTotal"=> time_exec,
       "timeQueryTotal"=> query_stats.fetch("query_tot_time", "N/A"),
@@ -74,17 +72,30 @@ class ApplicationController < ActionController::Base
 
   def get_output_json(input)
     begin
-      output = eval(input)
+      ActiveRecord::Base.logger = Logger.new(Rails.root.join("solution_queries.log"))
+      status = Timeout::timeout(5) do
+        start = Time.now
+        output = eval(input)
+        finish = Time.now
+      end
+      time_exec = finish - start
+
+      case output
+      when nil
+        output = "nil"
+      when []
+        output = [[]]
+      when {}
+        output = "{}"
+      end
     rescue Exception => error
       message = error.methods.include?(:name) ? ["#{error.name}: #{error.message}"] : [error.message]
       message.unshift("pls have your solution method execute in 5 seconds or less") if message.first == "execution expired"
-      output = { "results"=> message.concat(error.backtrace), "time_exec"=> "N/A" }
+      output = message.concat(error.backtrace)
+      time_exec = "N/A"
     end
-    output["results"] = "nil" if output["results"].nil?
-    output["results"] = "[]" if output["results"] == []
-    output["results"] = "{}" if output["results"] == {}
 
-    output
+    { "results"=> Array.wrap(output.as_json(methods: :type)), "time_exec"=> time_exec }
   end
 
   def get_query_stats
@@ -95,7 +106,7 @@ class ApplicationController < ActionController::Base
     end
     File.truncate(log_url, 0)
     num_queries = all_times.size
-    return {} if num_queries == 0
+    return {} if num_queries.zero?
     min_time = all_times.min
     max_time = all_times.max
     tot_time = all_times.inject{ |sum, el| sum + el }
@@ -106,11 +117,11 @@ class ApplicationController < ActionController::Base
       "query_tot_time"=> tot_time / 1000,
       "query_avg_time"=> avg_time / 1000,
     }
-
     query_stats.each do |key, time|
       query_stats[key] = time
     end
     query_stats["num_queries"] = num_queries
+
     query_stats
   end
 

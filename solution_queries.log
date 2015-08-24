@@ -1,1 +1,4 @@
-D, [2015-08-24T11:10:34.922550 #99763] DEBUG -- :   [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "problems".* FROM "problems" WHERE "problems"."id" = $1 LIMIT 1[0m  [["id", "20"]]
+D, [2015-08-24T12:11:59.065144 #4061] DEBUG -- :   [1m[36mSenior Load (0.5ms)[0m  [1mSELECT  "programmers".* FROM "programmers" WHERE "programmers"."type" IN ('Senior') LIMIT 1[0m
+D, [2015-08-24T12:12:12.294068 #4061] DEBUG -- :   [1m[35mSenior Load (0.6ms)[0m  SELECT  "programmers".* FROM "programmers" WHERE "programmers"."type" IN ('Senior') LIMIT 1
+D, [2015-08-24T12:12:41.231950 #4061] DEBUG -- :   [1m[36mSenior Load (0.5ms)[0m  [1mSELECT  "programmers".* FROM "programmers" WHERE "programmers"."type" IN ('Senior') LIMIT 1[0m
+D, [2015-08-24T12:13:09.132942 #4061] DEBUG -- :   [1m[35mSenior Load (0.5ms)[0m  SELECT  "programmers".* FROM "programmers" WHERE "programmers"."type" IN ('Senior') LIMIT 2

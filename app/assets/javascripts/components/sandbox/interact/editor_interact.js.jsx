@@ -36,41 +36,23 @@ var EditorInteract = React.createClass({
       var table = this.props.parent;
       this.setState({ loading: true });
       table.setState({ loading: true });
-      var originalInputSolution = $('#editor-content').val();
       var inputSolution = $('#editor-content').val();
       var methodDef = / *def +([a-zA-Z_\?\d]*)/g.exec(inputSolution);
-      var putsSolution;
+      var formattedSolution;
+      var solCharCount;
+      var solCondensed = inputSolution.replace(/#.*/g,'').replace(/\n/g,'').replace(/ /g,'');
       if (methodDef === null) {
-        putsSolution = '{ "results"=> "pls define a solution method", "time_exec"=> "N/A" }';
+        formattedSolution = 'pls define a solution method';
+        solCharCount = solCondensed.length;
       } else {
         var lastLine = inputSolution.match(/[^\n].*[\n]*$/)[0].replace(/\n*$/,'');
         var methodName = lastLine.split(' ')[0];
         methodName = (methodName === 'end' || methodName[0] === '#') ? methodDef[1] : methodName;
-        var solCharCount = inputSolution.replace(/#.*/g,'').replace(/\n/g,'').replace(/ /g,'').replace(RegExp('def' + methodName),'').replace(RegExp('end' + methodName),'').length;
-        var splitSolution = inputSolution.split('\n');
-        for (var i = 0; i < splitSolution.length; i++)  {
-          if (splitSolution[i].search(RegExp('def ' + methodName)) >= 0) {
-            splitSolution.splice(i + 1, 0, '  status = Timeout::timeout(5) do');
-            break;
-          }
-        };
-        var reverseSplitSolution = splitSolution.reverse();
-        for (var i = 0; i < reverseSplitSolution.length; i++) {
-          if (reverseSplitSolution[i].search(RegExp('end')) >= 0) {
-            reverseSplitSolution.splice(i + 1, 0, '  end');
-            break;
-          }
-        };
-        inputSolution = reverseSplitSolution.reverse().join('\n');
-        var methodCall = RegExp('\\n *' + methodName, 'g');
-        if (inputSolution.search(methodCall) === -1) {
-          putsSolution = '{ "results"=> "pls call your method after its definition", "time_exec"=> "N/A" }';
-        } else {
-          putsSolution = inputSolution.replace(methodCall, '\nstart = Time.now\nresults = ' + methodName + '\nfinish = Time.now\n{ "results"=> results.as_json(methods: :type), "time_exec"=> finish - start }');
-        }
+        solCharCount = solCondensed.replace(RegExp('def' + methodName),'').replace(RegExp('end' + methodName),'').length;
+        var methodCall = inputSolution.search(RegExp('\\n *' + methodName, 'g'));
+        formattedSolution = methodCall === -1 ? 'pls call your method after its definition' : inputSolution;
       }
 
-      var formattedSolution = 'ActiveRecord::Base.logger = Logger.new(Rails.root.join("solution_queries.log"))\n' + putsSolution;
       var blackList = {
         '(`)': 'pls don\'t use backticks',
         '([\\s]system[ (])': 'pls don\`t call \'system\'',
@@ -179,7 +161,7 @@ var EditorInteract = React.createClass({
               newSolvedProblem: newSolvedProblem + '/' + table.props.problem.id,
               loggedIn: loggedIn,
               data: data,
-              solution: originalInputSolution,
+              solution: inputSolution,
               results: {
                 'isCorrect': newData.isCorrect,
                 'numQueries': newData.numQueries,
