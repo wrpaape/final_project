@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
       time_exec = "N/A"
     end
 
-    { "results"=> Array.wrap(output.as_json(methods: :type)), "time_exec"=> time_exec }
+    { "results"=> Array.wrap(output).as_json(methods: :type), "time_exec"=> time_exec }
   end
 
   def get_query_stats
@@ -126,8 +126,8 @@ class ApplicationController < ActionController::Base
 
   def results_correct?(results, problem_id)
     answer = Problem.find(problem_id).answer
-    parsed_answer = Array.wrap(JSON.parse(answer))
-    results == parsed_answer ? true : false
+    parsed_answer = JSON.parse(answer)
+    JSON.parse(results.to_json) == parsed_answer ? true : false
   end
 
   protected
