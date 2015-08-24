@@ -126,7 +126,7 @@ class ApplicationController < ActionController::Base
 
   def results_correct?(results, problem_id)
     answer = Problem.find(problem_id).answer
-    parsed_answer = JSON.parse(answer)
+    parsed_answer = Array.wrap(JSON.parse(answer))
     results == parsed_answer ? true : false
   end
 
