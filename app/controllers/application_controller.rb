@@ -50,10 +50,11 @@ class ApplicationController < ActionController::Base
 
   def get_solution_data(params)
     results_hash = get_output_json(params[:solution])
+    results = results_hash["results"]
     query_stats = get_query_stats
     time_exec = results_hash["time_exec"] == "N/A" ? "N/A" : results_hash["time_exec"] < query_stats.fetch("query_tot_time", 0) ? results_hash["time_exec"] + query_stats.fetch("query_tot_time", 0) : results_hash["time_exec"]
     {
-      "results"=> results_hash["results"],
+      "results"=> results,
       "isCorrect"=> results_correct?(results, params[:problem_id]),
       "timeExecTotal"=> time_exec,
       "timeQueryTotal"=> query_stats.fetch("query_tot_time", "N/A"),
@@ -73,11 +74,12 @@ class ApplicationController < ActionController::Base
   def get_output_json(input)
     begin
       ActiveRecord::Base.logger = Logger.new(Rails.root.join("solution_queries.log"))
+      output = ''
+      start = Time.now
       status = Timeout::timeout(5) do
-        start = Time.now
         output = eval(input)
-        finish = Time.now
       end
+      finish = Time.now
       time_exec = finish - start
 
       case output
