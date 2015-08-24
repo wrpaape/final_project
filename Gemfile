@@ -67,8 +67,3 @@ source "https://rails-assets.org" do
   gem 'rails-assets-moment'
   gem 'rails-assets-datetimepicker'
 end
-
-group :development do
-  gem 'ruby-prof'
-  gem 'request_profiler', :git => "git://github.com/justinweiss/request_profiler.git"
-end

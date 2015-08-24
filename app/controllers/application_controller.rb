@@ -75,17 +75,14 @@ class ApplicationController < ActionController::Base
   def get_output_json(input)
     begin
       output = eval(input)
-    rescue => error
-      output = { "results"=> ["#{error.name}: #{error.message}"] << error.backtrace, "time_exec"=> "N/A" }
+    rescue Exception => error
+      message = error.methods.include?(:name) ? ["#{error.name}: #{error.message}"] : [error.message]
+      message.unshift("pls have your solution method execute in 5 seconds or less") if message.first == "execution expired"
+      output = { "results"=> message.concat(error.backtrace), "time_exec"=> "N/A" }
     end
-
-    if output.empty?
-      output = { "results"=> "pls call your method after its definition", "time_exec"=> "N/A" }
-    else
-      output["results"] = "nil" if output["results"].nil?
-      output["results"] = "[]" if output["results"] == []
-      output["results"] = "{}" if output["results"] == {}
-    end
+    output["results"] = "nil" if output["results"].nil?
+    output["results"] = "[]" if output["results"] == []
+    output["results"] = "{}" if output["results"] == {}
 
     output
   end
@@ -95,7 +92,7 @@ class ApplicationController < ActionController::Base
     log_url = Rails.root.join("solution_queries.log")
     IO.foreach(log_url) do |line|
       all_times << line.scan(/(?<=\()[^m]*/).first.to_f
-     end
+    end
     File.truncate(log_url, 0)
     num_queries = all_times.size
     return {} if num_queries == 0

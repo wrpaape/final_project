@@ -38,31 +38,38 @@ var EditorInteract = React.createClass({
       table.setState({ loading: true });
       var originalInputSolution = $('#editor-content').val();
       var inputSolution = $('#editor-content').val();
-      var lastLine = inputSolution.match(/[^\n].*[\n]*$/)[0].replace(/\n*$/,'');
-      var methodName = lastLine.split(' ')[0];
-      methodName = (methodName === 'end' || methodName[0] === '#') ? inputSolution.match(/ *def +([a-zA-Z_\?\d]*)/g)[1] : methodName;
-      var solCharCount = inputSolution.replace(/#.*/g,'').replace(/\n/g,'').replace(/ /g,'').replace(RegExp('def' + methodName),'').replace(RegExp('end' + methodName),'').length;
-      var splitSolution = inputSolution.split('\n');
-      for (var i = 0; i < splitSolution.length; i++)  {
-        if (splitSolution[i].search(RegExp('def ' + methodName)) >= 0) {
-          splitSolution.splice(i + 1, 0, '  status = Timeout::timeout(5) do');
-          break;
+      var methodDef = / *def +([a-zA-Z_\?\d]*)/g.exec(inputSolution);
+      var putsSolution;
+      if (methodDef === null) {
+        putsSolution = '{ "results"=> "pls define a solution method", "time_exec"=> "N/A" }';
+      } else {
+        var lastLine = inputSolution.match(/[^\n].*[\n]*$/)[0].replace(/\n*$/,'');
+        var methodName = lastLine.split(' ')[0];
+        methodName = (methodName === 'end' || methodName[0] === '#') ? methodDef[1] : methodName;
+        var solCharCount = inputSolution.replace(/#.*/g,'').replace(/\n/g,'').replace(/ /g,'').replace(RegExp('def' + methodName),'').replace(RegExp('end' + methodName),'').length;
+        var splitSolution = inputSolution.split('\n');
+        for (var i = 0; i < splitSolution.length; i++)  {
+          if (splitSolution[i].search(RegExp('def ' + methodName)) >= 0) {
+            splitSolution.splice(i + 1, 0, '  status = Timeout::timeout(5) do');
+            break;
+          }
+        };
+        var reverseSplitSolution = splitSolution.reverse();
+        for (var i = 0; i < reverseSplitSolution.length; i++) {
+          if (reverseSplitSolution[i].search(RegExp('end')) >= 0) {
+            reverseSplitSolution.splice(i + 1, 0, '  end');
+            break;
+          }
+        };
+        inputSolution = reverseSplitSolution.reverse().join('\n');
+        var methodCall = RegExp('\\n *' + methodName, 'g');
+        if (inputSolution.search(methodCall) === -1) {
+          putsSolution = '{ "results"=> "pls call your method after its definition", "time_exec"=> "N/A" }';
+        } else {
+          putsSolution = inputSolution.replace(methodCall, '\nstart = Time.now\nresults = ' + methodName + '\nfinish = Time.now\n{ "results"=> results.as_json(methods: :type), "time_exec"=> finish - start }');
         }
-      };
-      var reverseSplitSolution = splitSolution.reverse();
-      for (var i = 0; i < reverseSplitSolution.length; i++) {
-        if (reverseSplitSolution[i].search(RegExp('end')) >= 0) {
-          reverseSplitSolution.splice(i + 1, 0, '  end');
-          break;
-        }
-      };
+      }
 
-      inputSolution = reverseSplitSolution.reverse().join('\n');
-      // var indentedSolution = inputSolution.replace(/\n/g, '\n  ');
-      // var putsSolution = indentedSolution.replace(RegExp('\n  ' + methodName, 'g'), '\n  start = Time.now\n  results = ' + methodName + '\n  finish = Time.now\n  results_hash = { "results"=> results.as_json(methods: :type), "time_exec"=> finish - start }\n  puts results_hash.to_json');
-      // var formattedSolution = 'require \'timeout\'\ntask :solution => :environment do\n  ActiveRecord::Base.logger = Logger.new(Rails.root.join("solution_queries.log"))\n  ' + putsSolution + '\nend';
-
-      var putsSolution = inputSolution.replace(RegExp('\n' + methodName, 'g'), '\nstart = Time.now\nresults = ' + methodName + '\nfinish = Time.now\n{ "results"=> results.as_json(methods: :type), "time_exec"=> finish - start }');
       var formattedSolution = 'ActiveRecord::Base.logger = Logger.new(Rails.root.join("solution_queries.log"))\n' + putsSolution;
       var blackList = {
         '(`)': 'pls don\'t use backticks',
@@ -159,7 +166,6 @@ var EditorInteract = React.createClass({
       } else {
         $.getJSON(table.props.url,
           {
-            // profile_request: true,
             interact: true,
             solution: formattedSolution,
             problem_id: table.props.problem.id
