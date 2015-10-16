@@ -1,4 +1,3 @@
-require 'open3'
 class EnvironmentsController < ApplicationController
   before_action :set_environment, only: :show
 
